@@ -7,7 +7,7 @@ import { BlogService } from '../../services/blog.service';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  posts: string[] = [];
+  posts: any[] = [];
 
   constructor(private blogService: BlogService) { }
 

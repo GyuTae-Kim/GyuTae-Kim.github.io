@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { MarkdownModule } from 'ngx-markdown';
@@ -15,7 +16,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { HomeComponent } from './pages/home/home.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { HomeComponent } from './pages/home/home.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MarkdownModule.forRoot({ loader: HttpClientModule }),
+    MatChipsModule,
+    MatCardModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,

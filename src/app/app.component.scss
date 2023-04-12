@@ -11,6 +11,11 @@ $dark-theme: mat-dark-theme($primary, $accent);
 .dark-mode {
     background-color: #121212;
     color: white;
+
+    mat-card {
+        background-color: #2d2d2d;
+        color: white;
+    }
 }
 
 body {
@@ -25,4 +30,8 @@ mat-toolbar {
 
 .spacer {
     flex: 1 1 auto;
+}
+
+.mat-toolbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

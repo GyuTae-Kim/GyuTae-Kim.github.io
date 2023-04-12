@@ -6,15 +6,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BlogService {
-  private postsUrl = '/assets/posts';
 
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.postsUrl}/posts.json`);
+  getPosts(): Observable<any> {
+    return this.http.get('assets/posts/posts.json');
   }
 
-  getPost(postName: string): Observable<string> {
-    return this.http.get(`${this.postsUrl}/${postName}`, { responseType: 'text' });
+  getPost(slug: string): Observable<string> {
+    return this.http.get(`assets/posts/${slug}`, { responseType: 'text' });
   }
 }

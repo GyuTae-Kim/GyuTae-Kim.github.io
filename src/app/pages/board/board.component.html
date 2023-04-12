@@ -1,8 +1,9 @@
 <div class="board-container">
-    <h1>Blog</h1>
-    <mat-list>
-        <mat-list-item *ngFor="let post of posts">
-            <a [routerLink]="['/blog', post]">{{ post }}</a>
-        </mat-list-item>
-    </mat-list>
+    <mat-card *ngFor="let post of posts" class="post-card">
+        <mat-card-title>{{ post.title }}</mat-card-title>
+        <mat-card-content>{{ post.description }}</mat-card-content>
+        <mat-card-actions>
+            <button mat-button [routerLink]="['/blog', post.slug]">자세히 보기</button>
+        </mat-card-actions>
+    </mat-card>
 </div>
