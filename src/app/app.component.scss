@@ -1,33 +1,28 @@
-header {
-    nav {
-        ul {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            list-style: none;
-            padding: 0;
+@import '@angular/material/theming';
+@include mat-core();
 
-            li {
-                cursor: pointer;
-                margin-right: 24px;
-                font-size: 16px;
-                font-weight: 500;
-                text-transform: uppercase;
-                color: $dark-color;
+$primary: mat-palette($mat-indigo);
+$accent: mat-palette($mat-pink, A200, A100, A400);
+$light-theme: mat-light-theme($primary, $accent);
+$dark-theme: mat-dark-theme($primary, $accent);
 
-                &:last-child {
-                    margin-right: 0;
-                }
+@include angular-material-theme($light-theme);
 
-                &.active {
-                    color: $white-color;
-                    border-bottom: 2px solid $white-color;
-                }
+.dark-mode {
+    background-color: #121212;
+    color: white;
+}
 
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-    }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+}
+
+mat-toolbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spacer {
+    flex: 1 1 auto;
 }

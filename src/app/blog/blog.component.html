@@ -1,9 +1,0 @@
-<section>
-    <!-- 게시글 목록 -->
-</section>
-
-<footer>
-    <button *ngIf="currentPage > 1" (click)="onPreviousPage()">Previous</button>
-    <span>{{ currentPage }}</span>
-    <button *ngIf="currentPage < totalPages" (click)="onNextPage()">Next</button>
-</footer>

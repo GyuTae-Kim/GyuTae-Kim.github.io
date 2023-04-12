@@ -1,0 +1,8 @@
+<div class="board-container">
+    <h1>Blog</h1>
+    <mat-list>
+        <mat-list-item *ngFor="let post of posts">
+            <a [routerLink]="['/blog', post]">{{ post }}</a>
+        </mat-list-item>
+    </mat-list>
+</div>
