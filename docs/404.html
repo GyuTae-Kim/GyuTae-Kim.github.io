@@ -5,11 +5,8 @@
     <meta charset="utf-8" />
     <title>Redirecting...</title>
     <script>
-        // 현재 URL에서 경로를 가져옵니다.
-        const path = window.location.pathname;
-
-        // index.html로 리다이렉트하고 경로를 유지합니다.
-        window.location.href = '/index.html' + path;
+        var locationPath = location.pathname;
+        location.replace(location.protocol + '//' + location.host + '/#' + locationPath);
     </script>
 </head>
 
