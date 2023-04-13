@@ -1,4 +1,1 @@
-ng build --configuration=production
-rm -rf docs
-mkdir docs
-cp -r ./dist/kgt-gitblog/* ./docs
+ng build --configuration=production --output-path docs --base-href /

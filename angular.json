@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kgt-gitblog",
+            "outputPath": "docs",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -40,6 +40,7 @@
               "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/app/app.component.scss"
             ],
+            "baseHref": "/",
             "scripts": []
           },
           "configurations": {
