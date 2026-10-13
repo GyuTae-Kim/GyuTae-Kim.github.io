@@ -7,6 +7,8 @@ import { CASE_STUDIES } from '../../portfolio-data';
 })
 export class HomeComponent {
   cases = CASE_STUDIES;
+  // Shown as its own card beside the CAD → feature → CAM figure.
+  furniture = CASE_STUDIES.find((c) => c.id === 'sketchup-manufacturing')!;
   stage = 1;
   stages = [
     {

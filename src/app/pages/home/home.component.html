@@ -34,37 +34,54 @@
         ><span>Research to Product</span>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="visual-topline">
-        <span>GEOMETRY → INTELLIGENCE → MANUFACTURING</span
-        ><span class="visual-index">0{{ stage + 1 }} / 03</span>
-      </div>
-      <div class="geometry-stage">
-        <app-hero-figure
-          [stage]="stage"
-          [label]="'CAD 형상 개념도: ' + stages[stage].title"
-        ></app-hero-figure>
-      </div>
-      <div
-        class="visual-controls"
-        role="group"
-        aria-label="연구에서 제조까지 단계 선택"
-      >
-        <button
-          *ngFor="let step of stages; let i = index"
-          type="button"
-          (click)="stage = i"
-          [class.selected]="stage === i"
-          [attr.aria-pressed]="stage === i"
+    <div class="hero-side">
+      <div class="hero-visual">
+        <div class="visual-topline">
+          <span>GEOMETRY → INTELLIGENCE → MANUFACTURING</span
+          ><span class="visual-index">0{{ stage + 1 }} / 03</span>
+        </div>
+        <div class="geometry-stage">
+          <app-hero-figure
+            [stage]="stage"
+            [label]="'CAD 형상 개념도: ' + stages[stage].title"
+          ></app-hero-figure>
+        </div>
+        <div
+          class="visual-controls"
+          role="group"
+          aria-label="연구에서 제조까지 단계 선택"
         >
-          {{ step.label }}
-        </button>
+          <button
+            *ngFor="let step of stages; let i = index"
+            type="button"
+            (click)="stage = i"
+            [class.selected]="stage === i"
+            [attr.aria-pressed]="stage === i"
+          >
+            {{ step.label }}
+          </button>
+        </div>
+        <div class="visual-caption" aria-live="polite">
+          <strong>{{ stages[stage].title }}</strong>
+          <p>{{ stages[stage].text }}</p>
+          <span>연구개발 흐름을 보여 주는 개념도</span>
+        </div>
       </div>
-      <div class="visual-caption" aria-live="polite">
-        <strong>{{ stages[stage].title }}</strong>
-        <p>{{ stages[stage].text }}</p>
-        <span>연구개발 흐름을 보여 주는 개념도</span>
-      </div>
+      <a
+        class="hero-alt-card"
+        [routerLink]="['/portfolio', furniture.id]"
+        [attr.aria-label]="furniture.title + ' 사례 보기'"
+      >
+        <img [src]="furniture.figure.src" alt="" width="560" height="390" />
+        <div>
+          <span class="eyebrow">FURNITURE DESIGN → MANUFACTURING DATA</span>
+          <strong>{{ furniture.title }}</strong>
+          <ol class="alt-flow">
+            <li *ngFor="let label of furniture.diagramLabels">{{ label }}</li>
+          </ol>
+        </div>
+        <span class="alt-arrow" aria-hidden="true">↗</span>
+      </a>
     </div>
   </section>
   <div class="expertise-strip">
