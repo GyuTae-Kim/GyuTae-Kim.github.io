@@ -59,12 +59,12 @@
             <p>{{ project.role }}</p>
           </div>
           <div>
-            <h3>검증으로 확인한 것</h3>
-            <p>{{ project.outcome }}</p>
+            <h3>결과</h3>
+            <p class="row-headline">{{ project.headline }}</p>
           </div>
         </div>
         <a class="text-link" [routerLink]="['/portfolio', project.id]"
-          >접근 방법과 검증 과정 보기 <span aria-hidden="true">→</span></a
+          >사례 보기 <span aria-hidden="true">→</span></a
         >
       </div>
     </article>
@@ -86,74 +86,60 @@
         <span *ngFor="let tag of selected!.tags">{{ tag }}</span>
       </div>
     </div>
-    <figure class="case-figure" *ngIf="!selected!.gallery">
-      <img
-        [src]="selected!.figure.src"
-        [alt]="selected!.figure.alt"
-        width="560"
-        height="390"
-      />
-      <figcaption>
-        <span class="figure-kind" [class.research]="selected!.figure.kind === 'research'">{{
-          selected!.figure.kind === 'research' ? '연구 렌더' : '개념도'
-        }}</span>
-        {{ selected!.figure.caption }}
-      </figcaption>
-    </figure>
-    <section class="case-at-a-glance" aria-labelledby="case-overview-title">
-      <h2 id="case-overview-title" class="eyebrow">기여와 검증 요약</h2>
-      <div class="case-overview-grid">
+    <section class="case-hero" aria-labelledby="case-headline">
+      <p class="result-headline" id="case-headline">{{ selected!.headline }}</p>
+      <figure class="pair-gallery" *ngIf="selected!.gallery as gallery; else caseFigure">
+        <div class="pair-grid">
+          <div class="pair" *ngFor="let pair of gallery.pairs">
+            <div *ngFor="let item of pair">
+              <img [src]="item.src" [alt]="item.alt" width="690" height="510" />
+              <span>{{ item.caption }}</span>
+            </div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="figure-kind research">연구 렌더</span>
+          {{ gallery.caption }}
+        </figcaption>
+      </figure>
+      <ng-template #caseFigure>
+        <figure class="case-figure">
+          <img
+            [src]="selected!.figure.src"
+            [alt]="selected!.figure.alt"
+            width="560"
+            height="390"
+          />
+          <figcaption>
+            <span
+              class="figure-kind"
+              [class.research]="selected!.figure.kind === 'research'"
+              >{{ selected!.figure.kind === 'research' ? '연구 렌더' : '개념도' }}</span
+            >
+            {{ selected!.figure.caption }}
+          </figcaption>
+        </figure>
+      </ng-template>
+      <div class="case-made">
+        <span class="eyebrow">만든 것</span>
+        <ul>
+          <li *ngFor="let output of selected!.outputs">{{ output }}</li>
+        </ul>
+      </div>
+      <dl class="case-facts">
         <div>
-          <h3>맡은 범위</h3>
-          <p>{{ selected!.role }}</p>
+          <dt>맡은 범위</dt>
+          <dd>{{ selected!.role }}</dd>
         </div>
         <div>
-          <h3>주요 결과물</h3>
-          <ul>
-            <li *ngFor="let output of selected!.outputs">{{ output }}</li>
-          </ul>
+          <dt>핵심 판단</dt>
+          <dd>{{ selected!.keyDecision }}</dd>
         </div>
-      </div>
-      <div class="case-result">
-        <h3>검증으로 확인한 것</h3>
-        <p>{{ selected!.outcome }}</p>
-      </div>
-      <p class="case-record-scope">
-        기술 문서와 코드 변경 이력을 바탕으로 정리한 사례입니다. 검증 근거와
-        한계는 아래에 따로 적었습니다.
-      </p>
+      </dl>
+      <p class="result-scope">{{ selected!.scopeLine }}</p>
     </section>
-    <div class="case-body">
-      <aside class="case-nav">
-        <span class="eyebrow">IN THIS CASE</span
-        ><a
-          [routerLink]="[]"
-          fragment="problem"
-          [class.current]="activeSection === 'problem'"
-          >01 문제</a
-        ><a
-          [routerLink]="[]"
-          fragment="approach"
-          [class.current]="activeSection === 'approach'"
-          >02 접근</a
-        ><a
-          [routerLink]="[]"
-          fragment="contribution"
-          [class.current]="activeSection === 'contribution'"
-          >03 기여</a
-        ><a
-          [routerLink]="[]"
-          fragment="validation"
-          [class.current]="activeSection === 'validation'"
-          >04 검증</a>
-        <a
-          *ngIf="hasAchievements"
-          [routerLink]="[]"
-          fragment="related-achievements"
-          [class.current]="activeSection === 'related-achievements'"
-          >05 연구 성과</a
-        >
-      </aside>
+    <details class="result-details case-details">
+      <summary>자세히 · 문제, 접근, 기여, 검증</summary>
       <div class="case-sections">
         <section id="problem">
           <p class="eyebrow">01 / PROBLEM</p>
@@ -176,20 +162,6 @@
               ><b *ngIf="!last" aria-hidden="true">→</b></ng-container
             >
           </div>
-          <figure class="pair-gallery" *ngIf="selected!.gallery as gallery">
-            <figcaption>
-              <strong>{{ gallery.title }}</strong>
-              <span>{{ gallery.caption }}</span>
-            </figcaption>
-            <div class="pair-grid">
-              <div class="pair" *ngFor="let pair of gallery.pairs">
-                <div *ngFor="let item of pair">
-                  <img [src]="item.src" [alt]="item.alt" width="690" height="510" loading="lazy" />
-                  <span>{{ item.caption }}</span>
-                </div>
-              </div>
-            </div>
-          </figure>
           <div class="research-decision">
             <h3>선택과 판단</h3>
             <p>{{ selected!.decision }}</p>
@@ -210,29 +182,29 @@
             <strong>검증 범위</strong>
             <p>{{ selected!.caution }}</p>
           </div>
-        </section>
-        <app-achievements
-          [projectId]="selected!.id"
-          anchorId="related-achievements"
-          [showProjectLinks]="false"
-        ></app-achievements>
-        <div class="related-research">
-          <p class="eyebrow">RELATED PUBLIC IMPLEMENTATIONS</p>
-          <h3>관련 경험을 보여 주는 공개 연구</h3>
-          <p>
-            학부연구생 때 비슷한 문제를 다뤄 본 공개 코드입니다. 이 사례의 실험
-            결과가 아니며, 같은 코드를 다시 쓴 것도 아닙니다.
+          <p class="case-record-scope">
+            기술 문서와 코드 변경 이력을 바탕으로 정리한 사례입니다.
           </p>
-          <div
-            class="related-work"
-            *ngFor="let work of selected!.relatedResearch"
-          >
-            <a class="text-link" routerLink="/research" [fragment]="work.id"
-              >{{ work.title }} <span aria-hidden="true">↗</span></a
-            >
-            <p>{{ work.connection }}</p>
-          </div>
-        </div>
+        </section>
+      </div>
+    </details>
+    <app-achievements
+      [projectId]="selected!.id"
+      anchorId="related-achievements"
+      [showProjectLinks]="false"
+    ></app-achievements>
+    <div class="related-research">
+      <p class="eyebrow">RELATED PUBLIC IMPLEMENTATIONS</p>
+      <h3>관련 경험을 보여 주는 공개 연구</h3>
+      <p>
+        학부연구생 때 비슷한 문제를 다뤄 본 공개 코드입니다. 이 사례의 실험
+        결과가 아니며, 같은 코드를 다시 쓴 것도 아닙니다.
+      </p>
+      <div class="related-work" *ngFor="let work of selected!.relatedResearch">
+        <a class="text-link" routerLink="/research" [fragment]="work.id"
+          >{{ work.title }} <span aria-hidden="true">↗</span></a
+        >
+        <p>{{ work.connection }}</p>
       </div>
     </div>
   </ng-template>

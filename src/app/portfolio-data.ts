@@ -1,6 +1,11 @@
 export interface CaseStudy {
   id: string;
   number: string;
+  // First-screen summary: one result line, the key judgement and a one-line scope.
+  // The long problem/approach/validation text stays behind 「자세히」 on the case page.
+  headline: string;
+  keyDecision: string;
+  scopeLine: string;
   role: string;
   outputs: string[];
   outcome: string;
@@ -32,6 +37,10 @@ export interface CaseFigure {
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'cad-feature-recognition',
+    headline: '면마다 가공 의미를 붙여 학습 데이터까지 이었습니다',
+    keyDecision:
+      '평균 지표가 좋아져도 부품 계열별 오류가 늘어난 후보는 채택하지 않았습니다.',
+    scopeLine: '기존 형상 집합의 후속 실험 · 새 부품 독립 평가 아님',
     role: '라벨링 프로그램 전체 연구개발, 가공 특징 인식 후속 연구의 데이터 구성과 모델 실험',
     outputs: [
       '면 분류를 편집하고 형상과 라벨을 전달하는 도구',
@@ -103,6 +112,10 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 'fusion-cam',
+    headline: '공구를 바꾸거나 실패해도 기존 CAM 작업이 남게 했습니다',
+    keyDecision:
+      '공구 설정만 바꾸면 되는 경우와 작업을 새로 만들어야 하는 경우를 나눠 처리했습니다.',
+    scopeLine: '시뮬레이션 표본 비교까지 · 실제 CNC 가공 승인 아님',
     role: '가공 계획을 Fusion에 적용하는 기능, 공구 변경과 실패 복구, 형상 선택 검증 개발',
     outputs: [
       'Fusion CAM에 가공 계획을 적용하는 어댑터',
@@ -149,6 +162,10 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 'sketchup-manufacturing',
+    headline: '판재를 돌려도 가공 위치와 결 방향이 함께 따라오게 했습니다',
+    keyDecision:
+      '치수만 바꾸지 않고 가공 위치, 엣지, 결 방향을 같은 좌표 변환으로 함께 옮겼습니다.',
+    scopeLine: '제조 출력 데이터의 일관성까지 · 네스팅기와 CNC는 별도 검증',
     role: 'UI에서 API, 제조 계산까지 이어지는 결맞춤 편집과 출력 좌표 변환 개발',
     outputs: [
       '결맞춤 편집 UI와 API',
@@ -207,6 +224,10 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 'panel-classification',
+    headline: '판재와 접촉 관계를 그래프로 표현해 역할을 분류했습니다',
+    keyDecision:
+      '형상 계열로 묶어 평가하고, 좌표축을 바꾼 입력은 따로 스트레스 평가했습니다.',
+    scopeLine: '내부 분할 평가 · 새 가구 외부 검증 아님',
     number: '04',
     role: '판재와 면의 입력 표현, 분류 모델, 특징 비교 실험 연구개발',
     outputs: [

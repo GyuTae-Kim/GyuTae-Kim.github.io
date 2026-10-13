@@ -130,7 +130,7 @@
           <p class="eyebrow">{{ project.category }}</p>
           <h3>{{ project.title }} <span aria-hidden="true">↗</span></h3>
           <p class="home-role"><span>담당</span>{{ project.role }}</p>
-          <p class="home-result"><span>검증</span>{{ project.outcome }}</p>
+          <p class="home-result"><span>결과</span>{{ project.headline }}</p>
           <div class="tags">
             <span *ngFor="let tag of project.tags.slice(0, 3)">{{ tag }}</span>
           </div>
