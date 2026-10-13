@@ -2139,6 +2139,106 @@ main:focus {
   padding-left: 16px;
   margin-top: 22px;
 }
+.rerun {
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  border-radius: 6px;
+  background: #fbfcf8;
+  padding: 24px 26px 22px;
+}
+.rerun-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rerun-head .eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+}
+.rerun-env {
+  font: 11px/1.6 var(--mono);
+  color: var(--muted);
+}
+.rerun-summary {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #3f4f45;
+  margin: 10px 0 20px;
+}
+.rerun-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.rerun-figures figure {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  padding: 10px;
+}
+.rerun-figures figure.wide {
+  grid-column: 1 / -1;
+}
+.rerun-figures figure.compact img,
+.rerun-figures figure.compact figcaption {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rerun-figures img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.rerun-figures a {
+  display: block;
+  cursor: zoom-in;
+}
+.rerun-figures figcaption {
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--muted);
+  padding: 8px 4px 0;
+}
+.rerun-table {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+.rerun-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.rerun-table caption {
+  text-align: left;
+  font-size: 12px;
+  color: var(--muted);
+  padding-bottom: 8px;
+}
+.rerun-table th,
+.rerun-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.rerun-table th {
+  font: 600 11px/1.4 var(--mono);
+  color: var(--green);
+  letter-spacing: 0.4px;
+}
+.rerun-notes {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
 .research-connection {
   background: #edf1e7;
   border: 1px solid var(--line);
@@ -2178,6 +2278,15 @@ main:focus {
   }
   .case-sections .case-pipeline {
     padding: 15px 10px;
+  }
+  .rerun {
+    padding: 18px 14px 16px;
+  }
+  .rerun-summary {
+    font-size: 14px;
+  }
+  .rerun-figures figure {
+    padding: 6px;
   }
 }
 @media print {

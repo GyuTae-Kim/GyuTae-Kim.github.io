@@ -12,8 +12,9 @@
     <span class="eyebrow">읽는 방법</span>
     <p>
       학부연구생 시절의 연구라, 지금 공개 저장소에 남아 있는 코드와 실험 그림을
-      근거로 정리했습니다. 연구마다 직접 구현한 부분과 가져다 쓴 모델, 평가
-      조건을 나눠 적었습니다. 각 연구 아래의 최근 프로젝트 링크는 관련 경험을
+      근거로 정리했습니다. 2026년에는 그 코드를 다시 돌려 보고, 결과를 연구마다
+      「2026 재실행」으로 덧붙였습니다. 연구마다 직접 구현한 부분과 가져다 쓴
+      모델, 평가 조건을 나눠 적었습니다. 각 연구 아래의 최근 프로젝트 링크는 관련 경험을
       이어 둔 것으로, 같은 코드를 다시 썼다거나 현재 업무의 실험 근거라는 뜻은
       아닙니다.
     </p>
@@ -117,6 +118,37 @@
         </div></ng-template
       >
     </div>
+    <section class="rerun" *ngIf="work.rerun as rerun" [attr.aria-label]="work.title + ' 재실행 결과'">
+      <div class="rerun-head">
+        <p class="eyebrow">RESULTS · {{ rerun.label }}</p>
+        <span class="rerun-env">{{ rerun.environment }}</span>
+      </div>
+      <p class="rerun-summary">{{ rerun.summary }}</p>
+      <div class="rerun-figures">
+        <figure *ngFor="let fig of rerun.figures" [class.wide]="fig.wide" [class.compact]="fig.compact">
+          <a [href]="fig.src" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
+            ><img [src]="fig.src" [alt]="fig.alt" loading="lazy"
+          /></a>
+          <figcaption>{{ fig.caption }}</figcaption>
+        </figure>
+      </div>
+      <div class="rerun-table" *ngIf="rerun.table as table">
+        <table>
+          <caption>{{ table.caption }}</caption>
+          <thead>
+            <tr><th *ngFor="let col of table.columns" scope="col">{{ col }}</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of table.rows">
+              <td *ngFor="let cell of row">{{ cell }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="rerun-notes">
+        <li *ngFor="let note of rerun.notes">{{ note }}</li>
+      </ul>
+    </section>
     <div class="research-connection">
       <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
       <p>{{ work.connection }}</p>
