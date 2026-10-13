@@ -8,7 +8,6 @@ export interface Achievement {
   contribution: string;
   features: string[];
   metadata: { label: string; value: string }[];
-  evidenceScope: string;
   relatedProjectId: string;
   relatedProjectTitle: string;
 }
@@ -32,10 +31,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     metadata: [
       { label: '출원일', value: '2025.11.21' },
       { label: '출원번호', value: '10-2025-0177712' },
-      { label: '기여 구분', value: '공동발명자' },
     ],
-    evidenceScope:
-      '출원번호 통지서와 성과표에서 발명 명칭, 공동발명자, 출원일, 출원번호를 확인했습니다. AI 담당 범위는 본인 확인과 관련 연구개발 기록을 근거로 적었습니다. 연구는 기존 계층 그래프 모델을 활용·변형한 것이고, 후속 구현 기록이 출원 청구항을 직접 뒷받침하는 증거는 아닙니다. 상태는 출원 기준으로 표시했습니다.',
     relatedProjectId: 'panel-classification',
     relatedProjectTitle: '형상과 연결 관계로 판재의 역할을 분류하는 AI',
   },
@@ -57,10 +53,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     metadata: [
       { label: '창작일', value: '2025.05.13' },
       { label: '등록 신청 접수일', value: '2025.12.12' },
-      { label: '신청 구분', value: '회사 명의' },
     ],
-    evidenceScope:
-      '신청서와 접수 화면에서 프로그램 명칭과 접수일을 확인했습니다. 접수 화면에 등록번호 일부와 온라인발급 표시가 있지만, 등록증의 전체 번호와 등록 완료일은 아직 확인하지 못해 신청·접수 상태로 표시했습니다. 전체 연구개발을 맡았다는 점은 본인이 확인했습니다. 기능 설명에는 지금도 유지되는 관련 구현이 들어 있어, 신청 당시 버전과 코드가 같다고 단정할 수는 없습니다.',
     relatedProjectId: 'cad-feature-recognition',
     relatedProjectTitle: 'CAD 형상에서 가공 특징을 읽는 AI',
   },

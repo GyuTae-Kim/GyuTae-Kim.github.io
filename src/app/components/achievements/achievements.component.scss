@@ -97,23 +97,8 @@
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
-.achievement-evidence {
-  margin: 17px 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-.achievement-evidence summary {
-  cursor: pointer;
-  min-height: 30px;
-  color: var(--green);
-  padding: 3px 0;
-}
-.achievement-evidence p {
-  font-size: 13px;
-  line-height: 1.9;
-  margin-top: 8px;
-}
 .achievement-project {
+  margin-top: 22px;
   font-size: 13px;
   align-self: flex-start;
   gap: 12px;
@@ -137,11 +122,6 @@
   }
   .achievement-card h3 {
     font-size: 20px;
-  }
-  .achievement-evidence summary {
-    min-height: 44px;
-    display: list-item;
-    padding-top: 10px;
   }
 }
 @media print {
