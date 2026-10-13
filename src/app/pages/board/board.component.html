@@ -3,17 +3,19 @@
     <p class="eyebrow">RESEARCH ARCHIVE / PUBLIC IMPLEMENTATIONS</p>
     <h1>코드로 남긴 탐구<span class="accent">.</span></h1>
     <p>
-      이미지에서 구조를 찾고, 그래프에서 해를 탐색하고,<br />모델을 실제
-      입력·출력 흐름에 연결했던 기록입니다.
+      학부연구생 때 맡았던 세 연구입니다.<br />의류 이미지 분류의 오류를
+      분석하고, 그래프 학습으로 TSP 경로를 만들고, 가상 착용 모델을 앱까지
+      연결했습니다.
     </p>
   </div>
   <div class="archive-intro">
     <span class="eyebrow">읽는 방법</span>
     <p>
-      공개 저장소의 구현 코드와 과거 실험 그림을 연결했습니다. 직접 구현한 부분,
-      참조 모델과 평가 조건을 구분했습니다. 최근 업무 링크는 관련 경험의
-      연결이며, 같은 코드의 재사용이나 현재 업무의 직접 실험 근거를 뜻하지
-      않습니다.
+      학부연구생 시절의 연구라, 지금 공개 저장소에 남아 있는 코드와 실험 그림을
+      근거로 정리했습니다. 연구마다 직접 구현한 부분과 가져다 쓴 모델, 평가
+      조건을 나눠 적었습니다. 각 연구 아래의 최근 프로젝트 링크는 관련 경험을
+      이어 둔 것으로, 같은 코드를 다시 썼다거나 현재 업무의 실험 근거라는 뜻은
+      아닙니다.
     </p>
   </div>
   <nav class="archive-nav" aria-label="연구 목록">
@@ -41,7 +43,7 @@
         [href]="work.source"
         target="_blank"
         rel="noopener noreferrer"
-        [attr.aria-label]="work.title + ' 공개 GitHub 자료 새 창 열기'"
+        [attr.aria-label]="work.title + ' 공개 코드를 GitHub 새 창에서 열기'"
         >공개 코드 <span aria-hidden="true">↗</span></a
       >
     </div>
@@ -49,16 +51,16 @@
       <div>
         <h3 class="research-question">{{ work.question }}</h3>
         <div class="research-text">
-          <h4>직접 맡은 구현·분석</h4>
+          <h4>직접 구현하고 분석한 부분</h4>
           <ul class="research-contributions">
             <li *ngFor="let item of work.contribution">{{ item }}</li>
           </ul>
           <h4>접근 방법</h4>
           <p>{{ work.method }}</p>
-          <h4>구현과 분석에서 남긴 것</h4>
+          <h4>구현하고 확인한 것</h4>
           <p>{{ work.observation }}</p>
           <div class="reused-models">
-            <h4>참조·재사용 범위</h4>
+            <h4>참고하거나 가져다 쓴 부분</h4>
             <p>{{ work.reused }}</p>
           </div>
         </div>
@@ -111,42 +113,42 @@
             <div class="flow-step">
               가상 착용 결과 <span>Flask API → Android client</span>
             </div></ng-template
-          ><small>공개 코드의 흐름을 정리한 개념도</small>
+          ><small>공개 코드의 처리 흐름을 그린 개념도</small>
         </div></ng-template
       >
     </div>
     <div class="research-connection">
-      <span class="eyebrow">연결되는 연구개발 역량</span>
+      <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
       <p>{{ work.connection }}</p>
       <a class="text-link" [routerLink]="['/portfolio', work.relatedProjectId]"
         >{{ work.relatedProjectTitle }} <span aria-hidden="true">→</span></a
       >
     </div>
     <details class="scope-details">
-      <summary>자료의 범위와 해석 시 참고사항</summary>
+      <summary>자료의 범위와 한계</summary>
       <p>{{ work.limitation }}</p>
     </details>
     <figure class="wide-chart" *ngIf="work.id === 'fashion-classification'">
       <img
         src="assets/research/k-fashion-class-count.png"
-        alt="공개 K-fashion 분류 실험의 클래스 0~3 이미지 개수 막대그래프. 학습·검증 자료의 클래스별 표본 수 차이를 보여준다."
+        alt="공개 K-fashion 분류 실험의 클래스 0~3 이미지 개수 막대그래프. 학습·검증 데이터에서 클래스마다 표본 수가 다르다."
         loading="lazy"
         width="1400"
         height="500"
       />
       <figcaption>
-        클래스 분포 · 공개 저장소의 과거 실험 그림. 현재 코드는 학습·검증 각각
-        다운샘플링을 사용하며, 이 그림과 같은 실행 조건인지는 확인되지
-        않았습니다.
+        클래스 분포. 공개 저장소에 남아 있는 당시 실험 그림입니다. 현재 코드는
+        학습·검증 데이터를 각각 다운샘플링하는데, 이 그림이 같은 조건에서 나온
+        것인지는 확인하지 못했습니다.
       </figcaption>
     </figure>
   </article>
   <section class="archive-bridge">
     <p class="eyebrow">FROM EXPLORATION TO ENGINEERING</p>
-    <h2>다음 질문은, 실제 형상과 제조.</h2>
+    <h2>이제는 형상과 제조를 다룹니다.</h2>
     <p>
-      표현 학습과 오류 분석의 관심을 3D 형상 데이터, 가공 특징 인식,<br />CAD/CAM
-      도구의 실행과 검증으로 확장하고 있습니다.
+      학부연구생 때 관심을 가졌던 표현 학습과 오류 분석을,<br />지금은 3D 형상
+      데이터와 가공 특징 인식, CAD/CAM 도구의 실행과 검증으로 넓혀 가고 있습니다.
     </p>
     <a class="button primary" routerLink="/portfolio"
       >최근 연구개발 프로젝트 <span aria-hidden="true">↗</span></a

@@ -7,11 +7,11 @@
   <div class="achievement-heading">
     <p class="eyebrow">IP & SOFTWARE / RESEARCH OUTCOMES</p>
     <h2 [id]="anchorId + '-title'">
-      {{ projectId ? "연결되는 연구 성과" : "형상 연구를 지식재산과 도구로." }}
+      {{ projectId ? "관련 연구 성과" : "형상 연구에서 나온 특허와 프로그램." }}
     </h2>
     <p *ngIf="!projectId" class="achievement-intro">
-      3D 모델링의 연결 관계 분석과 가공 특징 인식의 학습용 라벨링.<br />연구를
-      특허 출원과 소프트웨어 산출물로 정리했습니다.
+      3D 가구 모델링 기술은 공동발명으로 특허 출원됐고,<br />가공 특징 인식용
+      라벨링 프로그램은 등록 신청이 접수됐습니다.
     </p>
   </div>
   <div class="achievement-grid" [class.single]="achievements.length === 1">
@@ -41,7 +41,7 @@
         </div>
       </dl>
       <details class="achievement-evidence">
-        <summary>증빙 자료의 확인 범위</summary>
+        <summary>증빙 자료로 확인한 범위</summary>
         <p>{{ achievement.evidenceScope }}</p>
       </details>
       <a

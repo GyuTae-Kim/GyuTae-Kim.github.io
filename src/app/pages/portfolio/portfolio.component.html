@@ -4,8 +4,9 @@
       <p class="eyebrow">SELECTED WORK / RESEARCH & ENGINEERING</p>
       <h1>연구에서 제조까지<span class="accent">.</span></h1>
       <p>
-        AI 모델의 출력이 실제 설계·가공 도구의 동작으로 이어지도록.<br />가공
-        특징 인식·판재 분류 AI·Fusion CAM·제조 출력의 연구개발 사례입니다.
+        AI 모델이 낸 결과를 설계·가공 도구에서 쓸 수 있게 만든 연구개발
+        사례입니다.<br />가공 특징 인식, 판재 분류 AI, Fusion CAM 연동, 제조 데이터
+        출력을 다룹니다.
       </p>
     </div>
     <a
@@ -54,7 +55,7 @@
         </div>
         <div class="project-summary">
           <div>
-            <h3>담당 기술 범위</h3>
+            <h3>맡은 범위</h3>
             <p>{{ project.role }}</p>
           </div>
           <div>
@@ -63,7 +64,7 @@
           </div>
         </div>
         <a class="text-link" [routerLink]="['/portfolio', project.id]"
-          >접근 방법과 검증 살펴보기 <span aria-hidden="true">→</span></a
+          >접근 방법과 검증 과정 보기 <span aria-hidden="true">→</span></a
         >
       </div>
     </article>
@@ -103,11 +104,11 @@
       <h2 id="case-overview-title" class="eyebrow">기여와 검증 요약</h2>
       <div class="case-overview-grid">
         <div>
-          <h3>담당 기술 범위</h3>
+          <h3>맡은 범위</h3>
           <p>{{ selected!.role }}</p>
         </div>
         <div>
-          <h3>남긴 산출물</h3>
+          <h3>주요 결과물</h3>
           <ul>
             <li *ngFor="let output of selected!.outputs">{{ output }}</li>
           </ul>
@@ -118,8 +119,8 @@
         <p>{{ selected!.outcome }}</p>
       </div>
       <p class="case-record-scope">
-        기술 문서·코드 변경 이력 기반의 사례 · 검증 근거와 한계는 아래에
-        구분했습니다.
+        기술 문서와 코드 변경 이력을 바탕으로 정리한 사례입니다. 검증 근거와
+        한계는 아래에 따로 적었습니다.
       </p>
     </section>
     <div class="case-body">
@@ -196,7 +197,7 @@
         </section>
         <section id="contribution">
           <p class="eyebrow">03 / CONTRIBUTION</p>
-          <h2>직접 연구·개발한 부분</h2>
+          <h2>직접 연구개발한 부분</h2>
           <ol class="contribution-list">
             <li *ngFor="let item of selected!.contribution">{{ item }}</li>
           </ol>
@@ -217,10 +218,10 @@
         ></app-achievements>
         <div class="related-research">
           <p class="eyebrow">RELATED PUBLIC IMPLEMENTATIONS</p>
-          <h3>관련 구현 경험을 보여주는 공개 자료</h3>
+          <h3>관련 경험을 보여 주는 공개 연구</h3>
           <p>
-            아래 링크는 과거 구현 경험의 근거입니다. 현재 사례의 실험 결과나
-            같은 코드의 재사용을 뜻하지 않습니다.
+            학부연구생 때 비슷한 문제를 다뤄 본 공개 코드입니다. 이 사례의 실험
+            결과가 아니며, 같은 코드를 다시 쓴 것도 아닙니다.
           </p>
           <div
             class="related-work"
