@@ -14,6 +14,15 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <script>
+      // 404.html sends a deep link here as /#/path; restore the path before the router starts.
+      (function () {
+        var hash = window.location.hash;
+        if (hash.indexOf('#/') === 0) {
+          window.history.replaceState(null, '', hash.slice(1));
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link
       rel="stylesheet"
