@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Original public research figures included in this portfolio
+!src/assets/research/*.png

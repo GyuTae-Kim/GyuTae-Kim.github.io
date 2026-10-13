@@ -4,18 +4,26 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
-import { PostComponent } from './pages/post/post.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'portfolio', component: PortfolioComponent },
-  { path: 'blog', component: BoardComponent },
-  { path: 'blog/:post', component: PostComponent },
+  { path: 'portfolio/:id', component: PortfolioComponent },
+  { path: 'research', component: BoardComponent },
+  { path: 'blog', redirectTo: 'research', pathMatch: 'full' },
+  { path: 'blog/:post', redirectTo: 'research' },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      scrollOffset: [0, 100],
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

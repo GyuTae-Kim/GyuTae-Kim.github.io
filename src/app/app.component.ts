@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
-import { OverlayContainer } from '@angular/cdk/overlay';
-
+import { Title } from '@angular/platform-browser';
+import { Router, NavigationEnd } from '@angular/router';
+import { CASE_STUDIES } from './portfolio-data';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  darkMode = true;
-
-  constructor(private overlayContainer: OverlayContainer) { }
-
-  toggleDarkMode(): void {
-    this.darkMode = !this.darkMode;
-    this.applyDarkMode();
-  }
-
-  private applyDarkMode(): void {
-    const classList = this.overlayContainer.getContainerElement().classList;
-    console.log(this.darkMode)
-    console.log(classList)
-    if (this.darkMode) {
-      classList.add('dark-mode');
-    } else {
-      classList.remove('dark-mode');
-    }
+  constructor(router: Router, title: Title) {
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const section = event.urlAfterRedirects.startsWith('/research')
+          ? '연구 아카이브'
+          : event.urlAfterRedirects.startsWith('/portfolio')
+            ? '프로젝트'
+            : event.urlAfterRedirects.startsWith('/contact')
+              ? '연락'
+              : 'AI · 3D · CAD/CAM';
+        const caseStudy = CASE_STUDIES.find(
+          (item) =>
+            event.urlAfterRedirects.split('#')[0] === `/portfolio/${item.id}`,
+        );
+        title.setTitle(`${caseStudy?.title ?? section} — 김규태 · Sean Kim`);
+      }
+    });
   }
 }

@@ -1,33 +1,335 @@
-<div class="content-wrapper">
-    <div class="home-container">
-        <mat-card class="profile-card">
-            <img mat-card-image src="assets/sean-kim.jpg" alt="Sean Kim" />
-            <mat-card-content>
-                <h1>김규태 (Sean Kim)</h1>
-                <h2>MLOps 개발자</h2>
-                <hr>
-                <div class="tech-stack">
-                    <img src="assets/stack_logo/python-logo.png" alt="Python" />
-                    <img src="assets/stack_logo/tensorflow-logo.png" alt="TensorFlow" />
-                    <img src="assets/stack_logo/pytorch-logo.png" alt="PyTorch" />
-                    <img src="assets/stack_logo/elasticsearch-logo.png" alt="Elasticsearch" />
-                    <img src="assets/stack_logo/mysql-logo.png" alt="MySQL" />
-                    <img src="assets/stack_logo/docker-logo.png" alt="Docker" />
-                    <img src="assets/stack_logo/aws-logo.png" alt="AWS" />
-                    <img src="assets/stack_logo/selenium-logo.png" alt="Selenium" />
-                </div>
-                <hr>
-                <mat-card-actions>
-                    <button mat-button color="primary">
-                        <mat-icon>email</mat-icon>
-                        <a href="mailto:GyuTae.K1020@gmail.com">GyuTae.K1020@gmail.com</a>
-                    </button>
-                    <button mat-button color="primary">
-                        <mat-icon>code</mat-icon>
-                        <a href="https://github.com/GyuTae-Kim" target="_blank">https://github.com/GyuTae-Kim</a>
-                    </button>
-                </mat-card-actions>
-            </mat-card-content>
-        </mat-card>
+<div class="page-shell">
+  <section class="hero" aria-labelledby="intro-title">
+    <div class="hero-copy">
+      <p class="eyebrow">
+        <span class="status-dot"></span> AI · 3D · CAD/CAM RESEARCH &
+        DEVELOPMENT
+      </p>
+      <h1 id="intro-title">
+        형상을 이해하고,<br />제조로 연결합니다<span class="accent">.</span>
+      </h1>
+      <p class="hero-description">
+        AI와 3D 기하를 실제 설계·제조 흐름으로 연결하는<br
+          class="desktop-break"
+        />
+        연구개발자
+        <strong>김규태<span class="english-name"> Sean Kim</span></strong
+        >입니다.
+      </p>
+      <p class="hero-context">
+        라벨링 도구와 가공 특징·판재 분류 AI를 연구개발하고,<br
+          class="desktop-break"
+        />Fusion CAM 적용과 제조 좌표 변환을 구현합니다.
+      </p>
+      <div class="actions">
+        <a class="button primary" routerLink="/portfolio"
+          >대표 프로젝트 보기 <span aria-hidden="true">↗</span></a
+        ><a class="text-link" routerLink="/research"
+          >연구 자료 살펴보기 <span aria-hidden="true">→</span></a
+        >
+      </div>
+      <div class="hero-topics">
+        <span>Geometric AI</span><span>CAD / CAM</span
+        ><span>Research to Product</span>
+      </div>
     </div>
+    <div class="hero-visual">
+      <div class="visual-topline">
+        <span>GEOMETRY → INTELLIGENCE → MANUFACTURING</span
+        ><span class="visual-index">0{{ stage + 1 }} / 03</span>
+      </div>
+      <div
+        class="geometry-stage"
+        [class.raw]="stage === 0"
+        [class.toolpath]="stage === 2"
+      >
+        <svg
+          class="cad-illustration"
+          viewBox="0 0 560 410"
+          role="img"
+          [attr.aria-label]="stages[stage].title + ' CAD 형상 개념도'"
+        >
+          <defs>
+            <pattern
+              id="grid"
+              width="34"
+              height="20"
+              patternUnits="userSpaceOnUse"
+              patternTransform="matrix(1 .55 -1 .55 280 0)"
+            >
+              <path
+                d="M 34 0 L 0 0 0 20"
+                fill="none"
+                stroke="#d7ddd9"
+                stroke-width=".7"
+              />
+            </pattern>
+            <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#edf0eb" />
+              <stop offset="1" stop-color="#d8dfd8" />
+            </linearGradient>
+          </defs>
+          <rect width="560" height="410" fill="url(#grid)" opacity=".65" />
+          <ellipse
+            cx="282"
+            cy="318"
+            rx="177"
+            ry="34"
+            fill="#293e32"
+            opacity=".05"
+          />
+          <path
+            d="M100 202 L292 304 L460 211 L268 109 Z"
+            fill="url(#top)"
+            stroke="#5c7266"
+            stroke-width="1.5"
+          />
+          <path
+            d="M100 202 L292 304 L292 349 L100 246 Z"
+            fill="#c5d1c8"
+            stroke="#5c7266"
+            stroke-width="1.5"
+          />
+          <path
+            d="M292 304 L460 211 L460 254 L292 349 Z"
+            fill="#adbdaf"
+            stroke="#5c7266"
+            stroke-width="1.5"
+          />
+          <path
+            class="feature-pocket"
+            d="M167 189 L262 139 L349 185 L254 238 Z"
+            fill="#ecd6c1"
+            stroke="#ac6841"
+            stroke-width="1.5"
+          />
+          <path
+            d="M167 189 L167 210 L254 255 L254 238 Z"
+            class="pocket-side"
+            fill="#c78f65"
+            stroke="#ac6841"
+            stroke-width="1.2"
+          />
+          <path
+            d="M254 238 L349 185 L349 205 L254 255 Z"
+            class="pocket-side"
+            fill="#d9af8c"
+            stroke="#ac6841"
+            stroke-width="1.2"
+          />
+          <path
+            d="M167 210 L262 159 L349 205 L254 255 Z"
+            class="pocket-floor"
+            fill="#e8c4a3"
+            stroke="#ac6841"
+            stroke-width="1.2"
+          />
+          <ellipse
+            class="feature-hole"
+            cx="374"
+            cy="223"
+            rx="20"
+            ry="11"
+            fill="#507764"
+            stroke="#274f3b"
+            stroke-width="1.5"
+          />
+          <path
+            class="feature-hole"
+            d="M354 223 Q374 240 394 223 L394 231 Q374 249 354 231 Z"
+            fill="#315b45"
+          />
+          <ellipse
+            cx="205"
+            cy="253"
+            rx="11"
+            ry="6"
+            fill="#7b8f80"
+            stroke="#526b5a"
+          />
+          <g class="annotation" fill="none" stroke="#ac6841" stroke-width="1">
+            <path d="M256 195 L256 84 L175 84" />
+            <circle cx="256" cy="195" r="3" fill="#ac6841" />
+          </g>
+          <g class="annotation" fill="none" stroke="#305f48" stroke-width="1">
+            <path d="M374 223 L438 166 L500 166" />
+            <circle cx="374" cy="223" r="3" fill="#305f48" />
+          </g>
+          <g class="annotation">
+            <text
+              x="111"
+              y="74"
+              fill="#8e4c2e"
+              font-size="12"
+              font-family="monospace"
+            >
+              POCKET
+            </text>
+            <text
+              x="445"
+              y="156"
+              fill="#305f48"
+              font-size="12"
+              font-family="monospace"
+            >
+              HOLE
+            </text>
+            <text
+              x="131"
+              y="93"
+              fill="#7b7f76"
+              font-size="9"
+              font-family="monospace"
+            >
+              FEATURE 01
+            </text>
+            <text
+              x="445"
+              y="183"
+              fill="#7b7f76"
+              font-size="9"
+              font-family="monospace"
+            >
+              FEATURE 02
+            </text>
+          </g>
+          <g
+            class="cam-path"
+            fill="none"
+            stroke="#ad5834"
+            stroke-width="2"
+            stroke-dasharray="5 4"
+          >
+            <path
+              d="M180 210 L262 166 L333 203 L254 246 L194 213 L262 177 L315 203 L254 236 L212 213 L262 188 L295 204 L254 225"
+            />
+            <ellipse cx="374" cy="223" rx="28" ry="16" />
+          </g>
+          <g class="axes" fill="none" stroke-width="1.2">
+            <path d="M61 336 L101 357" stroke="#ad5834" />
+            <path d="M61 336 L92 317" stroke="#507764" />
+            <path d="M61 336 L61 300" stroke="#668196" />
+          </g>
+          <g font-family="monospace" font-size="10" fill="#728077">
+            <text x="106" y="362">X</text>
+            <text x="94" y="316">Y</text>
+            <text x="58" y="295">Z</text>
+            <text x="360" y="377">B-REP / FEATURE GRAPH</text>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="visual-controls"
+        role="group"
+        aria-label="연구에서 제조까지 단계"
+      >
+        <button
+          *ngFor="let step of stages; let i = index"
+          type="button"
+          (click)="stage = i"
+          [class.selected]="stage === i"
+          [attr.aria-pressed]="stage === i"
+        >
+          {{ step.label }}
+        </button>
+      </div>
+      <div class="visual-caption" aria-live="polite">
+        <strong>{{ stages[stage].title }}</strong>
+        <p>{{ stages[stage].text }}</p>
+        <span>연구·개발 흐름을 설명하는 개념도</span>
+      </div>
+    </div>
+  </section>
+  <div class="expertise-strip">
+    <span class="eyebrow">FOCUS AREAS</span><span>형상 표현 & 그래프 학습</span
+    ><span>가공 특징 인식</span><span>CAM 자동화</span
+    ><span>설계–제조 데이터 연결</span>
+  </div>
+  <section class="section" aria-labelledby="work-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">01 / SELECTED WORK</p>
+        <h2 id="work-title">연구를 실제 도구로.</h2>
+      </div>
+      <a class="text-link" routerLink="/portfolio"
+        >전체 프로젝트 <span aria-hidden="true">↗</span></a
+      >
+    </div>
+    <div class="work-grid">
+      <a
+        class="work-card"
+        *ngFor="let project of cases"
+        [routerLink]="['/portfolio', project.id]"
+      >
+        <div
+          class="card-visual"
+          [class]="'card-visual visual-' + project.number"
+        >
+          <span class="project-number">{{ project.number }}</span>
+          <div class="mini-pipeline">
+            <span *ngFor="let label of project.diagramLabels">{{ label }}</span>
+          </div>
+          <div class="visual-lines" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="eyebrow">{{ project.category }}</p>
+          <h3>{{ project.title }} <span aria-hidden="true">↗</span></h3>
+          <p class="home-role"><span>담당</span>{{ project.role }}</p>
+          <p class="home-result"><span>검증</span>{{ project.outcome }}</p>
+          <div class="tags">
+            <span *ngFor="let tag of project.tags.slice(0, 3)">{{ tag }}</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+  <app-achievements anchorId="home-achievements"></app-achievements>
+  <section class="research-teaser section" aria-labelledby="research-title">
+    <div>
+      <p class="eyebrow">02 / RESEARCH ARCHIVE</p>
+      <h2 id="research-title">실험에서 배운 것들.</h2>
+      <p>
+        이미지 분류, 그래프 기반 경로 구성, 가상 피팅.<br />직접 구현한 부분과
+        기존 모델을 활용한 부분을 구분하고,<br />최근 형상 AI·CAD/CAM 작업과
+        연결되는 역량을 정리했습니다.
+      </p>
+      <a class="text-link" routerLink="/research"
+        >코드와 실험 자료 보기 <span aria-hidden="true">↗</span></a
+      >
+    </div>
+    <div class="research-map">
+      <span>VISION</span><span>GRAPH LEARNING</span><span>GEOMETRIC AI</span>
+      <p>데이터를 이해하고 → 구조를 표현하고 → 제품에 연결합니다.</p>
+    </div>
+  </section>
+  <section class="about-section section" aria-labelledby="about-title">
+    <div class="about-person">
+      <img
+        src="assets/sean-kim.jpg"
+        alt="김규태 · Sean Kim"
+        width="100"
+        height="100"
+        loading="lazy"
+      />
+      <div>
+        <p class="eyebrow">ABOUT ME</p>
+        <h2 id="about-title">김규태 <span>Sean Kim</span></h2>
+      </div>
+    </div>
+    <div>
+      <p class="about-statement">
+        모델의 예측을 넘어,<br />실제 형상과 제조 결과까지 생각합니다.
+      </p>
+      <p>
+        형상 표현과 데이터·모델 실험에서 얻은 결과를 CAD 도구와 제조 규칙에
+        연결합니다. 실험의 재현성과 제품에서의 일관성을 함께 다루는 개발을
+        지향합니다.
+      </p>
+      <a class="text-link" routerLink="/contact"
+        >함께할 기회 이야기하기 <span aria-hidden="true">↗</span></a
+      >
+    </div>
+  </section>
 </div>

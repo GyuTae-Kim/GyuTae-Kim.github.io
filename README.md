@@ -1,27 +1,37 @@
-# KgtGitblog
+# Sean Kim — Research & Engineering Portfolio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.5.
+기존 GitHub Pages Angular 저장소를 AI·3D·CAD/CAM 연구개발 포트폴리오로 수정한 검토용 소스입니다.
 
-## Development server
+## 로컬 미리보기
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```sh
+npm ci
+npm run preview
+```
 
-## Code scaffolding
+브라우저에서 http://127.0.0.1:4317 을 여세요. 현재 체크아웃의 `src/`를 직접 읽고 변경을 다시 빌드합니다.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 구성
 
-## Build
+- `/`: 소개, CAD→특징 인식→CAM 개념도, 대표 프로젝트.
+- `/portfolio`: 분야별 프로젝트 목록, `/portfolio/:id`: 문제·접근·기여·검증 사례. 가공 특징 인식, 판재 분류 AI, Fusion CAM, 제조 출력의 네 사례를 포함합니다.
+- `/research`: 공개 연구 코드 3개와 실제 실험 그림. 기존 `/blog` 주소도 이곳으로 연결합니다.
+- `/contact`: 공개 이메일·GitHub, 이메일 복사.
+- `src/app/achievement-data.ts`: 특허 출원·공동발명 및 프로그램 등록 신청 자료의 개인정보 없는 성과 요약.
+- `src/app/portfolio-data.ts`: 최근 개발 사례 내용.
+- `src/app/research-data.ts`: 공개 연구 자료 내용과 출처.
+- `src/assets/research/`: 본인 공개 저장소에서 가져온 원본 그림.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 배포 없는 빌드 검증
 
-## Running unit tests
+```sh
+npx ng build --configuration production --output-path dist/preview
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+기존 `docs/`는 수정하지 않았습니다. GitHub Pages는 `gh-pages` 브랜치를 사용하며, `master`의 소스 변경은 배포하지 않은 상태입니다. 기존 `npm run deploy`는 실제 Pages를 갱신하므로 사용자 승인 뒤에만 실행하세요.
 
-## Running end-to-end tests
+## 콘텐츠 확인
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+원본 사이트에는 경력·학위·논문 목록이 없었습니다. 검증할 수 없는 회사명·직함·재직기간·논문 저자·성과수치는 추가하지 않았습니다. 공개 연구 자료는 실험 기록, 참고 논문 기반 구현, 응용 통합 구현으로 구분합니다. 최신 개발 사례는 기술 작업을 요약한 내용으로, 외부 공개 전에 프로젝트 공개 범위와 본인 기여 표현을 확인해야 합니다.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2026년 10월 13일 기준 초안.

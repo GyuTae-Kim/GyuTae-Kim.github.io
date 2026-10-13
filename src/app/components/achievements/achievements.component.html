@@ -1,0 +1,56 @@
+<section
+  *ngIf="achievements.length"
+  class="achievement-section"
+  [id]="anchorId"
+  [attr.aria-labelledby]="anchorId + '-title'"
+>
+  <div class="achievement-heading">
+    <p class="eyebrow">IP & SOFTWARE / RESEARCH OUTCOMES</p>
+    <h2 [id]="anchorId + '-title'">
+      {{ projectId ? "연결되는 연구 성과" : "형상 연구를 지식재산과 도구로." }}
+    </h2>
+    <p *ngIf="!projectId" class="achievement-intro">
+      3D 모델링의 연결 관계 분석과 가공 특징 인식의 학습용 라벨링.<br />연구를
+      특허 출원과 소프트웨어 산출물로 정리했습니다.
+    </p>
+  </div>
+  <div class="achievement-grid" [class.single]="achievements.length === 1">
+    <article class="achievement-card" *ngFor="let achievement of achievements">
+      <div class="achievement-topline">
+        <span class="eyebrow">{{ achievement.kind }}</span
+        ><span
+          class="achievement-status"
+          [class.pending]="achievement.id === 'machining-labeling-software'"
+          >{{ achievement.status }}</span
+        >
+      </div>
+      <h3>{{ achievement.title }}</h3>
+      <p class="achievement-description">{{ achievement.description }}</p>
+      <div class="achievement-contribution">
+        <h4>본인 기여</h4>
+        <strong>{{ achievement.role }}</strong>
+        <p>{{ achievement.contribution }}</p>
+        <ul *ngIf="achievement.features.length">
+          <li *ngFor="let feature of achievement.features">{{ feature }}</li>
+        </ul>
+      </div>
+      <dl class="achievement-metadata">
+        <div *ngFor="let item of achievement.metadata">
+          <dt>{{ item.label }}</dt>
+          <dd>{{ item.value }}</dd>
+        </div>
+      </dl>
+      <details class="achievement-evidence">
+        <summary>증빙 자료의 확인 범위</summary>
+        <p>{{ achievement.evidenceScope }}</p>
+      </details>
+      <a
+        *ngIf="showProjectLinks"
+        class="text-link achievement-project"
+        [routerLink]="['/portfolio', achievement.relatedProjectId]"
+        >{{ achievement.relatedProjectTitle }}
+        <span aria-hidden="true">↗</span></a
+      >
+    </article>
+  </div>
+</section>

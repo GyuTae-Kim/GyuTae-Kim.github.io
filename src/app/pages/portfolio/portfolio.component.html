@@ -1,20 +1,176 @@
-<div class="content-wrapper">
-    <div class="portfolio-container">
-        <h1>Portfolio</h1>
-        <p>Here are some of my projects:</p>
-        <ul>
-            <li>
-                <h3>Project 1</h3>
-                <p>Description of Project 1</p>
-            </li>
-            <li>
-                <h3>Project 2</h3>
-                <p>Description of Project 2</p>
-            </li>
-            <li>
-                <h3>Project 3</h3>
-                <p>Description of Project 3</p>
-            </li>
-        </ul>
+<div class="page-shell interior-page">
+  <ng-container *ngIf="!selected; else caseDetail">
+    <div class="page-intro">
+      <p class="eyebrow">SELECTED WORK / RESEARCH & ENGINEERING</p>
+      <h1>연구에서 제조까지<span class="accent">.</span></h1>
+      <p>
+        AI 모델의 출력이 실제 설계·가공 도구의 동작으로 이어지도록.<br />가공
+        특징 인식·판재 분류 AI·Fusion CAM·제조 출력의 연구개발 사례입니다.
+      </p>
     </div>
+    <a
+      class="text-link portfolio-achievement-jump"
+      [routerLink]="[]"
+      fragment="achievements"
+      >특허·프로그램 성과 보기 <span aria-hidden="true">↓</span></a
+    >
+    <div class="filter-bar" role="group" aria-label="프로젝트 분야">
+      <button
+        *ngFor="let item of filters"
+        (click)="filter = item.id"
+        [class.selected]="filter === item.id"
+        [attr.aria-pressed]="filter === item.id"
+      >
+        {{ item.label }}
+      </button>
+    </div>
+    <article class="project-row" *ngFor="let project of visibleCases">
+      <div class="project-row-meta">
+        <span class="large-index">{{ project.number }}</span>
+        <p class="eyebrow">{{ project.category }}</p>
+        <span>{{ project.period }}</span>
+      </div>
+      <div class="project-row-content">
+        <h2>
+          <a [routerLink]="['/portfolio', project.id]"
+            >{{ project.title }} <span aria-hidden="true">↗</span></a
+          >
+        </h2>
+        <p class="row-subtitle">{{ project.subtitle }}</p>
+        <div class="tags">
+          <span *ngFor="let tag of project.tags">{{ tag }}</span>
+        </div>
+        <div class="project-summary">
+          <div>
+            <h3>담당 기술 범위</h3>
+            <p>{{ project.role }}</p>
+          </div>
+          <div>
+            <h3>검증으로 확인한 것</h3>
+            <p>{{ project.outcome }}</p>
+          </div>
+        </div>
+        <a class="text-link" [routerLink]="['/portfolio', project.id]"
+          >접근 방법과 검증 살펴보기 <span aria-hidden="true">→</span></a
+        >
+      </div>
+    </article>
+    <app-achievements></app-achievements>
+    <aside class="end-note">
+      실험 코드와 원본 자료는 <a routerLink="/research">연구 아카이브</a>에서 볼
+      수 있습니다.
+    </aside>
+  </ng-container>
+  <ng-template #caseDetail>
+    <a class="back-link" routerLink="/portfolio">← 프로젝트 목록</a>
+    <div class="page-intro detail-intro">
+      <p class="eyebrow">
+        CASE STUDY {{ selected!.number }} / {{ selected!.category }}
+      </p>
+      <h1>{{ selected!.title }}</h1>
+      <p>{{ selected!.subtitle }}</p>
+      <div class="tags">
+        <span *ngFor="let tag of selected!.tags">{{ tag }}</span>
+      </div>
+    </div>
+    <section class="case-at-a-glance" aria-labelledby="case-overview-title">
+      <h2 id="case-overview-title" class="eyebrow">기여와 검증 요약</h2>
+      <div class="case-overview-grid">
+        <div>
+          <h3>담당 기술 범위</h3>
+          <p>{{ selected!.role }}</p>
+        </div>
+        <div>
+          <h3>남긴 산출물</h3>
+          <ul>
+            <li *ngFor="let output of selected!.outputs">{{ output }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="case-result">
+        <h3>검증으로 확인한 것</h3>
+        <p>{{ selected!.outcome }}</p>
+      </div>
+      <p class="case-record-scope">
+        기술 문서·코드 변경 이력 기반의 사례 · 검증 근거와 한계는 아래에
+        구분했습니다.
+      </p>
+    </section>
+    <div class="case-body">
+      <aside class="case-nav">
+        <span class="eyebrow">IN THIS CASE</span
+        ><a [routerLink]="[]" fragment="problem">01 문제</a
+        ><a [routerLink]="[]" fragment="approach">02 접근</a
+        ><a [routerLink]="[]" fragment="contribution">03 기여</a
+        ><a [routerLink]="[]" fragment="validation">04 검증</a>
+        <a
+          *ngIf="hasAchievements"
+          [routerLink]="[]"
+          fragment="related-achievements"
+          >05 연구 성과</a
+        >
+      </aside>
+      <div class="case-sections">
+        <section id="problem">
+          <p class="eyebrow">01 / PROBLEM</p>
+          <h2>어떤 문제를 다뤘는가</h2>
+          <p>{{ selected!.problem }}</p>
+        </section>
+        <section id="approach">
+          <p class="eyebrow">02 / APPROACH</p>
+          <h2>어떻게 접근했는가</h2>
+          <p>{{ selected!.approach }}</p>
+          <div class="case-pipeline" aria-label="시스템 흐름">
+            <ng-container
+              *ngFor="let label of selected!.diagramLabels; let last = last"
+              ><span>{{ label }}</span
+              ><b *ngIf="!last" aria-hidden="true">→</b></ng-container
+            >
+          </div>
+          <div class="research-decision">
+            <h3>선택과 판단</h3>
+            <p>{{ selected!.decision }}</p>
+          </div>
+        </section>
+        <section id="contribution">
+          <p class="eyebrow">03 / CONTRIBUTION</p>
+          <h2>직접 연구·개발한 부분</h2>
+          <ol class="contribution-list">
+            <li *ngFor="let item of selected!.contribution">{{ item }}</li>
+          </ol>
+        </section>
+        <section id="validation">
+          <p class="eyebrow">04 / VALIDATION</p>
+          <h2>무엇을 확인했는가</h2>
+          <p>{{ selected!.validation }}</p>
+          <div class="validation-note">
+            <strong>검증 범위</strong>
+            <p>{{ selected!.caution }}</p>
+          </div>
+        </section>
+        <app-achievements
+          [projectId]="selected!.id"
+          anchorId="related-achievements"
+          [showProjectLinks]="false"
+        ></app-achievements>
+        <div class="related-research">
+          <p class="eyebrow">RELATED PUBLIC IMPLEMENTATIONS</p>
+          <h3>관련 구현 경험을 보여주는 공개 자료</h3>
+          <p>
+            아래 링크는 과거 구현 경험의 근거입니다. 현재 사례의 실험 결과나
+            같은 코드의 재사용을 뜻하지 않습니다.
+          </p>
+          <div
+            class="related-work"
+            *ngFor="let work of selected!.relatedResearch"
+          >
+            <a class="text-link" routerLink="/research" [fragment]="work.id"
+              >{{ work.title }} <span aria-hidden="true">↗</span></a
+            >
+            <p>{{ work.connection }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

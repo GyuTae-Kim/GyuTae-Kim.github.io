@@ -7,7 +7,8 @@
     "build": "ng build --configuration=production --output-path docs --base-href /",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --configuration=production --output-path docs --base-href / && npx gh-pages -d docs"
+    "deploy": "ng build --configuration=production --output-path docs --base-href / && npx gh-pages -d docs",
+    "preview": "ng serve --host 127.0.0.1 --port 4317"
   },
   "private": true,
   "dependencies": {

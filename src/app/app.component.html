@@ -1,25 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Git Blog</title>
-</head>
-
-<body [class.dark-mode]="darkMode">
-  <mat-toolbar color="primary">
-    <span>Git Blog</span>
-    <span class="spacer"></span>
-    <a mat-button routerLink="/">Home</a>
-    <a mat-button routerLink="/blog">Blog</a>
-    <a mat-button routerLink="/contact">Contact</a>
-    <a mat-button routerLink="/portfolio">Portfolio</a>
-    <button mat-icon-button (click)="toggleDarkMode()">
-      <mat-icon>brightness_6</mat-icon>
-    </button>
-  </mat-toolbar>
-  <router-outlet></router-outlet>
-</body>
-
-</html>
+<a class="skip-link" [routerLink]="[]" fragment="main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <a class="brand" routerLink="/" aria-label="Sean Kim 홈"
+    ><span class="brand-symbol" aria-hidden="true">s<span>.</span></span
+    ><span
+      >SEAN KIM<span class="brand-sub">RESEARCH & ENGINEERING</span></span
+    ></a
+  >
+  <nav aria-label="주요 메뉴">
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+      >소개</a
+    >
+    <a
+      routerLink="/portfolio"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >프로젝트</a
+    >
+    <a
+      routerLink="/research"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >연구 아카이브</a
+    >
+    <a
+      class="nav-contact"
+      routerLink="/contact"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >연락하기 <span aria-hidden="true">↗</span></a
+    >
+  </nav>
+</header>
+<main id="main" tabindex="-1"><router-outlet></router-outlet></main>
+<footer class="site-footer">
+  <a routerLink="/">김규태 <span>Sean Kim</span></a>
+  <p>From research to real-world engineering.</p>
+  <span>Updated · October 2026</span>
+</footer>
