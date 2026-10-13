@@ -31,6 +31,7 @@
               "src/apple-touch-icon.png",
               "src/favicon-16x16.png",
               "src/favicon-32x32.png",
+              "src/site.webmanifest",
               "src/404.html"
             ],
             "styles": ["src/styles.scss"],
