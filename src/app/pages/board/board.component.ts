@@ -7,4 +7,14 @@ import { RESEARCH_WORKS } from '../../research-data';
 })
 export class BoardComponent {
   works = RESEARCH_WORKS;
+  // Animated figures the reader has stopped; they show their still image instead.
+  stopped = new Set<string>();
+
+  toggleMotion(src: string): void {
+    if (this.stopped.has(src)) {
+      this.stopped.delete(src);
+    } else {
+      this.stopped.add(src);
+    }
+  }
 }

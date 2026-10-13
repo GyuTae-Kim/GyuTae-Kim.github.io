@@ -50,7 +50,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         id: 'graph-tsp',
-        title: 'Structure2Vec 기반 그래프 탐색',
+        title: '강화학습과 그래프 네트워크를 합친 TSP 연구',
         connection: '노드와 엣지, 그 사이의 관계를 학습 입력으로 표현해 본 경험',
       },
     ],
@@ -221,7 +221,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     relatedResearch: [
       {
         id: 'graph-tsp',
-        title: 'Structure2Vec 기반 그래프 표현과 탐색',
+        title: '강화학습과 그래프 네트워크를 합친 TSP 연구',
         connection:
           '요소와 관계를 입력으로 표현해 본 과거 구현 경험입니다. TSP 알고리즘을 이 분류 모델에 그대로 가져다 쓴 것은 아닙니다.',
       },

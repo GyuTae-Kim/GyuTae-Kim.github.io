@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CASE_STUDIES } from '../../portfolio-data';
+import { RESEARCH_WORKS } from '../../research-data';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,6 +8,7 @@ import { CASE_STUDIES } from '../../portfolio-data';
 })
 export class HomeComponent {
   cases = CASE_STUDIES;
+  research = RESEARCH_WORKS.filter((work) => work.result);
   // Shown as its own card beside the CAD → feature → CAM figure.
   furniture = CASE_STUDIES.find((c) => c.id === 'sketchup-manufacturing')!;
   stage = 1;

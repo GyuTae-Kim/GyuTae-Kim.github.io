@@ -3,20 +3,17 @@
     <p class="eyebrow">RESEARCH ARCHIVE / PUBLIC IMPLEMENTATIONS</p>
     <h1>코드로 남긴 탐구<span class="accent">.</span></h1>
     <p>
-      학부연구생 때 맡았던 세 연구입니다.<br />의류 이미지 분류의 오류를
-      분석하고, 그래프 학습으로 TSP 경로를 만들고, 가상 착용 모델을 앱까지
-      연결했습니다.
+      학부연구생 때는 강화학습을 주로 연구했습니다.<br />강화학습과 그래프
+      네트워크를 합쳐 TSP를 풀어 보고, 의류 이미지 분류의 오류를 분석하고,
+      가상 착용 모델을 앱까지 연결했습니다.
     </p>
   </div>
   <div class="archive-intro">
     <span class="eyebrow">읽는 방법</span>
     <p>
-      학부연구생 시절의 연구라, 지금 공개 저장소에 남아 있는 코드와 실험 그림을
-      근거로 정리했습니다. 2026년에는 그 코드를 다시 돌려 보고, 결과를 연구마다
-      「2026 재실행」으로 덧붙였습니다. 연구마다 직접 구현한 부분과 가져다 쓴
-      모델, 평가 조건을 나눠 적었습니다. 각 연구 아래의 최근 프로젝트 링크는 관련 경험을
-      이어 둔 것으로, 같은 코드를 다시 썼다거나 현재 업무의 실험 근거라는 뜻은
-      아닙니다.
+      2021년 학부연구생 때의 공개 코드를 2026년에 다시 돌린 결과입니다. 직접
+      구현한 부분과 가져다 쓴 모델, 실행 조건과 한계는 연구마다 「자세히」에
+      적었습니다.
     </p>
   </div>
   <nav class="archive-nav" aria-label="연구 목록">
@@ -37,7 +34,7 @@
       <div>
         <p class="eyebrow">0{{ i + 1 }} / {{ work.category }}</p>
         <h2>{{ work.title }}</h2>
-        <span class="period">{{ work.period }}</span>
+        <span class="period">{{ work.period }} → 2026 재실행</span>
       </div>
       <a
         class="source-link"
@@ -48,107 +45,192 @@
         >공개 코드 <span aria-hidden="true">↗</span></a
       >
     </div>
-    <div class="research-layout">
-      <div>
-        <h3 class="research-question">{{ work.question }}</h3>
-        <div class="research-text">
-          <h4>직접 구현하고 분석한 부분</h4>
-          <ul class="research-contributions">
-            <li *ngFor="let item of work.contribution">{{ item }}</li>
-          </ul>
-          <h4>접근 방법</h4>
-          <p>{{ work.method }}</p>
-          <h4>구현하고 확인한 것</h4>
-          <p>{{ work.observation }}</p>
-          <div class="reused-models">
-            <h4>참고하거나 가져다 쓴 부분</h4>
-            <p>{{ work.reused }}</p>
+    <section
+      class="result-card"
+      *ngIf="work.result as result"
+      [attr.aria-label]="work.title + ' 재실행 결과'"
+    >
+      <p class="result-headline">{{ result.headline }}</p>
+      <figure
+        class="result-figure"
+        *ngFor="let fig of result.figures"
+        [class.compact]="fig.compact"
+      >
+        <a
+          [href]="fig.src"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
+          ><picture
+            ><source
+              *ngIf="fig.still"
+              [attr.srcset]="fig.still"
+              media="(prefers-reduced-motion: reduce)" /><img
+              [src]="fig.still && stopped.has(fig.src) ? fig.still : fig.src"
+              [alt]="fig.alt"
+              loading="lazy" /></picture
+        ></a>
+        <button
+          *ngIf="fig.still"
+          type="button"
+          class="motion-toggle"
+          [attr.aria-pressed]="stopped.has(fig.src)"
+          (click)="toggleMotion(fig.src)"
+        >
+          {{ stopped.has(fig.src) ? "▶ 다시 재생" : "❚❚ 정지" }}
+        </button>
+        <figcaption>{{ fig.caption }}</figcaption>
+      </figure>
+      <ul class="result-stats">
+        <li *ngFor="let stat of result.stats">
+          <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+        </li>
+      </ul>
+      <p class="result-summary">{{ result.summary }}</p>
+      <ol class="result-story" *ngIf="result.story">
+        <li *ngFor="let step of result.story">
+          <span>{{ step.label }}</span>
+          <p>{{ step.text }}</p>
+        </li>
+      </ol>
+      <div class="result-retry" *ngIf="result.retry">
+        <span class="eyebrow">다시 한다면</span>
+        <ul>
+          <li *ngFor="let item of result.retry">{{ item }}</li>
+        </ul>
+      </div>
+      <p class="result-scope">{{ result.scope }} · {{ work.credit }}</p>
+    </section>
+    <details class="result-details">
+      <summary>자세히 · 연구 내용과 재실행 조건</summary>
+      <div class="research-layout">
+        <div>
+          <h3 class="research-question">{{ work.question }}</h3>
+          <div class="research-text">
+            <h4>직접 구현하고 분석한 부분</h4>
+            <ul class="research-contributions">
+              <li *ngFor="let item of work.contribution">{{ item }}</li>
+            </ul>
+            <h4>접근 방법</h4>
+            <p>{{ work.method }}</p>
+            <h4>구현하고 확인한 것</h4>
+            <p>{{ work.observation }}</p>
+            <div class="reused-models">
+              <h4>참고하거나 가져다 쓴 부분</h4>
+              <p>{{ work.reused }}</p>
+            </div>
+            <h4>범위와 한계</h4>
+            <p>{{ work.limitation }}</p>
+          </div>
+          <div class="tags">
+            <span *ngFor="let tag of work.tags">{{ tag }}</span>
           </div>
         </div>
-        <div class="tags">
-          <span *ngFor="let tag of work.tags">{{ tag }}</span>
-        </div>
+        <figure *ngIf="work.image; else concept">
+          <img
+            [src]="work.image"
+            [alt]="work.imageAlt"
+            loading="lazy"
+            width="800"
+            height="600"
+          />
+          <figcaption>
+            {{ work.imageCaption }}<br /><a
+              [href]="work.image"
+              target="_blank"
+              rel="noopener noreferrer"
+              >원본 그림 크게 보기 ↗</a
+            >
+          </figcaption>
+        </figure>
+        <ng-template #concept
+          ><div class="research-concept">
+            <p class="eyebrow">IMPLEMENTATION FLOW</p>
+            <ng-container *ngIf="work.id === 'graph-tsp'; else visionFlow"
+              ><div class="flow-step">
+                그래프 상태 <span>Nodes · Edges · Visited state</span>
+              </div>
+              <span aria-hidden="true">↓</span>
+              <div class="flow-step">
+                Structure2Vec + Q-learning
+                <span>Graph embedding → Q value · TD update</span>
+              </div>
+              <span aria-hidden="true">↓</span>
+              <div class="flow-step">
+                도시 선택·경로 삽입
+                <span>Q value · Insertion heuristic · Path cost</span>
+              </div></ng-container
+            ><ng-template #visionFlow
+              ><div class="flow-step">
+                인물 + 의류 이미지 <span>Image upload</span>
+              </div>
+              <span aria-hidden="true">↓</span>
+              <div class="flow-step">
+                파싱 · 포즈 · GrabCut <span>Preprocessing → ACGPN</span>
+              </div>
+              <span aria-hidden="true">↓</span>
+              <div class="flow-step">
+                가상 착용 결과 <span>Flask API → Android client</span>
+              </div></ng-template
+            ><small>공개 코드의 처리 흐름을 그린 개념도</small>
+          </div></ng-template
+        >
       </div>
-      <figure *ngIf="work.image; else concept">
+      <div class="rerun-detail" *ngIf="work.result as result">
+        <p class="eyebrow">2026 재실행 조건 · {{ result.details.environment }}</p>
+        <div class="rerun-figures">
+          <figure
+            *ngFor="let fig of result.details.figures"
+            [class.compact]="fig.compact"
+          >
+            <a
+              [href]="fig.src"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
+              ><img [src]="fig.src" [alt]="fig.alt" loading="lazy"
+            /></a>
+            <figcaption>{{ fig.caption }}</figcaption>
+          </figure>
+        </div>
+        <div class="rerun-table" *ngIf="result.details.table as table">
+          <table>
+            <caption>
+              {{
+                table.caption
+              }}
+            </caption>
+            <thead>
+              <tr>
+                <th *ngFor="let col of table.columns" scope="col">{{ col }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of table.rows">
+                <td *ngFor="let cell of row">{{ cell }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="rerun-notes">
+          <li *ngFor="let note of result.details.notes">{{ note }}</li>
+        </ul>
+      </div>
+      <figure class="wide-chart" *ngIf="work.id === 'fashion-classification'">
         <img
-          [src]="work.image"
-          [alt]="work.imageAlt"
+          src="assets/research/k-fashion-class-count.png"
+          alt="공개 K-fashion 분류 실험의 클래스 0~3 이미지 개수 막대그래프. 학습·검증 데이터에서 클래스마다 표본 수가 다르다."
           loading="lazy"
-          width="800"
-          height="600"
+          width="1400"
+          height="500"
         />
         <figcaption>
-          {{ work.imageCaption }}<br /><a
-            [href]="work.image"
-            target="_blank"
-            rel="noopener noreferrer"
-            >원본 그림 크게 보기 ↗</a
-          >
+          2021년 클래스 분포. 공개 저장소에 남아 있는 당시 실험 그림입니다. 현재
+          코드는 학습·검증 데이터를 각각 다운샘플링하는데, 이 그림이 같은 조건에서
+          나온 것인지는 확인하지 못했습니다.
         </figcaption>
       </figure>
-      <ng-template #concept
-        ><div class="research-concept">
-          <p class="eyebrow">IMPLEMENTATION FLOW</p>
-          <ng-container *ngIf="work.id === 'graph-tsp'; else visionFlow"
-            ><div class="flow-step">
-              그래프 상태 <span>Nodes · Edges · Visited state</span>
-            </div>
-            <span aria-hidden="true">↓</span>
-            <div class="flow-step">
-              Structure2Vec <span>Graph embedding → Q value</span>
-            </div>
-            <span aria-hidden="true">↓</span>
-            <div class="flow-step">
-              도시 선택·경로 삽입
-              <span>Q value · Insertion heuristic · Path cost</span>
-            </div></ng-container
-          ><ng-template #visionFlow
-            ><div class="flow-step">
-              인물 + 의류 이미지 <span>Image upload</span>
-            </div>
-            <span aria-hidden="true">↓</span>
-            <div class="flow-step">
-              파싱 · 포즈 · GrabCut <span>Preprocessing → ACGPN</span>
-            </div>
-            <span aria-hidden="true">↓</span>
-            <div class="flow-step">
-              가상 착용 결과 <span>Flask API → Android client</span>
-            </div></ng-template
-          ><small>공개 코드의 처리 흐름을 그린 개념도</small>
-        </div></ng-template
-      >
-    </div>
-    <section class="rerun" *ngIf="work.rerun as rerun" [attr.aria-label]="work.title + ' 재실행 결과'">
-      <div class="rerun-head">
-        <p class="eyebrow">RESULTS · {{ rerun.label }}</p>
-        <span class="rerun-env">{{ rerun.environment }}</span>
-      </div>
-      <p class="rerun-summary">{{ rerun.summary }}</p>
-      <div class="rerun-figures">
-        <figure *ngFor="let fig of rerun.figures" [class.wide]="fig.wide" [class.compact]="fig.compact">
-          <a [href]="fig.src" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
-            ><img [src]="fig.src" [alt]="fig.alt" loading="lazy"
-          /></a>
-          <figcaption>{{ fig.caption }}</figcaption>
-        </figure>
-      </div>
-      <div class="rerun-table" *ngIf="rerun.table as table">
-        <table>
-          <caption>{{ table.caption }}</caption>
-          <thead>
-            <tr><th *ngFor="let col of table.columns" scope="col">{{ col }}</th></tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of table.rows">
-              <td *ngFor="let cell of row">{{ cell }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <ul class="rerun-notes">
-        <li *ngFor="let note of rerun.notes">{{ note }}</li>
-      </ul>
-    </section>
+    </details>
     <div class="research-connection">
       <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
       <p>{{ work.connection }}</p>
@@ -156,24 +238,6 @@
         >{{ work.relatedProjectTitle }} <span aria-hidden="true">→</span></a
       >
     </div>
-    <details class="scope-details">
-      <summary>자료의 범위와 한계</summary>
-      <p>{{ work.limitation }}</p>
-    </details>
-    <figure class="wide-chart" *ngIf="work.id === 'fashion-classification'">
-      <img
-        src="assets/research/k-fashion-class-count.png"
-        alt="공개 K-fashion 분류 실험의 클래스 0~3 이미지 개수 막대그래프. 학습·검증 데이터에서 클래스마다 표본 수가 다르다."
-        loading="lazy"
-        width="1400"
-        height="500"
-      />
-      <figcaption>
-        클래스 분포. 공개 저장소에 남아 있는 당시 실험 그림입니다. 현재 코드는
-        학습·검증 데이터를 각각 다운샘플링하는데, 이 그림이 같은 조건에서 나온
-        것인지는 확인하지 못했습니다.
-      </figcaption>
-    </figure>
   </article>
   <section class="archive-bridge">
     <p class="eyebrow">FROM EXPLORATION TO ENGINEERING</p>
