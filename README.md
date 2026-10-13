@@ -28,7 +28,16 @@ npm run preview
 npx ng build --configuration production --output-path dist/preview
 ```
 
-기존 `docs/`는 수정하지 않았습니다. GitHub Pages는 `gh-pages` 브랜치를 사용하며, `master`의 소스 변경은 배포하지 않은 상태입니다. 기존 `npm run deploy`는 실제 Pages를 갱신하므로 사용자 승인 뒤에만 실행하세요.
+GitHub Pages는 `gh-pages` 브랜치 루트를 사용합니다. `npm run deploy`는 `docs/`에 빌드한 뒤 그 내용을 `gh-pages`에 올리며 실제 Pages를 갱신하므로 사용자 승인 뒤에만 실행하세요. 배포한 `docs/`는 `master`에도 커밋해 `gh-pages`와 같게 유지합니다.
+
+전역 git 무시 설정에 `*.png`가 있으면 `gh-pages`가 PNG를 빼고 올립니다. 그때는 배포 캐시 저장소에서만 전역 무시를 끄고 다시 배포하세요.
+
+```sh
+git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.github.io.git" config core.excludesFile /dev/null
+npx gh-pages -d docs
+```
+
+2026년 10월 13일 배포.
 
 ## 콘텐츠 확인
 
