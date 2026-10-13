@@ -99,14 +99,31 @@
     <div class="case-body">
       <aside class="case-nav">
         <span class="eyebrow">IN THIS CASE</span
-        ><a [routerLink]="[]" fragment="problem">01 문제</a
-        ><a [routerLink]="[]" fragment="approach">02 접근</a
-        ><a [routerLink]="[]" fragment="contribution">03 기여</a
-        ><a [routerLink]="[]" fragment="validation">04 검증</a>
+        ><a
+          [routerLink]="[]"
+          fragment="problem"
+          [class.current]="activeSection === 'problem'"
+          >01 문제</a
+        ><a
+          [routerLink]="[]"
+          fragment="approach"
+          [class.current]="activeSection === 'approach'"
+          >02 접근</a
+        ><a
+          [routerLink]="[]"
+          fragment="contribution"
+          [class.current]="activeSection === 'contribution'"
+          >03 기여</a
+        ><a
+          [routerLink]="[]"
+          fragment="validation"
+          [class.current]="activeSection === 'validation'"
+          >04 검증</a>
         <a
           *ngIf="hasAchievements"
           [routerLink]="[]"
           fragment="related-achievements"
+          [class.current]="activeSection === 'related-achievements'"
           >05 연구 성과</a
         >
       </aside>
@@ -122,8 +139,13 @@
           <p>{{ selected!.approach }}</p>
           <div class="case-pipeline" aria-label="시스템 흐름">
             <ng-container
-              *ngFor="let label of selected!.diagramLabels; let last = last"
-              ><span>{{ label }}</span
+              *ngFor="
+                let label of selected!.diagramLabels;
+                let i = index;
+                let last = last
+              "
+              ><span
+                ><small aria-hidden="true">{{ i + 1 }}</small>{{ label }}</span
               ><b *ngIf="!last" aria-hidden="true">→</b></ng-container
             >
           </div>
