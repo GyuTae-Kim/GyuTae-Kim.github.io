@@ -5,10 +5,20 @@
     <meta name="theme-color" content="#f7f8f4">
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+    <link rel="manifest" href="/site.webmanifest?v=2">
+    <script>
+      // 404.html sends a deep link here as /#/path; restore the path before the router starts.
+      (function () {
+        var hash = window.location.hash;
+        if (hash.indexOf('#/') === 0) {
+          window.history.replaceState(null, '', hash.slice(1));
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <style>@charset "UTF-8";:root{--paper:#f7f8f4;--ink:#202d28;--muted:#56625a;--line:#d9dfd7;--accent:#a75534;--green:#315b46;--surface:#edf0e8;--white:#fff;--mono:ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;--sans:"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;--header-h:84px;--shadow:0 1px 2px rgba(32, 45, 40, .04), 0 12px 32px -18px rgba(32, 45, 40, .28);--grid-line:rgba(49, 91, 70, .08)}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 24px)}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}@media (max-width: 767px){html{scroll-padding-top:20px}}@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}@media print{body{background:white;font-size:11pt;color:#000}}</style><link rel="stylesheet" href="styles.5acc11bbfd417986.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.5acc11bbfd417986.css"></noscript></head>
