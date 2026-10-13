@@ -17,6 +17,16 @@ export interface CaseStudy {
   validation: string;
   caution?: string;
   diagramLabels: string[];
+  figure: CaseFigure;
+  gallery?: { title: string; caption: string; pairs: CaseFigure[][] };
+}
+
+// figure.kind: 'research' = rendered from the actual research data, 'concept' = synthetic illustration.
+export interface CaseFigure {
+  src: string;
+  alt: string;
+  caption: string;
+  kind: 'research' | 'concept';
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -65,6 +75,31 @@ export const CASE_STUDIES: CaseStudy[] = [
     caution:
       '확인 범위는 라벨링·학습 데이터 구성과 기존 형상 집합의 후속 실험입니다. 반복 검토한 평가 집합은 탐색적 근거이며 새로운 부품의 독립 평가가 아닙니다. 최종 재학습에서 전체 데이터를 사용한 점수는 학습 점수로 구분하고, 운영 모델 적용은 별도 확인 대상으로 둡니다.',
     diagramLabels: ['STEP 형상', '면·인접 그래프', '학습·추론', '가공 특징'],
+    figure: {
+      src: 'assets/figures/fig-feature-pair.webp',
+      alt: '닫힌 포켓과 열린 포켓의 합성 대조 형상 렌더. 면 색은 구멍·포켓(파랑), 필렛(주황), 소재(회색) 라벨입니다.',
+      caption: '후속 연구에서 생성한 합성 대조 형상 — 닫힌 포켓과 열린 포켓, 면 색은 구성 라벨',
+      kind: 'research',
+    },
+    gallery: {
+      title: '판별 대상만 바꾼 합성 대조 형상',
+      caption:
+        '같은 조건에서 판별 대상만 바꾼 STEP 쌍을 생성하고, 엔진의 STEP 읽기로 구성 라벨을 확인했습니다. 면 색: 파랑 구멍·포켓, 보라 챔퍼, 주황 필렛, 회색 소재.',
+      pairs: [
+        [
+          { src: 'assets/research/feature-pairs/pocket-closed.webp', alt: '닫힌 포켓 합성 형상', caption: '닫힌 포켓', kind: 'research' },
+          { src: 'assets/research/feature-pairs/pocket-open.webp', alt: '열린 포켓 합성 형상', caption: '열린 포켓', kind: 'research' },
+        ],
+        [
+          { src: 'assets/research/feature-pairs/hole-blind.webp', alt: '막힌 구멍 합성 형상', caption: '막힌 구멍', kind: 'research' },
+          { src: 'assets/research/feature-pairs/hole-stock-boss.webp', alt: '같은 위치의 돌출 보스(소재) 합성 형상', caption: '돌출 보스 · 소재', kind: 'research' },
+        ],
+        [
+          { src: 'assets/research/feature-pairs/chamfer-chamfer.webp', alt: '모서리 챔퍼 합성 형상', caption: '챔퍼', kind: 'research' },
+          { src: 'assets/research/feature-pairs/chamfer-stock-ledge.webp', alt: '같은 위치의 소재 턱 합성 형상', caption: '소재 턱', kind: 'research' },
+        ],
+      ],
+    },
   },
   {
     id: 'fusion-cam',
@@ -105,6 +140,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     caution:
       '공구 경로 생성과 시뮬레이션의 표본 비교는 실제 CNC 가공, 도면 공차, 표면 품질의 승인과 구분합니다.',
     diagramLabels: ['가공 특징', '공구·셋업 계획', 'Fusion CAM', '소재 검증'],
+    figure: {
+      src: 'assets/figures/fig-cam.svg',
+      alt: 'CAM 개념도: 소재 상자 안의 2단 중첩 포켓, 단별 공구 T1과 T2, 각 단의 공구 경로',
+      caption: '개념도 · 합성 형상 — 중첩 포켓의 단별 공구 경로와 공구 변경',
+      kind: 'concept',
+    },
   },
   {
     id: 'sketchup-manufacturing',
@@ -157,6 +198,12 @@ export const CASE_STUDIES: CaseStudy[] = [
       '네스팅·가공 출력',
       '라벨·부재 연결',
     ],
+    figure: {
+      src: 'assets/figures/fig-nesting.svg',
+      alt: '제조 데이터 개념도: 원장 한 장 위의 부재 배치, 결이 이어지는 도어 그룹 A-1~A-3, 엣지·경첩·선반핀 표시',
+      caption: '개념도 · 합성 배치 — 결맞춤 도어 그룹과 엣지·경첩·선반핀 가공 표시',
+      kind: 'concept',
+    },
   },
   {
     id: 'panel-classification',
@@ -210,5 +257,11 @@ export const CASE_STUDIES: CaseStudy[] = [
       '분류·특징 비교',
       '축 변화 평가',
     ],
+    figure: {
+      src: 'assets/figures/fig-panels.svg',
+      alt: '판재 분류 개념도: 분해한 가구 몸통의 측판·상하판·뒷판·선반·도어를 역할별 색으로 표시하고 접촉 관계를 그래프로 연결',
+      caption: '개념도 · 합성 형상 — 판재 역할과 접촉 관계 그래프',
+      kind: 'concept',
+    },
   },
 ];

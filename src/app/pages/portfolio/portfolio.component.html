@@ -28,7 +28,19 @@
       <div class="project-row-meta">
         <span class="large-index">{{ project.number }}</span>
         <p class="eyebrow">{{ project.category }}</p>
-        <span>{{ project.period }}</span>
+        <span class="row-period">{{ project.period }}</span>
+        <a
+          class="row-figure"
+          [routerLink]="['/portfolio', project.id]"
+          tabindex="-1"
+          aria-hidden="true"
+          ><img
+            [src]="project.figure.src"
+            alt=""
+            width="560"
+            height="390"
+            loading="lazy"
+        /></a>
       </div>
       <div class="project-row-content">
         <h2>
@@ -73,6 +85,20 @@
         <span *ngFor="let tag of selected!.tags">{{ tag }}</span>
       </div>
     </div>
+    <figure class="case-figure" *ngIf="!selected!.gallery">
+      <img
+        [src]="selected!.figure.src"
+        [alt]="selected!.figure.alt"
+        width="560"
+        height="390"
+      />
+      <figcaption>
+        <span class="figure-kind" [class.research]="selected!.figure.kind === 'research'">{{
+          selected!.figure.kind === 'research' ? '연구 렌더' : '개념도'
+        }}</span>
+        {{ selected!.figure.caption }}
+      </figcaption>
+    </figure>
     <section class="case-at-a-glance" aria-labelledby="case-overview-title">
       <h2 id="case-overview-title" class="eyebrow">기여와 검증 요약</h2>
       <div class="case-overview-grid">
@@ -149,6 +175,20 @@
               ><b *ngIf="!last" aria-hidden="true">→</b></ng-container
             >
           </div>
+          <figure class="pair-gallery" *ngIf="selected!.gallery as gallery">
+            <figcaption>
+              <strong>{{ gallery.title }}</strong>
+              <span>{{ gallery.caption }}</span>
+            </figcaption>
+            <div class="pair-grid">
+              <div class="pair" *ngFor="let pair of gallery.pairs">
+                <div *ngFor="let item of pair">
+                  <img [src]="item.src" [alt]="item.alt" width="690" height="510" loading="lazy" />
+                  <span>{{ item.caption }}</span>
+                </div>
+              </div>
+            </div>
+          </figure>
           <div class="research-decision">
             <h3>선택과 판단</h3>
             <p>{{ selected!.decision }}</p>

@@ -38,185 +38,11 @@
         <span>GEOMETRY → INTELLIGENCE → MANUFACTURING</span
         ><span class="visual-index">0{{ stage + 1 }} / 03</span>
       </div>
-      <div
-        class="geometry-stage"
-        [class.raw]="stage === 0"
-        [class.toolpath]="stage === 2"
-      >
-        <svg
-          class="cad-illustration"
-          viewBox="0 0 560 410"
-          role="img"
-          [attr.aria-label]="stages[stage].title + ' CAD 형상 개념도'"
-        >
-          <defs>
-            <pattern
-              id="grid"
-              width="34"
-              height="20"
-              patternUnits="userSpaceOnUse"
-              patternTransform="matrix(1 .55 -1 .55 280 0)"
-            >
-              <path
-                d="M 34 0 L 0 0 0 20"
-                fill="none"
-                stroke="#d7ddd9"
-                stroke-width=".7"
-              />
-            </pattern>
-            <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#edf0eb" />
-              <stop offset="1" stop-color="#d8dfd8" />
-            </linearGradient>
-          </defs>
-          <rect width="560" height="410" fill="url(#grid)" opacity=".65" />
-          <ellipse
-            cx="282"
-            cy="318"
-            rx="177"
-            ry="34"
-            fill="#293e32"
-            opacity=".05"
-          />
-          <path
-            d="M100 202 L292 304 L460 211 L268 109 Z"
-            fill="url(#top)"
-            stroke="#5c7266"
-            stroke-width="1.5"
-          />
-          <path
-            d="M100 202 L292 304 L292 349 L100 246 Z"
-            fill="#c5d1c8"
-            stroke="#5c7266"
-            stroke-width="1.5"
-          />
-          <path
-            d="M292 304 L460 211 L460 254 L292 349 Z"
-            fill="#adbdaf"
-            stroke="#5c7266"
-            stroke-width="1.5"
-          />
-          <path
-            class="feature-pocket"
-            d="M167 189 L262 139 L349 185 L254 238 Z"
-            fill="#ecd6c1"
-            stroke="#ac6841"
-            stroke-width="1.5"
-          />
-          <path
-            d="M167 189 L167 210 L254 255 L254 238 Z"
-            class="pocket-side"
-            fill="#c78f65"
-            stroke="#ac6841"
-            stroke-width="1.2"
-          />
-          <path
-            d="M254 238 L349 185 L349 205 L254 255 Z"
-            class="pocket-side"
-            fill="#d9af8c"
-            stroke="#ac6841"
-            stroke-width="1.2"
-          />
-          <path
-            d="M167 210 L262 159 L349 205 L254 255 Z"
-            class="pocket-floor"
-            fill="#e8c4a3"
-            stroke="#ac6841"
-            stroke-width="1.2"
-          />
-          <ellipse
-            class="feature-hole"
-            cx="374"
-            cy="223"
-            rx="20"
-            ry="11"
-            fill="#507764"
-            stroke="#274f3b"
-            stroke-width="1.5"
-          />
-          <path
-            class="feature-hole"
-            d="M354 223 Q374 240 394 223 L394 231 Q374 249 354 231 Z"
-            fill="#315b45"
-          />
-          <ellipse
-            cx="205"
-            cy="253"
-            rx="11"
-            ry="6"
-            fill="#7b8f80"
-            stroke="#526b5a"
-          />
-          <g class="annotation" fill="none" stroke="#ac6841" stroke-width="1">
-            <path d="M256 195 L256 84 L175 84" />
-            <circle cx="256" cy="195" r="3" fill="#ac6841" />
-          </g>
-          <g class="annotation" fill="none" stroke="#305f48" stroke-width="1">
-            <path d="M374 223 L438 166 L500 166" />
-            <circle cx="374" cy="223" r="3" fill="#305f48" />
-          </g>
-          <g class="annotation">
-            <text
-              x="111"
-              y="74"
-              fill="#8e4c2e"
-              font-size="12"
-              font-family="monospace"
-            >
-              POCKET
-            </text>
-            <text
-              x="445"
-              y="156"
-              fill="#305f48"
-              font-size="12"
-              font-family="monospace"
-            >
-              HOLE
-            </text>
-            <text
-              x="131"
-              y="93"
-              fill="#7b7f76"
-              font-size="9"
-              font-family="monospace"
-            >
-              FEATURE 01
-            </text>
-            <text
-              x="445"
-              y="183"
-              fill="#7b7f76"
-              font-size="9"
-              font-family="monospace"
-            >
-              FEATURE 02
-            </text>
-          </g>
-          <g
-            class="cam-path"
-            fill="none"
-            stroke="#ad5834"
-            stroke-width="2"
-            stroke-dasharray="5 4"
-          >
-            <path
-              d="M180 210 L262 166 L333 203 L254 246 L194 213 L262 177 L315 203 L254 236 L212 213 L262 188 L295 204 L254 225"
-            />
-            <ellipse cx="374" cy="223" rx="28" ry="16" />
-          </g>
-          <g class="axes" fill="none" stroke-width="1.2">
-            <path d="M61 336 L101 357" stroke="#ad5834" />
-            <path d="M61 336 L92 317" stroke="#507764" />
-            <path d="M61 336 L61 300" stroke="#668196" />
-          </g>
-          <g font-family="monospace" font-size="10" fill="#728077">
-            <text x="106" y="362">X</text>
-            <text x="94" y="316">Y</text>
-            <text x="58" y="295">Z</text>
-            <text x="360" y="377">B-REP / FEATURE GRAPH</text>
-          </g>
-        </svg>
+      <div class="geometry-stage">
+        <app-hero-figure
+          [stage]="stage"
+          [label]="stages[stage].title + ' — CAD 형상 개념도'"
+        ></app-hero-figure>
       </div>
       <div
         class="visual-controls"
@@ -266,6 +92,16 @@
           [class]="'card-visual visual-' + project.number"
         >
           <span class="project-number">{{ project.number }}</span>
+          <span class="figure-kind" [class.research]="project.figure.kind === 'research'">{{
+            project.figure.kind === 'research' ? '연구 렌더' : '개념도'
+          }}</span>
+          <img
+            [src]="project.figure.src"
+            [alt]="project.figure.alt"
+            width="560"
+            height="390"
+            loading="lazy"
+          />
           <ol class="mini-pipeline" aria-label="작업 흐름">
             <li *ngFor="let label of project.diagramLabels; let i = index">
               <b aria-hidden="true">{{ i + 1 }}</b>{{ label }}

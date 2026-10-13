@@ -1,0 +1,246 @@
+:host {
+  display: block;
+}
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  overflow: visible;
+  --base: #dfe6de;
+  --top: #eef2ec;
+  --edge: #4c6255;
+  --pocket: #e7b892;
+  --hole: #86b39a;
+  --fillet: #a9bcd6;
+  --cut: #b2552f;
+}
+.ground {
+  fill: #213a2e;
+  opacity: 0.06;
+}
+.face {
+  fill: var(--base);
+  stroke: none;
+  transition: fill 0.35s ease;
+}
+.f-top {
+  fill: var(--top);
+}
+.shade {
+  fill: #12251b;
+  stroke: none;
+  pointer-events: none;
+}
+[data-strip] {
+  stroke: currentColor;
+  stroke-width: 0.6;
+}
+.f-pocket,
+.f-hole,
+.f-fillet,
+.f-side {
+  color: var(--base);
+}
+.stage-1 .f-pocket,
+.stage-2 .f-pocket {
+  fill: var(--pocket);
+  color: var(--pocket);
+}
+.stage-1 .f-hole,
+.stage-2 .f-hole {
+  fill: var(--hole);
+  color: var(--hole);
+}
+.stage-1 .f-fillet {
+  fill: var(--fillet);
+  color: var(--fillet);
+}
+.stage-2 .f-pocket,
+.stage-2 .f-hole {
+  fill-opacity: 0.55;
+}
+.edges path {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.edges.thin path {
+  stroke-width: 0.7;
+  stroke-dasharray: 3 3;
+  opacity: 0.7;
+}
+.mesh path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 0.8;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.stage-0 .mesh path {
+  opacity: 0.55;
+}
+
+/* face adjacency graph: 01 neutral, 02 colored by feature, 03 hidden */
+.graph {
+  transition: opacity 0.35s ease;
+}
+.graph line {
+  stroke: #2c4436;
+  stroke-width: 1;
+  opacity: 0.55;
+}
+.graph circle {
+  fill: #fff;
+  stroke: #2c4436;
+  stroke-width: 1.4;
+  transition: fill 0.35s ease;
+}
+.stage-1 .graph line {
+  opacity: 0.3;
+}
+.stage-1 .n-pocket {
+  fill: #c9733f;
+}
+.stage-1 .n-hole {
+  fill: #2f6b4c;
+}
+.stage-1 .n-fillet {
+  fill: #4a6f9e;
+}
+.stage-2 .graph {
+  opacity: 0;
+}
+
+/* feature labels: stage 02 only */
+.labels {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.stage-1 .labels {
+  opacity: 1;
+}
+.label path {
+  fill: none;
+  stroke-width: 1;
+}
+.label text {
+  font: 600 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.5px;
+}
+.label text.sub {
+  font-size: 9.5px;
+  font-weight: 400;
+  fill: #6f776f;
+}
+.l-pocket path,
+.l-pocket circle {
+  stroke: #ac6841;
+  fill: #ac6841;
+}
+.l-pocket path {
+  fill: none;
+}
+.l-pocket text {
+  fill: #8e4c2e;
+}
+.l-hole path,
+.l-hole circle {
+  stroke: #2f6b4c;
+  fill: #2f6b4c;
+}
+.l-hole path {
+  fill: none;
+}
+.l-hole text {
+  fill: #2f5a45;
+}
+.l-fillet path,
+.l-fillet circle {
+  stroke: #4a6f9e;
+  fill: #4a6f9e;
+}
+.l-fillet path {
+  fill: none;
+}
+.l-fillet text {
+  fill: #3e5f88;
+}
+
+/* CAM: stage 03 only */
+.cam {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.stage-2 .cam {
+  opacity: 1;
+}
+.cam path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cam .cut {
+  stroke: var(--cut);
+  stroke-width: 1.6;
+}
+.cam .contour {
+  stroke-dasharray: 6 4;
+}
+.cam .rapid {
+  stroke: #6b7a70;
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+.cam .peck {
+  stroke: var(--cut);
+  stroke-width: 1.4;
+}
+
+/* setup origin: neutral axes, highlighted as WCS in stage 03 */
+.wcs path {
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.wcs .ax-x {
+  stroke: #b2552f;
+}
+.wcs .ax-y {
+  stroke: #3f7a5c;
+}
+.wcs .ax-z {
+  stroke: #4a6f9e;
+}
+.wcs circle {
+  fill: #2c4436;
+}
+.wcs text {
+  font: 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  fill: #5d6a62;
+}
+.wcs .wcs-label {
+  font-weight: 600;
+  fill: var(--cut);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.stage-2 .wcs-label {
+  opacity: 1;
+}
+.figure-note {
+  font: 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.6px;
+  fill: #6b766e;
+}
+@media (prefers-reduced-motion: reduce) {
+  .face,
+  .mesh path,
+  .graph,
+  .labels,
+  .cam,
+  .wcs-label {
+    transition: none;
+  }
+}

@@ -8,6 +8,7 @@ import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
 
 import { AchievementsComponent } from './components/achievements/achievements.component';
+import { HeroFigureComponent } from './components/hero-figure/hero-figure.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AchievementsComponent } from './components/achievements/achievements.co
     PortfolioComponent,
     BoardComponent,
     AchievementsComponent,
+    HeroFigureComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   bootstrap: [AppComponent],

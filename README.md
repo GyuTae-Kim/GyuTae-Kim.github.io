@@ -21,6 +21,13 @@ npm run preview
 - `src/app/portfolio-data.ts`: 최근 개발 사례 내용.
 - `src/app/research-data.ts`: 공개 연구 자료 내용과 출처.
 - `src/assets/research/`: 본인 공개 저장소에서 가져온 원본 그림.
+- `src/assets/figures/`, `src/app/components/hero-figure/`: 사례 개념도와 홈 개념도. `tools/figures/`의 스크립트로 다시 만듭니다(Python 3 표준 라이브러리만 사용).
+
+  ```sh
+  cd tools/figures
+  python3 panels.py ../../src/assets/figures/fig-panels.svg   # cam.py, nesting.py 도 같은 방식
+  python3 hero_figure_gen.py ../../src/app/components/hero-figure/hero-figure.component.html
+  ```
 
 ## 배포 없는 빌드 검증
 
