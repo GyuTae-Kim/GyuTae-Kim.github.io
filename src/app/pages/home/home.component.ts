@@ -1,12 +1,6 @@
 import { AfterViewInit, Component, NgZone, OnDestroy } from '@angular/core';
-import { CASE_STUDIES, CaseStep, FIGURE_KIND_LABELS, stepOwnerLabel } from '../../portfolio-data';
+import { CASE_STUDIES, FIGURE_KIND_LABELS } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
-
-interface OwnerSpan {
-  owner: CaseStep['owner'];
-  label: string;
-  steps: string;
-}
 
 @Component({
   selector: 'app-home',
@@ -19,10 +13,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   research = RESEARCH_WORKS.filter((work) => work.result);
   // Shown as its own product card under the concept viewport.
   furniture = CASE_STUDIES.find((c) => c.id === 'wedraw-pro')!;
-  // Which story steps each owner did, e.g. "1–3단계 직접 · 4단계 협력 기관".
-  ownership: Record<string, OwnerSpan[]> = Object.fromEntries(
-    CASE_STUDIES.map((c) => [c.id, ownerSpans(c.story)]),
-  );
+  // Only tools that appear in the projects and research on this site.
+  skills = [
+    { area: 'AI', items: ['Python', 'TensorFlow', 'PyTorch', '그래프 신경망', '강화학습', '컴퓨터 비전'] },
+    { area: '3D · CAD/CAM', items: ['OpenCascade', 'STEP', 'Autodesk Fusion API', 'CAM'] },
+    { area: '제품 개발', items: ['SketchUp Ruby API', 'JavaScript', 'Flask'] },
+  ];
   sections = [
     { id: 'work', label: '프로젝트' },
     { id: 'research', label: '연구' },
@@ -52,19 +48,4 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.observer?.disconnect();
   }
-}
-
-function ownerSpans(story: CaseStep[]): OwnerSpan[] {
-  const spans: { owner: CaseStep['owner']; label: string; from: number; to: number }[] = [];
-  story.forEach((step, i) => {
-    const label = stepOwnerLabel(step);
-    const last = spans[spans.length - 1];
-    if (last && last.label === label) last.to = i + 1;
-    else spans.push({ owner: step.owner, label, from: i + 1, to: i + 1 });
-  });
-  return spans.map((s) => ({
-    owner: s.owner,
-    label: s.label,
-    steps: s.from === s.to ? `${s.from}단계` : `${s.from}–${s.to}단계`,
-  }));
 }
