@@ -47,19 +47,12 @@ export const TINTS = {
   kick: '#9fa69f',
   cut: '#a75534',
   rapid: '#2f5f9e',
+  sheet: '#e7dfcb',
+  drilled: '#2c322e',
+  wall: '#f3f1ea',
+  counter: '#f6f5f1',
+  oak: '#c29a74',
 };
-
-export const FURNITURE_LIMITS = {
-  width: { min: 600, max: 1200, step: 10, initial: 900 },
-  kick: { min: 60, max: 150, step: 5, initial: 100 },
-  // Above this width the door is split into two leaves.
-  twoDoors: 750,
-};
-
-export function furnitureCounts(width: number) {
-  const doors = width > FURNITURE_LIMITS.twoDoors ? 2 : 1;
-  return { panels: 7 + doors, joints: 13 + doors };
-}
 
 export const VIEW_MODELS: ViewModel[] = [
   {
@@ -119,41 +112,51 @@ export const VIEW_MODELS: ViewModel[] = [
     id: 'furniture',
     label: '가구',
     sheet: 'A-02',
-    name: '하부장',
-    caseId: 'panel-classification',
+    name: '원룸 벽면 가구',
+    caseId: 'wedraw-pro',
     layers: [
       {
-        label: '형상 분석',
-        title: '패널과 접합면을 찾습니다',
-        text: '가구 모델에서 패널을 하나씩 떼어 보고, 서로 맞닿은 접합면을 찾습니다.',
-        legend: [],
-        balloons: false,
-      },
-      {
-        label: '패널 인식',
-        title: '패널마다 역할을 붙입니다',
-        text: '접합 관계와 형상으로 측판, 상·하판, 선반, 뒷판, 문, 걸레받이를 구분합니다.',
+        label: '설계',
+        title: '가구빌더로 벽 한 면을 채웁니다',
+        text: '벽을 그리고 붙박이장, 냉장고 자리, 하부장, 상부장을 놓아 폭을 나누면 가구빌더가 장마다 패널과 문을 만듭니다.',
         legend: [
-          { label: '측판', swatch: TINTS.side },
-          { label: '상·하판', swatch: TINTS.board },
-          { label: '선반', swatch: TINTS.shelf },
-          { label: '뒷판', swatch: TINTS.back },
-          { label: '문', swatch: TINTS.door },
-          { label: '걸레받이', swatch: TINTS.kick },
-        ],
-        balloons: true,
-      },
-      {
-        label: '파라미터 조정',
-        title: '크기를 바꾸면 패널이 함께 움직입니다',
-        text: '폭과 걸레받이 높이를 바꿔 보세요. 패널마다 정해진 규칙대로 길이와 위치가 바뀝니다.',
-        legend: [
-          { label: '측판', detail: '폭 끝으로 이동', swatch: TINTS.side },
-          { label: '상·하판·선반·뒷판', detail: '폭 − 36 mm', swatch: TINTS.board },
-          { label: '문', detail: '폭 750 mm 초과 시 2짝', swatch: TINTS.door },
-          { label: '걸레받이', detail: '하판·뒷판과 함께', swatch: TINTS.kick },
+          { label: '벽 그리기', detail: '높이 2380', swatch: '#2f5f9e' },
+          { label: '붙박이장', detail: '900 + 600', swatch: TINTS.side },
+          { label: '냉장고 자리', detail: '950', swatch: '#8fa8cf' },
+          { label: '하부장', detail: '600 + 900', swatch: TINTS.board },
+          { label: '상부장', detail: '바닥에서 1500', swatch: TINTS.shelf },
+          { label: '패널과 문', detail: '장 7개', swatch: TINTS.door },
         ],
         balloons: false,
+        steps: true,
+      },
+      {
+        label: '제조',
+        title: '공장에서 패널을 가공합니다',
+        text: '엔진이 배치한 대로 몸통재 판재에서 패널을 오려 내고, 하부장 측판에 엣지를 붙인 뒤 스키퍼로 구멍과 뒷판 홈을 냅니다.',
+        legend: [
+          { label: '네스팅', detail: '몸통재 18T · 11장', swatch: TINTS.sheet },
+          { label: '엣지밴딩', detail: '측판 3면 · 0.8 mm', swatch: TINTS.cut },
+          { label: '스키퍼 보링', detail: '연결 피스 Ø6 · 선반핀 Ø3', swatch: TINTS.drilled },
+          { label: '뒷판 홈', detail: '아랫면 라우터 · 4 × 7', swatch: '#59605a' },
+        ],
+        balloons: false,
+        steps: true,
+      },
+      {
+        label: '조립·설치',
+        title: '조립해서 집에 설치합니다',
+        text: '하부장을 연결 피스로 조립하고, 붙박이장과 냉장고장, 하부장을 벽에 붙여 수평을 맞춘 뒤 상판을 올리고 상부장을 겁니다.',
+        legend: [
+          { label: '몸통 조립', detail: '연결 피스 12곳', swatch: TINTS.wall },
+          { label: '선반과 조절발', detail: '발 4개', swatch: TINTS.wall },
+          { label: '걸레받이와 문', detail: '경첩 4개', swatch: TINTS.oak },
+          { label: '설치', detail: '벽에 붙여 수평 맞춤', swatch: TINTS.oak },
+          { label: '상판', detail: '12T 엔지니어드스톤', swatch: TINTS.counter },
+          { label: '상부장', detail: '보조목에 걸기', swatch: TINTS.oak },
+        ],
+        balloons: false,
+        steps: true,
       },
     ],
   },

@@ -68,15 +68,15 @@
       [attr.aria-live]="autoplay && !paused ? 'off' : 'polite'"
     >
       <strong>{{ view.title }}</strong>
-      <p>{{ text }}</p>
+      <p>{{ view.text }}</p>
       <a class="text-link" [routerLink]="['/portfolio', info.caseId]"
         >이 흐름의 실제 프로젝트 <span aria-hidden="true">→</span></a
       >
     </div>
     <div class="viewer-side">
-      <ol class="viewer-legend" *ngIf="legend.length">
+      <ol class="viewer-legend" *ngIf="view.legend.length">
         <li
-          *ngFor="let item of legend; let i = index"
+          *ngFor="let item of view.legend; let i = index"
           [class.active]="view.steps && i === step"
           [class.ahead]="view.steps && step >= 0 && i > step"
         >
@@ -97,32 +97,6 @@
           }}</span>
         </li>
       </ol>
-      <div class="viewer-params" *ngIf="model === 'furniture' && layer === 2">
-        <label>
-          <span>폭 W</span>
-          <input
-            type="range"
-            [min]="limits.width.min"
-            [max]="limits.width.max"
-            [step]="limits.width.step"
-            [value]="params.width"
-            (input)="setWidth($any($event.target).value)"
-          />
-          <output>{{ params.width }} mm</output>
-        </label>
-        <label>
-          <span>걸레받이 K</span>
-          <input
-            type="range"
-            [min]="limits.kick.min"
-            [max]="limits.kick.max"
-            [step]="limits.kick.step"
-            [value]="params.kick"
-            (input)="setKick($any($event.target).value)"
-          />
-          <output>{{ params.kick }} mm</output>
-        </label>
-      </div>
     </div>
   </div>
   <dl class="title-block">

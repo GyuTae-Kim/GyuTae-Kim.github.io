@@ -8,8 +8,8 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import type { FurnitureParams, ViewportScene } from './viewport-scene';
-import { FURNITURE_LIMITS, ModelId, VIEW_MODELS, furnitureCounts } from './viewport-data';
+import type { ViewportScene } from './viewport-scene';
+import { ModelId, VIEW_MODELS } from './viewport-data';
 
 // Home viewport: a drawing sheet with a live three.js model. The 3D code is a lazy
 // chunk; until it loads (or without WebGL) the sheet shows a rendered still.
@@ -23,19 +23,15 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
   @ViewChild('stage') private stage!: ElementRef<HTMLDivElement>;
 
   models = VIEW_MODELS;
-  limits = FURNITURE_LIMITS;
   readonly reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   model: ModelId = 'part';
-  // With motion the part plays modelling → recognition → machining on its own.
+  // With motion each model plays its three layers on its own, e.g. modelling →
+  // recognition → machining.
   layer = this.reducedMotion ? 1 : 0;
   autoplay = !this.reducedMotion;
   paused = false;
   // Legend row the animation is on.
   step = -1;
-  params: FurnitureParams = {
-    width: FURNITURE_LIMITS.width.initial,
-    kick: FURNITURE_LIMITS.kick.initial,
-  };
   state: 'loading' | 'live' | 'still' = 'loading';
   private scene?: ViewportScene;
   private destroyed = false;
@@ -53,35 +49,12 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
     return this.info.layers[this.layer];
   }
 
-  get counts() {
-    return furnitureCounts(this.params.width);
-  }
-
   get still() {
     return `assets/viewer/${this.model}-${this.layer}.webp`;
   }
 
-  get text() {
-    if (this.model === 'furniture' && this.layer === 0) {
-      const c = this.counts;
-      return `패널 ${c.panels}장을 떼어 보고, 서로 맞닿은 접합면 ${c.joints}곳을 찾습니다.`;
-    }
-    return this.view.text;
-  }
-
-  get legend() {
-    if (this.model === 'furniture' && this.layer === 0) {
-      const c = this.counts;
-      return [
-        { label: '패널', detail: `${c.panels}장`, swatch: '#2f5f9e' },
-        { label: '접합면', detail: `${c.joints}곳`, swatch: '#8fa8cf' },
-      ];
-    }
-    return this.view.legend;
-  }
-
   get stageLabel() {
-    return `${this.info.label} 개념 모델, ${this.view.label} 단계: ${this.text}`;
+    return `${this.info.label} 개념 모델, ${this.view.label} 단계: ${this.view.text}`;
   }
 
   ngAfterViewInit() {
@@ -96,7 +69,6 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
           this.scene = new ViewportScene(this.stage.nativeElement, {
             reducedMotion: this.reducedMotion,
             autoplay: this.autoplay,
-            onParams: (p) => this.showAutoParams(p),
             onLayer: (layer) => this.refresh(() => (this.layer = layer)),
             onStep: (step) => this.refresh(() => (this.step = step)),
           });
@@ -112,9 +84,14 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
     this.scene?.dispose();
   }
 
+  // Picking a model plays its layers from the start; picking a layer stops there.
   selectModel(id: ModelId) {
-    this.stopAutoplay();
     this.model = id;
+    if (!this.reducedMotion) {
+      this.layer = 0;
+      this.autoplay = true;
+      this.scene?.startAutoplay();
+    }
     this.scene?.setModel(id);
     this.scene?.setLayer(this.layer);
   }
@@ -137,21 +114,6 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
   private stopAutoplay() {
     this.autoplay = false;
     this.scene?.stopAutoplay();
-  }
-
-  setWidth(value: string) {
-    this.params = { ...this.params, width: Number(value) };
-    this.scene?.setParams(this.params);
-  }
-
-  setKick(value: string) {
-    this.params = { ...this.params, kick: Number(value) };
-    this.scene?.setParams(this.params);
-  }
-
-  // The automatic width sweep runs outside Angular; refresh only this component's view.
-  private showAutoParams(p: FurnitureParams) {
-    this.refresh(() => (this.params = p));
   }
 
   // Scene callbacks arrive from the render loop outside Angular.

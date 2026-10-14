@@ -2,6 +2,7 @@ import {
   BoxGeometry,
   BufferAttribute,
   BufferGeometry,
+  CircleGeometry,
   Color,
   CylinderGeometry,
   DirectionalLight,
@@ -15,6 +16,7 @@ import {
   InstancedMesh,
   Line,
   LineBasicMaterial,
+  LineDashedMaterial,
   LineSegments,
   Material,
   Matrix4,
@@ -33,7 +35,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { FURNITURE_LIMITS, ModelId, TINTS } from './viewport-data';
+import { ModelId, TINTS } from './viewport-data';
 
 // Concept models for the home viewport, drawn like a CAD sheet: white faces, ink edges,
 // numbered balloons. Units are millimetres; the part is built Z-up and turned Y-up.
@@ -47,14 +49,14 @@ type P2 = [number, number];
 type PartTag = 'stock' | 'pocket' | 'counterbore' | 'hole' | 'step' | 'fillet';
 type PanelRole = 'side' | 'board' | 'shelf' | 'back' | 'door' | 'kick';
 
-export interface FurnitureParams {
-  width: number;
-  kick: number;
-}
-
 interface Note {
   anchor: Vector3;
   owner: Object3D;
+}
+
+// Text pinned to a point in the scene, such as a live dimension.
+interface Label extends Note {
+  text: string;
 }
 
 interface ModelView {
@@ -71,6 +73,7 @@ interface ModelView {
   step?(): number;
   hud?(): string;
   done?(): boolean;
+  labels?(): Label[];
 }
 
 // ---------- geometry helpers ----------
@@ -1385,13 +1388,20 @@ function buildPart(reducedMotion: boolean): ModelView {
   return view;
 }
 
-// ---------- furniture (base cabinet) ----------
+// ---------- furniture (one studio wall: wardrobe, fridge cabinet, base and upper cabinets) ----------
 
-interface Panel {
-  role: PanelRole;
-  mesh: Mesh;
-  pivot?: Group;
-}
+// 가구빌더 defaults (wedraw-sketchup): 18 mm body, a 3 mm back set 18 mm in from the rear in
+// 4 mm grooves, full-overlay doors 18 mm thick standing 4 mm proud, 100 mm legs behind an
+// 18 mm kickboard 50 mm back from the front, a 12 mm worktop. Body sizes include the doors,
+// the plinth and the worktop. Millimetres, y up from the floor, z out from the back wall.
+const FB = { t: 18, back: 3, backInset: 18, groove: 4, gap: 4, door: 18, plinth: 100, kickBack: 50, worktop: 12 };
+const DOOR_ZONE = FB.gap + FB.door;
+// Top and bottom boards start at the back's groove and run to the carcass front.
+const BOARD_Z = FB.backInset + FB.groove;
+const DOOR_OPEN = (100 * Math.PI) / 180;
+const FURN_SCALE = 0.125;
+const UNIT = new BoxGeometry(1, 1, 1);
+const UNIT_EDGES = new EdgesGeometry(UNIT);
 
 const ROLE_TINT: Record<PanelRole, string> = {
   side: TINTS.side,
@@ -1402,178 +1412,1150 @@ const ROLE_TINT: Record<PanelRole, string> = {
   kick: TINTS.kick,
 };
 
-function buildFurniture(reducedMotion: boolean, onParams: (p: FurnitureParams) => void) {
-  const H = 870;
-  const D = 580;
-  const T = 18;
-  const TB = 9;
-  const scale = 0.125;
-  const root = new Group();
-  const body = new Group();
-  body.scale.setScalar(scale);
-  body.position.y = (-H / 2) * scale;
-  root.add(body);
+interface Slab {
+  size: Vector3;
+  at: Vector3;
+}
 
-  const unit = new BoxGeometry(1, 1, 1);
-  const unitEdges = new EdgesGeometry(unit);
-  const edgeMat = new LineBasicMaterial({ color: INK });
-  const roleMaterials = new Map<PanelRole, MeshLambertMaterial>();
-  const makePanel = (role: PanelRole, parent: Object3D = body): Panel => {
-    if (!roleMaterials.has(role)) roleMaterials.set(role, faceMaterial());
-    const mesh = new Mesh(unit, roleMaterials.get(role)!);
-    mesh.add(new LineSegments(unitEdges, edgeMat));
-    parent.add(mesh);
-    return { role, mesh };
-  };
-  const sideL = makePanel('side');
-  const sideR = makePanel('side');
-  const top = makePanel('board');
-  const bottom = makePanel('board');
-  const back = makePanel('back');
-  const shelf = makePanel('shelf');
-  const kick = makePanel('kick');
-  const doorPivots = [new Group(), new Group()];
-  doorPivots.forEach((p) => body.add(p));
-  const doors = doorPivots.map((p) => ({ ...makePanel('door', p), pivot: p }));
+function box(x0: number, x1: number, y0: number, y1: number, z0: number, z1: number): Slab {
+  return { size: new Vector3(x1 - x0, y1 - y0, z1 - z0), at: new Vector3((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2) };
+}
 
-  // Dimension lines for the parameter layer.
-  const dimMat = new LineBasicMaterial({ color: ACCENT });
-  const dims = new LineSegments(new BufferGeometry(), dimMat);
-  body.add(dims);
+// A box drawn from the unit cube: scale is its size, position its centre.
+function slab(material: Material | Material[], edge: LineBasicMaterial, s?: Slab): Mesh {
+  const mesh = new Mesh(UNIT, material);
+  mesh.add(new LineSegments(UNIT_EDGES, edge));
+  if (s) {
+    mesh.scale.copy(s.size);
+    mesh.position.copy(s.at);
+  }
+  return mesh;
+}
 
-  const graphRoot = new Group();
-  body.add(graphRoot);
+function tinted(hex: number): MeshLambertMaterial {
+  const m = faceMaterial();
+  m.color.setHex(hex);
+  return m;
+}
 
-  let params: FurnitureParams = { width: FURNITURE_LIMITS.width.initial, kick: FURNITURE_LIMITS.kick.initial };
-  let layer = 1;
-  let auto = !reducedMotion;
-  let autoClock = 0;
-  const dimAnchors = { width: new Vector3(), kick: new Vector3() };
+type ModuleKind = 'tall' | 'base' | 'upper' | 'flap';
 
-  const setBox = (p: Panel, sx: number, sy: number, sz: number, x: number, y: number, z: number) => {
-    p.mesh.scale.set(sx, sy, sz);
-    p.mesh.position.set(x, y, z);
-  };
+interface ModuleSpec {
+  name: string;
+  kind: ModuleKind;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  d: number;
+  doors: number;
+  shelves: number;
+  // Wardrobe: a board this far above the carcass bottom with a hanging rail under it.
+  divider?: number;
+  // Door-material end panels inside the body width; `down` stretches them to the floor.
+  ends?: { left?: boolean; right?: boolean; down?: number };
+}
 
-  const apply = () => {
-    const W = params.width;
-    const K = params.kick;
-    const inner = W - 2 * T;
-    setBox(sideL, T, H, D, -W / 2 + T / 2, H / 2, 0);
-    setBox(sideR, T, H, D, W / 2 - T / 2, H / 2, 0);
-    setBox(top, inner, T, D, 0, H - T / 2, 0);
-    setBox(bottom, inner, T, D - TB, 0, K + T / 2, TB / 2);
-    const backH = H - T - K;
-    setBox(back, inner, backH, TB, 0, K + backH / 2, -D / 2 + TB / 2);
-    const shelfD = D - TB - 42;
-    setBox(shelf, inner - 2, T, shelfD, 0, K + T + (H - 2 * T - K) / 2, -D / 2 + TB + 2 + shelfD / 2);
-    setBox(kick, inner, K, T, 0, K / 2, D / 2 - 50 - T / 2);
+// One wall of a studio: wardrobe, the fridge slot under a flap cabinet framed by end panels,
+// then the kitchen run. Depths follow the builder demo (wardrobe 600, fridge cabinet 680,
+// base 580, upper 350); a 60 mm filler meets the left wall.
+const ROOM = { h: 2380, left: 0, right: 4400, front: 1500, wall: 100 };
+const FILLER = 60;
+const MODULES: ModuleSpec[] = [
+  { name: '붙박이장 900', kind: 'tall', x: 60, y: 0, w: 900, h: 2300, d: 600, doors: 2, shelves: 0, divider: 1700 },
+  { name: '붙박이장 600', kind: 'tall', x: 960, y: 0, w: 600, h: 2300, d: 600, doors: 1, shelves: 4 },
+  { name: '냉장고장', kind: 'flap', x: 1560, y: 1950, w: 950, h: 350, d: 680, doors: 1, shelves: 0, ends: { left: true, right: true, down: 1950 } },
+  { name: '하부장 600', kind: 'base', x: 2510, y: 0, w: 600, h: 850, d: 580, doors: 1, shelves: 1 },
+  { name: '하부장 900', kind: 'base', x: 3110, y: 0, w: 900, h: 850, d: 580, doors: 2, shelves: 1, ends: { right: true } },
+  { name: '상부장 600', kind: 'upper', x: 2510, y: 1500, w: 600, h: 800, d: 350, doors: 1, shelves: 2 },
+  { name: '상부장 900', kind: 'upper', x: 3110, y: 1500, w: 900, h: 800, d: 350, doors: 2, shelves: 2, ends: { right: true } },
+];
+// The base cabinet assembled panel by panel in the last layer.
+const BUILT = 4;
 
-    const two = W > FURNITURE_LIMITS.twoDoors;
-    const doorH = H - K - 4;
-    const doorW = two ? W / 2 - 2 : W - 3;
-    const open = (100 * Math.PI) / 180;
-    doors.forEach((d, i) => {
-      const visible = i === 0 || two;
-      d.pivot.visible = visible;
-      const left = i === 0;
-      d.pivot.position.set(left ? -W / 2 : W / 2, K + 2, D / 2);
-      d.pivot.rotation.y = left ? -open : open;
-      setBox(d, doorW, doorH, T, left ? doorW / 2 : -doorW / 2, doorH / 2, T / 2);
-    });
+type PieceRole = PanelRole | 'trim' | 'rod';
 
-    // W dimension above the front top edge, K dimension at the right of the plinth.
-    const yW = H + 90;
-    const zF = D / 2;
-    const xK = W / 2 + 90;
-    const zK = D / 2 - 50;
-    const tick = 18;
-    const pos = [
-      -W / 2, yW, zF, W / 2, yW, zF,
-      -W / 2, H + 15, zF, -W / 2, yW + 30, zF,
-      W / 2, H + 15, zF, W / 2, yW + 30, zF,
-      -W / 2 - tick, yW - tick, zF, -W / 2 + tick, yW + tick, zF,
-      W / 2 - tick, yW - tick, zF, W / 2 + tick, yW + tick, zF,
-      xK, 0, zK, xK, K, zK,
-      W / 2 + 15, 0, zK, xK + 30, 0, zK,
-      W / 2 + 15, K, zK, xK + 30, K, zK,
-      xK - tick, -tick, zK, xK + tick, tick, zK,
-      xK - tick, K - tick, zK, xK + tick, K + tick, zK,
-    ];
-    dims.geometry.dispose();
-    dims.geometry = new BufferGeometry();
-    dims.geometry.setAttribute('position', new Float32BufferAttribute(pos, 3));
-    dimAnchors.width.set(0, yW, zF);
-    dimAnchors.kick.set(xK, K / 2, zK);
+interface Piece {
+  role: PieceRole;
+  part: 'side' | 'bottom' | 'top' | 'rail' | 'back' | 'shelf' | 'divider' | 'rod' | 'door' | 'kick' | 'end';
+  s: Slab;
+  // Doors: the hinge edge (-1 left, 1 right, 0 top for a lift-up flap).
+  hinge?: number;
+}
 
-    // Panel contact graph: nodes at panel centres.
-    graphRoot.clear();
-    const parts = [sideL, sideR, top, bottom, back, shelf, kick, ...(two ? doors : [doors[0]])];
-    body.updateMatrixWorld(true);
-    const nodes = parts.map((p) => {
-      const c = new Vector3();
-      p.mesh.getWorldPosition(c);
-      return body.worldToLocal(c);
-    });
-    const links: [number, number][] = [
-      [0, 2], [1, 2], [0, 3], [1, 3], [0, 4], [1, 4], [2, 4], [3, 4],
-      [5, 0], [5, 1], [6, 0], [6, 1], [6, 3], [7, 0],
-    ];
-    if (two) links.push([8, 1]);
-    graphRoot.add(graphOverlay(nodes, links, 14));
-  };
+// Panels of one module in its own frame: x across from its left edge, y up from its bottom,
+// z out from the wall.
+function modulePieces(m: ModuleSpec): Piece[] {
+  const { t } = FB;
+  const out: Piece[] = [];
+  const add = (role: PieceRole, part: Piece['part'], s: Slab, hinge?: number) => out.push({ role, part, s, hinge });
+  const floor = m.kind === 'tall' || m.kind === 'base';
+  const y0 = floor ? FB.plinth : 0;
+  const y1 = m.kind === 'base' ? m.h - FB.worktop : m.h;
+  const cd = m.d - DOOR_ZONE;
+  const x0 = m.ends?.left ? t : 0;
+  const x1 = m.w - (m.ends?.right ? t : 0);
+  const endY0 = (m.kind === 'upper' ? -20 : 0) - (m.ends?.down ?? 0);
+  if (m.ends?.left) add('trim', 'end', box(0, t, endY0, y1, 0, m.d));
+  if (m.ends?.right) add('trim', 'end', box(m.w - t, m.w, endY0, y1, 0, m.d));
+  // Sides run the full carcass height; the boards sit between them.
+  add('side', 'side', box(x0, x0 + t, y0, y1, 0, cd));
+  add('side', 'side', box(x1 - t, x1, y0, y1, 0, cd));
+  const ix0 = x0 + t;
+  const ix1 = x1 - t;
+  add('board', 'bottom', box(ix0, ix1, y0, y0 + t, BOARD_Z, cd));
+  if (m.kind === 'base') {
+    // Base preset: rails instead of a top board, and a handle channel 40 deep and 60 high.
+    add('board', 'rail', box(ix0, ix1, y1 - t, y1, BOARD_Z, BOARD_Z + 80));
+    add('board', 'rail', box(ix0, ix1, y1 - t, y1, cd - 120, cd - 40));
+    add('board', 'rail', box(ix0, ix1, y1 - 60, y1 - t, cd - 40 - t, cd - 40));
+  } else {
+    add('board', 'top', box(ix0, ix1, y1 - t, y1, BOARD_Z, cd));
+  }
+  // The back's tongues sit 6.5 mm into each side's groove.
+  add('back', 'back', box(ix0 - 6.5, ix1 + 6.5, y0, y1, FB.backInset, FB.backInset + FB.back));
+  let shelfTop = y1 - t;
+  if (m.divider) {
+    const dy = y0 + m.divider;
+    add('board', 'divider', box(ix0, ix1, dy - t, dy, BOARD_Z, cd));
+    // Ø25 hanging rail, its centre 50 mm under the compartment top.
+    const ry = dy - t - 50;
+    const rz = (BOARD_Z + cd) / 2;
+    add('rod', 'rod', box(ix0, ix1, ry - 12.5, ry + 12.5, rz - 12.5, rz + 12.5));
+    shelfTop = dy - t;
+  }
+  for (let i = 1; i <= m.shelves; i++) {
+    // Shelves stop 80 mm short of the front and run back to the back panel.
+    const y = y0 + t + ((shelfTop - y0 - t) * i) / (m.shelves + 1);
+    add('shelf', 'shelf', box(ix0 + 0.5, ix1 - 0.5, y - t / 2, y + t / 2, BOARD_Z, cd - 80));
+  }
+  // Doors cover the carcass with 3 mm between leaves; upper doors hang 20 mm below as a pull.
+  const dy0 = m.kind === 'upper' ? -20 : y0;
+  const dy1 = m.kind === 'base' ? y1 - 60 : y1;
+  const leaf = (x1 - x0 - 3 * m.doors) / m.doors;
+  for (let i = 0; i < m.doors; i++) {
+    const a = x0 + 1.5 + i * (leaf + 3);
+    const hinge = m.kind === 'flap' ? 0 : m.doors === 2 && i === 1 ? 1 : -1;
+    add('door', 'door', box(a, a + leaf, dy0, dy1, cd + FB.gap, m.d), hinge);
+  }
+  if (floor) add('kick', 'kick', box(x0, x1, 0, FB.plinth, cd - FB.kickBack - t, cd - FB.kickBack));
+  return out;
+}
 
-  const notes: Note[] = [
-    { anchor: new Vector3(0.5, 0.2, 0.1), owner: sideR.mesh },
-    { anchor: new Vector3(0.2, 0.5, 0.3), owner: top.mesh },
-    { anchor: new Vector3(0.3, 0.5, 0.4), owner: shelf.mesh },
-    { anchor: new Vector3(-0.15, -0.42, 0.5), owner: back.mesh },
-    { anchor: new Vector3(0, 0.2, -0.5), owner: doors[0].mesh },
-    { anchor: new Vector3(0.3, 0, 0.5), owner: kick.mesh },
-  ];
+interface ModuleView {
+  spec: ModuleSpec;
+  group: Group;
+  items: { piece: Piece; obj: Object3D; home: Vector3 }[];
+  // Swings every door open by k (0–1).
+  open(k: number): void;
+}
 
-  apply();
-  const view: ModelView & {
-    setParams(p: FurnitureParams): void;
-    stopAuto(): void;
-    dimNotes(): { width: Vector3; kick: Vector3; owner: Object3D; params: FurnitureParams } | null;
-  } = {
-    root,
-    fitRadius: 112,
-    view: new Vector3(0.62, 0.62, 1.6),
-    setLayer(next: number) {
-      layer = next;
-      for (const [role, mat] of roleMaterials) mat.color.setHex(next === 0 ? FACE : tint(ROLE_TINT[role], 1));
-      graphRoot.visible = next === 0;
-      dims.visible = next === 2;
-      autoClock = 0;
-    },
-    notes(l: number) {
-      if (l !== 1) return [];
-      return notes;
-    },
-    update(_time: number, dt: number) {
-      if (layer !== 2 || !auto) return;
-      autoClock += dt;
-      const span = FURNITURE_LIMITS.width;
-      const w = span.initial + 240 * Math.sin(autoClock * 0.55);
-      const width = Math.round(w / span.step) * span.step;
-      if (width !== params.width) {
-        params = { ...params, width };
-        apply();
-        onParams(params);
+function buildModule(m: ModuleSpec, mats: Record<PieceRole, Material>, edge: LineBasicMaterial): ModuleView {
+  const group = new Group();
+  group.position.set(m.x, m.y, 0);
+  const doors: { pivot: Group; hinge: number }[] = [];
+  const items = modulePieces(m).map((piece) => {
+    let obj: Object3D;
+    if (piece.part === 'rod') {
+      const geo = new CylinderGeometry(12.5, 12.5, piece.s.size.x, 20);
+      obj = new Mesh(geo, mats.rod);
+      obj.rotation.z = Math.PI / 2;
+      obj.position.copy(piece.s.at);
+    } else if (piece.part === 'door') {
+      // The leaf hangs from a pivot on its hinge edge.
+      const { size, at } = piece.s;
+      const pivot = new Group();
+      const hx = piece.hinge === 1 ? at.x + size.x / 2 : piece.hinge === -1 ? at.x - size.x / 2 : at.x;
+      const hy = piece.hinge === 0 ? at.y + size.y / 2 : at.y;
+      pivot.position.set(hx, hy, at.z + size.z / 2);
+      const leafMesh = slab(mats.door, edge);
+      leafMesh.scale.copy(size);
+      leafMesh.position.set(at.x - hx, at.y - hy, -size.z / 2);
+      pivot.add(leafMesh);
+      doors.push({ pivot, hinge: piece.hinge ?? -1 });
+      obj = pivot;
+    } else {
+      obj = slab(mats[piece.role], edge, piece.s);
+    }
+    group.add(obj);
+    return { piece, obj, home: obj.position.clone() };
+  });
+  return {
+    spec: m,
+    group,
+    items,
+    open(k) {
+      for (const d of doors) {
+        if (d.hinge === 0) d.pivot.rotation.x = -DOOR_OPEN * k;
+        else d.pivot.rotation.y = d.hinge * DOOR_OPEN * k;
       }
     },
-    setParams(p: FurnitureParams) {
-      params = { ...p };
+  };
+}
+
+// Panel-role tints for the builder and factory views.
+function roleMats(): Record<PieceRole, Material> {
+  const out = {} as Record<PieceRole, Material>;
+  (Object.keys(ROLE_TINT) as PanelRole[]).forEach((role) => (out[role] = tinted(tint(ROLE_TINT[role], 1))));
+  out.trim = tinted(tint(TINTS.door, 0.75));
+  out.rod = metal(0xa8ada5);
+  return out;
+}
+
+// What the finished furniture looks like: white body, oak doors and trim, a stone worktop.
+const FINISH = { body: 0xf3f2ec, back: 0xe4e2da, oak: 0xc29a74, stone: 0xf6f5f1, wall: 0xf3f1ea, floor: 0xeadfc8 };
+
+function finishMats(): Record<PieceRole, Material> {
+  const body = tinted(FINISH.body);
+  const oak = tinted(FINISH.oak);
+  return {
+    side: body,
+    board: body,
+    shelf: body,
+    back: tinted(FINISH.back),
+    door: oak,
+    kick: oak,
+    trim: oak,
+    rod: metal(0xa8ada5),
+  };
+}
+
+// Pieces of the wall that belong to no single module, in room coordinates.
+function wallExtras() {
+  const t = FB.t;
+  const base = MODULES.filter((m) => m.kind === 'base');
+  const bx0 = Math.min(...base.map((m) => m.x));
+  const bx1 = Math.max(...base.map((m) => m.x + m.w));
+  return {
+    worktop: box(bx0, bx1, 850 - FB.worktop, 850, 0, 580),
+    // Top surround up to the ceiling over the tall units, the fridge cabinet and the uppers.
+    surround: [
+      box(FILLER, 1560, 2300, ROOM.h, 600 - t, 600),
+      box(1560, 2510, 2300, ROOM.h, 680 - t, 680),
+      box(2510, 4010, 2300, ROOM.h, 350 - t, 350),
+    ],
+    filler: box(0, FILLER, 0, ROOM.h, 600 - t, 600),
+    // 19 mm wall batten the upper cabinets hang on through notches in their sides.
+    batten: box(2510, 4010, 2300 - t - 100, 2300 - t, 0, 19),
+    fridge: box(1560 + t + 12, 2510 - t - 12, 0, 1820, 20, 700),
+  };
+}
+
+// Back and left walls cut like a section, and the floor.
+function buildRoom(edge: LineBasicMaterial) {
+  const group = new Group();
+  const wallMat = tinted(FINISH.wall);
+  const cutMat = tinted(0x737a75);
+  const wallMats = [wallMat, wallMat, cutMat, wallMat, wallMat, wallMat];
+  const walls = new Group();
+  walls.add(slab(wallMats, edge, box(-ROOM.wall, ROOM.right, 0, ROOM.h, -ROOM.wall, 0)));
+  walls.add(slab(wallMats, edge, box(-ROOM.wall, 0, 0, ROOM.h, 0, ROOM.front)));
+  const floor = slab(tinted(FINISH.floor), edge, box(-ROOM.wall, ROOM.right, -30, 0, -ROOM.wall, ROOM.front));
+  const planks: number[] = [];
+  for (let z = 150; z < ROOM.front; z += 150) planks.push(0, 0.5, z, ROOM.right, 0.5, z);
+  const plankLines = new LineSegments(
+    new BufferGeometry().setAttribute('position', new Float32BufferAttribute(planks, 3)),
+    new LineBasicMaterial({ color: INK, transparent: true, opacity: 0.22 }),
+  );
+  group.add(walls, floor, plankLines);
+  return { group, walls, floor };
+}
+
+// Straight tool moves timed in seconds.
+interface Leg {
+  from: Vector3;
+  to: Vector3;
+  start: number;
+  end: number;
+  cut: boolean;
+}
+
+function planLegs(start: Vector3, t0: number, plan: [Vector3, number, boolean][]): Leg[] {
+  const legs: Leg[] = [];
+  let at = start.clone();
+  let clock = t0;
+  for (const [to, speed, cut] of plan) {
+    const dur = at.distanceTo(to) / speed;
+    if (dur <= 1e-6) continue;
+    legs.push({ from: at.clone(), to: to.clone(), start: clock, end: clock + dur, cut });
+    clock += dur;
+    at = to.clone();
+  }
+  return legs;
+}
+
+function legAt(legs: Leg[], t: number, out: Vector3): Leg {
+  const leg = legs.find((l) => t < l.end) ?? legs[legs.length - 1];
+  const k = leg.end > leg.start ? clamp01((t - leg.start) / (leg.end - leg.start)) : 1;
+  out.copy(leg.from).lerp(leg.to, k);
+  return leg;
+}
+
+// A furniture layer: its own group, camera direction and live labels.
+type FurnitureStage = Stage & { group: Group; view: Vector3; labels?(): Label[] };
+
+const DESIGN_STEPS = ['벽 그리기 · 높이 2380', '붙박이장 · 900 + 600', '냉장고 자리 · 950', '하부장 · 600 + 900', '상부장 · 바닥에서 1500', '패널과 문 · 장 7개'];
+
+// Layer 0: the wall is drawn in SketchUp; the furniture builder places runs, splits them
+// into cabinets and turns each cabinet into panels and doors.
+function buildDesign(edge: LineBasicMaterial, reducedMotion: boolean): FurnitureStage {
+  const group = new Group();
+  group.scale.setScalar(FURN_SCALE);
+  group.position.set(-2150 * FURN_SCALE, -1190 * FURN_SCALE, -300 * FURN_SCALE);
+  const room = buildRoom(edge);
+  group.add(room.group);
+
+  // SketchUp's red, green and blue axes from the room corner.
+  const axes: [Vector3, number, number][] = [
+    [AX, 4800, 0xc4473a],
+    [AZ, 1900, 0x3f8a4a],
+    [AY, 2700, BLUE],
+  ];
+  for (const [dir, len, hex] of axes) {
+    const geo = new BufferGeometry().setFromPoints([new Vector3(0, 1, 1), dir.clone().multiplyScalar(len).add(new Vector3(0, 1, 1))]);
+    group.add(new Line(geo, new LineBasicMaterial({ color: hex })));
+  }
+
+  // Builder boxes: whole runs first, then the cabinets they split into.
+  const boxMat = new MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.45, depthWrite: false });
+  const boxLine = new LineBasicMaterial({ color: BLUE });
+  const ghost = (s: Slab) => {
+    const m = new Mesh(UNIT, boxMat);
+    m.add(new LineSegments(UNIT_EDGES, boxLine));
+    m.scale.copy(s.size);
+    m.position.copy(s.at);
+    group.add(m);
+    return m;
+  };
+  const runs = [
+    { run: box(60, 1560, 0, 2300, 0, 600), cut: 960, at: [1.6, 2.2, 2.8] },
+    { run: box(2510, 4010, 0, 850, 0, 580), cut: 3110, at: [4.0, 4.5, 5.0] },
+    { run: box(2510, 4010, 1500, 2300, 0, 350), cut: 3110, at: [5.2, 5.7, 6.2] },
+  ].map((r) => {
+    const { size, at } = r.run;
+    const x0 = at.x - size.x / 2;
+    const x1 = at.x + size.x / 2;
+    const y0 = at.y - size.y / 2;
+    const y1 = at.y + size.y / 2;
+    const z1 = at.z + size.z / 2;
+    const whole = ghost(r.run);
+    const halves = [box(x0, r.cut, y0, y1, 0, z1), box(r.cut, x1, y0, y1, 0, z1)].map(ghost);
+    const splitGeo = new BufferGeometry().setFromPoints([new Vector3(r.cut, y1, z1), new Vector3(r.cut, y0, z1)]);
+    const split = new Line(splitGeo, new LineBasicMaterial({ color: ACCENT }));
+    group.add(split);
+    const widths = [r.cut - x0, x1 - r.cut];
+    const marks = [new Vector3((x0 + r.cut) / 2, y1 + 80, z1), new Vector3((r.cut + x1) / 2, y1 + 80, z1)];
+    return { whole, halves, split, at: r.at, widths, marks };
+  });
+  // The fridge slot is an empty place in the run, with the flap cabinet over it.
+  const slotGeo = new EdgesGeometry(new BoxGeometry(950, 1950, 680));
+  const slot = new LineSegments(slotGeo, new LineDashedMaterial({ color: BLUE, dashSize: 60, gapSize: 40 }));
+  slot.computeLineDistances();
+  slot.position.set(1560 + 475, 975, 340);
+  group.add(slot);
+  const flapBox = ghost(box(1560, 2510, 1950, 2300, 0, 680));
+  const slotAt: [number, number] = [3.0, 3.8];
+
+  const mats = roleMats();
+  const modules = MODULES.map((m) => buildModule(m, mats, edge));
+  modules.forEach((m) => group.add(m.group));
+  const extras = wallExtras();
+  const worktop = slab(tinted(0xe9e7df), edge, extras.worktop);
+  const trims = [...extras.surround, extras.filler].map((s) => slab(mats.trim, edge, s));
+  group.add(worktop, ...trims);
+  const panelAt = 6.5;
+  const moduleGap = 0.32;
+  const extrasAt = panelAt + MODULES.length * moduleGap + 0.2;
+  const end = 11.4;
+  // Which builder box stands for each module until its panels appear.
+  const boxOf = [runs[0].halves[0], runs[0].halves[1], flapBox, runs[1].halves[0], runs[1].halves[1], runs[2].halves[0], runs[2].halves[1]];
+
+  let t = 0;
+  const apply = () => {
+    const w = ease(span(t, 0.3, 1.4));
+    room.walls.scale.y = Math.max(w, 0.001);
+    runs.forEach((r) => {
+      const [show, cut, done] = r.at;
+      r.whole.visible = t >= show && t < done;
+      r.split.visible = t >= cut && t < done + 0.2;
+      r.split.scale.y = Math.max(ease(span(t, cut, done)), 0.001);
+    });
+    modules.forEach((m, i) => {
+      const from = panelAt + i * moduleGap;
+      const placed = i === 2 ? t >= slotAt[0] : t >= runs[i < 2 ? 0 : i < 5 ? 1 : 2].at[2];
+      boxOf[i].visible = placed && t < from + 0.15;
+      m.items.forEach((it, k) => (it.obj.visible = t >= from + k * 0.025));
+      m.open(0);
+    });
+    slot.visible = t >= slotAt[0] && t < panelAt + 2 * moduleGap;
+    worktop.visible = t >= extrasAt;
+    trims.forEach((m) => (m.visible = t >= extrasAt + 0.15));
+  };
+  const step = () =>
+    t < 1.5 ? 0 : t < runs[0].at[2] + 0.1 ? 1 : t < slotAt[1] + 0.1 ? 2 : t < runs[1].at[2] + 0.1 ? 3 : t < runs[2].at[2] + 0.2 ? 4 : 5;
+
+  return {
+    group,
+    view: new Vector3(0.42, 0.5, 1.6),
+    fitRadius: 205,
+    show(on) {
+      group.visible = on;
+    },
+    reset() {
+      t = reducedMotion ? end : 0;
       apply();
     },
-    stopAuto() {
-      auto = false;
+    update(dt) {
+      if (reducedMotion) return;
+      t += dt;
+      if (t > end + 0.6) t = 0;
+      apply();
     },
-    dimNotes() {
-      return layer === 2 ? { width: dimAnchors.width, kick: dimAnchors.kick, owner: body, params } : null;
+    notes: () => [],
+    step,
+    hud: () => `${pad2(step() + 1)} ${DESIGN_STEPS[step()]}`,
+    done: () => !reducedMotion && t >= end,
+    labels() {
+      const r = runs.find((x) => t >= x.at[1] && t < x.at[2] + 0.6);
+      if (r) return r.marks.map((anchor, i) => ({ anchor, owner: group, text: String(r.widths[i]) }));
+      if (t >= slotAt[0] && t < slotAt[1] + 0.6) return [{ anchor: new Vector3(2035, 2380, 680), owner: group, text: '950' }];
+      return [];
     },
+  };
+}
+
+// Sheet 5 of 9 of the demo kitchen's 18T body material as prisme-engine's nesting planner
+// lays it out with its defaults (10 mm trim, Ø6 tool + 0.3 spacing, small parts first, then
+// columns from the right), in cut order. x runs along the 2440 side, y along the 1220 side.
+const NEST_SHEET: { name: string; role: PanelRole; x: number; y: number; w: number; h: number }[] = [
+  { name: '밴드목', role: 'board', x: 2229.2, y: 10, w: 80, h: 563 },
+  { name: '밴드목', role: 'board', x: 2315.5, y: 10, w: 80, h: 563 },
+  { name: '밴드목', role: 'board', x: 10, y: 1088.6, w: 863, h: 80 },
+  { name: '밴드목', role: 'board', x: 879.3, y: 1088.6, w: 563, h: 80 },
+  { name: '우측판', role: 'side', x: 1622.6, y: 816.3, w: 800, h: 328 },
+  { name: '우측판', role: 'side', x: 1894.9, y: 10, w: 328, h: 800 },
+  { name: '우측판', role: 'side', x: 1330.6, y: 10, w: 558, h: 738 },
+  { name: '우측판', role: 'side', x: 816.3, y: 754.3, w: 800, h: 328 },
+  { name: '우측판', role: 'side', x: 766.3, y: 10, w: 558, h: 738 },
+  { name: '우측판', role: 'side', x: 10, y: 754.3, w: 800, h: 328 },
+  { name: '좌측판', role: 'side', x: 10, y: 10, w: 750, h: 658 },
+];
+const SHEET = { w: 2440, d: 1220, t: 18 };
+// The 900 base cabinet's side, cut seventh on that sheet, goes on to the edge bander.
+const NEST_PICK = 6;
+const SHEET_RAW = 0xece8dc;
+const DRILLED = 0x2c322e;
+
+// That side panel lying flat: its height (738) along x, depth (558) along z with the
+// front edge at +z.
+const SIDE = { l: 738, d: 558, t: 18 };
+// Holes and the groove are drawn 2.5 times their size; at true size a Ø3 hole is under 2 px.
+const HOLE_DRAW = 2.5;
+
+// The side's machining from the 900 base cabinet, in its flat frame (u along the height,
+// 0 at mid-height; z along the depth): connector through holes for the bottom board (three,
+// 80 mm in and at most 300 apart) and the rails; shelf pins Ø3 in two columns 50 mm in from
+// the shelf edges; hinge-plate pilots Ø3, 37 mm in, 32 apart; the back groove 4 wide,
+// 18–22 mm from the rear edge.
+function sideMachining() {
+  const m = MODULES[BUILT];
+  const y0 = FB.plinth;
+  const y1 = m.h - FB.worktop;
+  const cd = m.d - DOOR_ZONE;
+  const u = (y: number) => y - (y0 + y1) / 2;
+  const z = (zc: number) => zc - cd / 2;
+  const through = [
+    ...[80, 268, 456].map((a) => ({ u: u(y0 + 9), z: z(cd - a) })),
+    { u: u(y1 - 9), z: z(BOARD_Z + 40) },
+    { u: u(y1 - 9), z: z(cd - 80) },
+    { u: u(y1 - 39), z: z(cd - 49) },
+  ].map((h) => ({ ...h, r: 3, face: 'top' as const }));
+  const shelfY = y0 + FB.t + (y1 - FB.t - y0 - FB.t) / 2;
+  const pinY = shelfY - FB.t / 2 - 3.75;
+  const pins = [pinY - 32, pinY, pinY + 32].flatMap((y) =>
+    [BOARD_Z + 50, cd - 80 - 50].map((zc) => ({ u: u(y), z: z(zc), r: 1.5, face: 'bottom' as const })),
+  );
+  const pilots = [y0 + 100, y1 - 60 - 100].flatMap((y) =>
+    [y - 16, y + 16].map((yy) => ({ u: u(yy), z: z(cd - 37), r: 1.5, face: 'bottom' as const })),
+  );
+  // Through-feed: the panel runs in +x, so holes nearer the leading end come first.
+  const holes = [...through, ...pins, ...pilots].sort((a, b) => b.u - a.u || a.z - b.z);
+  return { holes, groove: z(FB.backInset + FB.groove / 2) };
+}
+const SIDE_MACHINING = sideMachining();
+
+// The side panel with its label, edge bands and machining, hidden until each is made.
+function sidePanel(edge: LineBasicMaterial) {
+  const group = new Group();
+  const bodyMat = tinted(tint(TINTS.side, 1));
+  bodyMat.transparent = true;
+  const body = slab(bodyMat, edge, box(-SIDE.l / 2, SIDE.l / 2, 0, SIDE.t, -SIDE.d / 2, SIDE.d / 2));
+  group.add(body);
+  const label = new Group();
+  label.add(slab(faceMaterial(), edge, box(-50, 50, SIDE.t, SIDE.t + 1, -25, 25)));
+  label.add(slab(tinted(DRILLED), edge, box(-44, -22, SIDE.t + 1, SIDE.t + 1.5, -11, 11)));
+  group.add(label);
+  const bandMat = tinted(ACCENT);
+  // Front, rear and bottom edges get 0.8 mm tape (drawn 4 mm); the worktop covers the top.
+  const bands = {
+    front: new Mesh(UNIT, bandMat),
+    rear: new Mesh(UNIT, bandMat),
+    bottom: new Mesh(UNIT, bandMat),
+  };
+  Object.values(bands).forEach((b) => {
+    b.visible = false;
+    group.add(b);
+  });
+  const holeMat = new MeshBasicMaterial({ color: DRILLED, side: DoubleSide });
+  const holes = SIDE_MACHINING.holes.map((h) => {
+    const g = new Group();
+    for (const y of h.face === 'top' ? [SIDE.t + 0.4, -0.4] : [-0.4]) {
+      const m = new Mesh(new CircleGeometry(h.r * HOLE_DRAW, 20), holeMat);
+      m.rotation.x = -Math.PI / 2;
+      m.position.set(h.u, y, h.z);
+      g.add(m);
+    }
+    g.visible = false;
+    group.add(g);
+    return g;
+  });
+  const groove = new Mesh(UNIT, tinted(0x59605a));
+  groove.visible = false;
+  group.add(groove);
+  return {
+    group,
+    bodyMat,
+    holes,
+    // Tape along one edge from `from` to `to` in that edge's own coordinate.
+    setBand(edgeName: 'front' | 'rear' | 'bottom', from: number, to: number) {
+      const b = bands[edgeName];
+      b.visible = to - from > 0.5;
+      if (edgeName === 'bottom') {
+        b.scale.set(4, SIDE.t + 1, Math.max(to - from, 0.01));
+        b.position.set(-SIDE.l / 2 - 2, SIDE.t / 2, (from + to) / 2);
+      } else {
+        const zs = edgeName === 'front' ? 1 : -1;
+        b.scale.set(Math.max(to - from, 0.01), SIDE.t + 1, 4);
+        b.position.set((from + to) / 2, SIDE.t / 2, zs * (SIDE.d / 2 + 2));
+      }
+    },
+    // Back groove on the underside from u = from to the far end.
+    setGroove(from: number) {
+      const a = Math.max(-SIDE.l / 2, from);
+      groove.visible = a < SIDE.l / 2;
+      groove.scale.set(Math.max(SIDE.l / 2 - a, 0.01), 1, FB.groove * HOLE_DRAW);
+      groove.position.set((a + SIDE.l / 2) / 2, -0.3, SIDE_MACHINING.groove);
+    },
+  };
+}
+
+function metalBox(hex: number, edge: LineBasicMaterial, s: Slab): Mesh {
+  return slab(metal(hex), edge, s);
+}
+
+function cylinderY(r: number, y0: number, y1: number, hex: number, edge: LineBasicMaterial, segments = 28): Mesh {
+  const geo = new CylinderGeometry(r, r, y1 - y0, segments);
+  const m = new Mesh(geo, metal(hex));
+  m.position.y = (y0 + y1) / 2;
+  m.add(edgesOf(geo, edge));
+  return m;
+}
+
+// Edge-banding passes: which edge faces the machine, how the panel turns for it, and the
+// edge's half length.
+const BAND_PASSES: { edge: 'bottom' | 'front' | 'rear'; turn: number; half: number; label: string }[] = [
+  { edge: 'bottom', turn: Math.PI / 2, half: SIDE.d / 2, label: '아래' },
+  { edge: 'front', turn: 0, half: SIDE.l / 2, label: '앞' },
+  { edge: 'rear', turn: Math.PI, half: SIDE.l / 2, label: '뒤' },
+];
+
+// Layer 1: the CNC router nests a body sheet exactly as the engine planned it, the edge
+// bander tapes the 900 base cabinet's side on three edges, and the skipper (a through-feed
+// boring machine) machines it lying inner face down.
+function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): FurnitureStage {
+  const group = new Group();
+  const machine = 0xb9beb6;
+  const dark = 0x8f958d;
+
+  // --- nesting router ---
+  const nest = new Group();
+  nest.scale.setScalar(FURN_SCALE);
+  nest.position.y = -12;
+  group.add(nest);
+  nest.add(metalBox(machine, edge, box(-1320, 1320, -158, -18, -710, 710)));
+  nest.add(metalBox(dark, edge, box(-1200, 1200, -560, -158, -600, 600)));
+  nest.add(slab(tinted(SHEET_RAW), edge, box(-SHEET.w / 2, SHEET.w / 2, -SHEET.t, 0, -SHEET.d / 2, SHEET.d / 2)));
+  const labelMat = faceMaterial();
+  const qrMat = tinted(DRILLED);
+  const tints = roleMats();
+  // Engine y runs away from the operator, so it maps to -z.
+  const cutParts = NEST_SHEET.map((n, i) => {
+    const cx = n.x + n.w / 2 - SHEET.w / 2;
+    const cz = SHEET.d / 2 - (n.y + n.h / 2);
+    const mat = tinted(SHEET_RAW);
+    const top = new Mesh(UNIT, mat);
+    top.scale.set(n.w, 1, n.h);
+    top.position.set(cx, 0.1, cz);
+    nest.add(top);
+    // 100 × 50 label with its QR code, long side across; small parts get none.
+    const label = new Group();
+    label.position.set(cx, 0.6, cz);
+    if (Math.min(n.w, n.h) > 100) {
+      label.add(slab(labelMat, edge, box(-50, 50, 0, 1.5, -25, 25)));
+      label.add(slab(qrMat, edge, box(-44, -22, 1.5, 2, -11, 11)));
+    }
+    nest.add(label);
+    return { n, i, cx, cz, top, mat, label, tint: (tints[n.role] as MeshLambertMaterial).color.clone(), done: 0 };
+  });
+
+  // Ø6 tool around each part outside its outline, plunging through the sheet.
+  const toolR = 3;
+  const safe = 80;
+  const depth = -SHEET.t - 1;
+  const plan: [Vector3, number, boolean][] = [];
+  for (const { n, cx, cz } of cutParts) {
+    const ax = cx - n.w / 2 - toolR;
+    const az = cz - n.h / 2 - toolR;
+    const bx = cx + n.w / 2 + toolR;
+    const bz = cz + n.h / 2 + toolR;
+    plan.push([new Vector3(ax, safe, az), 9000, false], [new Vector3(ax, depth, az), 1400, false]);
+    for (const [x, z] of [[bx, az], [bx, bz], [ax, bz], [ax, az]]) plan.push([new Vector3(x, depth, z), 4200, true]);
+    plan.push([new Vector3(ax, safe, az), 2400, false]);
+  }
+  const home = new Vector3(-SHEET.w / 2 - 120, safe, -SHEET.d / 2 - 120);
+  plan.push([home, 9000, false]);
+  const legs = planLegs(home, 0.3, plan);
+  // Four cutting moves per part; the fourth closes its outline.
+  const cuts = legs.filter((l) => l.cut);
+  cutParts.forEach((c, i) => (c.done = cuts[i * 4 + 3].end));
+  const cutEnd = legs[legs.length - 1].end;
+  const pickAt = cutEnd + 0.7;
+
+  // Kerf drawn behind the tool in short pieces, and the planned path in faint rust.
+  const kerfPos: number[] = [];
+  const kerfEnd: number[] = [];
+  const planPos: number[] = [];
+  for (const l of cuts) {
+    planPos.push(l.from.x, 1.2, l.from.z, l.to.x, 1.2, l.to.z);
+    const pieces = Math.max(1, Math.ceil(l.from.distanceTo(l.to) / 30));
+    for (let i = 0; i < pieces; i++) {
+      const a = l.from.clone().lerp(l.to, i / pieces);
+      const b = l.from.clone().lerp(l.to, (i + 1) / pieces);
+      kerfPos.push(a.x, 1.6, a.z, b.x, 1.6, b.z);
+      kerfEnd.push(l.start + ((l.end - l.start) * (i + 1)) / pieces);
+    }
+  }
+  const kerfGeo = new BufferGeometry();
+  kerfGeo.setAttribute('position', new Float32BufferAttribute(kerfPos, 3));
+  nest.add(new LineSegments(kerfGeo, edge));
+  const planGeo = new BufferGeometry();
+  planGeo.setAttribute('position', new Float32BufferAttribute(planPos, 3));
+  const planLine = new LineSegments(
+    planGeo,
+    new LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.45, depthTest: false }),
+  );
+  planLine.renderOrder = 7;
+  nest.add(planLine);
+
+  // Gantry across the sheet: posts and beam move in z, the carriage in x, the spindle in y.
+  const gantry = new Group();
+  nest.add(gantry);
+  for (const x of [-1400, 1400]) gantry.add(metalBox(0xc2c6be, edge, box(x - 70, x + 70, -158, 560, -70, 70)));
+  gantry.add(metalBox(0xc2c6be, edge, box(-1470, 1470, 480, 640, -90, 90)));
+  const carriage = new Group();
+  gantry.add(carriage);
+  carriage.add(metalBox(0xd6d9d2, edge, box(-130, 130, 440, 690, -130, 130)));
+  const spindle = new Group();
+  carriage.add(spindle);
+  spindle.add(cylinderY(58, 70, 380, 0xa8ada5, edge));
+  spindle.add(cylinderY(30, 40, 70, 0xc2c6be, edge));
+  const routerBit = cylinderY(toolR, 0, 40, 0x8c928a, edge, 12);
+  spindle.add(routerBit);
+  spindle.add(metalBox(0xc2c6be, edge, box(-60, 60, 380, 800, -15, 15)));
+  const dust = chipSpray(120, 7, 0xe2d8c0, false, 5);
+  nest.add(dust.mesh);
+
+  // --- edge bander ---
+  const band = new Group();
+  band.scale.setScalar(FURN_SCALE);
+  band.position.y = 14;
+  group.add(band);
+  const edgeZ = 320;
+  band.add(metalBox(machine, edge, box(-1000, 1000, -420, -30, edgeZ + 12, 640)));
+  band.add(metalBox(dark, edge, box(-1000, 1000, -40, 0, 90, edgeZ + 12)));
+  band.add(metalBox(dark, edge, box(-1000, 1000, -40, 0, -250, -210)));
+  const station = -150;
+  band.add(metalBox(0xd6d9d2, edge, box(station - 220, station - 60, -30, 70, edgeZ + 30, 470)));
+  const roller = cylinderY(36, -10, 50, 0xa8ada5, edge, 20);
+  roller.position.set(station, roller.position.y, edgeZ + 3 + 36);
+  band.add(roller);
+  band.add(metalBox(0xd6d9d2, edge, box(-740, -460, -30, -10, 380, 630)));
+  const coil = cylinderY(120, -10, 16, 0xe7c8b9, edge, 40);
+  coil.position.set(-600, coil.position.y, 505);
+  band.add(coil);
+  band.add(
+    new Line(
+      new BufferGeometry().setFromPoints([new Vector3(-600, 3, 385), new Vector3(station, 9, edgeZ + 2)]),
+      new LineBasicMaterial({ color: ACCENT }),
+    ),
+  );
+  band.add(metalBox(0xd6d9d2, edge, box(320, 440, -30, 90, edgeZ + 16, 470)));
+  const banded = sidePanel(edge);
+  band.add(banded.group);
+  const passLen = 1.5;
+  const returnLen = 0.6;
+  const bandLen = BAND_PASSES.length * (passLen + returnLen);
+
+  // --- skipper (through-feed boring, top and bottom units) ---
+  const bore = new Group();
+  bore.scale.setScalar(FURN_SCALE);
+  bore.position.y = -4;
+  group.add(bore);
+  // An open frame of rails and rollers, so the bottom unit can reach the panel.
+  for (const z of [-400, 400]) bore.add(metalBox(machine, edge, box(-1100, 1100, -360, -20, z - 40, z + 40)));
+  for (const x of [-880, -440, 440, 880]) {
+    const r = new Mesh(new CylinderGeometry(10, 10, 800, 16), metal(dark));
+    r.rotation.x = Math.PI / 2;
+    r.position.set(x, -10, 0);
+    bore.add(r);
+  }
+  bore.add(metalBox(0xc2c6be, edge, box(-110, 110, -360, 600, -660, -540)));
+  bore.add(metalBox(0xc2c6be, edge, box(-60, 60, 520, 600, -660, 370)));
+  const head = new Group();
+  bore.add(head);
+  head.add(metalBox(0xd6d9d2, edge, box(-120, 120, 150, 300, -100, 100)));
+  head.add(metalBox(0xc2c6be, edge, box(-40, 40, 300, 520, -25, 25)));
+  const drill = new Group();
+  head.add(drill);
+  drill.add(cylinderY(24, 60, 150, 0xa8ada5, edge, 20));
+  const bit = cylinderY(4, 0, 60, 0x8c928a, edge, 12);
+  drill.add(bit);
+  // Bottom unit under the rollers, drilling upwards, and its router for the groove.
+  const under = new Group();
+  bore.add(under);
+  under.add(metalBox(0xd6d9d2, edge, box(-120, 120, -300, -150, -100, 100)));
+  const upDrill = new Group();
+  under.add(upDrill);
+  upDrill.add(cylinderY(24, -150, -60, 0xa8ada5, edge, 20));
+  const upBit = cylinderY(4, -60, 0, 0x8c928a, edge, 12);
+  upDrill.add(upBit);
+  const routerX = -260;
+  const grooveRouter = new Group();
+  grooveRouter.position.set(routerX, 0, SIDE_MACHINING.groove);
+  bore.add(grooveRouter);
+  grooveRouter.add(metalBox(0xd6d9d2, edge, box(-90, 90, -300, -150, -80, 80)));
+  grooveRouter.add(cylinderY((FB.groove * HOLE_DRAW) / 2, -150, 7, 0x8c928a, edge, 12));
+  const bored = sidePanel(edge);
+  bore.add(bored.group);
+  BAND_PASSES.forEach((p) => bored.setBand(p.edge, -p.half, p.half));
+  for (const z of [-150, 150]) bored.group.add(metalBox(DRILLED, edge, box(-SIDE.l / 2 - 70, -SIDE.l / 2, 0, 60, z - 50, z + 50)));
+
+  // Through-feed keys: the panel stops for each hole; the router cuts on the way.
+  const keys: { t: number; px: number; hz: number; hole: number; target: number }[] = [];
+  let clock = 0.3;
+  let px = -SIDE.l / 2 - 700;
+  let hz = 0;
+  const holes = SIDE_MACHINING.holes;
+  keys.push({ t: clock, px, hz, hole: -1, target: 0 });
+  holes.forEach((h, i) => {
+    clock += Math.max(Math.abs(-h.u - px) / 2200, Math.abs(h.z - hz) / 2600, 0.12);
+    px = -h.u;
+    hz = h.z;
+    keys.push({ t: clock, px, hz, hole: -1, target: i });
+    clock += 0.14;
+    keys.push({ t: clock, px, hz, hole: i, target: i });
+  });
+  const drilledAt = keys.filter((k) => k.hole >= 0).map((k) => k.t - 0.07);
+  const holesEnd = clock;
+  clock += (620 - px) / 1500;
+  px = 620;
+  keys.push({ t: clock, px, hz: 0, hole: -1, target: holes.length - 1 });
+  const flipAt = clock + 0.3;
+  const boreLen = flipAt + 1.2;
+
+  // Seconds: nesting and the pick, slide, edge banding, slide, boring and the flip.
+  const bandAt = pickAt + 1.0;
+  const boreAt = bandAt + 0.7 + bandLen;
+  const end = boreAt + 0.7 + boreLen + 1.4;
+  const slide = 430;
+  const radii = [150, 118, 112];
+
+  let t = 0;
+  const tip = new Vector3();
+  let cutting = false;
+  let current = 0;
+  let pass = 0;
+  const apply = () => {
+    const out1 = ease(span(t, bandAt, bandAt + 0.7));
+    const out2 = ease(span(t, boreAt, boreAt + 0.7));
+    nest.visible = t < bandAt + 0.7;
+    band.visible = t >= bandAt && t < boreAt + 0.7;
+    bore.visible = t >= boreAt;
+    nest.position.x = -slide * out1;
+    band.position.x = slide * (1 - out1) - slide * out2;
+    bore.position.x = slide * (1 - out2);
+
+    // Nesting, then the side panel lifts off the sheet.
+    const l = legAt(legs, Math.min(t, cutEnd), tip);
+    cutting = l.cut && t < cutEnd;
+    gantry.position.z = tip.z;
+    carriage.position.x = tip.x;
+    spindle.position.y = tip.y;
+    const kerfCount = kerfEnd.findIndex((e) => e > t);
+    kerfGeo.setDrawRange(0, (kerfCount < 0 ? kerfEnd.length : kerfCount) * 2);
+    planLine.visible = t < cutEnd;
+    current = 0;
+    cutParts.forEach((c, i) => {
+      c.mat.color.setHex(SHEET_RAW).lerp(c.tint, ease(span(t, c.done, c.done + 0.25)));
+      if (t >= c.done) current = i + 1;
+      const shown = span(t, cutEnd + 0.05 + i * 0.05, cutEnd + 0.2 + i * 0.05);
+      c.label.visible = shown > 0;
+      c.label.scale.setScalar(Math.max(ease(shown), 0.001));
+      const lift = i === NEST_PICK ? 160 * ease(span(t, pickAt, pickAt + 0.6)) : 0;
+      c.top.position.y = 0.1 + lift;
+      c.label.position.y = 0.6 + lift;
+    });
+
+    // Edge banding: one pass per edge, the panel turned so that edge faces the machine.
+    const bt = t - bandAt - 0.7;
+    pass = Math.min(Math.max(Math.floor(bt / (passLen + returnLen)), 0), BAND_PASSES.length - 1);
+    const p = BAND_PASSES[pass];
+    const pt = bt - pass * (passLen + returnLen);
+    const run = ease(span(pt, 0, passLen));
+    const bx = -p.half - 1100 + (2 * p.half + 1600) * run;
+    // Back to the infeed and turned for the next edge.
+    const back = pass < BAND_PASSES.length - 1 ? ease(span(pt, passLen, passLen + returnLen)) : 0;
+    const next = BAND_PASSES[Math.min(pass + 1, BAND_PASSES.length - 1)];
+    const startX = -next.half - 1100;
+    banded.group.position.x = bx + (startX - bx) * back;
+    banded.group.position.y = 80 * Math.sin(Math.PI * back);
+    banded.group.rotation.y = p.turn + (next.turn - p.turn) * back;
+    const dist = p.edge === 'bottom' ? SIDE.l / 2 : SIDE.d / 2;
+    const nextDist = next.edge === 'bottom' ? SIDE.l / 2 : SIDE.d / 2;
+    banded.group.position.z = edgeZ - dist + (dist - nextDist) * back;
+    BAND_PASSES.forEach((q, k) => {
+      // Length of this edge that has passed the press roller, from its leading end.
+      const covered = k < pass || (k === pass && back > 0) ? 2 * q.half : k === pass ? Math.min(Math.max(bx + q.half - station, 0), 2 * q.half) : 0;
+      if (q.edge === 'front') banded.setBand('front', q.half - covered, q.half);
+      if (q.edge === 'rear') banded.setBand('rear', -q.half, -q.half + covered);
+      if (q.edge === 'bottom') banded.setBand('bottom', q.half - covered, q.half);
+    });
+    if (bt < 0) BAND_PASSES.forEach((q) => banded.setBand(q.edge, 0, 0));
+
+    // Boring: top unit for the through holes, bottom unit for the inner face.
+    const st = t - boreAt - 0.7;
+    const ki = keys.findIndex((k) => k.t > st);
+    const a = keys[Math.max(ki - 1, 0)];
+    const b = keys[ki < 0 ? keys.length - 1 : ki];
+    const kk = b.t > a.t ? ease(clamp01((st - a.t) / (b.t - a.t))) : 1;
+    const bpx = a.px + (b.px - a.px) * kk;
+    bored.group.position.x = bpx;
+    const target = holes[b.target];
+    const hz2 = a.hz + (b.hz - a.hz) * kk;
+    head.position.z = target.face === 'top' ? hz2 : head.position.z;
+    under.position.z = target.face === 'bottom' ? hz2 : under.position.z;
+    const dip = b.hole >= 0 ? Math.sin(Math.PI * clamp01((st - a.t) / (b.t - a.t))) : 0;
+    // Through holes are drilled from each face to half the thickness plus 3 mm.
+    drill.position.y = target.face === 'top' ? 70 - 64 * dip : 70;
+    upDrill.position.y = target.face === 'bottom' ? -40 + 50 * dip : -40;
+    const r = target.r * HOLE_DRAW;
+    bit.scale.set(r / 4, 1, r / 4);
+    upBit.scale.set(r / 4, 1, r / 4);
+    bored.holes.forEach((m, i) => (m.visible = st >= drilledAt[i]));
+    bored.setGroove(routerX - bpx);
+    // See-through while the bottom unit works, then the panel turns over to show it.
+    const flip = ease(span(st, flipAt, flipAt + 1.0));
+    bored.bodyMat.opacity = st > 0 && st < flipAt ? 0.55 : 0.55 + 0.45 * flip;
+    bored.bodyMat.depthWrite = bored.bodyMat.opacity > 0.99;
+    bored.group.position.y = 260 * Math.sin((Math.PI / 2) * flip);
+    bored.group.rotation.x = Math.PI * flip;
+    if (st <= 0) {
+      bored.bodyMat.opacity = 1;
+      bored.bodyMat.depthWrite = true;
+    }
+  };
+  const step = () => {
+    if (t < bandAt + 0.35) return 0;
+    if (t < boreAt + 0.35) return 1;
+    const st = t - boreAt - 0.7;
+    if (st < holesEnd) return 2;
+    return st < flipAt ? 3 : 4;
+  };
+
+  return {
+    group,
+    view: new Vector3(0.5, 1.2, 1.4),
+    get fitRadius() {
+      const k1 = ease(span(t, bandAt, bandAt + 0.7));
+      const k2 = ease(span(t, boreAt, boreAt + 0.7));
+      return radii[0] + (radii[1] - radii[0]) * k1 + (radii[2] - radii[1]) * k2;
+    },
+    show(on) {
+      group.visible = on;
+    },
+    reset() {
+      t = reducedMotion ? end : 0;
+      dust.clear();
+      apply();
+      dust.move(0);
+    },
+    update(dt) {
+      if (reducedMotion) return;
+      t += dt;
+      if (t > end + 0.6) {
+        t = 0;
+        dust.clear();
+      }
+      apply();
+      if (cutting) {
+        dust.spawn(tip, toolR, 1);
+        routerBit.rotation.y += dt * 40;
+      }
+      dust.move(dt);
+      const banding = t > bandAt && t < boreAt;
+      coil.rotation.y -= banding ? dt * 2.5 : 0;
+      roller.rotation.y += banding ? dt * 9 : 0;
+    },
+    notes: () => [],
+    step,
+    hud() {
+      const s = step();
+      if (s === 0) {
+        if (t < cutEnd) return `01 네스팅 · 몸통재 18T, ${current}/${NEST_SHEET.length}`;
+        return t < pickAt ? '01 네스팅 · 라벨 100 × 50' : '01 네스팅 · 하부장 측판 꺼내기';
+      }
+      if (s === 1) return `02 엣지밴딩 · ${BAND_PASSES[pass].label} 모서리 ${pass + 1}/3`;
+      if (s === 2) {
+        const st = t - boreAt - 0.7;
+        const i = drilledAt.findIndex((d) => d > st);
+        const h = holes[i < 0 ? holes.length - 1 : i];
+        if (h.face === 'top') return '03 스키퍼 윗면 · 연결 피스 Ø6';
+        return Math.abs(h.z - (SIDE.d / 2 - 37)) < 30 ? '03 스키퍼 아랫면 · 경첩 자리 Ø3' : '03 스키퍼 아랫면 · 선반핀 Ø3';
+      }
+      if (s === 3) return '04 아랫면 라우터 · 뒷판 홈 4×7';
+      return '가공 완료 · 측판 안쪽 면';
+    },
+    done: () => !reducedMotion && t >= end,
+  };
+}
+
+const INSTALL_STEPS = [
+  '몸통 조립 · 연결 피스 12곳',
+  '선반과 조절발',
+  '걸레받이와 문 · 경첩 4개',
+  '설치 · 벽에 붙여 수평 맞춤',
+  '상판 · 12T 엔지니어드스톤',
+  '상부장 · 보조목에 걸기',
+];
+
+// Layer 2: the 900 base cabinet is assembled, then the whole wall goes in: tall units, the
+// fridge cabinet and the base run, the worktop, and the upper cabinets on their batten.
+function buildInstall(edge: LineBasicMaterial, reducedMotion: boolean): FurnitureStage {
+  const group = new Group();
+  group.scale.setScalar(FURN_SCALE);
+  const mats = finishMats();
+  const room = buildRoom(edge);
+  group.add(room.group);
+  const modules = MODULES.map((m) => buildModule(m, mats, edge));
+  modules.forEach((m) => group.add(m.group));
+  const built = modules[BUILT];
+  const spec = built.spec;
+  const extras = wallExtras();
+  const worktop = slab(tinted(FINISH.stone), edge, extras.worktop);
+  const surround = extras.surround.map((s) => slab(mats.trim, edge, s));
+  const filler = slab(mats.trim, edge, extras.filler);
+  const batten = slab(tinted(0xd8c2a0), edge, extras.batten);
+  const fridge = slab(tinted(0xdcded9), edge, extras.fridge);
+  const fridgeLines = new LineSegments(
+    new BufferGeometry().setAttribute(
+      'position',
+      new Float32BufferAttribute([0, -0.1, 0.501, 0, 0.5, 0.501, -0.5, -0.1, 0.501, 0.5, -0.1, 0.501], 3),
+    ),
+    edge,
+  );
+  fridge.add(fridgeLines);
+  group.add(worktop, ...surround, filler, batten, fridge);
+
+  // Connector heads on the outside of each side, and four levelling feet.
+  const sideMesh = built.items.filter((it) => it.piece.part === 'side').map((it) => it.obj);
+  const headMat = metal(0x8f958d);
+  const heads = SIDE_MACHINING.holes
+    .filter((h) => h.face === 'top')
+    .flatMap((h) =>
+      sideMesh.map((side, k) => {
+        const m = new Mesh(new CylinderGeometry(5, 5, 2, 16), headMat);
+        m.rotation.z = Math.PI / 2;
+        const sx = side.position.x + (k === 0 ? -FB.t / 2 - 1 : FB.t / 2 + 1);
+        m.position.set(sx, h.u + (FB.plinth + spec.h - FB.worktop) / 2, h.z + (spec.d - DOOR_ZONE) / 2);
+        built.group.add(m);
+        return m;
+      }),
+    );
+  const cd = spec.d - DOOR_ZONE;
+  const feet = [70, spec.w - 70 - (spec.ends?.right ? FB.t : 0)].flatMap((x) =>
+    [BOARD_Z + 60, cd - 120].map((z) => {
+      const f = cylinderY(15, 0, FB.plinth, 0x6f756f, edge, 16);
+      f.position.x = x;
+      f.position.z = z;
+      built.group.add(f);
+      return f;
+    }),
+  );
+
+  // Seconds for the assembly; parts come in from these directions.
+  const partAt: Record<Piece['part'], [number, number]> = {
+    bottom: [0.3, 0.9],
+    side: [0.8, 1.5],
+    back: [1.6, 2.3],
+    rail: [2.3, 2.9],
+    top: [2.3, 2.9],
+    shelf: [3.4, 4.0],
+    divider: [3.4, 4.0],
+    rod: [3.4, 4.0],
+    kick: [4.6, 5.1],
+    door: [5.2, 5.8],
+    end: [8.8, 9.3],
+  };
+  const fromDir = (it: { piece: Piece; home: Vector3 }): Vector3 => {
+    switch (it.piece.part) {
+      case 'side':
+        return new Vector3(it.home.x < spec.w / 2 ? -420 : 420, 0, 0);
+      case 'back':
+        return new Vector3(0, 900, 0);
+      case 'rail':
+      case 'top':
+        return new Vector3(0, 420, 0);
+      case 'end':
+        return new Vector3(300, 0, 0);
+      case 'bottom':
+      case 'shelf':
+      case 'door':
+      case 'kick':
+      default:
+        return new Vector3(0, 0, 500);
+    }
+  };
+  const builtFrom = built.items.map((it) => fromDir(it));
+  const headsAt: [number, number] = [2.9, 3.2];
+  const feetAt: [number, number] = [4.1, 4.5];
+  const doorClose: [number, number] = [5.9, 6.5];
+  const roomAt: [number, number] = [6.8, 7.6];
+  // Order the other modules come in, after the room appears.
+  const arrive: Record<number, number> = { 0: 7.7, 1: 7.9, 2: 8.1, 3: 8.3, [BUILT]: 8.5, 5: 10.8, 6: 11.0 };
+  const counterAt: [number, number] = [9.6, 10.3];
+  const battenAt = 10.4;
+  const trimAt = 11.8;
+  const showOff: [number, number, number, number] = [12.4, 13.1, 13.8, 14.5];
+  const end = 16.0;
+  const outZ = 900;
+
+  // Centre of view: the cabinet being built in front of its place, then the whole wall.
+  const cabCentre = new Vector3(spec.x + spec.w / 2, spec.h / 2, outZ + spec.d / 2);
+  const roomCentre = new Vector3(2150, 1190, 400);
+  const centre = new Vector3();
+
+  let t = 0;
+  const apply = () => {
+    const swing = ease(span(t, showOff[0], showOff[1])) - ease(span(t, showOff[2], showOff[3]));
+    built.items.forEach((it, i) => {
+      const [a, b] = partAt[it.piece.part];
+      it.obj.position.copy(it.home).addScaledVector(builtFrom[i], 1 - ease(span(t, a, b)));
+      it.obj.visible = t >= a;
+    });
+    built.open(t < doorClose[0] ? 1 : Math.max(1 - ease(span(t, ...doorClose)), swing));
+    heads.forEach((h) => h.scale.setScalar(Math.max(ease(span(t, ...headsAt)), 0.001)));
+    feet.forEach((f) => f.scale.set(1, Math.max(ease(span(t, ...feetAt)), 0.001), 1));
+
+    const r = ease(span(t, ...roomAt));
+    room.group.visible = t >= roomAt[0];
+    room.walls.scale.y = Math.max(r, 0.001);
+    modules.forEach((m, i) => {
+      const a = arrive[i];
+      const k = ease(span(t, a, a + 0.8));
+      if (i !== BUILT) {
+        m.group.visible = t >= a;
+        m.open(i === 0 ? swing : 0);
+      }
+      // Upper cabinets come down onto the batten; the rest slide back to the wall.
+      if (m.spec.kind === 'upper') m.group.position.set(m.spec.x, m.spec.y + 160 * (1 - k), 120 * (1 - k));
+      else m.group.position.set(m.spec.x, m.spec.y, outZ * (1 - k));
+    });
+    fridge.visible = t >= arrive[2];
+    fridge.position.z = extras.fridge.at.z + outZ * (1 - ease(span(t, arrive[2], arrive[2] + 0.8)));
+    worktop.visible = t >= counterAt[0];
+    worktop.position.y = extras.worktop.at.y + 380 * (1 - ease(span(t, ...counterAt)));
+    batten.visible = t >= battenAt;
+    batten.scale.x = extras.batten.size.x * Math.max(ease(span(t, battenAt, battenAt + 0.3)), 0.001);
+    surround.forEach((s) => (s.visible = t >= trimAt));
+    filler.visible = t >= trimAt;
+    centre.copy(cabCentre).lerp(roomCentre, ease(span(t, roomAt[0], roomAt[1] + 0.4)));
+    group.position.copy(centre).multiplyScalar(-FURN_SCALE);
+  };
+  const step = () => {
+    if (t < headsAt[1]) return 0;
+    if (t < feetAt[1] + 0.1) return 1;
+    if (t < doorClose[1] + 0.2) return 2;
+    if (t < counterAt[0]) return 3;
+    if (t < battenAt) return 4;
+    return t < trimAt + 0.4 ? 5 : 6;
+  };
+
+  return {
+    group,
+    view: new Vector3(0.45, 0.55, 1.6),
+    get fitRadius() {
+      return 112 + 95 * ease(span(t, roomAt[0], roomAt[1] + 0.4));
+    },
+    show(on) {
+      group.visible = on;
+    },
+    reset() {
+      t = reducedMotion ? end : 0;
+      apply();
+    },
+    update(dt) {
+      if (reducedMotion) return;
+      t += dt;
+      if (t > end + 0.6) t = 0;
+      apply();
+    },
+    notes: () => [],
+    step,
+    hud: () => (step() < 6 ? `${pad2(step() + 1)} ${INSTALL_STEPS[step()]}` : '설치 완료 · 원룸 벽 한 면'),
+    done: () => !reducedMotion && t >= end,
+  };
+}
+
+function buildFurniture(reducedMotion: boolean): ModelView {
+  const root = new Group();
+  const edge = new LineBasicMaterial({ color: INK });
+  const stages = [
+    buildDesign(edge, reducedMotion),
+    buildFactory(edge, reducedMotion),
+    buildInstall(edge, reducedMotion),
+  ];
+  stages.forEach((s) => root.add(s.group));
+  let layer = 0;
+  const view: ModelView = {
+    root,
+    fitRadius: stages[0].fitRadius,
+    view: stages[0].view.clone(),
+    setLayer(next: number) {
+      layer = next;
+      stages.forEach((s, i) => s.show(i === next));
+      stages[next].reset();
+      view.fitRadius = stages[next].fitRadius;
+      view.view.copy(stages[next].view);
+    },
+    notes: () => [],
+    update(_time: number, dt: number) {
+      stages[layer].update(dt);
+      view.fitRadius = stages[layer].fitRadius;
+    },
+    step: () => stages[layer].step(),
+    hud: () => stages[layer].hud(),
+    done: () => stages[layer].done(),
+    labels: () => stages[layer].labels?.() ?? [],
   };
   return view;
 }
@@ -1582,9 +2564,8 @@ function buildFurniture(reducedMotion: boolean, onParams: (p: FurnitureParams) =
 
 export interface ViewportOptions {
   reducedMotion: boolean;
-  // Play the part's three layers one after another until the reader picks one.
+  // Play the model's three layers one after another until the reader picks one.
   autoplay: boolean;
-  onParams: (p: FurnitureParams) => void;
   onLayer: (layer: number) => void;
   onStep: (step: number) => void;
 }
@@ -1599,14 +2580,16 @@ export class ViewportScene {
   private readonly balloons: HTMLSpanElement[] = [];
   private readonly leaders: SVGLineElement[] = [];
   private readonly dots: SVGCircleElement[] = [];
-  private readonly dimLabels: HTMLSpanElement[] = [];
+  private readonly labelSpans: HTMLSpanElement[] = [];
   private readonly hud: HTMLSpanElement;
   private readonly part: ModelView;
-  private readonly furniture: ReturnType<typeof buildFurniture>;
+  private readonly furniture: ModelView;
   private model: ModelId = 'part';
   private layer = 1;
   private width = 1;
   private height = 1;
+  // Radius the camera was last fitted to; layers may zoom while they play.
+  private fitted = 0;
   private frame = 0;
   private last = 0;
   private visible = true;
@@ -1650,12 +2633,11 @@ export class ViewportScene {
     this.hud = document.createElement('span');
     this.hud.className = 'vp-hud';
     this.overlay.appendChild(this.hud);
-    for (const name of ['W', 'K']) {
+    for (let i = 0; i < 2; i++) {
       const label = document.createElement('span');
       label.className = 'vp-dim';
-      label.dataset['name'] = name;
       this.overlay.appendChild(label);
-      this.dimLabels.push(label);
+      this.labelSpans.push(label);
     }
 
     this.scene.add(new HemisphereLight(0xffffff, 0xd9d6cc, 2.2));
@@ -1665,7 +2647,7 @@ export class ViewportScene {
     this.scene.add(this.camera);
 
     this.part = buildPart(options.reducedMotion);
-    this.furniture = buildFurniture(options.reducedMotion, options.onParams);
+    this.furniture = buildFurniture(options.reducedMotion);
     this.scene.add(this.part.root, this.furniture.root);
 
     this.controls = new OrbitControls(this.camera, canvas);
@@ -1705,6 +2687,12 @@ export class ViewportScene {
     this.layer = layer;
     this.current.setLayer(layer);
     this.fit();
+    // Layers may look from their own direction; follow it unless the reader has turned the model.
+    if (this.swaying) this.sway(0);
+  }
+
+  startAutoplay() {
+    this.autoplay = !this.options.reducedMotion;
   }
 
   stopAutoplay() {
@@ -1714,11 +2702,6 @@ export class ViewportScene {
   // Freezes the animations and the sway; dragging still turns the model.
   setPaused(paused: boolean) {
     this.paused = paused;
-  }
-
-  setParams(p: FurnitureParams) {
-    this.furniture.stopAuto();
-    this.furniture.setParams(p);
   }
 
   resetView() {
@@ -1776,8 +2759,9 @@ export class ViewportScene {
         if (this.swaying && !this.options.reducedMotion) this.sway(dt);
         this.current.update(now / 1000, dt);
       }
+      if (this.current.fitRadius !== this.fitted) this.fit();
       this.controls.update();
-      if (this.autoplay && this.model === 'part' && this.current.done?.()) {
+      if (this.autoplay && this.current.done?.()) {
         const next = (this.layer + 1) % 3;
         this.setLayer(next);
         this.options.onLayer(next);
@@ -1808,6 +2792,7 @@ export class ViewportScene {
 
   private fit() {
     const r = this.current.fitRadius;
+    this.fitted = r;
     const aspect = this.width / this.height;
     let halfH = r;
     let halfW = r * aspect;
@@ -1882,13 +2867,14 @@ export class ViewportScene {
     this.hud.style.display = caption ? '' : 'none';
     if (this.hud.textContent !== caption) this.hud.textContent = caption;
 
-    const dims = this.model === 'furniture' ? this.furniture.dimNotes() : null;
-    this.dimLabels.forEach((label, i) => {
-      label.style.display = dims ? '' : 'none';
-      if (!dims) return;
-      const p = this.project(i === 0 ? dims.width : dims.kick, dims.owner);
-      label.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -50%)`;
-      label.textContent = i === 0 ? `W ${dims.params.width}` : `K ${dims.params.kick}`;
+    const labels = this.current.labels?.() ?? [];
+    this.labelSpans.forEach((span, i) => {
+      const l = labels[i];
+      span.style.display = l ? '' : 'none';
+      if (!l) return;
+      const p = this.project(l.anchor, l.owner);
+      span.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -50%)`;
+      if (span.textContent !== l.text) span.textContent = l.text;
     });
   }
 }

@@ -288,30 +288,6 @@
   text-align: right;
   white-space: nowrap;
 }
-.viewer-params {
-  display: grid;
-  gap: 10px;
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-}
-.viewer-params label {
-  display: grid;
-  grid-template-columns: 84px 1fr 70px;
-  align-items: center;
-  gap: 10px;
-  font-size: var(--fs-2);
-}
-.viewer-params input {
-  width: 100%;
-  accent-color: var(--accent);
-  min-height: 32px;
-}
-.viewer-params output {
-  font: 600 var(--fs-1) / 1 var(--mono);
-  color: var(--accent);
-  text-align: right;
-}
 .title-block {
   display: grid;
   grid-template-columns: 0.8fr 1.3fr 1.5fr 0.6fr 0.9fr 0.9fr;
@@ -376,8 +352,7 @@
 }
 @media print {
   .viewer-frame,
-  .viewer-layers,
-  .viewer-params {
+  .viewer-layers {
     display: none;
   }
 }
