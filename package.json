@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production --output-path docs --base-href /",
+    "build": "ng build --configuration=production --output-path docs --base-href / && node tools/route-pages.mjs docs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --configuration=production --output-path docs --base-href / && npx gh-pages -d docs",
+    "deploy": "npm run build && npx gh-pages -d docs",
     "preview": "ng serve --host 127.0.0.1 --port 4317"
   },
   "private": true,

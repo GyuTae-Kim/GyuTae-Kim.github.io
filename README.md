@@ -29,6 +29,7 @@ npm run preview
   cd tools/figures
   python3 panels.py ../../src/assets/figures/fig-panels.svg   # cam.py, nesting.py 도 같은 방식
   ```
+- `src/assets/og/`: 링크 미리보기 이미지(1200×630). `tools/route-pages.mjs`가 빌드 결과에 주소별 HTML(`portfolio.html`, `portfolio/<id>.html`, `research.html`, `contact.html`)을 만들어 GitHub Pages가 하위 주소에 200으로 응답하고, 주소마다 제목·설명·미리보기 이미지를 갖게 합니다. `npm run build`가 함께 실행합니다.
 
 ## 배포 없는 빌드 검증
 
