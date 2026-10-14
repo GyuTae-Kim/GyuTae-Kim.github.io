@@ -18,6 +18,8 @@ export interface ViewLayer {
   legend: LegendItem[];
   // Legend rows carry numbered balloons in the scene.
   balloons: boolean;
+  // Legend rows are animation steps: numbered, and the running one is highlighted.
+  steps?: boolean;
 }
 
 export interface ViewModel {
@@ -31,6 +33,7 @@ export interface ViewModel {
 
 // Same tints as viewport-scene.ts.
 export const TINTS = {
+  face: '#e9ece4',
   pocket: '#e2ad92',
   counterbore: '#7f9fce',
   hole: '#b3c6e4',
@@ -67,14 +70,19 @@ export const VIEW_MODELS: ViewModel[] = [
     caseId: 'cad-feature-recognition',
     layers: [
       {
-        label: '형상 분석',
-        title: '면과 맞닿은 관계를 읽습니다',
-        text: '부품을 면 29개로 나누고, 서로 맞닿은 53쌍을 그래프로 잇습니다.',
+        label: '모델링',
+        title: '부품을 모델링하고 면을 읽습니다',
+        text: '스케치를 돌출하고 단차, 포켓, 구멍을 파서 부품을 만든 뒤, 면 29개와 맞닿은 53쌍을 그래프로 잇습니다.',
         legend: [
-          { label: '면', detail: '29개', swatch: '#2f5f9e' },
-          { label: '맞닿은 관계', detail: '53쌍', swatch: '#8fa8cf' },
+          { label: '스케치', detail: '140 × 100 · R12', swatch: '#2f5f9e' },
+          { label: '돌출', detail: '높이 30', swatch: '#fbfaf6' },
+          { label: '단차 컷', detail: '깊이 12', swatch: TINTS.cut },
+          { label: '포켓 컷', detail: '60 × 48 · 깊이 12', swatch: TINTS.cut },
+          { label: '구멍', detail: 'Ø10 4곳 · 카운터보어 2곳', swatch: TINTS.cut },
+          { label: '면 분석', detail: '면 29개 · 53쌍', swatch: '#8fa8cf' },
         ],
         balloons: false,
+        steps: true,
       },
       {
         label: '피처 인식',
@@ -88,19 +96,22 @@ export const VIEW_MODELS: ViewModel[] = [
           { label: '필렛', detail: 'R12 · 4곳', swatch: TINTS.fillet },
         ],
         balloons: true,
+        steps: true,
       },
       {
-        label: '가공 전략',
-        title: '특징마다 공구 경로를 정합니다',
-        text: '인식한 특징을 단차 면, 포켓, 구멍, 바깥 윤곽 순서로 깎는 경로로 바꿉니다.',
+        label: '가공',
+        title: '바이스에 물린 소재를 깎습니다',
+        text: '인식한 특징마다 공구를 골라, 바이스에 물린 사각 소재를 윗면부터 바깥 윤곽까지 차례로 깎습니다.',
         legend: [
-          { label: '단차 면 가공', detail: 'Ø8 평엔드밀', swatch: TINTS.cut },
-          { label: '포켓 가공', detail: '2단 · 등고선', swatch: TINTS.cut },
-          { label: '구멍·카운터보어', detail: '드릴 → 원호', swatch: TINTS.cut },
-          { label: '윤곽 가공', detail: '바깥 둘레', swatch: TINTS.cut },
-          { label: '공구 이동', detail: '급속 이송', swatch: TINTS.rapid, dashed: true },
+          { label: '윗면 페이스', detail: 'Ø50 페이스밀', swatch: TINTS.face },
+          { label: '단차', detail: 'Ø16 엔드밀 · 2단', swatch: TINTS.step },
+          { label: '포켓', detail: 'Ø8 엔드밀 · 2단', swatch: TINTS.pocket },
+          { label: '구멍', detail: 'Ø10 드릴 · 4곳', swatch: TINTS.hole },
+          { label: '카운터보어', detail: 'Ø8 헬리컬 · 2곳', swatch: TINTS.counterbore },
+          { label: '바깥 윤곽', detail: 'Ø16 엔드밀 · 2단', swatch: TINTS.fillet },
         ],
         balloons: true,
+        steps: true,
       },
     ],
   },

@@ -24,8 +24,14 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
 
   models = VIEW_MODELS;
   limits = FURNITURE_LIMITS;
+  readonly reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   model: ModelId = 'part';
-  layer = 1;
+  // With motion the part plays modelling → recognition → machining on its own.
+  layer = this.reducedMotion ? 1 : 0;
+  autoplay = !this.reducedMotion;
+  paused = false;
+  // Legend row the animation is on.
+  step = -1;
   params: FurnitureParams = {
     width: FURNITURE_LIMITS.width.initial,
     kick: FURNITURE_LIMITS.kick.initial,
@@ -79,7 +85,6 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!this.webglAvailable()) {
       Promise.resolve().then(() => this.setState('still'));
       return;
@@ -89,8 +94,11 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
         .then(({ ViewportScene }) => {
           if (this.destroyed) return;
           this.scene = new ViewportScene(this.stage.nativeElement, {
-            reducedMotion,
+            reducedMotion: this.reducedMotion,
+            autoplay: this.autoplay,
             onParams: (p) => this.showAutoParams(p),
+            onLayer: (layer) => this.refresh(() => (this.layer = layer)),
+            onStep: (step) => this.refresh(() => (this.step = step)),
           });
           this.scene.setLayer(this.layer);
           this.zone.run(() => this.setState('live'));
@@ -105,18 +113,30 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
   }
 
   selectModel(id: ModelId) {
+    this.stopAutoplay();
     this.model = id;
     this.scene?.setModel(id);
     this.scene?.setLayer(this.layer);
   }
 
   selectLayer(i: number) {
+    this.stopAutoplay();
     this.layer = i;
     this.scene?.setLayer(i);
   }
 
   resetView() {
     this.scene?.resetView();
+  }
+
+  togglePause() {
+    this.paused = !this.paused;
+    this.scene?.setPaused(this.paused);
+  }
+
+  private stopAutoplay() {
+    this.autoplay = false;
+    this.scene?.stopAutoplay();
   }
 
   setWidth(value: string) {
@@ -131,7 +151,12 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
 
   // The automatic width sweep runs outside Angular; refresh only this component's view.
   private showAutoParams(p: FurnitureParams) {
-    this.params = p;
+    this.refresh(() => (this.params = p));
+  }
+
+  // Scene callbacks arrive from the render loop outside Angular.
+  private refresh(change: () => void) {
+    change();
     this.changes.detectChanges();
   }
 

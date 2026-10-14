@@ -1,25 +1,33 @@
 import {
   BoxGeometry,
+  BufferAttribute,
   BufferGeometry,
+  Color,
   CylinderGeometry,
   DirectionalLight,
+  DoubleSide,
+  DynamicDrawUsage,
   EdgesGeometry,
+  Euler,
   Float32BufferAttribute,
   Group,
   HemisphereLight,
+  InstancedMesh,
   Line,
   LineBasicMaterial,
-  LineDashedMaterial,
   LineSegments,
   Material,
+  Matrix4,
   Mesh,
   MeshBasicMaterial,
   MeshLambertMaterial,
   Object3D,
   OrthographicCamera,
+  Quaternion,
   Scene,
   ShapeUtils,
   SphereGeometry,
+  TetrahedronGeometry,
   Vector2,
   Vector3,
   WebGLRenderer,
@@ -55,8 +63,14 @@ interface ModelView {
   // Direction the camera starts from.
   view: Vector3;
   setLayer(layer: number): void;
-  notes(layer: number): Note[];
+  // A null entry hides that numbered balloon for now.
+  notes(layer: number): (Note | null)[];
   update(time: number, dt: number): void;
+  // Legend row the animation is on (-1 for none), a one-line caption for the stage,
+  // and whether the layer has played through once.
+  step?(): number;
+  hud?(): string;
+  done?(): boolean;
 }
 
 // ---------- geometry helpers ----------
@@ -230,69 +244,104 @@ interface PartFace {
   node: Vector3;
 }
 
-function buildPart(reducedMotion: boolean): ModelView {
-  const root = new Group();
-  const body = new Group();
-  body.rotation.x = -Math.PI / 2;
-  body.position.y = -15;
-  root.add(body);
+interface PartFeatures {
+  step: boolean;
+  pocket: boolean;
+  holes: boolean;
+}
 
+// One animated stage of the part model (modelling, recognition, machining).
+interface Stage {
+  fitRadius: number;
+  show(on: boolean): void;
+  reset(): void;
+  update(dt: number): void;
+  notes(): (Note | null)[];
+  step(): number;
+  hud(): string;
+  done(): boolean;
+}
+
+const AX = new Vector3(1, 0, 0);
+const AY = new Vector3(0, 1, 0);
+const AZ = new Vector3(0, 0, 1);
+
+// 140 × 100 × 30 with R12 corners; the right end is stepped down to 18, the top has a
+// 60 × 48 R8 pocket and two Ø18 counterbores, the step two Ø10 holes.
+const CB: P2[] = [[-50, -28], [-50, 28]];
+const DRILL: P2[] = [[57, -30], [57, 30]];
+const POCKET_RUNS = roundedRectRuns(-30, -24, 30, 24, 8);
+const POCKET = joinRuns(POCKET_RUNS);
+const FL = arc(-58, -38, 12, 180, 270, 10);
+const FR = arc(58, -38, 12, 270, 360, 10);
+const BR = arc(58, 38, 12, 0, 90, 10);
+const BL = arc(-58, 38, 12, 90, 180, 10);
+const OUTLINE = joinRuns(roundedRectRuns(-70, -50, 70, 50, 12));
+const STEP_OUTLINE = joinRuns([[[45, -50]], FR, BR, [[45, 50]]]);
+
+const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1);
+const ease = (v: number) => {
+  const x = clamp01(v);
+  return x * x * (3 - 2 * x);
+};
+const span = (t: number, a: number, b: number) => clamp01((t - a) / (b - a));
+const pad2 = (n: number) => String(n).padStart(2, '0');
+
+// Faces of the part with the given features cut; the full set is the finished part.
+function partFaces(f: PartFeatures): PartFace[] {
   const faces: PartFace[] = [];
   const add = (id: string, tag: PartTag, geometry: BufferGeometry, node: Vector3) =>
     faces.push({ id, tag, geometry, node });
-  const X = new Vector3(1, 0, 0);
-  const Y = new Vector3(0, 1, 0);
-  const Z = new Vector3(0, 0, 1);
-
-  // Stock 140 × 100 × 30 with R12 corners; the right end is stepped down to 18.
-  const cb: P2[] = [[-50, -28], [-50, 28]];
-  const drill: P2[] = [[57, -30], [57, 30]];
-  const pocketRuns = roundedRectRuns(-30, -24, 30, 24, 8);
-  const pocket = joinRuns(pocketRuns);
-  const fl = arc(-58, -38, 12, 180, 270, 10);
-  const fr = arc(58, -38, 12, 270, 360, 10);
-  const br = arc(58, 38, 12, 0, 90, 10);
-  const bl = arc(-58, 38, 12, 90, 180, 10);
-  const topOutline = joinRuns([[[-58, -50], [45, -50], [45, 50], [-58, 50]], bl, fl]);
-  const stepOutline = joinRuns([[[45, -50]], fr, br, [[45, 50]]]);
-
-  add('top', 'stock',
-    planar(topOutline, [pocket, circle(cb[0][0], cb[0][1], 9), circle(cb[1][0], cb[1][1], 9)], new Vector3(0, 0, 30), X, Y),
-    new Vector3(0, -37, 30));
-  add('stepFloor', 'step',
-    planar(stepOutline, drill.map(([x, y]) => circle(x, y, 5)), new Vector3(0, 0, 18), X, Y),
-    new Vector3(64, 0, 18));
-  add('pocketFloor', 'pocket', planar(pocket, [], new Vector3(0, 0, 18), X, Y), new Vector3(0, 0, 18));
-  cb.forEach(([x, y], i) =>
-    add(`cbFloor${i}`, 'counterbore',
-      planar(circle(x, y, 9), [circle(x, y, 5)], new Vector3(0, 0, 18), X, Y),
-      new Vector3(x + 7, y, 18)));
-  add('front', 'stock',
-    planar([[-58, 0], [58, 0], [58, 18], [45, 18], [45, 30], [-58, 30]], [], new Vector3(0, -50, 0), X, Z),
-    new Vector3(0, -50, 13));
-  add('back', 'stock',
-    planar([[-58, 0], [58, 0], [58, 30], [-45, 30], [-45, 18], [-58, 18]], [], new Vector3(0, 50, 0), X.clone().negate(), Z),
-    new Vector3(0, 50, 13));
-  add('left', 'stock', planar([[-38, 0], [38, 0], [38, 30], [-38, 30]], [], new Vector3(-70, 0, 0), Y.clone().negate(), Z),
+  const right = f.step ? 18 : 30;
+  const topHoles = [...(f.pocket ? [POCKET] : []), ...(f.holes ? CB.map(([x, y]) => circle(x, y, 9)) : [])];
+  const top = f.step ? joinRuns([[[-58, -50], [45, -50], [45, 50], [-58, 50]], BL, FL]) : OUTLINE;
+  add('top', 'stock', planar(top, topHoles, new Vector3(0, 0, 30), AX, AY), new Vector3(0, -37, 30));
+  if (f.step) {
+    add('stepFloor', 'step',
+      planar(STEP_OUTLINE, f.holes ? DRILL.map(([x, y]) => circle(x, y, 5)) : [], new Vector3(0, 0, 18), AX, AY),
+      new Vector3(64, 0, 18));
+    add('stepWall', 'step', planar([[-50, 18], [50, 18], [50, 30], [-50, 30]], [], new Vector3(45, 0, 0), AY, AZ),
+      new Vector3(45, 0, 24));
+  }
+  if (f.pocket) {
+    add('pocketFloor', 'pocket', planar(POCKET, [], new Vector3(0, 0, 18), AX, AY), new Vector3(0, 0, 18));
+    POCKET_RUNS.forEach((run, i) => add(`pocketWall${i}`, 'pocket', wall(run, 18, 30, true), runMidpoint(run, 24)));
+  }
+  if (f.holes) {
+    CB.forEach(([x, y], i) =>
+      add(`cbFloor${i}`, 'counterbore',
+        planar(circle(x, y, 9), [circle(x, y, 5)], new Vector3(0, 0, 18), AX, AY),
+        new Vector3(x + 7, y, 18)));
+    CB.forEach(([x, y], i) =>
+      add(`cbWall${i}`, 'counterbore', wall(circle(x, y, 9), 18, 30, true, true), new Vector3(x, y - 9, 24)));
+    [...CB, ...DRILL].forEach(([x, y], i) =>
+      add(`hole${i}`, 'hole', wall(circle(x, y, 5), 0, 18, true, true), new Vector3(x, y - 5, 9)));
+  }
+  const front: P2[] = f.step
+    ? [[-58, 0], [58, 0], [58, 18], [45, 18], [45, 30], [-58, 30]]
+    : [[-58, 0], [58, 0], [58, 30], [-58, 30]];
+  const back: P2[] = f.step
+    ? [[-58, 0], [58, 0], [58, 30], [-45, 30], [-45, 18], [-58, 18]]
+    : [[-58, 0], [58, 0], [58, 30], [-58, 30]];
+  add('front', 'stock', planar(front, [], new Vector3(0, -50, 0), AX, AZ), new Vector3(0, -50, 13));
+  add('back', 'stock', planar(back, [], new Vector3(0, 50, 0), AX.clone().negate(), AZ), new Vector3(0, 50, 13));
+  add('left', 'stock', planar([[-38, 0], [38, 0], [38, 30], [-38, 30]], [], new Vector3(-70, 0, 0), AY.clone().negate(), AZ),
     new Vector3(-70, 0, 15));
-  add('right', 'stock', planar([[-38, 0], [38, 0], [38, 18], [-38, 18]], [], new Vector3(70, 0, 0), Y, Z),
-    new Vector3(70, 0, 9));
-  add('stepWall', 'step', planar([[-50, 18], [50, 18], [50, 30], [-50, 30]], [], new Vector3(45, 0, 0), Y, Z),
-    new Vector3(45, 0, 24));
-  add('filletFL', 'fillet', wall(fl, 0, 30, false), runMidpoint(fl, 15));
-  add('filletFR', 'fillet', wall(fr, 0, 18, false), runMidpoint(fr, 9));
-  add('filletBR', 'fillet', wall(br, 0, 18, false), runMidpoint(br, 9));
-  add('filletBL', 'fillet', wall(bl, 0, 30, false), runMidpoint(bl, 15));
-  [...cb, ...drill].forEach(([x, y], i) =>
-    add(`hole${i}`, 'hole', wall(circle(x, y, 5), 0, 18, true, true), new Vector3(x, y - 5, 9)));
-  cb.forEach(([x, y], i) =>
-    add(`cbWall${i}`, 'counterbore', wall(circle(x, y, 9), 18, 30, true, true), new Vector3(x, y - 9, 24)));
-  pocketRuns.forEach((run, i) => add(`pocketWall${i}`, 'pocket', wall(run, 18, 30, true), runMidpoint(run, 24)));
+  add('right', 'stock', planar([[-38, 0], [38, 0], [38, right], [-38, right]], [], new Vector3(70, 0, 0), AY, AZ),
+    new Vector3(70, 0, right / 2));
+  add('filletFL', 'fillet', wall(FL, 0, 30, false), runMidpoint(FL, 15));
+  add('filletFR', 'fillet', wall(FR, 0, right, false), runMidpoint(FR, right / 2));
+  add('filletBR', 'fillet', wall(BR, 0, right, false), runMidpoint(BR, right / 2));
+  add('filletBL', 'fillet', wall(BL, 0, 30, false), runMidpoint(BL, 15));
+  return faces;
+}
 
+// Which faces of the finished part touch each other.
+function faceLinks(faces: PartFace[]): [number, number][] {
   const index = new Map(faces.map((f, i) => [f.id, i]));
   const links: [number, number][] = [];
   const link = (a: string, ...others: string[]) => others.forEach((b) => links.push([index.get(a)!, index.get(b)!]));
-  const pocketWalls = pocketRuns.map((_, i) => `pocketWall${i}`);
+  const pocketWalls = POCKET_RUNS.map((_, i) => `pocketWall${i}`);
   link('top', 'front', 'back', 'left', 'filletFL', 'filletBL', 'stepWall', 'cbWall0', 'cbWall1', ...pocketWalls);
   link('stepFloor', 'stepWall', 'front', 'back', 'right', 'filletFR', 'filletBR', 'hole2', 'hole3');
   link('pocketFloor', ...pocketWalls);
@@ -303,239 +352,900 @@ function buildPart(reducedMotion: boolean): ModelView {
   link('right', 'filletFR', 'filletBR');
   link('front', 'filletFL', 'filletFR', 'stepWall');
   link('back', 'filletBL', 'filletBR', 'stepWall');
+  return links;
+}
 
-  const tagMaterials = new Map<PartTag, MeshLambertMaterial>();
-  const edgeMat = new LineBasicMaterial({ color: INK });
+function solidOf(faces: PartFace[], material: Material, edgeMat: LineBasicMaterial): Group {
+  const g = new Group();
   for (const f of faces) {
-    if (!tagMaterials.has(f.tag)) tagMaterials.set(f.tag, faceMaterial());
-    body.add(new Mesh(f.geometry, tagMaterials.get(f.tag)!));
-    body.add(edgesOf(f.geometry, edgeMat));
+    g.add(new Mesh(f.geometry, material));
+    g.add(edgesOf(f.geometry, edgeMat));
   }
-  const graph = graphOverlay(faces.map((f) => f.node), links, 1.6);
-  body.add(graph);
+  return g;
+}
 
-  const featureTint: Record<PartTag, string | null> = {
-    stock: null,
-    pocket: TINTS.pocket,
-    counterbore: TINTS.counterbore,
-    hole: TINTS.hole,
-    step: TINTS.step,
-    fillet: TINTS.fillet,
+function sketchLoop(pts: P2[], z: number, material: LineBasicMaterial): Line {
+  const loop = [...pts, pts[0]].map(([x, y]) => new Vector3(x, y, z));
+  const line = new Line(new BufferGeometry().setFromPoints(loop), material);
+  line.renderOrder = 4;
+  return line;
+}
+
+function drawLines(lines: Line[], p: number) {
+  for (const l of lines) {
+    const n = l.geometry.getAttribute('position').count;
+    l.geometry.setDrawRange(0, Math.round(n * clamp01(p)));
+  }
+}
+
+// Translucent cut volume, drawn over the solid like a CAD cut preview. It hangs from z = top
+// and grows downwards as its group scales in z.
+function cutBody(outline: P2[], depth: number, top: number, fill: Material, line: LineBasicMaterial): Group {
+  const g = new Group();
+  g.position.z = top;
+  const geos = [
+    planar(outline, [], new Vector3(0, 0, 0), AX, AY),
+    planar(outline, [], new Vector3(0, 0, -depth), AX, AY),
+    wall(outline, -depth, 0, false, true),
+  ];
+  for (const geo of geos) {
+    const m = new Mesh(geo, fill);
+    m.renderOrder = 5;
+    g.add(m);
+  }
+  for (const z of [0, -depth]) {
+    const l = sketchLoop(outline, z, line);
+    l.renderOrder = 6;
+    g.add(l);
+  }
+  return g;
+}
+
+// Nodes pop in during the first half, links draw during the second.
+function revealGraph(g: Group, p: number) {
+  for (const c of g.children) {
+    if (c instanceof LineSegments) {
+      const n = c.geometry.getAttribute('position').count;
+      c.geometry.setDrawRange(0, Math.floor((n / 2) * clamp01(p * 2 - 1)) * 2);
+    } else {
+      c.scale.setScalar(Math.max(ease(p * 2), 0.0001));
+    }
+  }
+}
+
+const MODEL_STEPS = [
+  '스케치 · 140 × 100, R12',
+  '돌출 · 높이 30',
+  '단차 컷 · 깊이 12',
+  '포켓 컷 · 60 × 48, 깊이 12',
+  '구멍 · Ø10 4곳, 카운터보어 2곳',
+  '면 분석 · 면 29개, 맞닿은 53쌍',
+];
+
+// Layer 0: the part is modelled feature by feature, then its faces are read as a graph.
+function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: boolean): Stage {
+  const group = new Group();
+  body.add(group);
+  const mat = faceMaterial();
+  const finalFaces = partFaces({ step: true, pocket: true, holes: true });
+  const states = [
+    solidOf(partFaces({ step: false, pocket: false, holes: false }), mat, edgeMat),
+    solidOf(partFaces({ step: true, pocket: false, holes: false }), mat, edgeMat),
+    solidOf(partFaces({ step: true, pocket: true, holes: false }), mat, edgeMat),
+    solidOf(finalFaces, mat, edgeMat),
+  ];
+  states.forEach((s) => group.add(s));
+
+  const sketchMat = new LineBasicMaterial({ color: BLUE });
+  const cutFill = new MeshBasicMaterial({
+    color: ACCENT, transparent: true, opacity: 0.3, depthTest: false, depthWrite: false, side: DoubleSide,
+  });
+  const cutLine = new LineBasicMaterial({ color: ACCENT, transparent: true, depthTest: false });
+  const sketches: Line[][] = [
+    [sketchLoop(OUTLINE, 0, sketchMat)],
+    [sketchLoop(STEP_OUTLINE, 30, sketchMat)],
+    [sketchLoop(POCKET, 30, sketchMat)],
+    [
+      ...CB.flatMap(([x, y]) => [sketchLoop(circle(x, y, 9), 30, sketchMat), sketchLoop(circle(x, y, 5), 30, sketchMat)]),
+      ...DRILL.map(([x, y]) => sketchLoop(circle(x, y, 5), 18, sketchMat)),
+    ],
+  ];
+  sketches.flat().forEach((l) => group.add(l));
+  const cuts: Group[][] = [
+    [cutBody(STEP_OUTLINE, 12, 30, cutFill, cutLine)],
+    [cutBody(POCKET, 12, 30, cutFill, cutLine)],
+    [
+      ...CB.flatMap(([x, y]) => [
+        cutBody(circle(x, y, 9), 12, 30, cutFill, cutLine),
+        cutBody(circle(x, y, 5), 18, 18, cutFill, cutLine),
+      ]),
+      ...DRILL.map(([x, y]) => cutBody(circle(x, y, 5), 18, 18, cutFill, cutLine)),
+    ],
+  ];
+  cuts.flat().forEach((c) => group.add(c));
+  const graph = graphOverlay(finalFaces.map((f) => f.node), faceLinks(finalFaces), 1.6);
+  group.add(graph);
+
+  // Seconds: sketch, extrude, three cuts as [sketch, preview, commit], face graph.
+  const sketchAt: [number, number] = [0.2, 1.3];
+  const extrudeAt: [number, number] = [1.4, 2.4];
+  const cutAt: [number, number, number][] = [[2.7, 3.3, 3.9], [4.2, 4.8, 5.4], [5.7, 6.3, 6.9]];
+  const graphAt: [number, number] = [7.3, 8.8];
+  const end = 11;
+
+  let t = 0;
+  const apply = () => {
+    drawLines(sketches[0], ease(span(t, ...sketchAt)));
+    sketches[0].forEach((l) => (l.visible = t < extrudeAt[1]));
+    states[0].scale.z = Math.max(ease(span(t, ...extrudeAt)), 0.001);
+    const shown = t < extrudeAt[0] ? -1 : cutAt.filter(([, , commit]) => t >= commit).length;
+    states.forEach((s, i) => (s.visible = i === shown));
+    cutAt.forEach(([from, preview, commit], i) => {
+      sketches[i + 1].forEach((l) => (l.visible = t >= from && t < commit));
+      drawLines(sketches[i + 1], ease(span(t, from, preview)));
+      const live = t >= preview && t < commit + 0.4;
+      cuts[i].forEach((c) => {
+        c.visible = live;
+        c.scale.z = Math.max(ease(span(t, preview, commit - 0.1)), 0.001);
+      });
+      if (live) {
+        const fade = 1 - span(t, commit, commit + 0.4);
+        cutFill.opacity = 0.3 * fade;
+        cutLine.opacity = fade;
+      }
+    });
+    graph.visible = t >= graphAt[0];
+    revealGraph(graph, span(t, ...graphAt));
   };
+  const step = () =>
+    t < extrudeAt[0] ? 0 : t < cutAt[0][0] ? 1 : t < cutAt[1][0] ? 2 : t < cutAt[2][0] ? 3 : t < graphAt[0] ? 4 : 5;
 
-  // Toolpaths: step facing, two-level pocket contours, drilling + counterbore circles, outer profile.
-  const tool = buildToolpaths(pocketRuns, cb, drill);
-  body.add(tool.group);
+  return {
+    fitRadius: 84,
+    show(on) {
+      group.visible = on;
+    },
+    reset() {
+      t = reducedMotion ? end : 0;
+      apply();
+    },
+    update(dt) {
+      if (reducedMotion) return;
+      t += dt;
+      if (t > end + 0.6) t = 0;
+      apply();
+    },
+    notes: () => [],
+    step,
+    hud: () => `${pad2(step() + 1)} ${MODEL_STEPS[step()]}`,
+    done: () => !reducedMotion && t >= end,
+  };
+}
 
-  const featureNotes: Note[] = [
+const FEATURE_ORDER: Exclude<PartTag, 'stock'>[] = ['pocket', 'counterbore', 'hole', 'step', 'fillet'];
+const FEATURE_STEPS = ['포켓 · 면 9개', '카운터보어 · 2곳', '관통 구멍 · 4곳', '단차 · 면 2개', '필렛 · R12, 4곳'];
+
+// Layer 1: the recognised feature classes light up one after another.
+function buildRecognition(body: Group, edgeMat: LineBasicMaterial, reducedMotion: boolean): Stage {
+  const group = new Group();
+  body.add(group);
+  const faces = partFaces({ step: true, pocket: true, holes: true });
+  const mats = new Map<PartTag, MeshLambertMaterial>();
+  for (const f of faces) {
+    if (!mats.has(f.tag)) mats.set(f.tag, faceMaterial());
+    group.add(new Mesh(f.geometry, mats.get(f.tag)!));
+    group.add(edgesOf(f.geometry, edgeMat));
+  }
+  const notes: Note[] = [
     new Vector3(0, 0, 18),
     new Vector3(-50, 19, 30),
     new Vector3(57, -25, 18),
     new Vector3(64, 8, 18),
-    runMidpoint(fl, 15),
+    runMidpoint(FL, 15),
   ].map((anchor) => ({ anchor, owner: body }));
-  const pathNotes: Note[] = [
-    new Vector3(61, 12, 18.4),
-    new Vector3(0, -14, 24),
-    new Vector3(-50, -28, 30),
-    new Vector3(-74, -10, 1),
-  ].map((anchor) => ({ anchor, owner: body }));
-
-  let layer = 1;
+  const start = 0.5;
+  const slot = 0.8;
+  const end = start + FEATURE_ORDER.length * slot + 2.6;
+  const white = new Color(FACE);
+  let t = 0;
+  const apply = () => {
+    FEATURE_ORDER.forEach((tag, i) => {
+      const p = ease(span(t, start + i * slot, start + i * slot + 0.45));
+      mats.get(tag)!.color.lerpColors(white, new Color(tint(TINTS[tag], 1)), p);
+    });
+  };
+  const step = () => (t < start ? -1 : Math.min(Math.floor((t - start) / slot), FEATURE_ORDER.length - 1));
   return {
+    fitRadius: 84,
+    show(on) {
+      group.visible = on;
+    },
+    reset() {
+      t = reducedMotion ? end : 0;
+      apply();
+    },
+    update(dt) {
+      if (reducedMotion) return;
+      t += dt;
+      if (t > end + 0.6) t = 0;
+      apply();
+    },
+    notes: () => notes.map((n, i) => (t >= start + i * slot ? n : null)),
+    step,
+    hud: () => (step() < 0 ? 'AI 피처 인식' : `AI 인식 ${pad2(step() + 1)} · ${FEATURE_STEPS[step()]}`),
+    done: () => !reducedMotion && t >= end,
+  };
+}
+
+// ---------- machining (layer 2) ----------
+
+// Square stock clamped in a vise; the part is cut out of its top. The stock is a height
+// field on a 0.5 mm grid that each tool position lowers under the cutter.
+const STOCK = { x: 75, y: 55, top: 32, bottom: -12 };
+const CELL = 0.5;
+const NX = Math.round((2 * STOCK.x) / CELL) + 1;
+const NY = Math.round((2 * STOCK.y) / CELL) + 1;
+// 118° drill point: the cone rises tan(31°) per millimetre of radius.
+const DRILL_TIP = Math.tan((31 * Math.PI) / 180);
+const RAW = new Color(0xb5bab1);
+
+const OPS = ['윗면 페이스 가공', '단차 가공', '포켓 가공', '구멍 드릴', '카운터보어', '바깥 윤곽 가공'];
+const OP_COLORS = [TINTS.face, TINTS.step, TINTS.pocket, TINTS.hole, TINTS.counterbore, TINTS.fillet].map(
+  (hex) => new Color(tint(hex, 0.9)),
+);
+
+function buildStock() {
+  const group = new Group();
+  const count = NX * NY;
+  const heights = new Float32Array(count);
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  const index = new Uint32Array((NX - 1) * (NY - 1) * 6);
+  let k = 0;
+  for (let iy = 0; iy < NY - 1; iy++) {
+    for (let ix = 0; ix < NX - 1; ix++) {
+      const a = iy * NX + ix;
+      index[k++] = a;
+      index[k++] = a + 1;
+      index[k++] = a + NX + 1;
+      index[k++] = a;
+      index[k++] = a + NX + 1;
+      index[k++] = a + NX;
+    }
+  }
+  const posAttr = new BufferAttribute(pos, 3).setUsage(DynamicDrawUsage);
+  const colAttr = new BufferAttribute(col, 3).setUsage(DynamicDrawUsage);
+  const topGeo = new BufferGeometry();
+  topGeo.setAttribute('position', posAttr);
+  topGeo.setAttribute('color', colAttr);
+  topGeo.setIndex(new BufferAttribute(index, 1));
+  const top = new Mesh(
+    topGeo,
+    new MeshLambertMaterial({
+      vertexColors: true, flatShading: true, side: DoubleSide,
+    }),
+  );
+  top.frustumCulled = false;
+
+  // Side walls follow the height field along the boundary, counter-clockwise.
+  const perim: number[] = [];
+  for (let ix = 0; ix < NX; ix++) perim.push(ix);
+  for (let iy = 1; iy < NY; iy++) perim.push(iy * NX + NX - 1);
+  for (let ix = NX - 2; ix >= 0; ix--) perim.push((NY - 1) * NX + ix);
+  for (let iy = NY - 2; iy > 0; iy--) perim.push(iy * NX);
+  const wallPos = new Float32Array(perim.length * 6);
+  const wallIndex: number[] = [];
+  for (let i = 0; i < perim.length; i++) {
+    const j = (i + 1) % perim.length;
+    wallIndex.push(2 * i, 2 * i + 1, 2 * j + 1, 2 * i, 2 * j + 1, 2 * j);
+  }
+  const wallAttr = new BufferAttribute(wallPos, 3).setUsage(DynamicDrawUsage);
+  const wallGeo = new BufferGeometry();
+  wallGeo.setAttribute('position', wallAttr);
+  wallGeo.setIndex(wallIndex);
+  const walls = new Mesh(wallGeo, new MeshLambertMaterial({ color: RAW, flatShading: true, side: DoubleSide }));
+  walls.frustumCulled = false;
+  group.add(top, walls);
+
+  let rowMin = Infinity;
+  let rowMax = -1;
+  let edgeDirty = false;
+  const paint = (i: number, c: Color) => {
+    col[i * 3] = c.r;
+    col[i * 3 + 1] = c.g;
+    col[i * 3 + 2] = c.b;
+  };
+  const flush = () => {
+    if (rowMax >= rowMin) {
+      const start = rowMin * NX * 3;
+      const len = (rowMax - rowMin + 1) * NX * 3;
+      posAttr.addUpdateRange(start, len);
+      colAttr.addUpdateRange(start, len);
+      posAttr.needsUpdate = true;
+      colAttr.needsUpdate = true;
+      rowMin = Infinity;
+      rowMax = -1;
+    }
+    if (edgeDirty) {
+      perim.forEach((v, i) => (wallPos[i * 6 + 2] = heights[v]));
+      wallAttr.needsUpdate = true;
+      edgeDirty = false;
+    }
+  };
+  return {
+    group,
+    reset() {
+      heights.fill(STOCK.top);
+      for (let iy = 0; iy < NY; iy++) {
+        for (let ix = 0; ix < NX; ix++) {
+          const i = iy * NX + ix;
+          pos[i * 3] = -STOCK.x + ix * CELL;
+          pos[i * 3 + 1] = -STOCK.y + iy * CELL;
+          pos[i * 3 + 2] = STOCK.top;
+          col[i * 3] = RAW.r;
+          col[i * 3 + 1] = RAW.g;
+          col[i * 3 + 2] = RAW.b;
+        }
+      }
+      perim.forEach((v, i) => {
+        wallPos.set([pos[v * 3], pos[v * 3 + 1], STOCK.top, pos[v * 3], pos[v * 3 + 1], STOCK.bottom], i * 6);
+      });
+      posAttr.clearUpdateRanges();
+      colAttr.clearUpdateRanges();
+      posAttr.needsUpdate = true;
+      colAttr.needsUpdate = true;
+      wallAttr.needsUpdate = true;
+      rowMin = Infinity;
+      rowMax = -1;
+      edgeDirty = false;
+    },
+    // Lowers the field under a cutter whose tip is at (cx, cy, tz); returns the removed volume.
+    stamp(cx: number, cy: number, tz: number, r: number, drill: boolean, color: Color): number {
+      const ix0 = Math.max(0, Math.ceil((cx - r + STOCK.x) / CELL));
+      const ix1 = Math.min(NX - 1, Math.floor((cx + r + STOCK.x) / CELL));
+      const iy0 = Math.max(0, Math.ceil((cy - r + STOCK.y) / CELL));
+      const iy1 = Math.min(NY - 1, Math.floor((cy + r + STOCK.y) / CELL));
+      if (ix0 > ix1 || iy0 > iy1) return 0;
+      const r2 = r * r;
+      let removed = 0;
+      for (let iy = iy0; iy <= iy1; iy++) {
+        const dy = -STOCK.y + iy * CELL - cy;
+        let touched = false;
+        for (let ix = ix0; ix <= ix1; ix++) {
+          const dx = -STOCK.x + ix * CELL - cx;
+          const d2 = dx * dx + dy * dy;
+          if (d2 > r2) continue;
+          const z = drill ? tz + Math.sqrt(d2) * DRILL_TIP : tz;
+          const i = iy * NX + ix;
+          if (heights[i] <= z + 1e-4) continue;
+          removed += heights[i] - z;
+          heights[i] = z;
+          pos[i * 3 + 2] = z;
+          paint(i, color);
+          // Wall tops left standing next to the cut take its colour too, so a wall is
+          // one colour instead of stripes between the two heights.
+          if (ix > 0 && heights[i - 1] > z + 0.3) paint(i - 1, color);
+          if (ix < NX - 1 && heights[i + 1] > z + 0.3) paint(i + 1, color);
+          if (iy > 0 && heights[i - NX] > z + 0.3) paint(i - NX, color);
+          if (iy < NY - 1 && heights[i + NX] > z + 0.3) paint(i + NX, color);
+          touched = true;
+        }
+        if (touched) {
+          rowMin = Math.min(rowMin, Math.max(iy - 1, 0));
+          rowMax = Math.max(rowMax, Math.min(iy + 1, NY - 1));
+          if (iy === 0 || iy === NY - 1 || ix0 === 0 || ix1 === NX - 1) edgeDirty = true;
+        }
+      }
+      return removed * CELL * CELL;
+    },
+    flush,
+  };
+}
+
+interface Cutter {
+  name: string;
+  r: number;
+  kind: 'face' | 'flat' | 'drill';
+  model: Group;
+  spin: Object3D;
+}
+
+function metal(hex: number): MeshLambertMaterial {
+  const m = faceMaterial();
+  m.color.setHex(hex);
+  return m;
+}
+
+// Fluted cutting length along +y: lobed cross-section twisted on a 30° helix, cone tip for drills.
+function fluteGeometry(r: number, length: number, flutes: number, drill: boolean): BufferGeometry {
+  const seg = 40;
+  const rows = Math.max(10, Math.round(length / 1.5));
+  const twist = Math.tan(Math.PI / 6) / r;
+  const tipLen = drill ? r * DRILL_TIP : 0;
+  const positions: number[] = [];
+  for (let j = 0; j <= rows; j++) {
+    const y = (j / rows) * length;
+    for (let i = 0; i <= seg; i++) {
+      const a = (i / seg) * Math.PI * 2;
+      let rad = r * (0.8 + 0.2 * Math.cos(flutes * (a + twist * y)));
+      if (drill && y < tipLen) rad *= y / tipLen;
+      positions.push(rad * Math.cos(a), y, rad * Math.sin(a));
+    }
+  }
+  const index: number[] = [];
+  for (let j = 0; j < rows; j++) {
+    for (let i = 0; i < seg; i++) {
+      const a = j * (seg + 1) + i;
+      const b = a + seg + 1;
+      index.push(a, b, a + 1, a + 1, b, b + 1);
+    }
+  }
+  if (!drill) {
+    const c = positions.length / 3;
+    positions.push(0, 0, 0);
+    for (let i = 0; i < seg; i++) index.push(c, i, i + 1);
+  }
+  const g = new BufferGeometry();
+  g.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  g.setIndex(index);
+  g.computeVertexNormals();
+  return g;
+}
+
+// Collet nut, holder taper, flange and spindle nose above a tool that sticks out `stick` mm.
+function toolHolder(stick: number, nut: number, edge: LineBasicMaterial): Group {
+  const g = new Group();
+  const piece = (geo: BufferGeometry, y: number, hex: number) => {
+    const m = new Mesh(geo, metal(hex));
+    m.position.y = y;
+    m.add(edgesOf(geo, edge));
+    g.add(m);
+  };
+  piece(new CylinderGeometry(nut, nut, 10, 6), stick + 5, 0xc2c6be);
+  piece(new CylinderGeometry(20, nut + 2, 22, 32), stick + 21, 0xd6d9d2);
+  piece(new CylinderGeometry(27, 27, 8, 32), stick + 36, 0xc2c6be);
+  piece(new CylinderGeometry(34, 34, 70, 32), stick + 75, 0xa8ada5);
+  return g;
+}
+
+function makeCutters(edge: LineBasicMaterial): Cutter[] {
+  const carbide = new MeshLambertMaterial({ color: 0x8c928a, flatShading: true });
+  const shankMat = metal(0xd0d3cc);
+  const endMill = (name: string, r: number, flute: number, stick: number, drill: boolean): Cutter => {
+    const model = new Group();
+    const flutes = new Mesh(fluteGeometry(r, flute, drill ? 2 : 4, drill), carbide);
+    const shankGeo = new CylinderGeometry(r, r, stick - flute, 24);
+    const shank = new Mesh(shankGeo, shankMat);
+    shank.position.y = flute + (stick - flute) / 2;
+    shank.add(edgesOf(shankGeo, edge));
+    model.add(flutes, shank, toolHolder(stick, r + 6, edge));
+    return { name, r, kind: drill ? 'drill' : 'flat', model, spin: flutes };
+  };
+  // Ø50 face mill: a body with eight inserts on its rim.
+  const face = new Group();
+  const headGeo = new CylinderGeometry(23, 25, 12, 40);
+  const head = new Mesh(headGeo, metal(0xb3b8b0));
+  head.position.y = 6;
+  head.add(edgesOf(headGeo, edge));
+  face.add(head);
+  const insertMat = metal(0xc7a04c);
+  const insertGeo = new BoxGeometry(5, 4, 1.8);
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const ins = new Mesh(insertGeo, insertMat);
+    ins.position.set(Math.cos(a) * 23.2, 2.2, Math.sin(a) * 23.2);
+    ins.rotation.y = -a + Math.PI / 2;
+    face.add(ins);
+  }
+  const faceModel = new Group();
+  const arborGeo = new CylinderGeometry(15, 15, 14, 32);
+  const arbor = new Mesh(arborGeo, metal(0xc2c6be));
+  arbor.position.y = 19;
+  arbor.add(edgesOf(arborGeo, edge));
+  faceModel.add(face, arbor, toolHolder(26, 17, edge));
+  return [
+    { name: 'T1 Ø50 페이스밀', r: 25, kind: 'face', model: faceModel, spin: face },
+    endMill('T2 Ø16 평엔드밀', 8, 36, 46, false),
+    endMill('T3 Ø8 평엔드밀', 4, 20, 30, false),
+    endMill('T4 Ø10 드릴', 5, 42, 54, true),
+  ];
+}
+
+// Machine vise: bed, fixed and moving jaws with hardened jaw plates, screw and handle,
+// parallels under the stock. Part coordinates (z up); the stock sits between y = ±55.
+function buildVise(edge: LineBasicMaterial): Group {
+  const g = new Group();
+  const box = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, hex: number) => {
+    const geo = new BoxGeometry(x1 - x0, y1 - y0, z1 - z0);
+    const m = new Mesh(geo, metal(hex));
+    m.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
+    m.add(edgesOf(geo, edge));
+    g.add(m);
+  };
+  const body = 0xb9beb6;
+  const plate = 0x9fa59d;
+  box(-84, 84, -98, 106, -60, -36, body);
+  box(-80, 80, -94, -63, -36, -3, body);
+  box(-80, 80, -63, -55, -32, -3, plate);
+  box(-80, 80, 63, 94, -36, -3, body);
+  box(-80, 80, 55, 63, -32, -3, plate);
+  box(-72, 72, -50, -42, -36, -12, 0xd2d5ce);
+  box(-72, 72, 42, 50, -36, -12, 0xd2d5ce);
+  const screwGeo = new CylinderGeometry(9, 9, 34, 24);
+  const screw = new Mesh(screwGeo, metal(body));
+  screw.position.set(0, 111, -26);
+  screw.add(edgesOf(screwGeo, edge));
+  const handleGeo = new CylinderGeometry(3.5, 3.5, 76, 16);
+  const handle = new Mesh(handleGeo, metal(0x8f958d));
+  handle.position.set(0, 126, -26);
+  handle.rotation.z = Math.PI / 2;
+  handle.add(edgesOf(handleGeo, edge));
+  g.add(screw, handle);
+  return g;
+}
+
+interface Move {
+  from: Vector3;
+  to: Vector3;
+  start: number;
+  end: number;
+  cut: boolean;
+  op: number;
+  tool: number;
+  // Tool change: the spindle stops while the tool is swapped.
+  dwell: boolean;
+}
+
+function insetRing(d: number): P2[] {
+  const ring = joinRuns(roundedRectRuns(-30 + d, -24 + d, 30 - d, 24 - d, Math.max(8 - d, 0.6)));
+  const s = ring.findIndex(([, y]) => Math.abs(y - (-24 + d)) < 1e-6);
+  return [...ring.slice(s), ...ring.slice(0, s)];
+}
+
+// Tool moves for the six operations, timed in seconds (animation pace, not real feeds).
+function planMoves(): Move[] {
+  const moves: Move[] = [];
+  const safe = 46;
+  const home = 150;
+  const rapidSpeed = 560;
+  let at = new Vector3(30, -60, home);
+  let clock = 0;
+  let op = 0;
+  let tool = 0;
+  const push = (to: Vector3, speed: number, cut: boolean) => {
+    const dur = at.distanceTo(to) / speed;
+    if (dur <= 1e-6) return;
+    moves.push({ from: at.clone(), to: to.clone(), start: clock, end: clock + dur, cut, op, tool, dwell: false });
+    clock += dur;
+    at = to.clone();
+  };
+  const feed = (x: number, y: number, z: number, speed: number) => push(new Vector3(x, y, z), speed, true);
+  const rapid = (x: number, y: number, z: number) => {
+    const high = Math.max(safe, at.z);
+    push(new Vector3(at.x, at.y, high), rapidSpeed, false);
+    push(new Vector3(x, y, high), rapidSpeed, false);
+    push(new Vector3(x, y, z), rapidSpeed, false);
+  };
+  // Retracts, swaps the tool, then starts the next operation.
+  const begin = (nextOp: number, nextTool: number) => {
+    push(new Vector3(at.x, at.y, home), rapidSpeed, false);
+    op = nextOp;
+    tool = nextTool;
+    moves.push({ from: at.clone(), to: at.clone(), start: clock, end: clock + 0.45, cut: false, op, tool, dwell: true });
+    clock += 0.45;
+  };
+
+  // 1. Face the top from 32 to 30 in three passes.
+  rapid(-110, -36, 30);
+  for (const [x, y] of [[110, -36], [110, 0], [-110, 0], [-110, 36], [110, 36]]) feed(x, y, 30, 300);
+
+  // 2. Step: two passes per level at x 68 and 53, down to 24 then 18. The passes overlap
+  // by 1 mm; touching edge to edge would leave a one-cell fin standing between them.
+  begin(1, 1);
+  rapid(68, -72, 24);
+  for (const [x, y, z] of [[68, 72, 24], [53, 72, 24], [53, -72, 24], [53, -72, 18], [53, 72, 18], [68, 72, 18], [68, -72, 18]]) {
+    feed(x, y, z, 290);
+  }
+
+  // 3. Pocket: contours from the centre outwards, two levels.
+  begin(2, 2);
+  const rings = [21, 16, 10, 4].map(insetRing);
+  const [sx, sy] = rings[0][0];
+  rapid(sx, sy, 33);
+  for (const z of [24, 18]) {
+    feed(sx, sy, z, 90);
+    for (const ring of rings) {
+      for (const [x, y] of [...ring, ring[0]]) feed(x, y, z, 320);
+    }
+    feed(sx, sy, z, 320);
+  }
+
+  // 4. Drill the four holes through.
+  begin(3, 3);
+  for (const [x, y] of [...CB, ...DRILL]) {
+    const top = CB.some(([cx, cy]) => cx === x && cy === y) ? 30 : 18;
+    rapid(x, y, top + 3);
+    feed(x, y, -4, 95);
+    push(new Vector3(x, y, top + 3), rapidSpeed, false);
+  }
+
+  // 5. Counterbores: helical entry around the drilled hole, then one pass on the floor.
+  begin(4, 2);
+  for (const [x, y] of CB) {
+    rapid(x + 5, y, 33);
+    feed(x + 5, y, 30, 110);
+    for (let i = 1; i <= 108; i++) {
+      const a = (i / 36) * Math.PI * 2;
+      feed(x + 5 * Math.cos(a), y + 5 * Math.sin(a), 30 - 12 * Math.min(i / 72, 1), 200);
+    }
+  }
+
+  // 6. Outer profile with R20 tool-centre corners, levels 15 and 0, lead in from outside.
+  begin(5, 1);
+  const loop = joinRuns(roundedRectRuns(-78, -58, 78, 58, 20));
+  const s = loop.findIndex(([x, y]) => x <= -78 + 1e-6 && y > 0);
+  const path = [...loop.slice(s), ...loop.slice(0, s)];
+  const ly = path[0][1];
+  rapid(-98, ly, 15);
+  for (const z of [15, 0]) {
+    feed(-98, ly, z, 300);
+    for (const [x, y] of [...path, path[0]]) feed(x, y, z, 340);
+    feed(-98, ly, z, 340);
+  }
+  push(new Vector3(at.x, at.y, home), rapidSpeed, false);
+  push(new Vector3(30, -60, home), rapidSpeed, false);
+  return moves;
+}
+
+function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Stage & { group: Group } {
+  const group = new Group();
+  group.rotation.x = -Math.PI / 2;
+  group.position.y = -6;
+  const stock = buildStock();
+  group.add(buildVise(edgeMat), stock.group);
+
+  const cutters = makeCutters(edgeMat);
+  const toolGroup = new Group();
+  for (const c of cutters) {
+    c.model.rotation.x = Math.PI / 2;
+    toolGroup.add(c.model);
+  }
+  group.add(toolGroup);
+
+  const moves = planMoves();
+  const total = moves[moves.length - 1].end;
+  const end = total + 3.2;
+
+  // Planned path of the operation in progress, seen through the stock.
+  const pathMat = new LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.55, depthTest: false });
+  const paths = OPS.map((_, op) => {
+    const pts: number[] = [];
+    for (const m of moves) {
+      if (m.op === op && m.cut) pts.push(m.from.x, m.from.y, m.from.z, m.to.x, m.to.y, m.to.z);
+    }
+    const geo = new BufferGeometry();
+    geo.setAttribute('position', new Float32BufferAttribute(pts, 3));
+    const lines = new LineSegments(geo, pathMat);
+    lines.renderOrder = 7;
+    group.add(lines);
+    return lines;
+  });
+
+  // When the last cut is done the exact part, coloured by the operation that cut each face,
+  // takes over from the height field and its 0.5 mm stair steps.
+  const opOfTag: Record<PartTag, number> = { stock: 0, step: 1, pocket: 2, hole: 3, counterbore: 4, fillet: 5 };
+  const sideFaces = new Set(['front', 'back', 'left', 'right']);
+  const opMats = OP_COLORS.map((c) => {
+    const m = faceMaterial();
+    m.color.copy(c);
+    return m;
+  });
+  const finished = new Group();
+  for (const f of partFaces({ step: true, pocket: true, holes: true })) {
+    const op = sideFaces.has(f.id) ? 5 : opOfTag[f.tag];
+    finished.add(new Mesh(f.geometry, opMats[op]));
+    finished.add(edgesOf(f.geometry, edgeMat));
+  }
+  // Stock left under the part in the jaws; its top is the profile floor.
+  const rawMat = faceMaterial();
+  rawMat.color.copy(RAW);
+  const baseGeo = new BoxGeometry(2 * STOCK.x, 2 * STOCK.y, -STOCK.bottom);
+  const base = new Mesh(baseGeo, [rawMat, rawMat, rawMat, rawMat, opMats[5], rawMat]);
+  base.position.z = STOCK.bottom / 2;
+  base.add(edgesOf(baseGeo, edgeMat));
+  finished.add(base);
+  group.add(finished);
+
+  // Chips thrown off the cutter while it is removing material.
+  const chipCount = 140;
+  const chipMesh = new InstancedMesh(
+    new TetrahedronGeometry(1.1),
+    new MeshLambertMaterial({ color: 0xdfe2db, flatShading: true }),
+    chipCount,
+  );
+  chipMesh.frustumCulled = false;
+  group.add(chipMesh);
+  const chips = Array.from({ length: chipCount }, () => ({
+    life: 0, p: new Vector3(), v: new Vector3(), rot: new Euler(), spin: new Vector3(),
+  }));
+  let nextChip = 0;
+  const m4 = new Matrix4();
+  const q = new Quaternion();
+  const scl = new Vector3();
+  const spawn = (at: Vector3, r: number, n: number) => {
+    for (let i = 0; i < n; i++) {
+      const c = chips[nextChip++ % chipCount];
+      const a = Math.random() * Math.PI * 2;
+      const speed = 70 + Math.random() * 90;
+      c.p.set(at.x + Math.cos(a) * r, at.y + Math.sin(a) * r, at.z + 1.5);
+      c.v.set(
+        -Math.sin(a) * speed + Math.cos(a) * 25,
+        Math.cos(a) * speed + Math.sin(a) * 25,
+        50 + Math.random() * 90,
+      );
+      c.spin.set(Math.random() * 20, Math.random() * 20, Math.random() * 20);
+      c.life = 0.5 + Math.random() * 0.4;
+    }
+  };
+  const moveChips = (dt: number) => {
+    chips.forEach((c, i) => {
+      if (c.life > 0) {
+        c.life -= dt;
+        c.v.z -= 560 * dt;
+        c.p.addScaledVector(c.v, dt);
+        c.rot.set(c.rot.x + c.spin.x * dt, c.rot.y + c.spin.y * dt, c.rot.z + c.spin.z * dt);
+      }
+      const s = c.life > 0 ? Math.min(1, c.life * 4) : 0.0001;
+      m4.compose(c.p, q.setFromEuler(c.rot), scl.set(s, s, s));
+      chipMesh.setMatrixAt(i, m4);
+    });
+    chipMesh.instanceMatrix.needsUpdate = true;
+  };
+
+  const anchors: Note[] = [
+    new Vector3(-12, 38, 30),
+    new Vector3(62, 12, 18),
+    new Vector3(0, -6, 18),
+    new Vector3(57, -30, 12),
+    new Vector3(-50, -19, 30),
+    new Vector3(0, -50, 12),
+  ].map((anchor) => ({ anchor, owner: group }));
+
+  let t = 0;
+  let cursor = 0;
+  let cutCursor = 0;
+  let current = moves[0];
+  const tip = new Vector3();
+  const p = new Vector3();
+
+  const place = (time: number) => {
+    while (cursor < moves.length - 1 && moves[cursor].end < time) cursor++;
+    current = moves[cursor];
+    const k = current.end > current.start ? clamp01((time - current.start) / (current.end - current.start)) : 1;
+    tip.copy(current.from).lerp(current.to, k);
+    toolGroup.position.copy(tip);
+    const running = time < total;
+    // Back home the tool tip would still peek in at the top of the finished view.
+    cutters.forEach((c, i) => (c.model.visible = running && i === current.tool));
+    paths.forEach((l, i) => (l.visible = running && i === current.op && !current.dwell));
+  };
+
+  // Lowers the stock along every cutting move between t0 and t1.
+  const cutBetween = (t0: number, t1: number) => {
+    let removed = 0;
+    while (cutCursor < moves.length && moves[cutCursor].end <= t0) cutCursor++;
+    for (let i = cutCursor; i < moves.length && moves[i].start < t1; i++) {
+      const m = moves[i];
+      if (!m.cut) continue;
+      const cutter = cutters[m.tool];
+      const len = m.from.distanceTo(m.to);
+      const dur = m.end - m.start;
+      const a0 = clamp01((t0 - m.start) / dur) * len;
+      const a1 = clamp01((t1 - m.start) / dur) * len;
+      const ds = Math.max(CELL, Math.min(cutter.r * 0.4, 1.5));
+      for (let s = a0; ; s += ds) {
+        const at = Math.min(s, a1);
+        p.copy(m.from).lerp(m.to, len ? at / len : 1);
+        removed += stock.stamp(p.x, p.y, p.z, cutter.r, cutter.kind === 'drill', OP_COLORS[m.op]);
+        if (at >= a1) break;
+      }
+    }
+    return removed;
+  };
+
+  const showFinished = (on: boolean) => {
+    finished.visible = on;
+    stock.group.visible = !on;
+  };
+
+  const reset = () => {
+    t = 0;
+    cursor = 0;
+    cutCursor = 0;
+    stock.reset();
+    chips.forEach((c) => (c.life = 0));
+    showFinished(false);
+    place(0);
+    if (reducedMotion) {
+      t = end;
+      place(total);
+      showFinished(true);
+    }
+    stock.flush();
+    moveChips(0);
+  };
+
+  return {
+    group,
+    fitRadius: 112,
+    show(on) {
+      group.visible = on;
+    },
+    reset,
+    update(dt) {
+      if (reducedMotion) return;
+      const t0 = t;
+      t += dt;
+      if (t > end + 0.6) {
+        reset();
+        return;
+      }
+      const removed = t0 < total ? cutBetween(t0, Math.min(t, total)) : 0;
+      stock.flush();
+      place(Math.min(t, total));
+      const cutter = cutters[current.tool];
+      if (!current.dwell && t < total) cutter.spin.rotation.y -= dt * Math.PI * 2 * (cutter.kind === 'face' ? 3 : 6);
+      if (removed > 0.4) spawn(tip, cutter.r, Math.min(4, Math.ceil(removed / 25)));
+      moveChips(dt);
+      showFinished(t >= total);
+    },
+    notes() {
+      const reached = t >= total ? OPS.length : current.op + 1;
+      return anchors.map((n, i) => (i < reached ? n : null));
+    },
+    step: () => (t >= total ? OPS.length : current.op),
+    hud() {
+      if (t >= total) return '가공 완료 · 사각 소재에서 부품까지';
+      const name = cutters[current.tool].name;
+      return current.dwell ? `공구 교환 · ${name}` : `${pad2(current.op + 1)} ${OPS[current.op]} · ${name}`;
+    },
+    done: () => !reducedMotion && t >= end,
+  };
+}
+
+function buildPart(reducedMotion: boolean): ModelView {
+  const root = new Group();
+  const body = new Group();
+  body.rotation.x = -Math.PI / 2;
+  body.position.y = -15;
+  root.add(body);
+  const edgeMat = new LineBasicMaterial({ color: INK });
+  const machining = buildMachining(edgeMat, reducedMotion);
+  root.add(machining.group);
+  const stages: Stage[] = [
+    buildModeling(body, edgeMat, reducedMotion),
+    buildRecognition(body, edgeMat, reducedMotion),
+    machining,
+  ];
+  let layer = 0;
+  const view: ModelView = {
     root,
     fitRadius: 84,
     view: new Vector3(1, 0.95, 1.55),
     setLayer(next: number) {
       layer = next;
-      for (const [tag, mat] of tagMaterials) {
-        const hex = featureTint[tag];
-        mat.color.setHex(hex && next === 1 ? tint(hex, 1) : hex && next === 2 ? tint(hex, 0.35) : FACE);
-      }
-      graph.visible = next === 0;
-      tool.group.visible = next === 2;
-      tool.reset();
+      stages.forEach((s, i) => s.show(i === next));
+      body.visible = next < 2;
+      stages[next].reset();
+      view.fitRadius = stages[next].fitRadius;
     },
-    notes(l: number) {
-      return l === 1 ? featureNotes : l === 2 ? pathNotes : [];
-    },
-    update(_time: number, dt: number) {
-      if (layer === 2) tool.advance(reducedMotion ? Infinity : dt);
-    },
+    notes: (l: number) => stages[l].notes(),
+    update: (_time: number, dt: number) => stages[layer].update(dt),
+    step: () => stages[layer].step(),
+    hud: () => stages[layer].hud(),
+    done: () => stages[layer].done(),
   };
-}
-
-interface PathSegment {
-  rapid: boolean;
-  pts: Vector3[];
-}
-
-function buildToolpaths(pocketRuns: P2[][], cb: P2[], drill: P2[]) {
-  const group = new Group();
-  const segments: PathSegment[] = [];
-  const safe = 40;
-  let at = new Vector3(0, -80, safe);
-  const cut = (pts: Vector3[]) => {
-    segments.push({ rapid: false, pts: [at.clone(), ...pts] });
-    at = pts[pts.length - 1].clone();
-  };
-  const rapidTo = (p: Vector3) => {
-    const up = new Vector3(at.x, at.y, safe);
-    const over = new Vector3(p.x, p.y, safe);
-    segments.push({ rapid: true, pts: [at.clone(), up, over, p.clone()] });
-    at = p.clone();
-  };
-  const loop = (pts: P2[], z: number) => pts.map(([x, y]) => new Vector3(x, y, z)).concat(new Vector3(pts[0][0], pts[0][1], z));
-
-  // 1. Step face: zigzag over x 49…66.
-  const zs = 18.4;
-  const xs = [49, 54.5, 60, 65.5];
-  rapidTo(new Vector3(xs[0], -46, zs));
-  const zig: Vector3[] = [];
-  xs.forEach((x, i) => {
-    const ys = i % 2 === 0 ? [-46, 46] : [46, -46];
-    zig.push(new Vector3(x, ys[0], zs), new Vector3(x, ys[1], zs));
-  });
-  cut(zig);
-
-  // 2. Pocket: contours from the centre outwards at two depths.
-  for (const z of [24, 18.4]) {
-    const insets = [21, 16, 10, 4];
-    const first = insetRect(insets[0]);
-    rapidTo(new Vector3(first[0][0], first[0][1], z));
-    for (const d of insets) {
-      const ring = insetRect(d);
-      cut(loop(ring, z));
-    }
-  }
-
-  // 3. Drill four holes, then circle the two counterbores.
-  for (const [x, y] of [...cb, ...drill]) {
-    const top = cb.some(([cx, cy]) => cx === x && cy === y) ? 30 : 18;
-    rapidTo(new Vector3(x, y, top + 2));
-    cut([new Vector3(x, y, -3), new Vector3(x, y, top + 2)]);
-  }
-  for (const [x, y] of cb) {
-    const ring = arc(x, y, 5, -90, 270, 36);
-    rapidTo(new Vector3(ring[0][0], ring[0][1], 24));
-    cut(loop(ring, 24).concat(loop(ring, 18.4)));
-  }
-
-  // 4. Outer profile with the tool radius offset.
-  const profile = joinRuns(roundedRectRuns(-74, -54, 74, 54, 16));
-  const start = profile.findIndex(([x]) => x <= -74 + 1e-6);
-  const ordered = [...profile.slice(start), ...profile.slice(0, start)];
-  rapidTo(new Vector3(ordered[0][0], ordered[0][1], 1));
-  cut(loop(ordered, 1));
-  rapidTo(new Vector3(0, -80, safe));
-
-  function insetRect(d: number): P2[] {
-    const runs = roundedRectRuns(-30 + d, -24 + d, 30 - d, 24 - d, Math.max(8 - d, 0.6));
-    const ring = joinRuns(runs);
-    const s = ring.findIndex(([, y]) => Math.abs(y - (-24 + d)) < 1e-6);
-    return [...ring.slice(s), ...ring.slice(0, s)];
-  }
-
-  // Ghost of the full path, progress drawn on top while the tool moves.
-  const cutMat = new LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.22 });
-  const liveMat = new LineBasicMaterial({ color: ACCENT });
-  const rapidMat = new LineDashedMaterial({ color: BLUE, dashSize: 3, gapSize: 2.5, transparent: true, opacity: 0.7 });
-  const lives: { line: Line; pts: Vector3[]; start: number; end: number }[] = [];
-  const timeline: { seg: PathSegment; start: number; end: number; lengths: number[] }[] = [];
-  let clock = 0;
-  for (const seg of segments) {
-    const pts = seg.rapid ? seg.pts : subdivide(seg.pts, 1.5);
-    const geo = new BufferGeometry().setFromPoints(pts);
-    if (seg.rapid) {
-      const line = new Line(geo, rapidMat);
-      line.computeLineDistances();
-      group.add(line);
-    }
-    const lengths = [0];
-    for (let i = 1; i < pts.length; i++) lengths.push(lengths[i - 1] + pts[i].distanceTo(pts[i - 1]));
-    const speed = seg.rapid ? 260 : 85;
-    const duration = lengths[lengths.length - 1] / speed;
-    timeline.push({ seg: { rapid: seg.rapid, pts }, start: clock, end: clock + duration, lengths });
-    if (!seg.rapid) {
-      group.add(new Line(geo, cutMat));
-      const live = new Line(new BufferGeometry().setFromPoints(pts), liveMat);
-      live.geometry.setDrawRange(0, 0);
-      group.add(live);
-      lives.push({ line: live, pts, start: clock, end: clock + duration });
-    }
-    clock += duration;
-  }
-  const total = clock;
-  const hold = 1.6;
-
-  const toolGroup = new Group();
-  const fluteMat = faceMaterial();
-  fluteMat.color.setHex(tint(TINTS.cut, 0.85));
-  const shankMat = faceMaterial();
-  shankMat.color.setHex(0xd8dad3);
-  const flute = new Mesh(new CylinderGeometry(4, 4, 22, 24), fluteMat);
-  flute.position.y = 11;
-  const shank = new Mesh(new CylinderGeometry(4, 4, 30, 24), shankMat);
-  shank.position.y = 37;
-  const toolEdges = new LineBasicMaterial({ color: INK });
-  flute.add(edgesOf(flute.geometry, toolEdges));
-  shank.add(edgesOf(shank.geometry, toolEdges));
-  toolGroup.add(flute, shank);
-  toolGroup.rotation.x = Math.PI / 2;
-  group.add(toolGroup);
-
-  let t = 0;
-  const place = (time: number) => {
-    const clamped = Math.min(time, total);
-    for (const l of lives) {
-      const k = clamped >= l.end ? l.pts.length : clamped <= l.start ? 0 : null;
-      if (k !== null) {
-        l.line.geometry.setDrawRange(0, k);
-        continue;
-      }
-      const entry = timeline.find((e) => e.start === l.start)!;
-      const dist = ((clamped - l.start) / (l.end - l.start)) * entry.lengths[entry.lengths.length - 1];
-      let i = entry.lengths.findIndex((d) => d > dist);
-      if (i < 0) i = l.pts.length;
-      l.line.geometry.setDrawRange(0, i);
-    }
-    const cur = timeline.find((e) => clamped >= e.start && clamped <= e.end) ?? timeline[timeline.length - 1];
-    const dist = ((clamped - cur.start) / Math.max(cur.end - cur.start, 1e-6)) * cur.lengths[cur.lengths.length - 1];
-    let i = cur.lengths.findIndex((d) => d >= dist);
-    if (i <= 0) i = 1;
-    const a = cur.seg.pts[i - 1];
-    const b = cur.seg.pts[Math.min(i, cur.seg.pts.length - 1)];
-    const span = cur.lengths[i] - cur.lengths[i - 1] || 1;
-    toolGroup.position.copy(a).lerp(b, Math.min(Math.max((dist - cur.lengths[i - 1]) / span, 0), 1));
-  };
-
-  return {
-    group,
-    reset() {
-      t = 0;
-      place(0);
-    },
-    advance(dt: number) {
-      if (dt === Infinity) {
-        place(total);
-        toolGroup.position.set(0, -80, safe);
-        return;
-      }
-      t = (t + dt) % (total + hold);
-      place(t);
-    },
-  };
-}
-
-function subdivide(pts: Vector3[], step: number): Vector3[] {
-  const out = [pts[0].clone()];
-  for (let i = 1; i < pts.length; i++) {
-    const a = pts[i - 1];
-    const b = pts[i];
-    const n = Math.max(1, Math.ceil(a.distanceTo(b) / step));
-    for (let k = 1; k <= n; k++) out.push(a.clone().lerp(b, k / n));
-  }
-  return out;
+  return view;
 }
 
 // ---------- furniture (base cabinet) ----------
@@ -735,7 +1445,11 @@ function buildFurniture(reducedMotion: boolean, onParams: (p: FurnitureParams) =
 
 export interface ViewportOptions {
   reducedMotion: boolean;
+  // Play the part's three layers one after another until the reader picks one.
+  autoplay: boolean;
   onParams: (p: FurnitureParams) => void;
+  onLayer: (layer: number) => void;
+  onStep: (step: number) => void;
 }
 
 export class ViewportScene {
@@ -749,6 +1463,7 @@ export class ViewportScene {
   private readonly leaders: SVGLineElement[] = [];
   private readonly dots: SVGCircleElement[] = [];
   private readonly dimLabels: HTMLSpanElement[] = [];
+  private readonly hud: HTMLSpanElement;
   private readonly part: ModelView;
   private readonly furniture: ReturnType<typeof buildFurniture>;
   private model: ModelId = 'part';
@@ -758,6 +1473,9 @@ export class ViewportScene {
   private frame = 0;
   private last = 0;
   private visible = true;
+  private autoplay: boolean;
+  private paused = false;
+  private lastStep = -2;
   // Until the reader drags, the model sways a little around its starting view.
   private swaying = true;
   private swayClock = 0;
@@ -765,6 +1483,7 @@ export class ViewportScene {
   private readonly intersection: IntersectionObserver;
 
   constructor(private readonly stage: HTMLElement, private readonly options: ViewportOptions) {
+    this.autoplay = options.autoplay && !options.reducedMotion;
     this.renderer = new WebGLRenderer({ antialias: true, alpha: true });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setClearColor(0x000000, 0);
@@ -791,6 +1510,9 @@ export class ViewportScene {
       this.overlay.appendChild(b);
       this.balloons.push(b);
     }
+    this.hud = document.createElement('span');
+    this.hud.className = 'vp-hud';
+    this.overlay.appendChild(this.hud);
     for (const name of ['W', 'K']) {
       const label = document.createElement('span');
       label.className = 'vp-dim';
@@ -845,6 +1567,16 @@ export class ViewportScene {
   setLayer(layer: number) {
     this.layer = layer;
     this.current.setLayer(layer);
+    this.fit();
+  }
+
+  stopAutoplay() {
+    this.autoplay = false;
+  }
+
+  // Freezes the animations and the sway; dragging still turns the model.
+  setPaused(paused: boolean) {
+    this.paused = paused;
   }
 
   setParams(p: FurnitureParams) {
@@ -903,9 +1635,21 @@ export class ViewportScene {
       if (!this.visible || document.hidden) return;
       const dt = Math.min((now - this.last) / 1000, 0.1);
       this.last = now;
-      if (this.swaying && !this.options.reducedMotion) this.sway(dt);
+      if (!this.paused) {
+        if (this.swaying && !this.options.reducedMotion) this.sway(dt);
+        this.current.update(now / 1000, dt);
+      }
       this.controls.update();
-      this.current.update(now / 1000, dt);
+      if (this.autoplay && this.model === 'part' && this.current.done?.()) {
+        const next = (this.layer + 1) % 3;
+        this.setLayer(next);
+        this.options.onLayer(next);
+      }
+      const step = this.current.step?.() ?? -1;
+      if (step !== this.lastStep) {
+        this.lastStep = step;
+        this.options.onStep(step);
+      }
       this.renderer.render(this.scene, this.camera);
       this.placeNotes();
       this.frame = requestAnimationFrame(tick);
@@ -951,8 +1695,9 @@ export class ViewportScene {
     const center = this.project(new Vector3(), this.current.root);
     const reach = Math.min(Math.max(this.width * 0.075, 30), 56);
     const pad = 16;
-    const anchors = notes.map((n) => this.project(n.anchor, n.owner));
+    const anchors = notes.map((n) => (n ? this.project(n.anchor, n.owner) : null));
     const spots = anchors.map((a) => {
+      if (!a) return null;
       const dir = a.clone().sub(center);
       if (dir.lengthSq() < 1) dir.set(1, -1);
       dir.normalize();
@@ -964,24 +1709,27 @@ export class ViewportScene {
     for (let pass = 0; pass < 4; pass++) {
       for (let i = 0; i < spots.length; i++) {
         for (let j = i + 1; j < spots.length; j++) {
-          const d = spots[j].clone().sub(spots[i]);
+          const si = spots[i];
+          const sj = spots[j];
+          if (!si || !sj) continue;
+          const d = sj.clone().sub(si);
           const len = d.length();
           if (len < 28) {
             const push = d.lengthSq() < 0.01 ? new Vector2(0, 1) : d.normalize();
-            spots[i].addScaledVector(push, -(28 - len) / 2);
-            spots[j].addScaledVector(push, (28 - len) / 2);
+            si.addScaledVector(push, -(28 - len) / 2);
+            sj.addScaledVector(push, (28 - len) / 2);
           }
         }
       }
     }
     this.balloons.forEach((b, i) => {
-      const on = i < spots.length;
+      const a = anchors[i];
+      const s = spots[i];
+      const on = !!a && !!s;
       b.style.display = on ? '' : 'none';
       this.leaders[i].style.display = on ? '' : 'none';
       this.dots[i].style.display = on ? '' : 'none';
-      if (!on) return;
-      const a = anchors[i];
-      const s = spots[i];
+      if (!a || !s) return;
       b.style.transform = `translate(${s.x.toFixed(1)}px, ${s.y.toFixed(1)}px) translate(-50%, -50%)`;
       const dir = s.clone().sub(a);
       const edge = dir.length() > 12 ? s.clone().addScaledVector(dir.normalize(), -11) : s;
@@ -992,6 +1740,10 @@ export class ViewportScene {
       this.dots[i].setAttribute('cx', a.x.toFixed(1));
       this.dots[i].setAttribute('cy', a.y.toFixed(1));
     });
+
+    const caption = this.current.hud?.() ?? '';
+    this.hud.style.display = caption ? '' : 'none';
+    if (this.hud.textContent !== caption) this.hud.textContent = caption;
 
     const dims = this.model === 'furniture' ? this.furniture.dimNotes() : null;
     this.dimLabels.forEach((label, i) => {

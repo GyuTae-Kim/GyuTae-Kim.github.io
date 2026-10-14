@@ -41,6 +41,15 @@
     >
       처음 시점
     </button>
+    <button
+      class="viewer-pause"
+      type="button"
+      *ngIf="state === 'live' && !reducedMotion"
+      [attr.aria-pressed]="paused"
+      (click)="togglePause()"
+    >
+      {{ paused ? "▶ 재생" : "❚❚ 정지" }}
+    </button>
   </div>
   <div class="viewer-layers" role="group" aria-label="단계 선택">
     <button
@@ -54,7 +63,10 @@
     </button>
   </div>
   <div class="viewer-body">
-    <div class="viewer-text" aria-live="polite">
+    <div
+      class="viewer-text"
+      [attr.aria-live]="autoplay && !paused ? 'off' : 'polite'"
+    >
       <strong>{{ view.title }}</strong>
       <p>{{ text }}</p>
       <a class="text-link" [routerLink]="['/portfolio', info.caseId]"
@@ -63,8 +75,15 @@
     </div>
     <div class="viewer-side">
       <ol class="viewer-legend" *ngIf="legend.length">
-        <li *ngFor="let item of legend; let i = index">
-          <b class="legend-no" *ngIf="view.balloons && !$any(item).dashed">{{
+        <li
+          *ngFor="let item of legend; let i = index"
+          [class.active]="view.steps && i === step"
+          [class.ahead]="view.steps && step >= 0 && i > step"
+        >
+          <b
+            class="legend-no"
+            *ngIf="(view.balloons || view.steps) && !$any(item).dashed"
+            >{{
             i + 1
           }}</b
           ><i
