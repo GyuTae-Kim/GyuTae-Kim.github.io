@@ -47,7 +47,7 @@ const routes = [
     files: ['contact.html'],
     path: '/contact',
     title: '연락',
-    description: '김규태(Sean Kim)의 이메일과 GitHub 주소입니다.',
+    description: '3D 형상 AI, CAD/CAM, 가구 제조 데이터 분야의 연구개발 포지션이나 협업 제안은 메일로 연락 주세요. 김규태(Sean Kim)의 이메일과 GitHub입니다.',
     image: 'assets/og/home.jpg',
   },
 ];
