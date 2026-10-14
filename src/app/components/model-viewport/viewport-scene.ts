@@ -235,6 +235,65 @@ function graphOverlay(nodes: Vector3[], links: [number, number][], radius: numbe
   return g;
 }
 
+// Debris thrown off a spinning cutter: chips in the vise, dust at the router. Speeds and
+// gravity scale with `pace`; `zUp` says which axis points up in the owner's frame.
+function chipSpray(count: number, size: number, color: number, zUp: boolean, pace = 1) {
+  const mesh = new InstancedMesh(
+    new TetrahedronGeometry(size),
+    new MeshLambertMaterial({ color, flatShading: true }),
+    count,
+  );
+  mesh.frustumCulled = false;
+  const chips = Array.from({ length: count }, () => ({
+    life: 0, p: new Vector3(), v: new Vector3(), rot: new Euler(), spin: new Vector3(),
+  }));
+  let next = 0;
+  const m4 = new Matrix4();
+  const q = new Quaternion();
+  const scl = new Vector3();
+  return {
+    mesh,
+    spawn(at: Vector3, r: number, n: number) {
+      for (let i = 0; i < n; i++) {
+        const c = chips[next++ % count];
+        const a = Math.random() * Math.PI * 2;
+        const u = Math.cos(a);
+        const w = Math.sin(a);
+        const speed = (70 + Math.random() * 90) * pace;
+        const side = 25 * pace;
+        const lift = (50 + Math.random() * 90) * pace;
+        if (zUp) {
+          c.p.set(at.x + u * r, at.y + w * r, at.z + 1.5 * pace);
+          c.v.set(-w * speed + u * side, u * speed + w * side, lift);
+        } else {
+          c.p.set(at.x + u * r, at.y + 1.5 * pace, at.z + w * r);
+          c.v.set(-w * speed + u * side, lift, u * speed + w * side);
+        }
+        c.spin.set(Math.random() * 20, Math.random() * 20, Math.random() * 20);
+        c.life = 0.5 + Math.random() * 0.4;
+      }
+    },
+    move(dt: number) {
+      chips.forEach((c, i) => {
+        if (c.life > 0) {
+          c.life -= dt;
+          if (zUp) c.v.z -= 560 * pace * dt;
+          else c.v.y -= 560 * pace * dt;
+          c.p.addScaledVector(c.v, dt);
+          c.rot.set(c.rot.x + c.spin.x * dt, c.rot.y + c.spin.y * dt, c.rot.z + c.spin.z * dt);
+        }
+        const k = c.life > 0 ? Math.min(1, c.life * 4) : 0.0001;
+        m4.compose(c.p, q.setFromEuler(c.rot), scl.set(k, k, k));
+        mesh.setMatrixAt(i, m4);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+    },
+    clear() {
+      chips.forEach((c) => (c.life = 0));
+    },
+  };
+}
+
 // ---------- machined part ----------
 
 interface PartFace {
@@ -418,8 +477,8 @@ const MODEL_STEPS = [
   '돌출 · 높이 30',
   '단차 컷 · 깊이 12',
   '포켓 컷 · 60 × 48, 깊이 12',
-  '구멍 · Ø10 4곳, 카운터보어 2곳',
-  '면 분석 · 면 29개, 맞닿은 53쌍',
+  '구멍 · Ø10, 카운터보어 2곳',
+  '면 분석 · 면 29개, 53쌍',
 ];
 
 // Layer 0: the part is modelled feature by feature, then its faces are read as a graph.
@@ -579,9 +638,11 @@ function buildRecognition(body: Group, edgeMat: LineBasicMaterial, reducedMotion
 
 // ---------- machining (layer 2) ----------
 
-// Square stock clamped in a vise; the part is cut out of its top. The stock is a height
-// field on a 0.5 mm grid that each tool position lowers under the cutter.
-const STOCK = { x: 75, y: 55, top: 32, bottom: -12 };
+// Square stock in a flat-jaw vise; the part is cut out of its top. prisme-engine's default
+// stock leaves 1 mm on the sides and 3 mm on top, and the bottom keeps 12 mm for the jaws
+// (10 mm grip + 2 mm clearance). The stock is a height field on a 0.5 mm grid that each
+// tool position lowers under the cutter.
+const STOCK = { x: 71, y: 51, top: 33, bottom: -12 };
 const CELL = 0.5;
 const NX = Math.round((2 * STOCK.x) / CELL) + 1;
 const NY = Math.round((2 * STOCK.y) / CELL) + 1;
@@ -589,8 +650,9 @@ const NY = Math.round((2 * STOCK.y) / CELL) + 1;
 const DRILL_TIP = Math.tan((31 * Math.PI) / 180);
 const RAW = new Color(0xb5bab1);
 
-const OPS = ['윗면 페이스 가공', '단차 가공', '포켓 가공', '구멍 드릴', '카운터보어', '바깥 윤곽 가공'];
-const OP_COLORS = [TINTS.face, TINTS.step, TINTS.pocket, TINTS.hole, TINTS.counterbore, TINTS.fillet].map(
+// Operation groups in the engine's order; legend rows and balloons follow them.
+const OPS = ['윗면 페이싱', '외곽', '단차', '포켓', '카운터보어', '드릴링'];
+const OP_COLORS = [TINTS.face, TINTS.fillet, TINTS.step, TINTS.pocket, TINTS.counterbore, TINTS.hole].map(
   (hex) => new Color(tint(hex, 0.9)),
 );
 
@@ -699,23 +761,45 @@ function buildStock() {
       rowMax = -1;
       edgeDirty = false;
     },
-    // Lowers the field under a cutter whose tip is at (cx, cy, tz); returns the removed volume.
-    stamp(cx: number, cy: number, tz: number, r: number, drill: boolean, color: Color): number {
-      const ix0 = Math.max(0, Math.ceil((cx - r + STOCK.x) / CELL));
-      const ix1 = Math.min(NX - 1, Math.floor((cx + r + STOCK.x) / CELL));
-      const iy0 = Math.max(0, Math.ceil((cy - r + STOCK.y) / CELL));
-      const iy1 = Math.min(NY - 1, Math.floor((cy + r + STOCK.y) / CELL));
+    // Lowers the field under a cutter whose tip moves straight from (x0, y0, z0) to
+    // (x1, y1, z1): each cell the cutter passes over drops to the lowest tip height that
+    // reaches it, so neighbouring passes meet without ridges. A drill only moves along its
+    // axis and its cone rises with the distance from it. Returns the removed volume.
+    sweep(x0: number, y0: number, z0: number, x1: number, y1: number, z1: number, r: number, drill: boolean, color: Color): number {
+      const reach = r + 0.02;
+      const ix0 = Math.max(0, Math.ceil((Math.min(x0, x1) - reach + STOCK.x) / CELL));
+      const ix1 = Math.min(NX - 1, Math.floor((Math.max(x0, x1) + reach + STOCK.x) / CELL));
+      const iy0 = Math.max(0, Math.ceil((Math.min(y0, y1) - reach + STOCK.y) / CELL));
+      const iy1 = Math.min(NY - 1, Math.floor((Math.max(y0, y1) + reach + STOCK.y) / CELL));
       if (ix0 > ix1 || iy0 > iy1) return 0;
-      const r2 = r * r;
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const len2 = dx * dx + dy * dy;
+      const reach2 = reach * reach;
       let removed = 0;
       for (let iy = iy0; iy <= iy1; iy++) {
-        const dy = -STOCK.y + iy * CELL - cy;
+        const py = -STOCK.y + iy * CELL - y0;
         let touched = false;
         for (let ix = ix0; ix <= ix1; ix++) {
-          const dx = -STOCK.x + ix * CELL - cx;
-          const d2 = dx * dx + dy * dy;
-          if (d2 > r2) continue;
-          const z = drill ? tz + Math.sqrt(d2) * DRILL_TIP : tz;
+          const px = -STOCK.x + ix * CELL - x0;
+          // Where along the move the tool axis passes closest to this cell.
+          const along = len2 > 1e-9 ? (px * dx + py * dy) / len2 : 0;
+          const ex = px - clamp01(along) * dx;
+          const ey = py - clamp01(along) * dy;
+          const d2 = ex * ex + ey * ey;
+          if (d2 > reach2) continue;
+          let z: number;
+          if (drill || len2 <= 1e-9) {
+            z = Math.min(z0, z1) + (drill ? Math.sqrt(d2) * DRILL_TIP : 0);
+          } else {
+            // The stretch of the move with the cell under the cutter; on a ramp its lower end counts.
+            const fx = px - along * dx;
+            const fy = py - along * dy;
+            const half = Math.sqrt(Math.max(reach2 - fx * fx - fy * fy, 0) / len2);
+            const lo = clamp01(along - half);
+            const hi = clamp01(along + half);
+            z = Math.min(z0 + (z1 - z0) * lo, z0 + (z1 - z0) * hi);
+          }
           const i = iy * NX + ix;
           if (heights[i] <= z + 1e-4) continue;
           removed += heights[i] - z;
@@ -744,6 +828,8 @@ function buildStock() {
 
 interface Cutter {
   name: string;
+  // Number and diameter for the caption.
+  short: string;
   r: number;
   kind: 'face' | 'flat' | 'drill';
   model: Group;
@@ -756,8 +842,9 @@ function metal(hex: number): MeshLambertMaterial {
   return m;
 }
 
-// Fluted cutting length along +y: lobed cross-section twisted on a 30° helix, cone tip for drills.
-function fluteGeometry(r: number, length: number, flutes: number, drill: boolean): BufferGeometry {
+// Fluted cutting length along +y: lobed cross-section twisted on a 30° helix, cone tip for
+// drills, chip-breaker serrations for roughing end mills.
+function fluteGeometry(r: number, length: number, flutes: number, drill: boolean, rough = false): BufferGeometry {
   const seg = 40;
   const rows = Math.max(10, Math.round(length / 1.5));
   const twist = Math.tan(Math.PI / 6) / r;
@@ -768,6 +855,7 @@ function fluteGeometry(r: number, length: number, flutes: number, drill: boolean
     for (let i = 0; i <= seg; i++) {
       const a = (i / seg) * Math.PI * 2;
       let rad = r * (0.8 + 0.2 * Math.cos(flutes * (a + twist * y)));
+      if (rough) rad *= 0.95 + 0.05 * Math.cos((2 * Math.PI * y) / 2.5 + flutes * a);
       if (drill && y < tipLen) rad *= y / tipLen;
       positions.push(rad * Math.cos(a), y, rad * Math.sin(a));
     }
@@ -811,48 +899,58 @@ function toolHolder(stick: number, nut: number, edge: LineBasicMaterial): Group 
 function makeCutters(edge: LineBasicMaterial): Cutter[] {
   const carbide = new MeshLambertMaterial({ color: 0x8c928a, flatShading: true });
   const shankMat = metal(0xd0d3cc);
-  const endMill = (name: string, r: number, flute: number, stick: number, drill: boolean): Cutter => {
+  const endMill = (
+    name: string,
+    short: string,
+    r: number,
+    flute: number,
+    stick: number,
+    drill: boolean,
+    rough = false,
+  ): Cutter => {
     const model = new Group();
-    const flutes = new Mesh(fluteGeometry(r, flute, drill ? 2 : 4, drill), carbide);
+    const flutes = new Mesh(fluteGeometry(r, flute, drill ? 2 : 4, drill, rough), carbide);
     const shankGeo = new CylinderGeometry(r, r, stick - flute, 24);
     const shank = new Mesh(shankGeo, shankMat);
     shank.position.y = flute + (stick - flute) / 2;
     shank.add(edgesOf(shankGeo, edge));
     model.add(flutes, shank, toolHolder(stick, r + 6, edge));
-    return { name, r, kind: drill ? 'drill' : 'flat', model, spin: flutes };
+    return { name, short, r, kind: drill ? 'drill' : 'flat', model, spin: flutes };
   };
-  // Ø50 face mill: a body with eight inserts on its rim.
+  // Ø80 face mill: a body with ten inserts on its rim.
   const face = new Group();
-  const headGeo = new CylinderGeometry(23, 25, 12, 40);
+  const headGeo = new CylinderGeometry(37, 40, 14, 48);
   const head = new Mesh(headGeo, metal(0xb3b8b0));
-  head.position.y = 6;
+  head.position.y = 7;
   head.add(edgesOf(headGeo, edge));
   face.add(head);
   const insertMat = metal(0xc7a04c);
-  const insertGeo = new BoxGeometry(5, 4, 1.8);
-  for (let i = 0; i < 8; i++) {
-    const a = (i / 8) * Math.PI * 2;
+  const insertGeo = new BoxGeometry(6, 5, 2);
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2;
     const ins = new Mesh(insertGeo, insertMat);
-    ins.position.set(Math.cos(a) * 23.2, 2.2, Math.sin(a) * 23.2);
+    ins.position.set(Math.cos(a) * 38.2, 2.6, Math.sin(a) * 38.2);
     ins.rotation.y = -a + Math.PI / 2;
     face.add(ins);
   }
   const faceModel = new Group();
-  const arborGeo = new CylinderGeometry(15, 15, 14, 32);
+  const arborGeo = new CylinderGeometry(20, 20, 16, 32);
   const arbor = new Mesh(arborGeo, metal(0xc2c6be));
-  arbor.position.y = 19;
+  arbor.position.y = 22;
   arbor.add(edgesOf(arborGeo, edge));
-  faceModel.add(face, arbor, toolHolder(26, 17, edge));
+  faceModel.add(face, arbor, toolHolder(30, 22, edge));
+  // The packaged aluminium library the engine picks from (Tool(AL).json).
   return [
-    { name: 'T1 Ø50 페이스밀', r: 25, kind: 'face', model: faceModel, spin: face },
-    endMill('T2 Ø16 평엔드밀', 8, 36, 46, false),
-    endMill('T3 Ø8 평엔드밀', 4, 20, 30, false),
-    endMill('T4 Ø10 드릴', 5, 42, 54, true),
+    { name: 'T1 Ø80 페이스밀', short: 'T1 Ø80', r: 40, kind: 'face', model: faceModel, spin: face },
+    endMill('T4 Ø12 황삭 엔드밀', 'T4 Ø12', 6, 34, 44, false, true),
+    endMill('T8 Ø5 평엔드밀', 'T8 Ø5', 2.5, 15, 30, false),
+    endMill('T22 Ø10 드릴', 'T22 Ø10', 5, 42, 54, true),
   ];
 }
 
-// Machine vise: bed, fixed and moving jaws with hardened jaw plates, screw and handle,
-// parallels under the stock. Part coordinates (z up); the stock sits between y = ±55.
+// Flat-jaw machine vise: bed, fixed and moving jaws with hardened jaw plates, screw and
+// handle, parallels under the stock. Part coordinates (z up); the stock sits between
+// y = ±51 and the jaws grip its bottom 10 mm, stopping 2 mm under the part.
 function buildVise(edge: LineBasicMaterial): Group {
   const g = new Group();
   const box = (x0: number, x1: number, y0: number, y1: number, z0: number, z1: number, hex: number) => {
@@ -864,20 +962,20 @@ function buildVise(edge: LineBasicMaterial): Group {
   };
   const body = 0xb9beb6;
   const plate = 0x9fa59d;
-  box(-84, 84, -98, 106, -60, -36, body);
-  box(-80, 80, -94, -63, -36, -3, body);
-  box(-80, 80, -63, -55, -32, -3, plate);
-  box(-80, 80, 63, 94, -36, -3, body);
-  box(-80, 80, 55, 63, -32, -3, plate);
-  box(-72, 72, -50, -42, -36, -12, 0xd2d5ce);
-  box(-72, 72, 42, 50, -36, -12, 0xd2d5ce);
+  box(-84, 84, -94, 102, -60, -36, body);
+  box(-80, 80, -90, -59, -36, -2, body);
+  box(-80, 80, -59, -51, -32, -2, plate);
+  box(-80, 80, 59, 90, -36, -2, body);
+  box(-80, 80, 51, 59, -32, -2, plate);
+  box(-68, 68, -46, -38, -36, -12, 0xd2d5ce);
+  box(-68, 68, 38, 46, -36, -12, 0xd2d5ce);
   const screwGeo = new CylinderGeometry(9, 9, 34, 24);
   const screw = new Mesh(screwGeo, metal(body));
-  screw.position.set(0, 111, -26);
+  screw.position.set(0, 107, -26);
   screw.add(edgesOf(screwGeo, edge));
   const handleGeo = new CylinderGeometry(3.5, 3.5, 76, 16);
   const handle = new Mesh(handleGeo, metal(0x8f958d));
-  handle.position.set(0, 126, -26);
+  handle.position.set(0, 122, -26);
   handle.rotation.z = Math.PI / 2;
   handle.add(edgesOf(handleGeo, edge));
   g.add(screw, handle);
@@ -894,6 +992,8 @@ interface Move {
   tool: number;
   // Tool change: the spindle stops while the tool is swapped.
   dwell: boolean;
+  // Operation name as the engine writes it into Fusion, e.g. "[황삭] 포켓".
+  name: string;
 }
 
 function insetRing(d: number): P2[] {
@@ -902,95 +1002,179 @@ function insetRing(d: number): P2[] {
   return [...ring.slice(s), ...ring.slice(0, s)];
 }
 
-// Tool moves for the six operations, timed in seconds (animation pace, not real feeds).
+// Tool-centre loop around the part outline at `offset`, starting on the left side.
+function outsideLoop(offset: number): P2[] {
+  const loop = joinRuns(roundedRectRuns(-70 - offset, -50 - offset, 70 + offset, 50 + offset, 12 + offset));
+  const s = loop.findIndex(([x, y]) => x <= -70 - offset + 1e-6 && y > 0);
+  return [...loop.slice(s), ...loop.slice(0, s)];
+}
+
+// Depths from `from` down to `to` in `step` mm.
+function levels(from: number, to: number, step: number): number[] {
+  const out: number[] = [];
+  for (let z = from; z >= to - 1e-6; z -= step) out.push(Math.round(z * 100) / 100);
+  return out;
+}
+
+// Setup 1 as prisme-engine plans this part for a flat-jaw vise (one hold, the outside cut
+// through to the part bottom): facing, exterior stock and outer contour, then the Z18
+// features rough → finish (step, pocket, counterbore), drilling last. Stepdowns, stock and
+// entries follow the engine's defaults; the feeds are animation pace, slow on the first
+// depth of each operation and fast after it.
 function planMoves(): Move[] {
   const moves: Move[] = [];
-  const safe = 46;
-  const home = 150;
-  const rapidSpeed = 560;
+  const retract = STOCK.top + 5;
+  const home = 160;
+  const rapidSpeed = 900;
   let at = new Vector3(30, -60, home);
   let clock = 0;
   let op = 0;
   let tool = 0;
+  let name = '';
   const push = (to: Vector3, speed: number, cut: boolean) => {
     const dur = at.distanceTo(to) / speed;
     if (dur <= 1e-6) return;
-    moves.push({ from: at.clone(), to: to.clone(), start: clock, end: clock + dur, cut, op, tool, dwell: false });
+    moves.push({ from: at.clone(), to: to.clone(), start: clock, end: clock + dur, cut, op, tool, dwell: false, name });
     clock += dur;
     at = to.clone();
   };
   const feed = (x: number, y: number, z: number, speed: number) => push(new Vector3(x, y, z), speed, true);
   const rapid = (x: number, y: number, z: number) => {
-    const high = Math.max(safe, at.z);
+    const high = Math.max(retract, at.z);
     push(new Vector3(at.x, at.y, high), rapidSpeed, false);
     push(new Vector3(x, y, high), rapidSpeed, false);
     push(new Vector3(x, y, z), rapidSpeed, false);
   };
-  // Retracts, swaps the tool, then starts the next operation.
-  const begin = (nextOp: number, nextTool: number) => {
-    push(new Vector3(at.x, at.y, home), rapidSpeed, false);
+  // Starts an operation; another tool means going home and swapping it first.
+  const begin = (nextOp: number, nextTool: number, nextName: string) => {
+    if (nextTool !== tool) {
+      push(new Vector3(at.x, at.y, home), rapidSpeed, false);
+      tool = nextTool;
+      moves.push({ from: at.clone(), to: at.clone(), start: clock, end: clock + 0.35, cut: false, op: nextOp, tool, dwell: true, name: nextName });
+      clock += 0.35;
+    }
     op = nextOp;
-    tool = nextTool;
-    moves.push({ from: at.clone(), to: at.clone(), start: clock, end: clock + 0.45, cut: false, op, tool, dwell: true });
-    clock += 0.45;
+    name = nextName;
+  };
+  const pace = (level: number, first: number, rest: number) => (level === 0 ? first : rest);
+  // One full turn around (cx, cy) going from z0 to z1, ending where it started.
+  const helix = (cx: number, cy: number, r: number, z0: number, z1: number, speed: number) => {
+    for (let i = 0; i <= 24; i++) {
+      const a = (i / 24) * Math.PI * 2;
+      feed(cx + r * Math.cos(a), cy + r * Math.sin(a), z0 + ((z1 - z0) * i) / 24, speed);
+    }
   };
 
-  // 1. Face the top from 32 to 30 in three passes.
-  rapid(-110, -36, 30);
-  for (const [x, y] of [[110, -36], [110, 0], [-110, 0], [-110, 36], [110, 36]]) feed(x, y, 30, 300);
+  // 1. [황삭] 상면: Ø80 face mill, 1 mm per depth from the stock top (33) to the part top (30).
+  begin(0, 0, '[황삭] 상면');
+  let fx = -120;
+  let fy = -20;
+  rapid(fx, fy, 32);
+  levels(32, 30, 1).forEach((z, level) => {
+    const v = pace(level, 420, 2000);
+    feed(fx, fy, z, v);
+    fx = -fx;
+    feed(fx, fy, z, v);
+    fy = -fy;
+    feed(fx, fy, z, v);
+    fx = -fx;
+    feed(fx, fy, z, v);
+  });
 
-  // 2. Step: two passes per level at x 68 and 53, down to 24 then 18. The passes overlap
-  // by 1 mm; touching edge to edge would leave a one-cell fin standing between them.
-  begin(1, 1);
-  rapid(68, -72, 24);
-  for (const [x, y, z] of [[68, 72, 24], [53, 72, 24], [53, -72, 24], [53, -72, 18], [53, 72, 18], [68, 72, 18], [68, -72, 18]]) {
-    feed(x, y, z, 290);
-  }
+  // 2. [황삭] 외곽 소재 and [정삭] 외곽 윤곽: Ø12 roughing end mill around the outline in
+  // 2 mm steps down to the part bottom; the rough leaves 0.1 mm, the contour takes it.
+  const outside = (offset: number, first: number, rest: number) => {
+    const path = outsideLoop(offset);
+    const [lx, ly] = [path[0][0] - 14, path[0][1]];
+    rapid(lx, ly, 30);
+    levels(28, 0, 2).forEach((z, level) => {
+      const v = pace(level, first, rest);
+      feed(lx, ly, z, v);
+      for (const [x, y] of [...path, path[0]]) feed(x, y, z, v);
+      feed(lx, ly, z, v);
+    });
+  };
+  begin(1, 1, '[황삭] 외곽 소재');
+  outside(6.1, 450, 6000);
+  begin(1, 1, '[정삭] 외곽 윤곽');
+  outside(6, 450, 6000);
 
-  // 3. Pocket: contours from the centre outwards, two levels.
-  begin(2, 2);
-  const rings = [21, 16, 10, 4].map(insetRing);
-  const [sx, sy] = rings[0][0];
-  rapid(sx, sy, 33);
-  for (const z of [24, 18]) {
-    feed(sx, sy, z, 90);
-    for (const ring of rings) {
-      for (const [x, y] of [...ring, ring[0]]) feed(x, y, z, 320);
-    }
-    feed(sx, sy, z, 320);
-  }
+  // 3. The step, an open pocket: Ø12 rough with a helix entry, 1 mm per depth, 1 mm left on
+  // the wall, lanes 1.2 mm apart from the open side in; then a Ø5 finish on the wall.
+  begin(2, 1, '[황삭] 개방 포켓');
+  const lanes: number[] = [];
+  for (let x = 70; x > 52 + 0.05; x -= 1.2) lanes.push(x);
+  lanes.push(52);
+  rapid(67, -44, 31);
+  levels(29, 18, 1).forEach((z, level) => {
+    const v = pace(level, 2400, 16000);
+    feed(67, -44, z + 1, v);
+    helix(64, -44, 3, z + 1, z, v / 4);
+    lanes.forEach((x, i) => {
+      const y = i % 2 ? 57 : -57;
+      feed(x, y, z, v);
+      feed(x, -y, z, v);
+    });
+  });
+  begin(2, 2, '[정삭] 개방 포켓');
+  rapid(47.5, -56, 31);
+  levels(29, 18, 1).forEach((z, level) => {
+    const v = pace(level, 400, 4000);
+    const y = level % 2 ? 56 : -56;
+    feed(47.5, y, z, v);
+    feed(47.5, -y, z, v);
+  });
 
-  // 4. Drill the four holes through.
-  begin(3, 3);
-  for (const [x, y] of [...CB, ...DRILL]) {
-    const top = CB.some(([cx, cy]) => cx === x && cy === y) ? 30 : 18;
-    rapid(x, y, top + 3);
-    feed(x, y, -4, 95);
-    push(new Vector3(x, y, top + 3), rapidSpeed, false);
-  }
+  // 4. The pocket: Ø12 rough plunging at the centre (its opening is too narrow for a
+  // helix), rings 1.2 mm apart from the centre out, 1 mm left on the wall; Ø5 finish.
+  begin(3, 1, '[황삭] 포켓');
+  const rings: P2[][] = [];
+  for (let d = 7; d <= 22.6; d += 1.2) rings.push(insetRing(d));
+  rings.reverse();
+  rapid(0, 0, 31);
+  levels(29, 18, 1).forEach((z, level) => {
+    const v = pace(level, 1800, 16000);
+    feed(0, 0, z, v / 6);
+    for (const ring of rings) for (const [x, y] of [...ring, ring[0]]) feed(x, y, z, v);
+    feed(0, 0, z, v);
+  });
+  begin(3, 2, '[정삭] 포켓');
+  const wall = insetRing(2.5);
+  rapid(0, 0, 31);
+  levels(29, 18, 1).forEach((z, level) => {
+    const v = pace(level, 400, 5000);
+    feed(0, 0, z, v);
+    for (const [x, y] of [...wall, wall[0]]) feed(x, y, z, v);
+    feed(0, 0, z, v);
+  });
 
-  // 5. Counterbores: helical entry around the drilled hole, then one pass on the floor.
-  begin(4, 2);
+  // 5. [황삭] 카운터보어: both heads as one 2D pocket with the Ø12, a helix turn per 1 mm
+  // and a finishing turn at the floor.
+  begin(4, 1, '[황삭] 카운터보어');
   for (const [x, y] of CB) {
-    rapid(x + 5, y, 33);
-    feed(x + 5, y, 30, 110);
-    for (let i = 1; i <= 108; i++) {
-      const a = (i / 36) * Math.PI * 2;
-      feed(x + 5 * Math.cos(a), y + 5 * Math.sin(a), 30 - 12 * Math.min(i / 72, 1), 200);
-    }
+    rapid(x + 3, y, 31);
+    levels(29, 18, 1).forEach((z, level) => helix(x, y, 3, z + 1, z, pace(level, 300, 3000)));
+    helix(x, y, 3, 18, 18, 400);
   }
 
-  // 6. Outer profile with R20 tool-centre corners, levels 15 and 0, lead in from outside.
-  begin(5, 1);
-  const loop = joinRuns(roundedRectRuns(-78, -58, 78, 58, 20));
-  const s = loop.findIndex(([x, y]) => x <= -78 + 1e-6 && y > 0);
-  const path = [...loop.slice(s), ...loop.slice(0, s)];
-  const ly = path[0][1];
-  rapid(-98, ly, 15);
-  for (const z of [15, 0]) {
-    feed(-98, ly, z, 300);
-    for (const [x, y] of [...path, path[0]]) feed(x, y, z, 340);
-    feed(-98, ly, z, 340);
+  // 6. [정삭] 드릴링: the exact Ø10 drill, nearest hole next, chip-breaking pecks of 1.5 mm,
+  // tip through the bottom plus 1 mm.
+  begin(5, 3, '[정삭] 드릴링');
+  const holes = [...CB, ...DRILL];
+  const bottom = -1 - 5 * DRILL_TIP;
+  for (let n = 0; holes.length; n++) {
+    holes.sort((a, b) => Math.hypot(a[0] - at.x, a[1] - at.y) - Math.hypot(b[0] - at.x, b[1] - at.y));
+    const [x, y] = holes.shift()!;
+    const v = n === 0 ? 120 : 700;
+    rapid(x, y, 20);
+    let z = 18;
+    feed(x, y, z, v);
+    while (z > bottom + 1e-6) {
+      z = Math.max(z - 1.5, bottom);
+      feed(x, y, z, v);
+      if (z > bottom + 1e-6) feed(x, y, z + 0.5, v * 2);
+    }
+    push(new Vector3(x, y, 20), rapidSpeed, false);
   }
   push(new Vector3(at.x, at.y, home), rapidSpeed, false);
   push(new Vector3(30, -60, home), rapidSpeed, false);
@@ -1033,7 +1217,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
 
   // When the last cut is done the exact part, coloured by the operation that cut each face,
   // takes over from the height field and its 0.5 mm stair steps.
-  const opOfTag: Record<PartTag, number> = { stock: 0, step: 1, pocket: 2, hole: 3, counterbore: 4, fillet: 5 };
+  const opOfTag: Record<PartTag, number> = { stock: 0, fillet: 1, step: 2, pocket: 3, counterbore: 4, hole: 5 };
   const sideFaces = new Set(['front', 'back', 'left', 'right']);
   const opMats = OP_COLORS.map((c) => {
     const m = faceMaterial();
@@ -1042,7 +1226,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
   });
   const finished = new Group();
   for (const f of partFaces({ step: true, pocket: true, holes: true })) {
-    const op = sideFaces.has(f.id) ? 5 : opOfTag[f.tag];
+    const op = sideFaces.has(f.id) ? 1 : opOfTag[f.tag];
     finished.add(new Mesh(f.geometry, opMats[op]));
     finished.add(edgesOf(f.geometry, edgeMat));
   }
@@ -1050,65 +1234,23 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
   const rawMat = faceMaterial();
   rawMat.color.copy(RAW);
   const baseGeo = new BoxGeometry(2 * STOCK.x, 2 * STOCK.y, -STOCK.bottom);
-  const base = new Mesh(baseGeo, [rawMat, rawMat, rawMat, rawMat, opMats[5], rawMat]);
+  const base = new Mesh(baseGeo, [rawMat, rawMat, rawMat, rawMat, opMats[1], rawMat]);
   base.position.z = STOCK.bottom / 2;
   base.add(edgesOf(baseGeo, edgeMat));
   finished.add(base);
   group.add(finished);
 
   // Chips thrown off the cutter while it is removing material.
-  const chipCount = 140;
-  const chipMesh = new InstancedMesh(
-    new TetrahedronGeometry(1.1),
-    new MeshLambertMaterial({ color: 0xdfe2db, flatShading: true }),
-    chipCount,
-  );
-  chipMesh.frustumCulled = false;
-  group.add(chipMesh);
-  const chips = Array.from({ length: chipCount }, () => ({
-    life: 0, p: new Vector3(), v: new Vector3(), rot: new Euler(), spin: new Vector3(),
-  }));
-  let nextChip = 0;
-  const m4 = new Matrix4();
-  const q = new Quaternion();
-  const scl = new Vector3();
-  const spawn = (at: Vector3, r: number, n: number) => {
-    for (let i = 0; i < n; i++) {
-      const c = chips[nextChip++ % chipCount];
-      const a = Math.random() * Math.PI * 2;
-      const speed = 70 + Math.random() * 90;
-      c.p.set(at.x + Math.cos(a) * r, at.y + Math.sin(a) * r, at.z + 1.5);
-      c.v.set(
-        -Math.sin(a) * speed + Math.cos(a) * 25,
-        Math.cos(a) * speed + Math.sin(a) * 25,
-        50 + Math.random() * 90,
-      );
-      c.spin.set(Math.random() * 20, Math.random() * 20, Math.random() * 20);
-      c.life = 0.5 + Math.random() * 0.4;
-    }
-  };
-  const moveChips = (dt: number) => {
-    chips.forEach((c, i) => {
-      if (c.life > 0) {
-        c.life -= dt;
-        c.v.z -= 560 * dt;
-        c.p.addScaledVector(c.v, dt);
-        c.rot.set(c.rot.x + c.spin.x * dt, c.rot.y + c.spin.y * dt, c.rot.z + c.spin.z * dt);
-      }
-      const s = c.life > 0 ? Math.min(1, c.life * 4) : 0.0001;
-      m4.compose(c.p, q.setFromEuler(c.rot), scl.set(s, s, s));
-      chipMesh.setMatrixAt(i, m4);
-    });
-    chipMesh.instanceMatrix.needsUpdate = true;
-  };
+  const chips = chipSpray(140, 1.1, 0xdfe2db, true);
+  group.add(chips.mesh);
 
   const anchors: Note[] = [
     new Vector3(-12, 38, 30),
+    new Vector3(0, -50, 12),
     new Vector3(62, 12, 18),
     new Vector3(0, -6, 18),
-    new Vector3(57, -30, 12),
     new Vector3(-50, -19, 30),
-    new Vector3(0, -50, 12),
+    new Vector3(57, -30, 12),
   ].map((anchor) => ({ anchor, owner: group }));
 
   let t = 0;
@@ -1117,6 +1259,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
   let current = moves[0];
   const tip = new Vector3();
   const p = new Vector3();
+  const q = new Vector3();
 
   const place = (time: number) => {
     while (cursor < moves.length - 1 && moves[cursor].end < time) cursor++;
@@ -1130,7 +1273,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
     paths.forEach((l, i) => (l.visible = running && i === current.op && !current.dwell));
   };
 
-  // Lowers the stock along every cutting move between t0 and t1.
+  // Lowers the stock along the part of every cutting move between t0 and t1.
   const cutBetween = (t0: number, t1: number) => {
     let removed = 0;
     while (cutCursor < moves.length && moves[cutCursor].end <= t0) cutCursor++;
@@ -1138,17 +1281,10 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
       const m = moves[i];
       if (!m.cut) continue;
       const cutter = cutters[m.tool];
-      const len = m.from.distanceTo(m.to);
       const dur = m.end - m.start;
-      const a0 = clamp01((t0 - m.start) / dur) * len;
-      const a1 = clamp01((t1 - m.start) / dur) * len;
-      const ds = Math.max(CELL, Math.min(cutter.r * 0.4, 1.5));
-      for (let s = a0; ; s += ds) {
-        const at = Math.min(s, a1);
-        p.copy(m.from).lerp(m.to, len ? at / len : 1);
-        removed += stock.stamp(p.x, p.y, p.z, cutter.r, cutter.kind === 'drill', OP_COLORS[m.op]);
-        if (at >= a1) break;
-      }
+      p.copy(m.from).lerp(m.to, clamp01((t0 - m.start) / dur));
+      q.copy(m.from).lerp(m.to, clamp01((t1 - m.start) / dur));
+      removed += stock.sweep(p.x, p.y, p.z, q.x, q.y, q.z, cutter.r, cutter.kind === 'drill', OP_COLORS[m.op]);
     }
     return removed;
   };
@@ -1163,7 +1299,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
     cursor = 0;
     cutCursor = 0;
     stock.reset();
-    chips.forEach((c) => (c.life = 0));
+    chips.clear();
     showFinished(false);
     place(0);
     if (reducedMotion) {
@@ -1172,7 +1308,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
       showFinished(true);
     }
     stock.flush();
-    moveChips(0);
+    chips.move(0);
   };
 
   return {
@@ -1195,8 +1331,8 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
       place(Math.min(t, total));
       const cutter = cutters[current.tool];
       if (!current.dwell && t < total) cutter.spin.rotation.y -= dt * Math.PI * 2 * (cutter.kind === 'face' ? 3 : 6);
-      if (removed > 0.4) spawn(tip, cutter.r, Math.min(4, Math.ceil(removed / 25)));
-      moveChips(dt);
+      if (removed > 0.4) chips.spawn(tip, cutter.r, Math.min(4, Math.ceil(removed / 25)));
+      chips.move(dt);
       showFinished(t >= total);
     },
     notes() {
@@ -1205,9 +1341,10 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
     },
     step: () => (t >= total ? OPS.length : current.op),
     hud() {
-      if (t >= total) return '가공 완료 · 사각 소재에서 부품까지';
-      const name = cutters[current.tool].name;
-      return current.dwell ? `공구 교환 · ${name}` : `${pad2(current.op + 1)} ${OPS[current.op]} · ${name}`;
+      // The jaws held the bottom stock, so the part comes off for a second hold.
+      if (t >= total) return '가공 완료 · 바닥은 다시 물려 정리';
+      const cutter = cutters[current.tool];
+      return current.dwell ? `공구 교환 · ${cutter.name}` : `${pad2(current.op + 1)} ${current.name} · ${cutter.short}`;
     },
     done: () => !reducedMotion && t >= end,
   };
