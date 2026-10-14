@@ -33,7 +33,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       { label: '출원번호', value: '10-2025-0177712' },
     ],
     relatedProjectId: 'panel-classification',
-    relatedProjectTitle: '형상과 연결 관계로 판재의 역할을 분류하는 AI',
+    relatedProjectTitle: '가구 패널을 인식해 설계를 제조 데이터로 바꾸는 AI',
   },
   {
     id: 'machining-labeling-software',
@@ -55,6 +55,6 @@ export const ACHIEVEMENTS: Achievement[] = [
       { label: '등록 신청 접수일', value: '2025.12.12' },
     ],
     relatedProjectId: 'cad-feature-recognition',
-    relatedProjectTitle: 'CAD 형상에서 가공 특징을 읽는 AI',
+    relatedProjectTitle: '3D 모델을 읽고 가공 전략까지 설계하는 AI',
   },
 ];

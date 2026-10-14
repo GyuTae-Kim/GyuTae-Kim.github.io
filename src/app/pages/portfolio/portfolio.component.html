@@ -88,47 +88,54 @@
     </div>
     <section class="case-hero" aria-labelledby="case-headline">
       <p class="result-headline" id="case-headline">{{ selected!.headline }}</p>
-      <figure class="pair-gallery" *ngIf="selected!.gallery as gallery; else caseFigure">
-        <div class="pair-grid">
-          <div class="pair" *ngFor="let pair of gallery.pairs">
-            <div *ngFor="let item of pair">
-              <img [src]="item.src" [alt]="item.alt" width="690" height="510" />
-              <span>{{ item.caption }}</span>
-            </div>
-          </div>
-        </div>
+      <figure class="case-figure">
+        <img
+          [src]="selected!.figure.src"
+          [alt]="selected!.figure.alt"
+          width="560"
+          height="390"
+        />
         <figcaption>
-          <span class="figure-kind research">연구 렌더</span>
-          {{ gallery.caption }}
+          <span
+            class="figure-kind"
+            [class.research]="selected!.figure.kind !== 'concept'"
+            >{{ kindLabels[selected!.figure.kind] }}</span
+          >
+          {{ selected!.figure.caption }}
         </figcaption>
       </figure>
-      <ng-template #caseFigure>
-        <figure class="case-figure">
-          <img
-            [src]="selected!.figure.src"
-            [alt]="selected!.figure.alt"
-            width="560"
-            height="390"
-          />
-          <figcaption>
-            <span
-              class="figure-kind"
-              [class.research]="selected!.figure.kind === 'research'"
-              >{{ selected!.figure.kind === 'research' ? '연구 렌더' : '개념도' }}</span
+      <ol class="case-story" aria-label="프로젝트 흐름">
+        <li *ngFor="let step of selected!.story; let i = index" [class]="'owner-' + step.owner">
+          <div class="story-figure" *ngIf="step.image">
+            <picture
+              ><source
+                *ngIf="step.still"
+                [attr.srcset]="step.still"
+                media="(prefers-reduced-motion: reduce)" /><img
+                [src]="step.still && stopped.has(step.image) ? step.still : step.image"
+                [alt]="step.imageAlt"
+                loading="lazy"
+            /></picture>
+            <button
+              *ngIf="step.still"
+              type="button"
+              class="motion-toggle"
+              [attr.aria-pressed]="stopped.has(step.image)"
+              (click)="toggleMotion(step.image)"
             >
-            {{ selected!.figure.caption }}
-          </figcaption>
-        </figure>
-      </ng-template>
-      <div class="case-made">
-        <span class="eyebrow">만든 것</span>
-        <ul>
-          <li *ngFor="let output of selected!.outputs">{{ output }}</li>
-        </ul>
-      </div>
+              {{ stopped.has(step.image) ? "▶ 재생" : "❚❚ 정지" }}
+            </button>
+          </div>
+          <div class="story-meta">
+            <b>{{ i + 1 }}</b><span>{{ ownerLabels[step.owner] }}</span>
+          </div>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.text }}</p>
+        </li>
+      </ol>
       <dl class="case-facts">
         <div>
-          <dt>맡은 범위</dt>
+          <dt>맡은 역할</dt>
           <dd>{{ selected!.role }}</dd>
         </div>
         <div>
@@ -140,6 +147,26 @@
     </section>
     <details class="result-details case-details">
       <summary>자세히 · 문제, 접근, 기여, 검증</summary>
+      <div class="case-made">
+        <span class="eyebrow">만든 것</span>
+        <ul>
+          <li *ngFor="let output of selected!.outputs">{{ output }}</li>
+        </ul>
+      </div>
+      <figure class="pair-gallery" *ngIf="selected!.gallery as gallery">
+        <div class="pair-grid">
+          <div class="pair" *ngFor="let pair of gallery.pairs">
+            <div *ngFor="let item of pair">
+              <img [src]="item.src" [alt]="item.alt" width="690" height="510" loading="lazy" />
+              <span>{{ item.caption }}</span>
+            </div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="figure-kind research">연구 렌더</span>
+          {{ gallery.caption }}
+        </figcaption>
+      </figure>
       <div class="case-sections">
         <section id="problem">
           <p class="eyebrow">01 / PROBLEM</p>

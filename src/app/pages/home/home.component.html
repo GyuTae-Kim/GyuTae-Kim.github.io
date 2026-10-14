@@ -110,9 +110,7 @@
           [class]="'card-visual visual-' + project.number"
         >
           <span class="project-number">{{ project.number }}</span>
-          <span class="figure-kind" [class.research]="project.figure.kind === 'research'">{{
-            project.figure.kind === 'research' ? '연구 렌더' : '개념도'
-          }}</span>
+          <span class="figure-kind" [class.research]="project.figure.kind !== 'concept'">{{ kindLabels[project.figure.kind] }}</span>
           <img
             [src]="project.figure.src"
             [alt]="project.figure.alt"

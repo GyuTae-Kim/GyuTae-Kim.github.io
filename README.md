@@ -14,11 +14,11 @@ npm run preview
 ## 구성
 
 - `/`: 소개, CAD→특징 인식→CAM 개념도, 가구 설계→제조 데이터 사례 카드, 대표 프로젝트.
-- `/portfolio`: 분야별 프로젝트 목록, `/portfolio/:id`: 결과 한 줄과 대표 그림, 만든 것을 먼저 보이고 문제·접근·기여·검증은 「자세히」에 둔 사례. 가공 특징 인식, 판재 분류 AI, Fusion CAM, 제조 출력의 네 사례를 포함합니다.
+- `/portfolio`: 분야별 프로젝트 목록, `/portfolio/:id`: 결과 한 줄과 대표 그림, 만든 것을 먼저 보이고 문제·접근·기여·검증은 「자세히」에 둔 사례. 피처 인식·CAM 자동화, 가구 패널 인식, Wedraw Pro의 세 사례를 4단계 흐름(직접·팀·협력 기관 표시)으로 보여 줍니다.
 - `/research`: 학부연구생 때의 공개 연구 3개를 2026년에 다시 돌린 결과 카드(결과 한 줄, 대표 그림, 숫자)와 「자세히」. 기존 `/blog` 주소도 이곳으로 연결합니다.
 - `/contact`: 공개 이메일·GitHub, 이메일 복사.
 - `src/app/achievement-data.ts`: 특허 출원·공동발명 및 프로그램 등록 신청 자료의 개인정보 없는 성과 요약.
-- `src/app/portfolio-data.ts`: 최근 개발 사례 내용.
+- `src/app/portfolio-data.ts`: 최근 개발 사례 내용. `src/assets/cases/`: 사례별 대표 그림과 단계 그림(제품 화면은 데모·테스트 데이터, 개인 정보는 잘라냄).
 - `src/app/research-data.ts`: 공개 연구 자료 내용과 출처.
 - `src/assets/research/`: 본인 공개 저장소에서 가져온 원본 그림.
 - `src/assets/research/rerun/`: 2026년에 세 공개 연구 코드를 다시 돌린 결과 그림(WebP). 사람이 나오는 그림은 얼굴을 모자이크했고, 의류 분류는 K-Fashion 대신 Fashion-MNIST로 돌린 결과입니다.

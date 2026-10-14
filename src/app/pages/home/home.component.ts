@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CASE_STUDIES } from '../../portfolio-data';
+import { CASE_STUDIES, FIGURE_KIND_LABELS } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
 @Component({
   selector: 'app-home',
@@ -8,9 +8,10 @@ import { RESEARCH_WORKS } from '../../research-data';
 })
 export class HomeComponent {
   cases = CASE_STUDIES;
+  kindLabels = FIGURE_KIND_LABELS;
   research = RESEARCH_WORKS.filter((work) => work.result);
   // Shown as its own card beside the CAD → feature → CAM figure.
-  furniture = CASE_STUDIES.find((c) => c.id === 'sketchup-manufacturing')!;
+  furniture = CASE_STUDIES.find((c) => c.id === 'wedraw-pro')!;
   stage = 1;
   stages = [
     {

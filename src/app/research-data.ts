@@ -68,7 +68,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     connection:
       '그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 판재와 면을 인식하는 지금의 연구로 이어졌습니다.',
     relatedProjectId: 'panel-classification',
-    relatedProjectTitle: '판재와 면, 접촉 관계를 그래프로 표현한 분류 AI',
+    relatedProjectTitle: '가구 패널을 인식해 제조 데이터로 바꾸는 AI',
     title: '강화학습과 그래프 네트워크로 TSP를 풀어 보려 한 시도',
     category: 'Reinforcement Learning × Graph Network · 참조 논문 기반 구현',
     question: '강화학습과 그래프 네트워크를 합쳐 조합 최적화 문제인 TSP의 경로를 만들 수 있을까?',
@@ -159,7 +159,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     connection:
       '클래스별 오류를 나눠 보고 평가 분할이 무엇을 뜻하는지 따져 본 경험이, 지금 CAD 가공 특징의 라벨과 모델을 평가하는 방식에도 남아 있습니다.',
     relatedProjectId: 'cad-feature-recognition',
-    relatedProjectTitle: 'CAD 형상 인식의 데이터와 모델 평가',
+    relatedProjectTitle: '3D 모델의 가공 특징 인식과 모델 평가',
     title: '의류 분류의 데이터 불균형과 클래스 혼동 분석',
     category: 'Computer Vision · 실험 기록',
     question:
@@ -240,8 +240,8 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     credit: 'ACGPN·인체 파싱·포즈 추정 공개 모델을 묶은 통합 구현',
     connection:
       '서로 다른 모듈의 입력과 출력을 맞춰 하나로 잇는 일은, 서버에서 만든 가공 계획을 Fusion에서 실행되게 하는 지금의 작업과 닮았습니다.',
-    relatedProjectId: 'fusion-cam',
-    relatedProjectTitle: '가공 계획을 Fusion 작업으로 옮기기',
+    relatedProjectId: 'cad-feature-recognition',
+    relatedProjectTitle: '가공 전략을 Fusion CAM 공정으로 옮기기',
     title: '가상 착용을 위한 이미지 전처리와 추론 통합',
     category: 'Computer Vision · 응용 구현',
     question:
