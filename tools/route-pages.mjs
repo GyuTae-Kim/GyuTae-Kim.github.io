@@ -1,6 +1,7 @@
 // Writes a copy of the built index.html for each app route, so GitHub Pages answers deep
 // links with 200 instead of the 404 redirect, and link previews get the page's own title,
-// description and image. Usage: node tools/route-pages.mjs [build-dir]
+// description and image. Also writes sitemap.xml for the same routes.
+// Usage: node tools/route-pages.mjs [build-dir]
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
@@ -76,3 +77,13 @@ for (const route of routes) {
   }
   console.log(route.path, '→', route.files.join(', '));
 }
+
+const today = new Date().toISOString().slice(0, 10);
+const urls = ['/', ...routes.map((route) => route.path)]
+  .map((path) => `  <url><loc>${site}${path}</loc><lastmod>${today}</lastmod></url>`)
+  .join('\n');
+writeFileSync(
+  join(outDir, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+);
+console.log('sitemap.xml →', routes.length + 1, 'urls');
