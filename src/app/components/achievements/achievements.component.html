@@ -63,7 +63,7 @@
           *ngIf="showProjectLinks"
           class="text-link achievement-project"
           [routerLink]="['/portfolio', achievement.relatedProjectId]"
-          >{{ achievement.relatedProjectTitle }}
+          >{{ projectTitle(achievement.relatedProjectId) }}
           <span aria-hidden="true">→</span></a
         >
       </article>

@@ -7,8 +7,8 @@ export interface Achievement {
   role: string;
   features: string[];
   metadata: { label: string; value: string }[];
+  // The link text is that project's title (CASE_STUDIES).
   relatedProjectId: string;
-  relatedProjectTitle: string;
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
@@ -27,7 +27,6 @@ export const ACHIEVEMENTS: Achievement[] = [
       { label: '출원번호', value: '10-2025-0177712' },
     ],
     relatedProjectId: 'panel-classification',
-    relatedProjectTitle: '가구 패널을 인식해 설계를 제조 데이터로 바꾸는 AI',
   },
   {
     id: 'machining-labeling-software',
@@ -38,7 +37,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       '형상 그래프와 학습 데이터 구성',
     ],
     kind: '프로그램',
-    status: '등록 신청·접수 확인',
+    status: '등록 신청 접수',
     title: '가공 형상 및 특징 인식 인공지능 학습용 라벨링 프로그램',
     description: 'CAD 모델의 면마다 가공 특징을 표시해 특징 인식 AI의 학습 데이터를 만드는 도구입니다.',
     metadata: [
@@ -46,6 +45,5 @@ export const ACHIEVEMENTS: Achievement[] = [
       { label: '등록 신청 접수일', value: '2025.12.12' },
     ],
     relatedProjectId: 'cad-feature-recognition',
-    relatedProjectTitle: '3D 모델을 읽고 가공 전략까지 설계하는 AI',
   },
 ];

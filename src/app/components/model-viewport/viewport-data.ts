@@ -78,7 +78,7 @@ export const VIEW_MODELS: ViewModel[] = [
         steps: true,
       },
       {
-        label: '피처 인식',
+        label: '특징 인식',
         title: '면마다 가공 특징을 붙입니다',
         text: '면 단위로 예측한 결과를 포켓, 카운터보어, 구멍, 단차, 필렛으로 묶습니다.',
         legend: [

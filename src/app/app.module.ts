@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 import { AchievementsComponent } from './components/achievements/achievements.component';
 import { ModelViewportComponent } from './components/model-viewport/model-viewport.component';
@@ -17,6 +18,7 @@ import { ModelViewportComponent } from './components/model-viewport/model-viewpo
     ContactComponent,
     PortfolioComponent,
     BoardComponent,
+    NotFoundComponent,
     AchievementsComponent,
     ModelViewportComponent,
   ],

@@ -3,13 +3,16 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   NgZone,
+  OnInit,
   OnDestroy,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import type { ViewportScene } from './viewport-scene';
 import { ModelId, VIEW_MODELS } from './viewport-data';
+import { siteUpdated } from '../../site-updated';
 
 // Home viewport: a drawing sheet with a live three.js model. The 3D code is a lazy
 // chunk; until it loads (or without WebGL) the sheet shows a rendered still.
@@ -19,8 +22,11 @@ import { ModelId, VIEW_MODELS } from './viewport-data';
   styleUrls: ['./model-viewport.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ModelViewportComponent implements AfterViewInit, OnDestroy {
+export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('stage') private stage!: ElementRef<HTMLDivElement>;
+  // On a project page the viewer shows that project's model only, without the model
+  // tabs or the link back to the same project.
+  @Input() fixedModel?: ModelId;
 
   models = VIEW_MODELS;
   readonly reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -35,11 +41,17 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
   state: 'loading' | 'live' | 'still' = 'loading';
   private scene?: ViewportScene;
   private destroyed = false;
+  private nearby?: IntersectionObserver;
+  readonly updated = siteUpdated();
 
   constructor(
     private readonly zone: NgZone,
     private readonly changes: ChangeDetectorRef,
   ) {}
+
+  ngOnInit() {
+    if (this.fixedModel) this.model = this.fixedModel;
+  }
 
   get info() {
     return this.models.find((m) => m.id === this.model)!;
@@ -62,6 +74,22 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
       Promise.resolve().then(() => this.setState('still'));
       return;
     }
+    // The three.js chunk loads once the viewer comes near the screen (on phones it sits
+    // below the projects); the still image stands in until then.
+    this.zone.runOutsideAngular(() => {
+      this.nearby = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          this.nearby?.disconnect();
+          this.loadScene();
+        },
+        { rootMargin: '600px 0px' },
+      );
+      this.nearby.observe(this.stage.nativeElement);
+    });
+  }
+
+  private loadScene() {
     this.zone.runOutsideAngular(() => {
       import('./viewport-scene')
         .then(({ ViewportScene }) => {
@@ -72,6 +100,7 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
             onLayer: (layer) => this.refresh(() => (this.layer = layer)),
             onStep: (step) => this.refresh(() => (this.step = step)),
           });
+          if (this.model !== 'part') this.scene.setModel(this.model);
           this.scene.setLayer(this.layer);
           this.zone.run(() => this.setState('live'));
         })
@@ -81,6 +110,7 @@ export class ModelViewportComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroyed = true;
+    this.nearby?.disconnect();
     this.scene?.dispose();
   }
 

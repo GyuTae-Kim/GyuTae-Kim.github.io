@@ -66,7 +66,7 @@
   <section class="contact-topics" aria-labelledby="topics-title">
     <div class="section-title">
       <span class="section-no">01</span>
-      <h2 id="topics-title">주로 다루는 일</h2>
+      <h2 id="topics-title">주요 프로젝트</h2>
       <a class="text-link" routerLink="/portfolio"
         >전체 보기 <span aria-hidden="true">→</span></a
       >
@@ -75,7 +75,9 @@
       <li *ngFor="let project of cases">
         <a class="topic-card" [routerLink]="['/portfolio', project.id]">
           <img
-            [src]="project.figure.src"
+            [src]="project.thumb + '-672.webp'"
+            [attr.srcset]="srcset(project.thumb)"
+            sizes="(max-width: 720px) 100vw, 340px"
             alt=""
             width="560"
             height="390"

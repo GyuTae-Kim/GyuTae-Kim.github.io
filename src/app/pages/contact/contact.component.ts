@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { CASE_STUDIES } from '../../portfolio-data';
+import { CASE_STUDIES, thumbSrcset } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
 
 const EMAIL = 'GyuTae.K1020@gmail.com';
@@ -14,6 +14,7 @@ export class ContactComponent implements OnDestroy {
   // Opens a new mail with the subject line already filled in.
   mailto = `mailto:${EMAIL}?subject=${encodeURIComponent('포트폴리오를 보고 연락드립니다')}`;
   cases = CASE_STUDIES;
+  srcset = thumbSrcset;
   repos = RESEARCH_WORKS.map((work) => ({
     name: work.source.split('/').pop(),
     title: work.title,
