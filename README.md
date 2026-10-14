@@ -23,12 +23,6 @@ npm run preview
 - `src/app/research-data.ts`: 공개 연구 자료 내용과 출처.
 - `src/assets/research/`: 본인 공개 저장소에서 가져온 원본 그림.
 - `src/assets/research/rerun/`: 2026년에 세 공개 연구 코드를 다시 돌린 결과 그림(WebP). 사람이 나오는 그림은 얼굴을 모자이크했고, 의류 분류는 K-Fashion 대신 Fashion-MNIST로 돌린 결과입니다.
-- `src/assets/figures/`: 예전 사례 개념도. `tools/figures/`의 스크립트로 다시 만듭니다(Python 3 표준 라이브러리만 사용).
-
-  ```sh
-  cd tools/figures
-  python3 panels.py ../../src/assets/figures/fig-panels.svg   # cam.py, nesting.py 도 같은 방식
-  ```
 - `src/assets/og/`: 링크 미리보기 이미지(1200×630). `tools/route-pages.mjs`가 빌드 결과에 주소별 HTML(`portfolio.html`, `portfolio/<id>.html`, `research.html`, `contact.html`)을 만들어 GitHub Pages가 하위 주소에 200으로 응답하고, 주소마다 제목·설명·미리보기 이미지를 갖게 합니다. `npm run build`가 함께 실행합니다.
 
 ## 배포 없는 빌드 검증
