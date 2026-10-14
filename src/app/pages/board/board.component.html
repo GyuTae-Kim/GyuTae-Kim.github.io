@@ -83,6 +83,8 @@
               media="(prefers-reduced-motion: reduce)" /><img
               [src]="fig.still && stopped.has(fig.src) ? fig.still : fig.src"
               [alt]="fig.alt"
+              [width]="fig.width"
+              [height]="fig.height"
               loading="lazy" /></picture
         ></a>
         <button
@@ -183,7 +185,7 @@
               target="_blank"
               rel="noopener noreferrer"
               [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
-              ><img [src]="fig.src" [alt]="fig.alt" loading="lazy"
+              ><img [src]="fig.src" [alt]="fig.alt" [width]="fig.width" [height]="fig.height" loading="lazy"
             /></a>
             <figcaption>{{ fig.caption }}</figcaption>
           </figure>
@@ -230,7 +232,7 @@
       <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
       <p>{{ work.connection }}</p>
       <a class="text-link" [routerLink]="['/portfolio', work.relatedProjectId]"
-        >{{ work.relatedProjectTitle }} <span aria-hidden="true">→</span></a
+        >{{ projectTitle(work.relatedProjectId) }} <span aria-hidden="true">→</span></a
       >
     </div>
   </article>

@@ -1,10 +1,13 @@
 <div class="page-shell interior-page">
   <ng-container *ngIf="!selected; else caseDetail">
+    <p class="missing-note" *ngIf="missing" role="status">
+      찾는 프로젝트가 없습니다. 아래 목록에서 골라 주세요.
+    </p>
     <div class="page-intro">
       <h1>연구에서 제조까지<span class="accent">.</span></h1>
       <p>
-        3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 그 결과를
-        Fusion CAM과 가구 제조 데이터로 이었습니다.<br />가구 설계에서 생산까지
+        3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 인식 결과로
+        Fusion CAM 공정을 만들고 가구 크기 변경을 계산했습니다.<br />가구 설계에서 생산까지
         잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.
       </p>
     </div>
@@ -28,11 +31,12 @@
           tabindex="-1"
           aria-hidden="true"
           ><img
-            [src]="project.figure.src"
+            [src]="project.thumb + '-672.webp'"
+            [attr.srcset]="srcset(project.thumb)"
+            sizes="(max-width: 720px) 100vw, 300px"
             alt=""
             width="560"
             height="390"
-            loading="lazy"
         /></a>
       </div>
       <div class="project-row-content">
@@ -47,8 +51,8 @@
         </div>
         <div class="project-summary">
           <div>
-            <h3>맡은 범위</h3>
-            <p>{{ project.role }}</p>
+            <h3>맡은 역할</h3>
+            <p>{{ project.role }} {{ project.roleNote }}</p>
           </div>
           <div>
             <h3>결과</h3>
@@ -68,60 +72,51 @@
     <section class="other-projects" id="other-projects" aria-labelledby="other-projects-title">
       <div class="archive-intro">
         <h2 id="other-projects-title">기타 프로젝트</h2>
-        <p>설계·제조 기능을 제품으로 운영하는 데 필요한 웹 서비스와 감시 기능도 개발했습니다. 맡은 범위와 주요 판단을 함께 정리했습니다.</p>
+        <p>제품을 운영하면서 서비스 감시 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.</p>
       </div>
-      <article class="research-entry" *ngFor="let project of otherProjects" [id]="project.id" [attr.aria-labelledby]="project.id + '-title'">
-        <div class="research-entry-heading">
-          <div>
-            <p class="eyebrow">{{ project.category }}</p>
-            <h3 class="other-project-title" [id]="project.id + '-title'">{{ project.title }}</h3>
-          </div>
-        </div>
+      <article class="research-entry other-project" *ngFor="let project of otherProjects" [id]="project.id" [attr.aria-labelledby]="project.id + '-title'">
+        <p class="eyebrow">{{ project.category }} · {{ project.period }}</p>
+        <h3 class="other-project-title" [id]="project.id + '-title'">{{ project.title }}</h3>
         <p class="research-summary">{{ project.summary }}</p>
-        <div class="tags"><span *ngFor="let tag of project.tags">{{ tag }}</span></div>
-        <dl class="case-facts"><div><dt>맡은 역할</dt><dd>{{ project.role }}</dd></div></dl>
-        <ol class="step-work" aria-label="개발한 기능">
+        <ul class="result-stats">
+          <li *ngFor="let stat of project.stats">
+            <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+          </li>
+        </ul>
+        <dl class="case-facts single"><div><dt>맡은 역할</dt><dd>{{ project.role }}</dd></div></dl>
+        <ol class="work-chips" aria-label="한 일">
           <li *ngFor="let item of project.work; let i = index">
-            <div class="story-meta"><b>{{ i + 1 }}</b><span>개발한 기능</span></div>
-            <h4>{{ item.title }}</h4>
-            <p>{{ item.text }}</p>
+            <b>{{ i + 1 }}</b><strong>{{ item.title }}</strong><span>{{ item.text }}</span>
           </li>
         </ol>
-        <div class="operation-evidence" aria-label="실제 제품 화면">
-          <figure *ngFor="let shot of project.evidence">
-            <a [href]="shot.src" target="_blank" rel="noopener noreferrer" [attr.aria-label]="shot.title + ' 공개용 캡처 새 창에서 보기'">
-              <img [src]="shot.src" [alt]="shot.alt" [width]="shot.width" [height]="shot.height" loading="lazy" />
-            </a>
-            <figcaption><span class="figure-kind">운영 캡처 · 가림 편집</span><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
-          </figure>
+        <div class="tags"><span *ngFor="let tag of project.tags">{{ tag }}</span></div>
+        <div class="operation-evidence" *ngIf="project.evidence.length" aria-label="실제 운영 화면">
+          <ng-container *ngTemplateOutlet="shots; context: { $implicit: project.evidence }"></ng-container>
         </div>
         <details class="result-details">
-          <summary>자세히 · 개선 사례와 판단, 구현 범위</summary>
-          <section class="operation-improvements" [attr.aria-labelledby]="project.id + '-improvements'">
-            <h4 [id]="project.id + '-improvements'">운영 중 발견하고 개선한 사례</h4>
-            <p class="step-note">코드 변경 이력과 회귀 테스트의 검사 항목을 기준으로 정리했습니다. 실제 운영 화면은 내부 세부정보를 가려 실었습니다.</p>
-            <article *ngFor="let item of project.improvements" class="operation-improvement">
-              <span class="period">{{ item.date }}</span>
-              <h5>{{ item.title }}</h5>
-              <dl>
-                <div><dt>발생했던 문제</dt><dd>{{ item.before }}</dd></div>
-                <div><dt>바꾼 것</dt><dd>{{ item.change }}</dd></div>
-                <div><dt>수정 후 동작</dt><dd>{{ item.result }}</dd></div>
-              </dl>
-              <p class="step-note"><b>확인 근거</b> {{ item.validation }}</p>
-            </article>
-          </section>
+          <summary>자세히 · 문제와 해결<ng-container *ngIf="project.moreEvidence.length">, 화면</ng-container></summary>
           <ol class="fix-list">
-            <li *ngFor="let item of project.decisions">
+            <li *ngFor="let item of project.fixes">
               <p class="fix-problem"><span>문제</span>{{ item.problem }}</p>
               <b aria-hidden="true">→</b>
               <p class="fix-answer"><span>해결</span>{{ item.fix }}</p>
             </li>
           </ol>
-          <p class="result-scope">{{ project.scope }}</p>
+          <div class="operation-evidence" *ngIf="project.moreEvidence.length">
+            <ng-container *ngTemplateOutlet="shots; context: { $implicit: project.moreEvidence }"></ng-container>
+          </div>
         </details>
+        <p class="result-scope">{{ project.scope }}</p>
       </article>
     </section>
+    <ng-template #shots let-list>
+      <figure *ngFor="let shot of list">
+        <button type="button" class="zoom-open" [attr.aria-label]="shot.title + ' 크게 보기'" (click)="openZoom(shot.full, shot.alt)">
+          <img [src]="shot.src" [alt]="shot.alt" [width]="shot.width" [height]="shot.height" loading="lazy" />
+        </button>
+        <figcaption><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
+      </figure>
+    </ng-template>
     <app-achievements></app-achievements>
     <aside class="end-note">
       학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는
@@ -141,14 +136,28 @@
       </div>
     </div>
     <section class="case-hero" aria-labelledby="case-headline">
-      <p class="result-headline" id="case-headline">{{ selected!.headline }}</p>
+      <h2 class="result-headline" id="case-headline">{{ selected!.headline }}</h2>
       <figure class="case-figure">
-        <img
-          [src]="selected!.figure.src"
-          [alt]="selected!.figure.alt"
-          width="560"
-          height="390"
-        />
+        <picture
+          ><source
+            *ngIf="selected!.figure.still"
+            [attr.srcset]="selected!.figure.still"
+            media="(prefers-reduced-motion: reduce)" /><img
+            [src]="selected!.figure.still && stopped.has(selected!.figure.src) ? selected!.figure.still : selected!.figure.src"
+            [alt]="selected!.figure.alt"
+            width="560"
+            height="390"
+            fetchpriority="high"
+        /></picture>
+        <button
+          *ngIf="selected!.figure.still"
+          type="button"
+          class="motion-toggle"
+          [attr.aria-pressed]="stopped.has(selected!.figure.src)"
+          (click)="toggleMotion(selected!.figure.src)"
+        >
+          {{ stopped.has(selected!.figure.src) ? "▶ 재생" : "❚❚ 정지" }}
+        </button>
         <figcaption>
           <span
             class="figure-kind"
@@ -164,17 +173,26 @@
         </li>
       </ul>
       <ol class="case-story" aria-label="프로젝트 흐름">
-        <li *ngFor="let step of selected!.story; let i = index" [class]="'owner-' + step.owner">
+        <li *ngFor="let step of selected!.story; let i = index">
           <div class="story-figure" *ngIf="step.image">
-            <picture
-              ><source
-                *ngIf="step.still"
-                [attr.srcset]="step.still"
-                media="(prefers-reduced-motion: reduce)" /><img
-                [src]="step.still && stopped.has(step.image) ? step.still : step.image"
-                [alt]="step.imageAlt"
-                loading="lazy"
-            /></picture>
+            <button
+              type="button"
+              class="zoom-open"
+              [attr.aria-label]="step.title + ' 그림 크게 보기'"
+              (click)="openZoom(step.image, step.imageAlt ?? '', step.still)"
+            >
+              <picture
+                ><source
+                  *ngIf="step.still"
+                  [attr.srcset]="step.still"
+                  media="(prefers-reduced-motion: reduce)" /><img
+                  [src]="step.still && stopped.has(step.image) ? step.still : step.image"
+                  [alt]="step.imageAlt"
+                  width="900"
+                  height="675"
+                  loading="lazy"
+              /></picture>
+            </button>
             <button
               *ngIf="step.still"
               type="button"
@@ -185,9 +203,7 @@
               {{ stopped.has(step.image) ? "▶ 재생" : "❚❚ 정지" }}
             </button>
           </div>
-          <div class="story-meta">
-            <b>{{ i + 1 }}</b><span>{{ ownerLabel(step) }}</span>
-          </div>
+          <div class="story-meta"><b>{{ i + 1 }}</b></div>
           <h3>{{ step.title }}</h3>
           <p>{{ step.text }}</p>
         </li>
@@ -195,7 +211,13 @@
       <dl class="case-facts">
         <div>
           <dt>맡은 역할</dt>
-          <dd>{{ selected!.role }}</dd>
+          <dd>
+            <p>{{ selected!.role }}</p>
+            <ul class="role-list">
+              <li *ngFor="let item of selected!.roleItems">{{ item }}</li>
+            </ul>
+            <p class="role-note" *ngIf="selected!.roleNote">{{ selected!.roleNote }}</p>
+          </dd>
         </div>
         <div>
           <dt>핵심 판단</dt>
@@ -204,15 +226,18 @@
       </dl>
       <p class="result-scope">{{ selected!.scopeLine }}</p>
     </section>
+    <section class="case-concept" *ngIf="selected!.concept as concept" aria-labelledby="case-concept-title">
+      <h2 class="detail-title" id="case-concept-title"><span>3D</span>개념 모델로 보는 과정</h2>
+      <p class="case-concept-note">{{ conceptNotes[concept] }}</p>
+      <app-model-viewport [fixedModel]="concept"></app-model-viewport>
+    </section>
     <details class="result-details case-details">
       <summary>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
       <section class="detail-block" aria-labelledby="detail-work">
         <h2 class="detail-title" id="detail-work"><span>01</span>단계마다 한 일</h2>
         <ol class="step-work">
-          <li *ngFor="let step of selected!.story; let i = index" [class]="'owner-' + step.owner">
-            <div class="story-meta">
-              <b>{{ i + 1 }}</b><span>{{ ownerLabel(step) }}</span>
-            </div>
+          <li *ngFor="let step of selected!.story; let i = index">
+            <div class="story-meta"><b>{{ i + 1 }}</b></div>
             <h3>{{ step.title }}</h3>
             <ul *ngIf="step.did.length">
               <li *ngFor="let item of step.did">{{ item }}</li>
@@ -291,4 +316,17 @@
       >
     </nav>
   </ng-template>
+  <dialog
+    #zoomDialog
+    class="zoom-dialog"
+    aria-label="그림 크게 보기"
+    (click)="onZoomClick($event)"
+    (close)="zoom = undefined"
+  >
+    <ng-container *ngIf="zoom">
+      <img [src]="zoom.src" [alt]="zoom.alt" />
+      <p>{{ zoom.alt }}</p>
+    </ng-container>
+    <button type="button" class="zoom-close" (click)="closeZoom()">닫기</button>
+  </dialog>
 </div>

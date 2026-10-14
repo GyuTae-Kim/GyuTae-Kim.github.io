@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
     <meta charset="utf-8" />
-    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>페이지로 이동하는 중 — 김규태 · Sean Kim</title>
     <script>
-        // GitHub Pages serves this page for unknown paths. index.html turns /#/path back into /path.
+        // GitHub Pages serves this page for unknown paths. index.html turns /#/path back into /path,
+        // and the app shows its own "없는 페이지" screen if the path really does not exist.
         var locationPath = location.pathname + location.search + location.hash;
         location.replace(location.protocol + '//' + location.host + '/#' + locationPath);
     </script>
 </head>
 
-<body>
-    <h1>Redirecting...</h1>
-    <p>
-        If you are not redirected automatically, <a href="/">click here</a>.
-    </p>
+<body style="font-family: sans-serif; background: #f4f3ec; color: #1e2522; padding: 40px 24px;">
+    <p>페이지로 이동하는 중입니다. 바로 넘어가지 않으면 <a href="/">홈으로 가기</a>를 눌러 주세요.</p>
 </body>
 
 </html>

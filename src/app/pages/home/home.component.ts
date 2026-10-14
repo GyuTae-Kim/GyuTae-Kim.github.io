@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, NgZone, OnDestroy } from '@angular/core';
-import { CASE_STUDIES, FIGURE_KIND_LABELS } from '../../portfolio-data';
+import { CASE_STUDIES, FIGURE_KIND_LABELS, thumbSrcset } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
 
 @Component({
@@ -10,6 +10,7 @@ import { RESEARCH_WORKS } from '../../research-data';
 export class HomeComponent implements AfterViewInit, OnDestroy {
   cases = CASE_STUDIES;
   kindLabels = FIGURE_KIND_LABELS;
+  srcset = thumbSrcset;
   research = RESEARCH_WORKS.filter((work) => work.result);
   // Shown as its own product card under the concept viewport.
   furniture = CASE_STUDIES.find((c) => c.id === 'wedraw-pro')!;

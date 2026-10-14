@@ -51,10 +51,19 @@
         [routerLink]="['/portfolio', furniture.id]"
         [attr.aria-label]="furniture.title + ' 프로젝트 보기'"
       >
-        <img [src]="furniture.figure.src" alt="" width="560" height="390" />
+        <!-- A real product screen, so the card does not repeat project 03's thumbnail below. -->
+        <img
+          src="assets/cases/wedraw-pro/card-336.webp"
+          srcset="assets/cases/wedraw-pro/card-336.webp 336w, assets/cases/wedraw-pro/card-672.webp 672w"
+          sizes="132px"
+          alt=""
+          width="560"
+          height="390"
+        />
         <div>
-          <span class="product-kicker">지금 만드는 제품</span>
-          <strong>{{ furniture.title }}</strong>
+          <span class="product-kicker">지금 팀과 만드는 제품 · 진행 중</span>
+          <strong>Wedraw Pro</strong>
+          <p class="product-line">{{ furniture.subtitle }}</p>
           <ol class="flow-chips">
             <li *ngFor="let label of furniture.diagramLabels">{{ label }}</li>
           </ol>
@@ -76,7 +85,9 @@
           <a class="index-row case-row" [routerLink]="['/portfolio', project.id]">
             <span class="row-thumb"
               ><img
-                [src]="project.figure.src"
+                [src]="project.thumb + '-336.webp'"
+                [attr.srcset]="srcset(project.thumb)"
+                sizes="(max-width: 720px) 110px, 170px"
                 alt=""
                 width="560"
                 height="390"
@@ -101,7 +112,7 @@
         </li>
       </ol>
       <a class="text-link" routerLink="/portfolio" fragment="other-projects"
-        >기타 프로젝트 · 서비스 감시와 웹 운영 <span aria-hidden="true">→</span></a
+        >기타 프로젝트 · 서비스 감시와 송장 연동 개선 <span aria-hidden="true">→</span></a
       >
     </section>
 
@@ -129,7 +140,14 @@
             [fragment]="work.id"
           >
             <span class="row-thumb"
-              ><img [src]="work.result!.thumb" alt="" loading="lazy"
+              ><img
+                [src]="work.result!.thumb + '-336.webp'"
+                [attr.srcset]="srcset(work.result!.thumb)"
+                sizes="(max-width: 720px) 110px, 170px"
+                alt=""
+                width="560"
+                height="390"
+                loading="lazy"
             /></span>
             <span class="row-body">
               <span class="row-meta">{{ work.category }}</span>
@@ -139,9 +157,8 @@
                 ><b>시행착오</b>{{ work.result!.headline }}</span
               >
             </span>
-            <span class="row-stat"
-              ><b>{{ work.result!.stats[0].value }}</b
-              ><span>{{ work.result!.stats[0].label }}</span></span
+            <span class="row-stat" *ngIf="work.result!.homeStat ?? work.result!.stats[0] as stat"
+              ><b>{{ stat.value }}</b><span>{{ stat.label }}</span></span
             >
           </a>
         </li>

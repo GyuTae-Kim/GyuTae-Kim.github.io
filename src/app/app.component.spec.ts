@@ -5,31 +5,15 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'kgt-gitblog'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('kgt-gitblog');
-  });
-
-  it('should render title', () => {
+  it('renders the main menu', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('kgt-gitblog app is running!');
+    const menu = (fixture.nativeElement as HTMLElement).querySelectorAll('nav[aria-label="주요 메뉴"] a');
+    expect(Array.from(menu).map((a) => a.textContent?.trim())).toEqual(['프로젝트', '연구', '연락']);
   });
 });

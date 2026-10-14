@@ -1,5 +1,11 @@
 <figure class="viewer" [attr.data-model]="model">
   <div class="viewer-bar">
+    <div class="viewer-models" *ngIf="fixedModel; else modelTabs">
+      <span class="viewer-model-name"
+        ><span class="sheet-no">{{ info.sheet }}</span>{{ info.label }}</span
+      >
+    </div>
+    <ng-template #modelTabs>
     <div class="viewer-models" role="group" aria-label="모델 선택">
       <button
         *ngFor="let m of models"
@@ -11,6 +17,7 @@
         <span class="sheet-no">{{ m.sheet }}</span>{{ m.label }}
       </button>
     </div>
+    </ng-template>
     <span class="viewer-tag">개념 모델</span>
   </div>
   <div class="viewer-frame">
@@ -69,7 +76,7 @@
     >
       <strong>{{ view.title }}</strong>
       <p>{{ view.text }}</p>
-      <a class="text-link" [routerLink]="['/portfolio', info.caseId]"
+      <a class="text-link" *ngIf="!fixedModel" [routerLink]="['/portfolio', info.caseId]"
         >이 흐름의 실제 프로젝트 <span aria-hidden="true">→</span></a
       >
     </div>
@@ -122,7 +129,7 @@
     </div>
     <div>
       <dt>갱신</dt>
-      <dd>2026.10</dd>
+      <dd>{{ updated }}</dd>
     </div>
   </dl>
 </figure>

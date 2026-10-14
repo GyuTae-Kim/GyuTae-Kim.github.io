@@ -634,7 +634,7 @@ function buildRecognition(body: Group, edgeMat: LineBasicMaterial, reducedMotion
     },
     notes: () => notes.map((n, i) => (t >= start + i * slot ? n : null)),
     step,
-    hud: () => (step() < 0 ? 'AI 피처 인식' : `AI 인식 ${pad2(step() + 1)} · ${FEATURE_STEPS[step()]}`),
+    hud: () => (step() < 0 ? 'AI 특징 인식' : `AI 인식 ${pad2(step() + 1)} · ${FEATURE_STEPS[step()]}`),
     done: () => !reducedMotion && t >= end,
   };
 }

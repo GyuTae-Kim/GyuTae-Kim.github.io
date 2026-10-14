@@ -2,6 +2,26 @@
   display: block;
 }
 
+.case-concept {
+  margin: 8px 0 36px;
+}
+
+.case-concept-note {
+  margin: -4px 0 14px;
+  font-size: var(--fs-1);
+  line-height: 1.6;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.missing-note {
+  margin: 0 0 20px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: var(--fs-2);
+}
+
 .other-projects {
   margin-top: 52px;
   scroll-margin-top: calc(var(--header-h) + 20px);
@@ -14,22 +34,66 @@
   margin: 8px 0;
 }
 
-.step-work h4 {
-  font-size: var(--fs-2);
-  margin: 10px 0;
+.other-project .result-stats b {
+  font-size: var(--fs-5);
 }
 
-.step-work p {
+.other-project .case-facts.single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 780px;
+}
+
+/* Four pieces of work, one short line each. */
+.work-chips {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.work-chips li {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 8px;
+  row-gap: 2px;
+  align-content: start;
+  background: var(--sheet);
+  padding: 12px 14px 14px;
+}
+
+.work-chips b {
+  grid-row: span 2;
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  background: var(--white);
+  font: 600 var(--fs-1) / 1 var(--mono);
+}
+
+.work-chips strong {
+  font-size: var(--fs-2);
+  line-height: 1.5;
+}
+
+.work-chips span {
   font-size: var(--fs-1);
-  line-height: 1.75;
+  line-height: 1.6;
+  color: var(--muted);
   word-break: keep-all;
 }
 
 .operation-evidence {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
-  margin: 28px 0 40px;
+  gap: 22px;
+  margin: 24px 0 8px;
   align-items: start;
 }
 
@@ -42,80 +106,44 @@
   width: 100%;
   height: auto;
   border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.operation-evidence .zoom-open:hover img {
+  border-color: var(--ink);
 }
 
 .operation-evidence figcaption {
-  padding-top: 12px;
+  padding-top: 8px;
   font-size: var(--fs-1);
-  line-height: 1.75;
+  line-height: 1.6;
 }
 
 .operation-evidence strong {
   display: block;
-  margin-top: 8px;
-  font-size: var(--fs-2);
+  font-size: var(--fs-1);
 }
 
 .operation-evidence figcaption p {
   color: var(--muted);
-  margin: 6px 0 0;
+  margin: 2px 0 0;
 }
 
 .operation-evidence figure:only-child {
   grid-column: 1 / -1;
+  max-width: 760px;
 }
 
-.operation-improvements {
-  margin-bottom: 40px;
-}
-
-.operation-improvements > h4 {
-  font-size: var(--fs-3);
-  margin-bottom: 10px;
-}
-
-.operation-improvement {
-  margin-top: 22px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-}
-
-.operation-improvement h5 {
-  font-size: var(--fs-2);
-  margin: 8px 0 16px;
-}
-
-.operation-improvement dl {
-  margin: 0;
-}
-
-.operation-improvement dl > div {
-  display: grid;
-  grid-template-columns: 115px minmax(0, 1fr);
-  gap: 20px;
-  margin-bottom: 12px;
-  font-size: var(--fs-2);
-  line-height: 1.85;
-  word-break: keep-all;
-}
-
-.operation-improvement dt {
-  font-size: var(--fs-1);
-  color: var(--blue);
-  font-weight: 600;
-}
-
-.operation-improvement dd {
-  margin: 0;
+.other-project .result-details .fix-list {
+  margin-top: 6px;
 }
 
 @media (max-width: 760px) {
-  .operation-evidence {
+  .work-chips {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .operation-improvement dl > div {
+  .operation-evidence {
     grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
   }
 }
