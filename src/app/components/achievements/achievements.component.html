@@ -1,52 +1,73 @@
-<section
-  *ngIf="achievements.length"
-  class="achievement-section"
-  [id]="anchorId"
-  [attr.aria-labelledby]="anchorId + '-title'"
->
-  <div class="achievement-heading">
-    <p class="eyebrow">IP & SOFTWARE / RESEARCH OUTCOMES</p>
-    <h2 [id]="anchorId + '-title'">
-      {{ projectId ? "관련 연구 성과" : "형상 연구에서 나온 특허와 프로그램." }}
-    </h2>
-    <p *ngIf="!projectId" class="achievement-intro">
-      3D 가구 모델링 기술은 공동발명으로 특허 출원됐고,<br />가공 특징 인식용
-      라벨링 프로그램은 등록 신청이 접수됐습니다.
-    </p>
-  </div>
-  <div class="achievement-grid" [class.single]="achievements.length === 1">
-    <article class="achievement-card" *ngFor="let achievement of achievements">
-      <div class="achievement-topline">
-        <span class="eyebrow">{{ achievement.kind }}</span
-        ><span
-          class="achievement-status"
-          [class.pending]="achievement.id === 'machining-labeling-software'"
-          >{{ achievement.status }}</span
-        >
-      </div>
-      <h3>{{ achievement.title }}</h3>
-      <p class="achievement-description">{{ achievement.description }}</p>
-      <div class="achievement-contribution">
-        <h4>본인 기여</h4>
-        <strong>{{ achievement.role }}</strong>
-        <p>{{ achievement.contribution }}</p>
-        <ul *ngIf="achievement.features.length">
-          <li *ngFor="let feature of achievement.features">{{ feature }}</li>
-        </ul>
-      </div>
-      <dl class="achievement-metadata">
-        <div *ngFor="let item of achievement.metadata">
-          <dt>{{ item.label }}</dt>
-          <dd>{{ item.value }}</dd>
-        </div>
-      </dl>
-      <a
-        *ngIf="showProjectLinks"
-        class="text-link achievement-project"
-        [routerLink]="['/portfolio', achievement.relatedProjectId]"
-        >{{ achievement.relatedProjectTitle }}
-        <span aria-hidden="true">↗</span></a
+<ol class="achievement-rows" *ngIf="compact; else full">
+  <li *ngFor="let achievement of achievements">
+    <a
+      class="achievement-row"
+      [routerLink]="['/portfolio', achievement.relatedProjectId]"
+      fragment="related-achievements"
+    >
+      <span class="achievement-kind"
+        >{{ achievement.kind }}
+        <span class="achievement-status">{{ achievement.status }}</span></span
       >
-    </article>
-  </div>
-</section>
+      <strong>{{ achievement.title }}</strong>
+      <span class="achievement-line"
+        >{{ achievement.role }} ·
+        <ng-container *ngFor="let item of achievement.metadata; let last = last"
+          >{{ item.label }} {{ item.value }}{{ last ? "" : " · " }}</ng-container
+        ></span
+      >
+    </a>
+  </li>
+</ol>
+<ng-template #full>
+  <section
+    *ngIf="achievements.length"
+    class="achievement-section"
+    [id]="anchorId"
+    [attr.aria-labelledby]="anchorId + '-title'"
+  >
+    <div class="achievement-heading">
+      <h2 [id]="anchorId + '-title'">
+        {{ projectId ? "관련 연구 성과" : "형상 연구에서 나온 특허와 프로그램" }}
+      </h2>
+      <p *ngIf="!projectId" class="achievement-intro">
+        3D 가구 모델링 기술은 공동발명으로 특허 출원됐고,<br />가공 특징 인식용
+        라벨링 프로그램은 등록 신청이 접수됐습니다.
+      </p>
+    </div>
+    <div class="achievement-grid" [class.single]="achievements.length === 1">
+      <article
+        class="achievement-card"
+        *ngFor="let achievement of achievements"
+      >
+        <div class="achievement-topline">
+          <span class="achievement-kind">{{ achievement.kind }}</span
+          ><span class="achievement-status">{{ achievement.status }}</span>
+        </div>
+        <h3>{{ achievement.title }}</h3>
+        <p class="achievement-description">{{ achievement.description }}</p>
+        <div class="achievement-contribution">
+          <h4>본인 기여</h4>
+          <strong>{{ achievement.role }}</strong>
+          <p>{{ achievement.contribution }}</p>
+          <ul *ngIf="achievement.features.length">
+            <li *ngFor="let feature of achievement.features">{{ feature }}</li>
+          </ul>
+        </div>
+        <dl class="achievement-metadata">
+          <div *ngFor="let item of achievement.metadata">
+            <dt>{{ item.label }}</dt>
+            <dd>{{ item.value }}</dd>
+          </div>
+        </dl>
+        <a
+          *ngIf="showProjectLinks"
+          class="text-link achievement-project"
+          [routerLink]="['/portfolio', achievement.relatedProjectId]"
+          >{{ achievement.relatedProjectTitle }}
+          <span aria-hidden="true">→</span></a
+        >
+      </article>
+    </div>
+  </section>
+</ng-template>

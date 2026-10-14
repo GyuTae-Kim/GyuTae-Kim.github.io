@@ -1,45 +1,54 @@
 <a class="skip-link" [routerLink]="[]" fragment="main">본문으로 건너뛰기</a>
 <header class="site-header-bar">
-<div class="site-header">
-  <a class="brand" routerLink="/" aria-label="Sean Kim 홈"
-    ><span class="brand-symbol" aria-hidden="true">s<span>.</span></span
-    ><span
-      >SEAN KIM<span class="brand-sub">RESEARCH & ENGINEERING</span></span
-    ></a
-  >
-  <nav aria-label="주요 메뉴">
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      ariaCurrentWhenActive="page"
-      >소개</a
+  <div class="site-header">
+    <a class="brand" routerLink="/" aria-label="김규태 Sean Kim 홈"
+      ><span class="brand-mark" aria-hidden="true">S<span>.</span></span
+      ><span class="brand-name">김규태<span>Sean Kim</span></span></a
     >
-    <a
-      routerLink="/portfolio"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >프로젝트</a
-    >
-    <a
-      routerLink="/research"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >연구 아카이브</a
-    >
-    <a
-      class="nav-contact"
-      routerLink="/contact"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >연락하기 <span aria-hidden="true">↗</span></a
-    >
-  </nav>
-</div>
+    <nav aria-label="주요 메뉴">
+      <a
+        routerLink="/portfolio"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >프로젝트</a
+      >
+      <a
+        routerLink="/research"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >연구</a
+      >
+      <a
+        routerLink="/contact"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >연락</a
+      >
+    </nav>
+  </div>
 </header>
 <main id="main" tabindex="-1"><router-outlet></router-outlet></main>
 <footer class="site-footer">
-  <a routerLink="/">김규태 <span>Sean Kim</span></a>
-  <p>From research to real-world engineering.</p>
-  <span>Updated · October 2026</span>
+  <dl>
+    <div>
+      <dt>작성</dt>
+      <dd><a routerLink="/">김규태 Sean Kim</a></dd>
+    </div>
+    <div>
+      <dt>연락</dt>
+      <dd><a href="mailto:GyuTae.K1020@gmail.com">GyuTae.K1020&#64;gmail.com</a></dd>
+    </div>
+    <div>
+      <dt>코드</dt>
+      <dd>
+        <a href="https://github.com/GyuTae-Kim" target="_blank" rel="noopener noreferrer"
+          >github.com/GyuTae-Kim</a
+        >
+      </dd>
+    </div>
+    <div>
+      <dt>갱신</dt>
+      <dd>2026.10</dd>
+    </div>
+  </dl>
 </footer>

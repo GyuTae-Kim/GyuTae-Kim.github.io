@@ -22,7 +22,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       '판재와 면의 기하 정보, 접촉 관계 표현',
       '계층 그래프 기반 판재 분류 AI 연구',
     ],
-    kind: 'PATENT · 특허',
+    kind: '특허',
     status: '출원 · 공동발명',
     title:
       '가구 구성 요소의 위상적 연결 관계 분석을 이용한 3D 가구 모델링 장치, 방법 및 기록 매체',
@@ -45,7 +45,7 @@ export const ACHIEVEMENTS: Achievement[] = [
       '형상과 라벨 저장, 서버 전달',
       '형상 그래프와 학습 데이터 구성',
     ],
-    kind: 'SOFTWARE · 프로그램',
+    kind: '프로그램',
     status: '등록 신청·접수 확인',
     title: '가공 형상 및 특징 인식 인공지능 학습용 라벨링 프로그램',
     description:

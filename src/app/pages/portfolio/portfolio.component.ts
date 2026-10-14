@@ -10,16 +10,9 @@ import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS } from '../../portfolio-dat
 export class PortfolioComponent implements OnDestroy {
   cases = CASE_STUDIES;
   selected: CaseStudy | undefined;
-  filter = 'all';
   // Who did each story step: the owner, the team, or a partner institution.
   ownerLabels: Record<string, string> = { me: '직접', team: '팀과 함께', partner: '협력 기관' };
   kindLabels = FIGURE_KIND_LABELS;
-  filters = [
-    { id: 'all', label: '전체 프로젝트' },
-    { id: 'cad-feature-recognition', label: '피처 인식 · CAM' },
-    { id: 'panel-classification', label: '패널 인식 AI' },
-    { id: 'wedraw-pro', label: 'Wedraw Pro' },
-  ];
   // Cases that were merged into a larger story keep their old addresses working.
   private readonly movedCases: Record<string, string> = {
     'fusion-cam': 'cad-feature-recognition',
@@ -46,10 +39,9 @@ export class PortfolioComponent implements OnDestroy {
       this.stopped.add(src);
     }
   }
-  get visibleCases() {
-    return this.filter === 'all'
-      ? this.cases
-      : this.cases.filter((c) => c.id === this.filter);
+  get next(): CaseStudy {
+    const i = this.cases.indexOf(this.selected!);
+    return this.cases[(i + 1) % this.cases.length];
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

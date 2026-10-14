@@ -12,7 +12,7 @@ export class AppComponent {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const section = event.urlAfterRedirects.startsWith('/research')
-          ? '연구 아카이브'
+          ? '연구'
           : event.urlAfterRedirects.startsWith('/portfolio')
             ? '프로젝트'
             : event.urlAfterRedirects.startsWith('/contact')

@@ -13,8 +13,9 @@ npm run preview
 
 ## 구성
 
-- `/`: 소개, CAD→특징 인식→CAM 개념도, 가구 설계→제조 데이터 사례 카드, 대표 프로젝트.
-- `/portfolio`: 분야별 프로젝트 목록, `/portfolio/:id`: 결과 한 줄과 대표 그림, 만든 것을 먼저 보이고 문제·접근·기여·검증은 「자세히」에 둔 사례. 피처 인식·CAM 자동화, 가구 패널 인식, Wedraw Pro의 세 사례를 4단계 흐름(직접·팀·협력 기관 표시)으로 보여 줍니다.
+- `/`: 왼쪽에 이름·한 줄 소개·섹션 목차를 고정하고, 오른쪽에 3D 뷰포트, Wedraw Pro 제품 카드, 사례·연구·성과·소개 목록을 둔 인덱스. 디자인은 도면 시트(종이색 바탕, 잉크 선, 도면 파랑, 치수용 갈색, 표제란)를 따릅니다.
+- `src/app/components/model-viewport/`: 홈 3D 뷰포트(three.js, 지연 로딩). 가공 부품(형상 분석 → 피처 인식 → 가공 전략)과 가구 하부장(형상 분석 → 패널 인식 → 파라미터 조정) 개념 모델을 직접 만든 기하로 그립니다. WebGL이 없거나 불러오는 동안에는 `src/assets/viewer/`의 정지 이미지를 보여 주고, 움직임 줄이기 설정에서는 시점 흔들림과 애니메이션을 멈춥니다.
+- `/portfolio`: 프로젝트 목록, `/portfolio/:id`: 결과 한 줄과 대표 그림, 만든 것을 먼저 보이고 문제·접근·기여·검증은 「자세히」에 둔 사례. 피처 인식·CAM 자동화, 가구 패널 인식, Wedraw Pro의 세 사례를 4단계 흐름(직접·팀·협력 기관 표시)으로 보여 주고, 끝에 다음 사례로 넘어가는 링크를 둡니다.
 - `/research`: 학부연구생 때의 공개 연구 3개를 2026년에 다시 돌린 결과 카드(결과 한 줄, 대표 그림, 숫자)와 「자세히」. 기존 `/blog` 주소도 이곳으로 연결합니다.
 - `/contact`: 공개 이메일·GitHub, 이메일 복사.
 - `src/app/achievement-data.ts`: 특허 출원·공동발명 및 프로그램 등록 신청 자료의 개인정보 없는 성과 요약.
@@ -22,12 +23,11 @@ npm run preview
 - `src/app/research-data.ts`: 공개 연구 자료 내용과 출처.
 - `src/assets/research/`: 본인 공개 저장소에서 가져온 원본 그림.
 - `src/assets/research/rerun/`: 2026년에 세 공개 연구 코드를 다시 돌린 결과 그림(WebP). 사람이 나오는 그림은 얼굴을 모자이크했고, 의류 분류는 K-Fashion 대신 Fashion-MNIST로 돌린 결과입니다.
-- `src/assets/figures/`, `src/app/components/hero-figure/`: 사례 개념도와 홈 개념도. `tools/figures/`의 스크립트로 다시 만듭니다(Python 3 표준 라이브러리만 사용).
+- `src/assets/figures/`: 예전 사례 개념도. `tools/figures/`의 스크립트로 다시 만듭니다(Python 3 표준 라이브러리만 사용).
 
   ```sh
   cd tools/figures
   python3 panels.py ../../src/assets/figures/fig-panels.svg   # cam.py, nesting.py 도 같은 방식
-  python3 hero_figure_gen.py ../../src/app/components/hero-figure/hero-figure.component.html
   ```
 
 ## 배포 없는 빌드 검증

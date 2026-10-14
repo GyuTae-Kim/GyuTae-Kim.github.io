@@ -1,7 +1,6 @@
 <div class="page-shell interior-page">
   <ng-container *ngIf="!selected; else caseDetail">
     <div class="page-intro">
-      <p class="eyebrow">SELECTED WORK / RESEARCH & ENGINEERING</p>
       <h1>연구에서 제조까지<span class="accent">.</span></h1>
       <p>
         AI 모델이 낸 결과를 설계·가공 도구에서 쓸 수 있게 만든 연구개발
@@ -15,17 +14,7 @@
       fragment="achievements"
       >특허·프로그램 성과 보기 <span aria-hidden="true">↓</span></a
     >
-    <div class="filter-bar" role="group" aria-label="프로젝트 분야">
-      <button
-        *ngFor="let item of filters"
-        (click)="filter = item.id"
-        [class.selected]="filter === item.id"
-        [attr.aria-pressed]="filter === item.id"
-      >
-        {{ item.label }}
-      </button>
-    </div>
-    <article class="project-row" *ngFor="let project of visibleCases">
+    <article class="project-row" *ngFor="let project of cases">
       <div class="project-row-meta">
         <span class="large-index">{{ project.number }}</span>
         <p class="eyebrow">{{ project.category }}</p>
@@ -46,7 +35,7 @@
       <div class="project-row-content">
         <h2>
           <a [routerLink]="['/portfolio', project.id]"
-            >{{ project.title }} <span aria-hidden="true">↗</span></a
+            >{{ project.title }} <span aria-hidden="true">→</span></a
           >
         </h2>
         <p class="row-subtitle">{{ project.subtitle }}</p>
@@ -78,7 +67,7 @@
     <a class="back-link" routerLink="/portfolio">← 프로젝트 목록</a>
     <div class="page-intro detail-intro">
       <p class="eyebrow">
-        CASE STUDY {{ selected!.number }} / {{ selected!.category }}
+        사례 {{ selected!.number }} · {{ selected!.category }}
       </p>
       <h1>{{ selected!.title }}</h1>
       <p>{{ selected!.subtitle }}</p>
@@ -169,12 +158,12 @@
       </figure>
       <div class="case-sections">
         <section id="problem">
-          <p class="eyebrow">01 / PROBLEM</p>
+          <p class="section-no">01</p>
           <h2>어떤 문제를 다뤘는가</h2>
           <p>{{ selected!.problem }}</p>
         </section>
         <section id="approach">
-          <p class="eyebrow">02 / APPROACH</p>
+          <p class="section-no">02</p>
           <h2>어떻게 접근했는가</h2>
           <p>{{ selected!.approach }}</p>
           <div class="case-pipeline" aria-label="시스템 흐름">
@@ -195,14 +184,14 @@
           </div>
         </section>
         <section id="contribution">
-          <p class="eyebrow">03 / CONTRIBUTION</p>
+          <p class="section-no">03</p>
           <h2>직접 연구개발한 부분</h2>
           <ol class="contribution-list">
             <li *ngFor="let item of selected!.contribution">{{ item }}</li>
           </ol>
         </section>
         <section id="validation">
-          <p class="eyebrow">04 / VALIDATION</p>
+          <p class="section-no">04</p>
           <h2>무엇을 확인했는가</h2>
           <p>{{ selected!.validation }}</p>
           <div class="validation-note">
@@ -221,7 +210,6 @@
       [showProjectLinks]="false"
     ></app-achievements>
     <div class="related-research">
-      <p class="eyebrow">RELATED PUBLIC IMPLEMENTATIONS</p>
       <h3>관련 경험을 보여 주는 공개 연구</h3>
       <p>
         학부연구생 때 비슷한 문제를 다뤄 본 공개 코드입니다. 이 사례의 실험
@@ -229,10 +217,17 @@
       </p>
       <div class="related-work" *ngFor="let work of selected!.relatedResearch">
         <a class="text-link" routerLink="/research" [fragment]="work.id"
-          >{{ work.title }} <span aria-hidden="true">↗</span></a
+          >{{ work.title }} <span aria-hidden="true">→</span></a
         >
         <p>{{ work.connection }}</p>
       </div>
     </div>
+    <nav class="case-next" aria-label="다음 사례">
+      <a [routerLink]="['/portfolio', next.id]"
+        ><span class="eyebrow">다음 사례 {{ next.number }}</span
+        ><strong>{{ next.title }}</strong
+        ><span class="row-arrow" aria-hidden="true">→</span></a
+      >
+    </nav>
   </ng-template>
 </div>

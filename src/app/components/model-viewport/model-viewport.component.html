@@ -1,0 +1,135 @@
+<figure class="viewer" [attr.data-model]="model">
+  <div class="viewer-bar">
+    <div class="viewer-models" role="group" aria-label="모델 선택">
+      <button
+        *ngFor="let m of models"
+        type="button"
+        (click)="selectModel(m.id)"
+        [class.selected]="model === m.id"
+        [attr.aria-pressed]="model === m.id"
+      >
+        <span class="sheet-no">{{ m.sheet }}</span>{{ m.label }}
+      </button>
+    </div>
+    <span class="viewer-tag">개념 모델</span>
+  </div>
+  <div class="viewer-frame">
+    <div
+      class="viewer-stage"
+      #stage
+      role="img"
+      [attr.aria-label]="stageLabel"
+      [class.live]="state === 'live'"
+    >
+      <img
+        class="viewer-still"
+        *ngIf="state !== 'live'"
+        [src]="still"
+        alt=""
+        width="1200"
+        height="750"
+      />
+    </div>
+    <span class="viewer-hint" *ngIf="state === 'live'" aria-hidden="true"
+      >드래그해서 돌려 보기</span
+    >
+    <button
+      class="viewer-reset"
+      type="button"
+      *ngIf="state === 'live'"
+      (click)="resetView()"
+    >
+      처음 시점
+    </button>
+  </div>
+  <div class="viewer-layers" role="group" aria-label="단계 선택">
+    <button
+      *ngFor="let l of info.layers; let i = index"
+      type="button"
+      (click)="selectLayer(i)"
+      [class.selected]="layer === i"
+      [attr.aria-pressed]="layer === i"
+    >
+      <b>0{{ i + 1 }}</b>{{ l.label }}
+    </button>
+  </div>
+  <div class="viewer-body">
+    <div class="viewer-text" aria-live="polite">
+      <strong>{{ view.title }}</strong>
+      <p>{{ text }}</p>
+      <a class="text-link" [routerLink]="['/portfolio', info.caseId]"
+        >이 흐름의 실제 사례 <span aria-hidden="true">→</span></a
+      >
+    </div>
+    <div class="viewer-side">
+      <ol class="viewer-legend" *ngIf="legend.length">
+        <li *ngFor="let item of legend; let i = index">
+          <b class="legend-no" *ngIf="view.balloons && !$any(item).dashed">{{
+            i + 1
+          }}</b
+          ><i
+            class="legend-swatch"
+            [class.dashed]="$any(item).dashed"
+            [style.--swatch]="item.swatch"
+          ></i
+          ><span class="legend-label">{{ item.label }}</span
+          ><span class="legend-detail" *ngIf="item.detail">{{
+            item.detail
+          }}</span>
+        </li>
+      </ol>
+      <div class="viewer-params" *ngIf="model === 'furniture' && layer === 2">
+        <label>
+          <span>폭 W</span>
+          <input
+            type="range"
+            [min]="limits.width.min"
+            [max]="limits.width.max"
+            [step]="limits.width.step"
+            [value]="params.width"
+            (input)="setWidth($any($event.target).value)"
+          />
+          <output>{{ params.width }} mm</output>
+        </label>
+        <label>
+          <span>걸레받이 K</span>
+          <input
+            type="range"
+            [min]="limits.kick.min"
+            [max]="limits.kick.max"
+            [step]="limits.kick.step"
+            [value]="params.kick"
+            (input)="setKick($any($event.target).value)"
+          />
+          <output>{{ params.kick }} mm</output>
+        </label>
+      </div>
+    </div>
+  </div>
+  <dl class="title-block">
+    <div>
+      <dt>도면</dt>
+      <dd>{{ info.sheet }}</dd>
+    </div>
+    <div>
+      <dt>이름</dt>
+      <dd>{{ info.name }}</dd>
+    </div>
+    <div>
+      <dt>단계</dt>
+      <dd>0{{ layer + 1 }} {{ view.label }}</dd>
+    </div>
+    <div>
+      <dt>단위</dt>
+      <dd>mm</dd>
+    </div>
+    <div>
+      <dt>작성</dt>
+      <dd>김규태</dd>
+    </div>
+    <div>
+      <dt>갱신</dt>
+      <dd>2026.10</dd>
+    </div>
+  </dl>
+</figure>
