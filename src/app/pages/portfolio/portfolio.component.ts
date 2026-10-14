@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS, stepOwnerLabel } from '../../portfolio-data';
+import { OTHER_PROJECTS } from '../../other-projects-data';
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -9,6 +10,7 @@ import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS, stepOwnerLabel } from '../
 })
 export class PortfolioComponent implements OnDestroy {
   cases = CASE_STUDIES;
+  otherProjects = OTHER_PROJECTS;
   selected: CaseStudy | undefined;
   ownerLabel = stepOwnerLabel;
   kindLabels = FIGURE_KIND_LABELS;

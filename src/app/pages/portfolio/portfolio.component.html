@@ -8,6 +8,9 @@
         잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.
       </p>
     </div>
+    <nav class="archive-nav" aria-label="프로젝트 목록 바로가기">
+      <a [routerLink]="[]" fragment="other-projects">기타 프로젝트 <span aria-hidden="true">↓</span></a>
+    </nav>
     <a
       class="text-link portfolio-achievement-jump"
       [routerLink]="[]"
@@ -62,6 +65,63 @@
         >
       </div>
     </article>
+    <section class="other-projects" id="other-projects" aria-labelledby="other-projects-title">
+      <div class="archive-intro">
+        <h2 id="other-projects-title">기타 프로젝트</h2>
+        <p>설계·제조 기능을 제품으로 운영하는 데 필요한 웹 서비스와 감시 기능도 개발했습니다. 맡은 범위와 주요 판단을 함께 정리했습니다.</p>
+      </div>
+      <article class="research-entry" *ngFor="let project of otherProjects" [id]="project.id" [attr.aria-labelledby]="project.id + '-title'">
+        <div class="research-entry-heading">
+          <div>
+            <p class="eyebrow">{{ project.category }}</p>
+            <h3 class="other-project-title" [id]="project.id + '-title'">{{ project.title }}</h3>
+          </div>
+        </div>
+        <p class="research-summary">{{ project.summary }}</p>
+        <div class="tags"><span *ngFor="let tag of project.tags">{{ tag }}</span></div>
+        <dl class="case-facts"><div><dt>맡은 역할</dt><dd>{{ project.role }}</dd></div></dl>
+        <ol class="step-work" aria-label="개발한 기능">
+          <li *ngFor="let item of project.work; let i = index">
+            <div class="story-meta"><b>{{ i + 1 }}</b><span>개발한 기능</span></div>
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.text }}</p>
+          </li>
+        </ol>
+        <div class="operation-evidence" aria-label="실제 제품 화면">
+          <figure *ngFor="let shot of project.evidence">
+            <a [href]="shot.src" target="_blank" rel="noopener noreferrer" [attr.aria-label]="shot.title + ' 공개용 캡처 새 창에서 보기'">
+              <img [src]="shot.src" [alt]="shot.alt" [width]="shot.width" [height]="shot.height" loading="lazy" />
+            </a>
+            <figcaption><span class="figure-kind">운영 캡처 · 가림 편집</span><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
+          </figure>
+        </div>
+        <section class="operation-improvements" [attr.aria-labelledby]="project.id + '-improvements'">
+          <h4 [id]="project.id + '-improvements'">운영 중 발견하고 개선한 사례</h4>
+          <p class="step-note">코드 변경 이력과 회귀 테스트의 검사 항목을 기준으로 정리했습니다. 실제 운영 화면은 내부 세부정보를 가려 실었습니다.</p>
+          <article *ngFor="let item of project.improvements" class="operation-improvement">
+            <span class="period">{{ item.date }}</span>
+            <h5>{{ item.title }}</h5>
+            <dl>
+              <div><dt>발생했던 문제</dt><dd>{{ item.before }}</dd></div>
+              <div><dt>바꾼 것</dt><dd>{{ item.change }}</dd></div>
+              <div><dt>수정 후 동작</dt><dd>{{ item.result }}</dd></div>
+            </dl>
+            <p class="step-note"><b>확인 근거</b> {{ item.validation }}</p>
+          </article>
+        </section>
+        <details class="result-details">
+          <summary>자세히 · 문제와 해결, 구현 범위</summary>
+          <ol class="fix-list">
+            <li *ngFor="let item of project.decisions">
+              <p class="fix-problem"><span>문제</span>{{ item.problem }}</p>
+              <b aria-hidden="true">→</b>
+              <p class="fix-answer"><span>해결</span>{{ item.fix }}</p>
+            </li>
+          </ol>
+          <p class="result-scope">{{ project.scope }}</p>
+        </details>
+      </article>
+    </section>
     <app-achievements></app-achievements>
     <aside class="end-note">
       학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는
