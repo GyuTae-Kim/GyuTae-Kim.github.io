@@ -9,8 +9,6 @@ export interface CaseStudy {
   // 2–3 numbers taken from the product screens and renders shown on the page.
   stats: { value: string; label: string }[];
   role: string;
-  // One line for list rows: what he did and who else was involved.
-  roleShort: string;
   // 「자세히」 content, kept to short lines: problems met and how they were solved,
   // what was checked, what stays out of scope, and where the case was written from.
   fixes: { problem: string; fix: string }[];
@@ -86,7 +84,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '1건', label: '라벨링 프로그램 등록 신청 접수' },
     ],
     role: '형상 분석부터 가공 전략 설계와 Fusion 적용까지 직접 연구개발했습니다. 디지털 트윈(MDT) 시뮬레이션은 협력 기관이 맡았습니다.',
-    roleShort: '형상 분석부터 Fusion 적용까지 직접 연구개발, 시뮬레이션은 협력 기관',
     fixes: [
       {
         problem: '면 몇 개만 틀려도 가공 특징 묶음이 달라집니다.',
@@ -212,7 +209,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '1건', label: '공동발명 특허 출원' },
     ],
     role: '팀 프로젝트입니다. 가구 설계 지식은 팀과 함께 정리했고, 판재 분석과 패널 인식, 수식화 연구는 직접 진행했습니다.',
-    roleShort: '팀 프로젝트에서 판재 분석, 패널 인식, 수식화 연구 담당',
     fixes: [
       {
         problem: '크기와 모양이 비슷해도 판재마다 가구 안에서 맡는 역할이 다릅니다.',
@@ -315,7 +311,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '4종', label: 'BOM, 라벨, 가공 도면, 가공 코드를 한 번에' },
     ],
     role: '팀과 함께 개발하는 제품입니다. 커넥터로 제조 데이터를 내는 단계와 생산 투입 단계를 리딩했고, 도면과 발주 단계는 초기 개발을 리딩했습니다.',
-    roleShort: '팀 제품에서 제조 데이터와 생산 투입 리딩, 도면과 발주는 초기 개발 리딩',
     fixes: [
       {
         problem: '화면에서 고친 결 방향이 서버와 제조 파일에서 다른 뜻이 될 수 있습니다.',
