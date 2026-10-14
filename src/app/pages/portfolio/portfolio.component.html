@@ -95,22 +95,22 @@
             <figcaption><span class="figure-kind">운영 캡처 · 가림 편집</span><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
           </figure>
         </div>
-        <section class="operation-improvements" [attr.aria-labelledby]="project.id + '-improvements'">
-          <h4 [id]="project.id + '-improvements'">운영 중 발견하고 개선한 사례</h4>
-          <p class="step-note">코드 변경 이력과 회귀 테스트의 검사 항목을 기준으로 정리했습니다. 실제 운영 화면은 내부 세부정보를 가려 실었습니다.</p>
-          <article *ngFor="let item of project.improvements" class="operation-improvement">
-            <span class="period">{{ item.date }}</span>
-            <h5>{{ item.title }}</h5>
-            <dl>
-              <div><dt>발생했던 문제</dt><dd>{{ item.before }}</dd></div>
-              <div><dt>바꾼 것</dt><dd>{{ item.change }}</dd></div>
-              <div><dt>수정 후 동작</dt><dd>{{ item.result }}</dd></div>
-            </dl>
-            <p class="step-note"><b>확인 근거</b> {{ item.validation }}</p>
-          </article>
-        </section>
         <details class="result-details">
-          <summary>자세히 · 문제와 해결, 구현 범위</summary>
+          <summary>자세히 · 개선 사례와 판단, 구현 범위</summary>
+          <section class="operation-improvements" [attr.aria-labelledby]="project.id + '-improvements'">
+            <h4 [id]="project.id + '-improvements'">운영 중 발견하고 개선한 사례</h4>
+            <p class="step-note">코드 변경 이력과 회귀 테스트의 검사 항목을 기준으로 정리했습니다. 실제 운영 화면은 내부 세부정보를 가려 실었습니다.</p>
+            <article *ngFor="let item of project.improvements" class="operation-improvement">
+              <span class="period">{{ item.date }}</span>
+              <h5>{{ item.title }}</h5>
+              <dl>
+                <div><dt>발생했던 문제</dt><dd>{{ item.before }}</dd></div>
+                <div><dt>바꾼 것</dt><dd>{{ item.change }}</dd></div>
+                <div><dt>수정 후 동작</dt><dd>{{ item.result }}</dd></div>
+              </dl>
+              <p class="step-note"><b>확인 근거</b> {{ item.validation }}</p>
+            </article>
+          </section>
           <ol class="fix-list">
             <li *ngFor="let item of project.decisions">
               <p class="fix-problem"><span>문제</span>{{ item.problem }}</p>
