@@ -40,7 +40,7 @@ const routes = [
     files: ['research.html'],
     path: '/research',
     title: '연구',
-    description: '학부연구생 때 공개한 강화학습, 이미지 분류, 가상 착용 코드를 2026년에 다시 돌려 본 결과입니다.',
+    description: '학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트(TSP 경로 탐색, 의류 사진 분류, 가상 착용 앱)의 구현과 실험 결과입니다.',
     image: 'assets/og/research.jpg',
   },
   {

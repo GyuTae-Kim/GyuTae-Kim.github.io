@@ -66,7 +66,7 @@
     <section class="index-section" id="work" aria-labelledby="work-title">
       <div class="section-title">
         <span class="section-no">01</span>
-        <h2 id="work-title">연구를 실제 도구로</h2>
+        <h2 id="work-title">주요 프로젝트</h2>
         <a class="text-link" routerLink="/portfolio"
           >전체 보기 <span aria-hidden="true">→</span></a
         >
@@ -91,13 +91,9 @@
               >
               <strong class="row-title">{{ project.title }}</strong>
               <span class="row-result">{{ project.headline }}</span>
-              <span class="row-owners">
-                <span
-                  *ngFor="let span of ownership[project.id]"
-                  [class]="'owner-chip owner-' + span.owner"
-                  >{{ span.steps }} {{ span.label }}</span
-                >
-              </span>
+              <span class="row-note row-role"
+                ><b>역할</b>{{ project.roleShort }}</span
+              >
             </span>
             <span class="row-stat"
               ><b>{{ project.stats[0].value }}</b
@@ -116,14 +112,14 @@
     >
       <div class="section-title">
         <span class="section-no">02</span>
-        <h2 id="research-title">학부연구생 시절의 실험</h2>
+        <h2 id="research-title">학부연구생 때의 연구</h2>
         <a class="text-link" routerLink="/research"
           >전체 보기 <span aria-hidden="true">→</span></a
         >
       </div>
       <p class="section-lead">
-        학부연구생 때는 강화학습을 주로 연구했습니다. 그때 공개한 코드를
-        2026년에 다시 돌려 보고, 잘된 점과 안 된 점을 결과와 함께 정리했습니다.
+        학부연구생 때는 강화학습과 컴퓨터 비전 연구를 많이 했습니다. 코드를 공개한
+        세 프로젝트를 골라 무엇을 만들었고 어디서 막혔는지 적었습니다.
       </p>
       <ol class="index-rows">
         <li *ngFor="let work of research">
@@ -137,8 +133,11 @@
             /></span>
             <span class="row-body">
               <span class="row-meta">{{ work.category }}</span>
-              <strong class="row-title">{{ work.result!.headline }}</strong>
-              <span class="row-result">{{ work.title }}</span>
+              <strong class="row-title">{{ work.title }}</strong>
+              <span class="row-result">{{ work.summary }}</span>
+              <span class="row-note"
+                ><b>시행착오</b>{{ work.result!.headline }}</span
+              >
             </span>
             <span class="row-stat"
               ><b>{{ work.result!.stats[0].value }}</b
@@ -164,7 +163,7 @@
     <section class="index-section" id="about" aria-labelledby="about-title">
       <div class="section-title">
         <span class="section-no">04</span>
-        <h2 id="about-title">일하는 방식</h2>
+        <h2 id="about-title">소개</h2>
       </div>
       <div class="about-block">
         <img
@@ -183,6 +182,14 @@
             맞게 옮기는 일을 합니다. 실험은 다시 돌려도 같은 결과가 나오는지,
             제품에서는 단계마다 데이터의 의미가 어긋나지 않는지를 함께 챙깁니다.
           </p>
+          <dl class="skill-list" aria-label="다뤄 본 기술">
+            <div *ngFor="let group of skills">
+              <dt>{{ group.area }}</dt>
+              <dd>
+                <span *ngFor="let item of group.items">{{ item }}</span>
+              </dd>
+            </div>
+          </dl>
           <a class="text-link" routerLink="/contact"
             >연락하기 <span aria-hidden="true">→</span></a
           >
