@@ -49,7 +49,6 @@
         <div class="achievement-contribution">
           <h4>본인 기여</h4>
           <strong>{{ achievement.role }}</strong>
-          <p>{{ achievement.contribution }}</p>
           <ul *ngIf="achievement.features.length">
             <li *ngFor="let feature of achievement.features">{{ feature }}</li>
           </ul>

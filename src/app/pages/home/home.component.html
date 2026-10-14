@@ -11,8 +11,9 @@
       >
     </h1>
     <p class="profile-text">
-      SketchUp 가구 설계를 제조 데이터로 바꾸는 기능, Fusion CAM 연동, 가공 특징
-      인식과 판재 분류 AI를 연구개발합니다.
+      가공 특징과 가구 패널을 인식하는 AI를 연구하고 Fusion CAM 연동을
+      만들었습니다. 가구 설계에서 생산까지 잇는 Wedraw Pro에서는 제조 데이터와
+      생산 투입 단계를 리딩했습니다.
     </p>
     <nav class="index-nav" aria-label="이 페이지의 구성">
       <a
@@ -48,7 +49,7 @@
       <a
         class="product-card"
         [routerLink]="['/portfolio', furniture.id]"
-        [attr.aria-label]="furniture.title + ' 사례 보기'"
+        [attr.aria-label]="furniture.title + ' 프로젝트 보기'"
       >
         <img [src]="furniture.figure.src" alt="" width="560" height="390" />
         <div>
@@ -72,7 +73,7 @@
       </div>
       <ol class="index-rows">
         <li *ngFor="let project of cases">
-          <a class="index-row" [routerLink]="['/portfolio', project.id]">
+          <a class="index-row case-row" [routerLink]="['/portfolio', project.id]">
             <span class="row-thumb"
               ><img
                 [src]="project.figure.src"
@@ -94,10 +95,14 @@
                 <span
                   *ngFor="let span of ownership[project.id]"
                   [class]="'owner-chip owner-' + span.owner"
-                  >{{ span.steps }} {{ ownerLabels[span.owner] }}</span
+                  >{{ span.steps }} {{ span.label }}</span
                 >
               </span>
             </span>
+            <span class="row-stat"
+              ><b>{{ project.stats[0].value }}</b
+              ><span>{{ project.stats[0].label }}</span></span
+            >
             <span class="row-arrow" aria-hidden="true">→</span>
           </a>
         </li>

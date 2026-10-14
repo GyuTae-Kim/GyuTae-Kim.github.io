@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, NgZone, OnDestroy } from '@angular/core';
-import { CASE_STUDIES, CaseStep, FIGURE_KIND_LABELS } from '../../portfolio-data';
+import { CASE_STUDIES, CaseStep, FIGURE_KIND_LABELS, stepOwnerLabel } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
 
 interface OwnerSpan {
   owner: CaseStep['owner'];
+  label: string;
   steps: string;
 }
 
@@ -18,13 +19,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   research = RESEARCH_WORKS.filter((work) => work.result);
   // Shown as its own product card under the concept viewport.
   furniture = CASE_STUDIES.find((c) => c.id === 'wedraw-pro')!;
-  ownerLabels: Record<CaseStep['owner'], string> = { me: '직접', team: '팀과 함께', partner: '협력 기관' };
   // Which story steps each owner did, e.g. "1–3단계 직접 · 4단계 협력 기관".
   ownership: Record<string, OwnerSpan[]> = Object.fromEntries(
     CASE_STUDIES.map((c) => [c.id, ownerSpans(c.story)]),
   );
   sections = [
-    { id: 'work', label: '사례' },
+    { id: 'work', label: '프로젝트' },
     { id: 'research', label: '연구' },
     { id: 'achievements', label: '성과' },
     { id: 'about', label: '소개' },
@@ -55,14 +55,16 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 }
 
 function ownerSpans(story: CaseStep[]): OwnerSpan[] {
-  const spans: { owner: CaseStep['owner']; from: number; to: number }[] = [];
+  const spans: { owner: CaseStep['owner']; label: string; from: number; to: number }[] = [];
   story.forEach((step, i) => {
+    const label = stepOwnerLabel(step);
     const last = spans[spans.length - 1];
-    if (last && last.owner === step.owner) last.to = i + 1;
-    else spans.push({ owner: step.owner, from: i + 1, to: i + 1 });
+    if (last && last.label === label) last.to = i + 1;
+    else spans.push({ owner: step.owner, label, from: i + 1, to: i + 1 });
   });
   return spans.map((s) => ({
     owner: s.owner,
+    label: s.label,
     steps: s.from === s.to ? `${s.from}단계` : `${s.from}–${s.to}단계`,
   }));
 }

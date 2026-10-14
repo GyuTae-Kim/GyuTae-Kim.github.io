@@ -3,9 +3,9 @@
     <div class="page-intro">
       <h1>연구에서 제조까지<span class="accent">.</span></h1>
       <p>
-        AI 모델이 낸 결과를 설계·가공 도구에서 쓸 수 있게 만든 연구개발
-        사례입니다.<br />가공 특징 인식, 판재 분류 AI, Fusion CAM 연동, 제조 데이터
-        출력을 다룹니다.
+        3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 그 결과를
+        Fusion CAM과 가구 제조 데이터로 이었습니다.<br />가구 설계에서 생산까지
+        잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.
       </p>
     </div>
     <a
@@ -50,24 +50,29 @@
           <div>
             <h3>결과</h3>
             <p class="row-headline">{{ project.headline }}</p>
+            <ul class="mini-stats">
+              <li *ngFor="let stat of project.stats.slice(0, 2)">
+                <b>{{ stat.value }}</b> {{ stat.label }}
+              </li>
+            </ul>
           </div>
         </div>
         <a class="text-link" [routerLink]="['/portfolio', project.id]"
-          >사례 보기 <span aria-hidden="true">→</span></a
+          >프로젝트 보기 <span aria-hidden="true">→</span></a
         >
       </div>
     </article>
     <app-achievements></app-achievements>
     <aside class="end-note">
-      실험 코드와 원본 자료는 <a routerLink="/research">연구 아카이브</a>에서 볼
-      수 있습니다.
+      학부연구생 때 공개한 코드와 2026년에 다시 돌린 결과는
+      <a routerLink="/research">연구 페이지</a>에 있습니다.
     </aside>
   </ng-container>
   <ng-template #caseDetail>
     <a class="back-link" routerLink="/portfolio">← 프로젝트 목록</a>
     <div class="page-intro detail-intro">
       <p class="eyebrow">
-        사례 {{ selected!.number }} · {{ selected!.category }}
+        프로젝트 {{ selected!.number }} · {{ selected!.category }}
       </p>
       <h1>{{ selected!.title }}</h1>
       <p>{{ selected!.subtitle }}</p>
@@ -93,6 +98,11 @@
           {{ selected!.figure.caption }}
         </figcaption>
       </figure>
+      <ul class="result-stats case-stats">
+        <li *ngFor="let stat of selected!.stats">
+          <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+        </li>
+      </ul>
       <ol class="case-story" aria-label="프로젝트 흐름">
         <li *ngFor="let step of selected!.story; let i = index" [class]="'owner-' + step.owner">
           <div class="story-figure" *ngIf="step.image">
@@ -116,7 +126,7 @@
             </button>
           </div>
           <div class="story-meta">
-            <b>{{ i + 1 }}</b><span>{{ ownerLabels[step.owner] }}</span>
+            <b>{{ i + 1 }}</b><span>{{ ownerLabel(step) }}</span>
           </div>
           <h3>{{ step.title }}</h3>
           <p>{{ step.text }}</p>
@@ -135,13 +145,22 @@
       <p class="result-scope">{{ selected!.scopeLine }}</p>
     </section>
     <details class="result-details case-details">
-      <summary>자세히 · 문제, 접근, 기여, 검증</summary>
-      <div class="case-made">
-        <span class="eyebrow">만든 것</span>
-        <ul>
-          <li *ngFor="let output of selected!.outputs">{{ output }}</li>
-        </ul>
-      </div>
+      <summary>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
+      <section class="detail-block" aria-labelledby="detail-work">
+        <h2 class="detail-title" id="detail-work"><span>01</span>단계마다 한 일</h2>
+        <ol class="step-work">
+          <li *ngFor="let step of selected!.story; let i = index" [class]="'owner-' + step.owner">
+            <div class="story-meta">
+              <b>{{ i + 1 }}</b><span>{{ ownerLabel(step) }}</span>
+            </div>
+            <h3>{{ step.title }}</h3>
+            <ul *ngIf="step.did.length">
+              <li *ngFor="let item of step.did">{{ item }}</li>
+            </ul>
+            <p class="step-note" *ngIf="step.didNote">{{ step.didNote }}</p>
+          </li>
+        </ol>
+      </section>
       <figure class="pair-gallery" *ngIf="selected!.gallery as gallery">
         <div class="pair-grid">
           <div class="pair" *ngFor="let pair of gallery.pairs">
@@ -154,77 +173,59 @@
         <figcaption>
           <span class="figure-kind research">연구 렌더</span>
           {{ gallery.caption }}
+          <span class="color-legend">
+            <span *ngFor="let key of gallery.legend"
+              ><i [style.background]="key.color" aria-hidden="true"></i>{{ key.label }}</span
+            >
+          </span>
         </figcaption>
       </figure>
-      <div class="case-sections">
-        <section id="problem">
-          <p class="section-no">01</p>
-          <h2>어떤 문제를 다뤘는가</h2>
-          <p>{{ selected!.problem }}</p>
-        </section>
-        <section id="approach">
-          <p class="section-no">02</p>
-          <h2>어떻게 접근했는가</h2>
-          <p>{{ selected!.approach }}</p>
-          <div class="case-pipeline" aria-label="시스템 흐름">
-            <ng-container
-              *ngFor="
-                let label of selected!.diagramLabels;
-                let i = index;
-                let last = last
-              "
-              ><span
-                ><small aria-hidden="true">{{ i + 1 }}</small>{{ label }}</span
-              ><b *ngIf="!last" aria-hidden="true">→</b></ng-container
-            >
+      <section class="detail-block" aria-labelledby="detail-fixes">
+        <h2 class="detail-title" id="detail-fixes"><span>02</span>문제와 해결</h2>
+        <ol class="fix-list">
+          <li *ngFor="let item of selected!.fixes">
+            <p class="fix-problem"><span>문제</span>{{ item.problem }}</p>
+            <b aria-hidden="true">→</b>
+            <p class="fix-answer"><span>해결</span>{{ item.fix }}</p>
+          </li>
+        </ol>
+      </section>
+      <section class="detail-block" aria-labelledby="detail-checks">
+        <h2 class="detail-title" id="detail-checks"><span>03</span>검증</h2>
+        <div class="check-grid">
+          <div class="check-done">
+            <h3>검증한 것</h3>
+            <ul>
+              <li *ngFor="let item of selected!.checked">{{ item }}</li>
+            </ul>
           </div>
-          <div class="research-decision">
-            <h3>선택과 판단</h3>
-            <p>{{ selected!.decision }}</p>
+          <div class="check-out">
+            <h3>범위 밖</h3>
+            <ul>
+              <li *ngFor="let item of selected!.unchecked">{{ item }}</li>
+            </ul>
           </div>
-        </section>
-        <section id="contribution">
-          <p class="section-no">03</p>
-          <h2>직접 연구개발한 부분</h2>
-          <ol class="contribution-list">
-            <li *ngFor="let item of selected!.contribution">{{ item }}</li>
-          </ol>
-        </section>
-        <section id="validation">
-          <p class="section-no">04</p>
-          <h2>무엇을 확인했는가</h2>
-          <p>{{ selected!.validation }}</p>
-          <div class="validation-note">
-            <strong>검증 범위</strong>
-            <p>{{ selected!.caution }}</p>
-          </div>
-          <p class="case-record-scope">
-            기술 문서와 코드 변경 이력을 바탕으로 정리한 사례입니다.
-          </p>
-        </section>
-      </div>
+        </div>
+        <p class="case-source">{{ selected!.source }}</p>
+      </section>
     </details>
     <app-achievements
       [projectId]="selected!.id"
       anchorId="related-achievements"
       [showProjectLinks]="false"
     ></app-achievements>
-    <div class="related-research">
-      <h3>관련 경험을 보여 주는 공개 연구</h3>
-      <p>
-        학부연구생 때 비슷한 문제를 다뤄 본 공개 코드입니다. 이 사례의 실험
-        결과가 아니며, 같은 코드를 다시 쓴 것도 아닙니다.
-      </p>
-      <div class="related-work" *ngFor="let work of selected!.relatedResearch">
+    <div class="related-research" *ngIf="selected!.relatedResearch as related">
+      <h3>이어지는 학부 연구</h3>
+      <div class="related-work" *ngFor="let work of related">
         <a class="text-link" routerLink="/research" [fragment]="work.id"
           >{{ work.title }} <span aria-hidden="true">→</span></a
         >
         <p>{{ work.connection }}</p>
       </div>
     </div>
-    <nav class="case-next" aria-label="다음 사례">
+    <nav class="case-next" aria-label="다음 프로젝트">
       <a [routerLink]="['/portfolio', next.id]"
-        ><span class="eyebrow">다음 사례 {{ next.number }}</span
+        ><span class="eyebrow">다음 프로젝트 {{ next.number }}</span
         ><strong>{{ next.title }}</strong
         ><span class="row-arrow" aria-hidden="true">→</span></a
       >

@@ -2,17 +2,16 @@ export interface ResearchWork {
   id: string;
   title: string;
   category: string;
-  contribution: string[];
-  reused: string;
+  // 「자세히」 lists, one short line each: what he built, what came from others, what the work does not show.
+  built: string[];
+  borrowed: string[];
+  limits: string[];
   // One visible line naming the prior work or models this research builds on.
   credit: string;
   connection: string;
   relatedProjectId: string;
   relatedProjectTitle: string;
   question: string;
-  method: string;
-  observation: string;
-  limitation: string;
   tags: string[];
   source: string;
   image?: string;
@@ -49,7 +48,8 @@ export interface ResearchResult {
     environment: string;
     figures: ResearchFigure[];
     table?: { caption: string; columns: string[]; rows: string[][] };
-    notes: string[];
+    // What the rerun turned up in the 2021 code or setup.
+    findings: { title: string; text: string }[];
   };
 }
 
@@ -58,26 +58,26 @@ export interface ResearchResult {
 export const RESEARCH_WORKS: ResearchWork[] = [
   {
     id: 'graph-tsp',
-    contribution: [
-      '노드, 엣지, 도시 선택 상태를 담은 그래프 환경을 만들고 경로 비용을 기록하게 했습니다.',
-      'Structure2Vec 임베딩, Q값 평가, 여러 스텝의 보상 누적, 경험 샘플링으로 이어지는 탐색 루프를 구현했습니다.',
+    built: [
+      '노드, 엣지, 방문 상태를 담은 그래프 환경과 경로 비용 기록',
+      'Structure2Vec 임베딩과 Q값 평가',
+      '여러 스텝 보상 누적과 경험 샘플링을 잇는 탐색 루프',
+      '도시는 모델이 고르고 넣을 자리는 삽입 휴리스틱이 정하는 구조',
     ],
-    reused:
-      'NeurIPS 2017에 발표된 그래프 조합 최적화 연구를 참고해 구현했습니다. 이 논문의 저자가 아니며, 독자적인 알고리즘을 개발한 것도 아닙니다.',
+    borrowed: ['NeurIPS 2017 그래프 조합 최적화 연구의 방법 (논문 저자 아님)'],
+    limits: [
+      '원논문 그대로의 재현 아님 (target network 없음, n-step 방식 다름)',
+      '설정된 에피소드의 1%만 학습',
+      '끝까지 학습했을 때의 성능은 알 수 없음',
+    ],
     credit: 'NeurIPS 2017 그래프 조합 최적화 연구를 참고한 구현',
     connection:
-      '그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 판재와 면을 인식하는 지금의 연구로 이어졌습니다.',
+      '그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 가구 패널과 면을 인식하는 지금의 연구로 이어졌습니다.',
     relatedProjectId: 'panel-classification',
     relatedProjectTitle: '가구 패널을 인식해 제조 데이터로 바꾸는 AI',
     title: '강화학습과 그래프 네트워크로 TSP를 풀어 보려 한 시도',
     category: 'Reinforcement Learning × Graph Network · 참조 논문 기반 구현',
-    question: '강화학습과 그래프 네트워크를 합쳐 조합 최적화 문제인 TSP의 경로를 만들 수 있을까?',
-    method:
-      'Structure2Vec 임베딩으로 Q값을 계산하고, 여기에 도시 삽입 휴리스틱과 여러 스텝의 보상 누적, 경험 샘플링을 붙였습니다. 기본 설정에서는 고른 도시를 경로 비용이 가장 작아지는 위치에 끼워 넣어 학습·평가 경로를 만듭니다.',
-    observation:
-      '어떤 도시를 넣을지는 학습한 모델이 고르고, 경로의 어디에 넣을지는 삽입 휴리스틱이 정하도록 역할을 나눴습니다. 도시 선택부터 보상, 학습, 경로 비용 기록까지 한 흐름으로 이어지게 만들었습니다.',
-    limitation:
-      '별도의 target network가 없고 보상 누적과 bootstrap 할인 방식도 표준 n-step DQN과 달라서, 원논문을 그대로 재현한 구현은 아닙니다. 2026년에 다시 돌려 보니 학습한 정책이 무작위 순서로 삽입한 것보다 낫지 않았습니다.',
+    question: '강화학습과 그래프 네트워크로 TSP 경로를 만들 수 있을까?',
     tags: ['Reinforcement learning', 'Structure2Vec', 'Q-learning', 'Graph neural network', 'TensorFlow'],
     source: 'https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V',
     period: '2021 · 학부연구생',
@@ -94,7 +94,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
         },
       ],
       stats: [
-        { value: '1.12배', label: 'OR-Tools 대비 경로 길이' },
+        { value: '+12%', label: 'OR-Tools보다 긴 경로' },
         { value: '차이 없음', label: '무작위 순서 삽입과 비교' },
         { value: '2가지', label: '코드에서 찾은 원인' },
       ],
@@ -138,23 +138,38 @@ export const RESEARCH_WORKS: ResearchWork[] = [
             ['100 (30)', '1.12', '1.13', '1.06', '1.22', '0.38'],
           ],
         },
-        notes: [
-          '큰 그래프가 나오면 에피소드 하나에 약 45초가 걸려, 설정된 10,000회는 seed당 5일이 넘습니다. 그래서 에피소드 수만 100회로 줄였고 나머지 설정은 그대로 두었습니다.',
-          '임베딩이 꺼진 직접적인 원인은 값의 크기였습니다. 정규화 없이 완전 그래프 전체를 더하는 구조라 도시 수가 늘면 Q값이 수백만 단위로 커졌고, 큰 그래프가 처음 나온 에피소드에서는 한 번의 갱신 손실이 10¹⁵ 단위까지 튀었습니다.',
-          'TD 목표값에도 문제가 있었습니다. 남은 도시를 고르는 함수가 방문 표시가 아닌 시작 도시 표시를 보고 있어서, 목표값이 「남은 도시 중 최댓값」이 아니라 늘 시작 도시의 Q값으로 계산됐습니다. n-step 기록의 다음 상태도 한 칸 어긋나 있었습니다.',
-          '이 결과는 이 정도 규모에서도 정책이 무너졌다는 점만 말해 주며, 끝까지 학습했을 때의 성능을 대신하지는 않습니다.',
+        findings: [
+          {
+            title: 'Q값 폭증',
+            text: '정규화 없이 완전 그래프 전체를 더해 Q값이 수백만 단위로 커졌고, 갱신 손실이 10¹⁵ 단위까지 튀었습니다.',
+          },
+          {
+            title: 'TD 목표값 오류',
+            text: '목표값이 남은 도시가 아니라 늘 시작 도시의 Q값으로 계산됐고, n-step 다음 상태도 한 칸 어긋나 있었습니다.',
+          },
+          {
+            title: '에피소드 100회로 줄임',
+            text: '큰 그래프는 에피소드당 약 45초라 10,000회면 seed당 5일이 넘습니다. 횟수만 줄이고 나머지 설정은 그대로 뒀습니다.',
+          },
         ],
       },
     },
   },
   {
     id: 'fashion-classification',
-    contribution: [
-      'ResNet50V2 분류 코드를 작성하고, 학습 데이터와 검증 데이터를 각각 클래스별로 다운샘플링했습니다.',
-      '클래스별 지표와 혼동행렬을 검토하고, 드레스와 아우터에서 나온 오류 사례를 분석했습니다.',
+    built: [
+      'ResNet50V2 분류 학습 코드',
+      '학습, 검증 데이터를 클래스별로 다운샘플링',
+      '클래스별 지표와 혼동행렬 검토',
+      '드레스와 아우터 오류 사례 분석',
     ],
-    reused:
-      'ImageNet으로 사전학습한 ResNet50V2 가중치와 K-fashion 데이터를 가져다 썼습니다. 직접 한 부분은 데이터 구성, 분류 학습 코드, 오류 분석입니다.',
+    borrowed: ['ImageNet 사전학습 ResNet50V2 가중치', 'K-Fashion 데이터'],
+    limits: [
+      '2021년 평가는 검증 데이터를 다시 써서 독립 테스트가 아님',
+      '오류 원인(불균형, 촬영 구도)까지는 검증하지 않음',
+      '재실행은 대체 데이터(Fashion-MNIST), 10 epoch, TensorFlow 2.15',
+      '맨 위 그림은 한 번 더 돌린 결과 (47.2%, 94.2%)',
+    ],
     credit: 'ImageNet 사전학습 ResNet50V2 활용',
     connection:
       '클래스별 오류를 나눠 보고 평가 분할이 무엇을 뜻하는지 따져 본 경험이, 지금 CAD 가공 특징의 라벨과 모델을 평가하는 방식에도 남아 있습니다.',
@@ -163,20 +178,14 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     title: '의류 분류의 데이터 불균형과 클래스 혼동 분석',
     category: 'Computer Vision · 실험 기록',
     question:
-      '의류 데이터의 클래스 분포와 혼동행렬을 보면 어떤 분류 오류가 드러날까?',
-    method:
-      '의류 클래스 네 개를 대상으로, 학습 데이터와 검증 데이터를 각각 가장 적은 클래스의 개수에 맞춰 다운샘플링했습니다. 사전학습된 ResNet50V2로 분류 코드를 만들고 클래스별 precision과 recall, 혼동행렬을 살펴봤습니다.',
-    observation:
-      '공개된 실험 그림을 보면 실제 클래스가 달라도 예측이 한 클래스로 몰리는 오류가 보입니다. README에는 드레스와 아우터가 비슷하게 보이는 사례를 정리했습니다. 다만 불균형이나 촬영 구도 때문에 이런 오류가 생겼는지까지 검증하지는 않았습니다.',
-    limitation:
-      '평가 함수가 검증 데이터를 다시 쓰기 때문에 2021년 결과는 독립된 테스트 성능이 아닙니다. 클래스 이름 설명도 일부 맞지 않고, 공개된 그림이 현재 코드와 같은 조건에서 나온 것인지도 확인하지 못했습니다.',
+      '클래스 분포와 혼동행렬을 보면 어떤 분류 오류가 드러날까?',
     tags: ['TensorFlow', 'ResNet50V2', 'Class imbalance', 'Error analysis'],
     source: 'https://github.com/GyuTae-Kim/Classification_ResNet',
     image: 'assets/research/k-fashion-confusion-matrix.png',
     imageAlt:
       '공개 K-fashion 실험의 4개 클래스 혼동행렬. 여러 실제 클래스의 예측이 클래스 2로 몰려 있다.',
     imageCaption:
-      '2021년 공개 저장소에 남아 있는 당시 실험 그림입니다. 현재 코드로 같은 조건에서 돌린 결과인지는 확인하지 못했습니다.',
+      '2021년 공개 저장소의 당시 그림 · 같은 조건에서 나온 것인지는 확인 못 함',
     period: '2021 · 학부연구생',
     result: {
       headline: '증강 설정 하나가 정확도를 절반으로 떨어뜨렸습니다',
@@ -219,24 +228,41 @@ export const RESEARCH_WORKS: ResearchWork[] = [
             ['숏컷 수정 + 증강 끔 + L2 0.0001', '96.4%', '25%'],
           ],
         },
-        notes: [
-          'K-Fashion은 AI Hub 이용 신청이 필요한 데이터라 이번에는 다시 받지 못했습니다.',
-          '설정 파일은 약한 증강을 의도했지만, 값을 받는 Keras 전처리 레이어에서는 ±72° 회전, 상하 뒤집기, 절반 크기 축소로 동작했습니다. 증강 뒤에 캐시를 둬서 첫 epoch의 변형이 끝까지 고정되기도 했습니다.',
-          'identity 숏컷이 원래 입력 대신 BN과 ReLU를 거친 값을 넘기고 있었습니다(Keras의 ResNet50V2와 다른 연결). ImageNet 가중치는 오류 없이 들어가서 겉으로는 드러나지 않았습니다.',
-          'README의 클래스별 recall은 argmax가 아니라 0.5 임계값으로 계산한 값이었고, 평가 함수는 검증 데이터를 다시 썼습니다. 이번에는 학습·검증과 겹치지 않는 테스트 세트를 따로 두었습니다.',
-          '맨 위 그림은 이미지별 예측을 남기려고 같은 설정을 한 번 더 돌린 결과입니다(정확도 47.2%와 94.2%). 쉬운 데이터로 10 epoch만 돌렸고, TensorFlow 2.3 대신 2.15에서 실행했습니다.',
+        findings: [
+          {
+            title: '증강이 의도보다 셌음',
+            text: '약한 증강을 의도했지만 실제로는 ±72° 회전, 상하 뒤집기, 절반 크기 축소로 동작했고, 캐시 때문에 첫 epoch의 변형이 끝까지 고정됐습니다.',
+          },
+          {
+            title: '숏컷 연결 오류',
+            text: 'identity 숏컷이 원래 입력 대신 BN과 ReLU를 거친 값을 넘겼습니다. ImageNet 가중치는 오류 없이 들어가 겉으로는 드러나지 않았습니다.',
+          },
+          {
+            title: '평가 방식',
+            text: 'README의 recall은 0.5 임계값 기준이었고 평가에 검증 데이터를 다시 썼습니다. 이번에는 겹치지 않는 테스트 세트를 따로 뒀습니다.',
+          },
+          {
+            title: '대체 데이터',
+            text: 'K-Fashion은 AI Hub 이용 신청이 필요해 이번에는 받지 못했고, 공개 데이터 Fashion-MNIST로 돌렸습니다.',
+          },
         ],
       },
     },
   },
   {
     id: 'virtual-try-on',
-    contribution: [
-      '인체 파싱과 포즈 추정 결과, GrabCut으로 만든 의류 마스크를 가상 착용 모델의 입력으로 묶었습니다.',
-      'Flask로 만든 이미지 업로드·결과 반환 API를 Android 클라이언트와 연결했습니다.',
+    built: [
+      '인체 파싱, 포즈, 의류 마스크를 ACGPN 입력 형식으로 정리',
+      'OpenCV GrabCut으로 의류 마스크 생성',
+      'Flask 업로드, 결과 반환 API',
+      'Kotlin, Retrofit Android 클라이언트 연결',
     ],
-    reused:
-      'ACGPN, 인체 파싱, 포즈 추정은 기존 모델을 그대로 썼고 의류 마스크는 OpenCV GrabCut으로 만들었습니다. 직접 한 부분은 전처리, 입출력 처리, 서버와 앱 연결입니다.',
+    borrowed: ['ACGPN 가상 착용 모델', '인체 파싱, 포즈 추정 공개 모델'],
+    limits: [
+      '화질이나 속도를 개선한 성과가 아닌 통합 구현',
+      '공개 가중치로 테스트 이미지 몇십 장을 돌린 값',
+      '제품 수준 성능이나 상용 운영 여부는 보여 주지 않음',
+    ],
     credit: 'ACGPN·인체 파싱·포즈 추정 공개 모델을 묶은 통합 구현',
     connection:
       '서로 다른 모듈의 입력과 출력을 맞춰 하나로 잇는 일은, 서버에서 만든 가공 계획을 Fusion에서 실행되게 하는 지금의 작업과 닮았습니다.',
@@ -245,13 +271,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     title: '가상 착용을 위한 이미지 전처리와 추론 통합',
     category: 'Computer Vision · 응용 구현',
     question:
-      '인물 사진과 옷 이미지를 모델 입력으로 바꾸고, 결과를 앱에서 받아 볼 수 있을까?',
-    method:
-      '인체 파싱과 포즈 추정 결과, GrabCut으로 만든 의류 마스크를 ACGPN 입력 형식에 맞춰 묶었습니다. Kotlin과 Retrofit으로 만든 Android 클라이언트가 Flask API로 사진을 올리고 결과를 받아 오도록 연결했습니다.',
-    observation:
-      '이미지를 받아 전처리하고 추론하는 코드, 업로드와 결과 반환 API, Android에서 결과를 보여 주는 흐름까지 코드로 남겼습니다. 화질이나 추론 속도를 수치로 개선한 성과가 아니라 여러 모듈을 잇는 통합 구현 사례입니다.',
-    limitation:
-      '기존 가상 착용 모델을 응용해 통합한 사례입니다. 재실행 수치는 2026년에 공개 가중치로 테스트 이미지 몇십 장을 돌려 본 결과라서, 제품 수준의 성능이나 상용 운영 여부까지 말해 주지는 않습니다.',
+      '인물 사진과 옷 이미지로 착용 결과를 만들어 앱에서 받아 볼 수 있을까?',
     tags: ['PyTorch', 'Virtual try-on', 'Human parsing', 'Flask', 'Android'],
     source: 'https://github.com/GyuTae-Kim/Deeplearning_Try_On',
     period: '2021 · 학부연구생',
@@ -298,11 +318,23 @@ export const RESEARCH_WORKS: ResearchWork[] = [
             ['GrabCut 마스크 IoU', '중앙값 0.929 → 0.957', '옷 40벌 · 코드 그대로 → 사각형을 이미지 안으로'],
           ],
         },
-        notes: [
-          'GrabCut에 넘기는 사각형 (1, 1, w, h)가 이미지 오른쪽과 아래 경계를 넘어, 배경 단서가 위·왼쪽 한 줄뿐이었습니다. 그래서 40벌 중 13벌에서 마스크가 배경까지 번졌습니다.',
-          'SSIM은 같은 옷을 다시 입혀 원본 사진과 비교한 값입니다. 옷 밖의 영역은 입력에서 그대로 가져오므로 점수가 후하게 나오고, ACGPN 논문의 값과는 비교할 수 없습니다.',
-          '눈으로 본 실패 유형은 세 가지였습니다. 마스크가 배경으로 새면 몸통이 번지고, 소매 길이가 바뀌면 팔에 잔상이 생기고, 기장이 다르면 원래 옷 무늬가 밑단 아래에 남습니다.',
-          '원래 쓰던 VITON 데이터는 원 저장소가 저작권 문제로 배포를 막아 두어 쓰지 않았습니다. ACGPN과 OpenPose 가중치는 비상업 연구용 조건으로 공개된 것입니다.',
+        findings: [
+          {
+            title: 'GrabCut 사각형 오류',
+            text: '사각형 (1, 1, w, h)가 이미지 경계를 넘어 배경 단서가 위와 왼쪽 한 줄뿐이었고, 40벌 중 13벌에서 마스크가 배경까지 번졌습니다.',
+          },
+          {
+            title: '실패 유형 세 가지',
+            text: '마스크가 배경으로 새면 몸통이 번지고, 소매 길이가 바뀌면 팔에 잔상이 생기고, 기장이 다르면 원래 옷 무늬가 밑단 아래에 남습니다.',
+          },
+          {
+            title: 'SSIM 읽는 법',
+            text: '같은 옷을 다시 입혀 원본과 비교한 값입니다. 옷 밖은 입력을 그대로 쓰므로 점수가 후하고, ACGPN 논문 값과 비교할 수 없습니다.',
+          },
+          {
+            title: '데이터와 가중치',
+            text: '원래 쓰던 VITON 데이터는 배포가 막혀 쓰지 않았고, ACGPN과 OpenPose 가중치는 비상업 연구용으로 공개된 것입니다.',
+          },
         ],
       },
     },

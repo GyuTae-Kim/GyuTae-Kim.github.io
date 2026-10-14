@@ -25,14 +25,14 @@ const routes = [
     files: ['portfolio.html', 'portfolio/index.html'],
     path: '/portfolio',
     title: '프로젝트',
-    description: 'AI 모델이 낸 결과를 설계·가공 도구에서 쓸 수 있게 만든 연구개발 사례 3건입니다. 가공 특징 인식과 CAM 연결, 가구 패널 인식, Wedraw Pro를 다룹니다.',
+    description: '가공 특징 인식과 Fusion CAM 연결, 가구 패널 인식, 가구 설계에서 생산까지 잇는 Wedraw Pro, 세 프로젝트입니다.',
     image: 'assets/og/portfolio.jpg',
   },
   ...cases.map((c) => ({
     files: [`portfolio/${c.id}.html`],
     path: `/portfolio/${c.id}`,
     title: c.title,
-    description: `${c.headline}. 단계마다 직접 한 일과 팀·협력 기관이 한 일을 나눠 적었습니다.`,
+    description: `${c.headline}. 단계마다 맡은 범위와 한 일을 나눠 적었습니다.`,
     image: `assets/og/${c.id}.jpg`,
   })),
   {

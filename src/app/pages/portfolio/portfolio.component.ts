@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS } from '../../portfolio-data';
+import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS, stepOwnerLabel } from '../../portfolio-data';
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -10,8 +10,7 @@ import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS } from '../../portfolio-dat
 export class PortfolioComponent implements OnDestroy {
   cases = CASE_STUDIES;
   selected: CaseStudy | undefined;
-  // Who did each story step: the owner, the team, or a partner institution.
-  ownerLabels: Record<string, string> = { me: '직접', team: '팀과 함께', partner: '협력 기관' };
+  ownerLabel = stepOwnerLabel;
   kindLabels = FIGURE_KIND_LABELS;
   // Cases that were merged into a larger story keep their old addresses working.
   private readonly movedCases: Record<string, string> = {
