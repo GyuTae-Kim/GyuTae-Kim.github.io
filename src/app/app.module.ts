@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
+import { OpenCadComponent } from './pages/opencad/opencad.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 import { AchievementsComponent } from './components/achievements/achievements.component';
@@ -19,6 +20,7 @@ import { IconComponent } from './components/icon/icon.component';
     ContactComponent,
     PortfolioComponent,
     BoardComponent,
+    OpenCadComponent,
     NotFoundComponent,
     AchievementsComponent,
     ModelViewportComponent,

@@ -67,6 +67,19 @@ const routes = [
     links: [{ href: '/portfolio', label: '프로젝트' }],
   },
   {
+    files: ['opencad.html', 'opencad/index.html'],
+    path: '/opencad',
+    title: '오픈캐드',
+    description:
+      'CAD 파일을 프로그램 없이 브라우저에서 여는 개인 프로젝트 OpenCAD입니다. DWG와 DXF 도면을 여는 2D 도면 뷰어를 공개했고, STEP, SKP, NC 뷰어를 준비하고 있습니다.',
+    image: 'assets/og/opencad.jpg',
+    imageAlt: '도면 시트 모양의 표지. OpenCAD, 2D 도면 뷰어로 예제 도면을 연 화면.',
+    links: [
+      { href: '/2dcad-viewer/', label: '2D 도면 뷰어 열기' },
+      { href: '/portfolio', label: '프로젝트' },
+    ],
+  },
+  {
     files: ['contact.html', 'contact/index.html'],
     path: '/contact',
     title: '연락',
