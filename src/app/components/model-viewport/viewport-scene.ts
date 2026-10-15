@@ -10,6 +10,7 @@ import {
   DynamicDrawUsage,
   EdgesGeometry,
   Euler,
+  ExtrudeGeometry,
   Float32BufferAttribute,
   Group,
   HemisphereLight,
@@ -27,6 +28,7 @@ import {
   OrthographicCamera,
   Quaternion,
   Scene,
+  Shape,
   ShapeUtils,
   SphereGeometry,
   TetrahedronGeometry,
@@ -1452,19 +1454,21 @@ interface ModuleSpec {
   shelves: number;
   // Wardrobe: a board this far above the carcass bottom with a hanging rail under it.
   divider?: number;
-  // Door-material end panels inside the body width; `down` stretches them to the floor.
-  ends?: { left?: boolean; right?: boolean; down?: number };
+  // Door-material end panels inside the body width; `down` stretches them to the floor and
+  // `up` to the ceiling.
+  ends?: { left?: boolean; right?: boolean; down?: number; up?: number };
 }
 
 // One wall of a studio: wardrobe, the fridge slot under a flap cabinet framed by end panels,
-// then the kitchen run. Depths follow the builder demo (wardrobe 600, fridge cabinet 680,
-// base 580, upper 350); a 60 mm filler meets the left wall.
+// then the kitchen run. Depths: wardrobe 600, fridge cabinet 600 (the builder demo's 680 cut
+// back so its top and end panels line up with the wardrobe's; the fridge stands proud),
+// base 580, upper 350; a 60 mm filler meets the left wall.
 const ROOM = { h: 2380, left: 0, right: 4400, front: 1500, wall: 100 };
 const FILLER = 60;
 const MODULES: ModuleSpec[] = [
   { name: '붙박이장 900', kind: 'tall', x: 60, y: 0, w: 900, h: 2300, d: 600, doors: 2, shelves: 0, divider: 1700 },
   { name: '붙박이장 600', kind: 'tall', x: 960, y: 0, w: 600, h: 2300, d: 600, doors: 1, shelves: 4 },
-  { name: '냉장고장', kind: 'flap', x: 1560, y: 1950, w: 950, h: 350, d: 680, doors: 1, shelves: 0, ends: { left: true, right: true, down: 1950 } },
+  { name: '냉장고장', kind: 'flap', x: 1560, y: 1950, w: 950, h: 350, d: 600, doors: 1, shelves: 0, ends: { left: true, right: true, down: 1950, up: 80 } },
   { name: '하부장 600', kind: 'base', x: 2510, y: 0, w: 600, h: 850, d: 580, doors: 1, shelves: 1 },
   { name: '하부장 900', kind: 'base', x: 3110, y: 0, w: 900, h: 850, d: 580, doors: 2, shelves: 1, ends: { right: true } },
   { name: '상부장 600', kind: 'upper', x: 2510, y: 1500, w: 600, h: 800, d: 350, doors: 1, shelves: 2 },
@@ -1481,6 +1485,27 @@ interface Piece {
   s: Slab;
   // Doors: the hinge edge (-1 left, 1 right, 0 top for a lift-up flap).
   hinge?: number;
+  // Base sides: the handle channel cut out of the front top corner, [height, depth].
+  notch?: [number, number];
+}
+
+// Handle channel of the base preset: 60 high and 40 deep under the worktop.
+const CHANNEL = { h: 60, d: 40 };
+
+// A board centred at the origin with its +x, +y corner cut away nx by ny through the
+// thickness, which runs along z.
+function notchedBoard(a: number, b: number, t: number, nx: number, ny: number): BufferGeometry {
+  const s = new Shape();
+  s.moveTo(-a / 2, -b / 2);
+  s.lineTo(a / 2, -b / 2);
+  s.lineTo(a / 2, b / 2 - ny);
+  s.lineTo(a / 2 - nx, b / 2 - ny);
+  s.lineTo(a / 2 - nx, b / 2);
+  s.lineTo(-a / 2, b / 2);
+  s.closePath();
+  const g = new ExtrudeGeometry(s, { depth: t, bevelEnabled: false, curveSegments: 1 });
+  g.translate(0, 0, -t / 2);
+  return g;
 }
 
 // Panels of one module in its own frame: x across from its left edge, y up from its bottom,
@@ -1488,7 +1513,10 @@ interface Piece {
 function modulePieces(m: ModuleSpec): Piece[] {
   const { t } = FB;
   const out: Piece[] = [];
-  const add = (role: PieceRole, part: Piece['part'], s: Slab, hinge?: number) => out.push({ role, part, s, hinge });
+  const add = (role: PieceRole, part: Piece['part'], s: Slab, hinge?: number) => {
+    out.push({ role, part, s, hinge });
+    return out[out.length - 1];
+  };
   const floor = m.kind === 'tall' || m.kind === 'base';
   const y0 = floor ? FB.plinth : 0;
   const y1 = m.kind === 'base' ? m.h - FB.worktop : m.h;
@@ -1496,11 +1524,15 @@ function modulePieces(m: ModuleSpec): Piece[] {
   const x0 = m.ends?.left ? t : 0;
   const x1 = m.w - (m.ends?.right ? t : 0);
   const endY0 = (m.kind === 'upper' ? -20 : 0) - (m.ends?.down ?? 0);
-  if (m.ends?.left) add('trim', 'end', box(0, t, endY0, y1, 0, m.d));
-  if (m.ends?.right) add('trim', 'end', box(m.w - t, m.w, endY0, y1, 0, m.d));
-  // Sides run the full carcass height; the boards sit between them.
-  add('side', 'side', box(x0, x0 + t, y0, y1, 0, cd));
-  add('side', 'side', box(x1 - t, x1, y0, y1, 0, cd));
+  const endY1 = y1 + (m.ends?.up ?? 0);
+  if (m.ends?.left) add('trim', 'end', box(0, t, endY0, endY1, 0, m.d));
+  if (m.ends?.right) add('trim', 'end', box(m.w - t, m.w, endY0, endY1, 0, m.d));
+  // Sides run the full carcass height; the boards sit between them. Base sides have the
+  // handle channel cut out of their front top corner.
+  for (const sx of [x0, x1 - t]) {
+    const side = add('side', 'side', box(sx, sx + t, y0, y1, 0, cd));
+    if (m.kind === 'base') side.notch = [CHANNEL.h, CHANNEL.d];
+  }
   const ix0 = x0 + t;
   const ix1 = x1 - t;
   add('board', 'bottom', box(ix0, ix1, y0, y0 + t, BOARD_Z, cd));
@@ -1508,7 +1540,7 @@ function modulePieces(m: ModuleSpec): Piece[] {
     // Base preset: rails instead of a top board, and a handle channel 40 deep and 60 high.
     add('board', 'rail', box(ix0, ix1, y1 - t, y1, BOARD_Z, BOARD_Z + 80));
     add('board', 'rail', box(ix0, ix1, y1 - t, y1, cd - 120, cd - 40));
-    add('board', 'rail', box(ix0, ix1, y1 - 60, y1 - t, cd - 40 - t, cd - 40));
+    add('board', 'rail', box(ix0, ix1, y1 - CHANNEL.h, y1 - t, cd - CHANNEL.d - t, cd - CHANNEL.d));
   } else {
     add('board', 'top', box(ix0, ix1, y1 - t, y1, BOARD_Z, cd));
   }
@@ -1531,7 +1563,7 @@ function modulePieces(m: ModuleSpec): Piece[] {
   }
   // Doors cover the carcass with 3 mm between leaves; upper doors hang 20 mm below as a pull.
   const dy0 = m.kind === 'upper' ? -20 : y0;
-  const dy1 = m.kind === 'base' ? y1 - 60 : y1;
+  const dy1 = m.kind === 'base' ? y1 - CHANNEL.h : y1;
   const leaf = (x1 - x0 - 3 * m.doors) / m.doors;
   for (let i = 0; i < m.doors; i++) {
     const a = x0 + 1.5 + i * (leaf + 3);
@@ -1574,6 +1606,14 @@ function buildModule(m: ModuleSpec, mats: Record<PieceRole, Material>, edge: Lin
       pivot.add(leafMesh);
       doors.push({ pivot, hinge: piece.hinge ?? -1 });
       obj = pivot;
+    } else if (piece.notch) {
+      // Depth along the shape's x, height along its y, thickness turned onto x.
+      const { size, at } = piece.s;
+      const geo = notchedBoard(size.z, size.y, size.x, piece.notch[1], piece.notch[0]);
+      geo.rotateY(-Math.PI / 2);
+      obj = new Mesh(geo, mats[piece.role]);
+      obj.add(edgesOf(geo, edge));
+      obj.position.copy(at);
     } else {
       obj = slab(mats[piece.role], edge, piece.s);
     }
@@ -1628,10 +1668,11 @@ function wallExtras() {
   const bx1 = Math.max(...base.map((m) => m.x + m.w));
   return {
     worktop: box(bx0, bx1, 850 - FB.worktop, 850, 0, 580),
-    // Top surround up to the ceiling over the tall units, the fridge cabinet and the uppers.
+    // Top surround up to the ceiling over the tall units, the uppers and, between its end
+    // panels, the fridge cabinet.
     surround: [
       box(FILLER, 1560, 2300, ROOM.h, 600 - t, 600),
-      box(1560, 2510, 2300, ROOM.h, 680 - t, 680),
+      box(1560 + t, 2510 - t, 2300, ROOM.h, 600 - t, 600),
       box(2510, 4010, 2300, ROOM.h, 350 - t, 350),
     ],
     filler: box(0, FILLER, 0, ROOM.h, 600 - t, 600),
@@ -1748,12 +1789,12 @@ function buildDesign(edge: LineBasicMaterial, reducedMotion: boolean): Furniture
     return { whole, halves, split, at: r.at, widths, marks };
   });
   // The fridge slot is an empty place in the run, with the flap cabinet over it.
-  const slotGeo = new EdgesGeometry(new BoxGeometry(950, 1950, 680));
+  const slotGeo = new EdgesGeometry(new BoxGeometry(950, 1950, 600));
   const slot = new LineSegments(slotGeo, new LineDashedMaterial({ color: BLUE, dashSize: 60, gapSize: 40 }));
   slot.computeLineDistances();
-  slot.position.set(1560 + 475, 975, 340);
+  slot.position.set(1560 + 475, 975, 300);
   group.add(slot);
-  const flapBox = ghost(box(1560, 2510, 1950, 2300, 0, 680));
+  const flapBox = ghost(box(1560, 2510, 1950, 2300, 0, 600));
   const slotAt: [number, number] = [3.0, 3.8];
 
   const mats = roleMats();
@@ -1818,7 +1859,7 @@ function buildDesign(edge: LineBasicMaterial, reducedMotion: boolean): Furniture
     labels() {
       const r = runs.find((x) => t >= x.at[1] && t < x.at[2] + 0.6);
       if (r) return r.marks.map((anchor, i) => ({ anchor, owner: group, text: String(r.widths[i]) }));
-      if (t >= slotAt[0] && t < slotAt[1] + 0.6) return [{ anchor: new Vector3(2035, 2380, 680), owner: group, text: '950' }];
+      if (t >= slotAt[0] && t < slotAt[1] + 0.6) return [{ anchor: new Vector3(2035, 2380, 600), owner: group, text: '950' }];
       return [];
     },
   };
@@ -1856,7 +1897,7 @@ const HOLE_DRAW = 2.5;
 // 0 at mid-height; z along the depth): connector through holes for the bottom board (three,
 // 80 mm in and at most 300 apart) and the rails; shelf pins Ø3 in two columns 50 mm in from
 // the shelf edges; hinge-plate pilots Ø3, 37 mm in, 32 apart; the back groove 4 wide,
-// 18–22 mm from the rear edge.
+// 18–22 mm from the rear edge; the handle channel cut out of the front top corner.
 function sideMachining() {
   const m = MODULES[BUILT];
   const y0 = FB.plinth;
@@ -1880,7 +1921,8 @@ function sideMachining() {
   );
   // Through-feed: the panel runs in +x, so holes nearer the leading end come first.
   const holes = [...through, ...pins, ...pilots].sort((a, b) => b.u - a.u || a.z - b.z);
-  return { holes, groove: z(FB.backInset + FB.groove / 2) };
+  const notch = { u0: u(y1 - CHANNEL.h), u1: u(y1), z0: z(cd - CHANNEL.d), z1: z(cd) };
+  return { holes, groove: z(FB.backInset + FB.groove / 2), notch };
 }
 const SIDE_MACHINING = sideMachining();
 
@@ -1889,13 +1931,26 @@ function sidePanel(edge: LineBasicMaterial) {
   const group = new Group();
   const bodyMat = tinted(tint(TINTS.side, 1));
   bodyMat.transparent = true;
-  const body = slab(bodyMat, edge, box(-SIDE.l / 2, SIDE.l / 2, 0, SIDE.t, -SIDE.d / 2, SIDE.d / 2));
+  // The body is drawn notched; the channel's offcut stays on it until the skipper cuts it.
+  const { notch } = SIDE_MACHINING;
+  const bodyGeo = notchedBoard(SIDE.l, SIDE.d, SIDE.t, notch.u1 - notch.u0, notch.z1 - notch.z0);
+  bodyGeo.rotateX(Math.PI / 2);
+  bodyGeo.translate(0, SIDE.t / 2, 0);
+  const body = new Mesh(bodyGeo, bodyMat);
+  body.add(edgesOf(bodyGeo, edge));
   group.add(body);
+  const offcut = new Group();
+  offcut.add(slab(bodyMat, edge, box(notch.u0, notch.u1, 0, SIDE.t, notch.z0, notch.z1)));
+  const bandMat = tinted(ACCENT);
+  // Its piece of the front tape, shown once the rest of the front edge is cut short.
+  const offcutBand = slab(bandMat, edge, box(notch.u0, notch.u1, -0.5, SIDE.t + 0.5, notch.z1, notch.z1 + 4));
+  offcutBand.visible = false;
+  offcut.add(offcutBand);
+  group.add(offcut);
   const label = new Group();
   label.add(slab(faceMaterial(), edge, box(-50, 50, SIDE.t, SIDE.t + 1, -25, 25)));
   label.add(slab(tinted(DRILLED), edge, box(-44, -22, SIDE.t + 1, SIDE.t + 1.5, -11, 11)));
   group.add(label);
-  const bandMat = tinted(ACCENT);
   // Front, rear and bottom edges get 0.8 mm tape (drawn 4 mm); the worktop covers the top.
   const bands = {
     front: new Mesh(UNIT, bandMat),
@@ -1926,6 +1981,8 @@ function sidePanel(edge: LineBasicMaterial) {
     group,
     bodyMat,
     holes,
+    offcut,
+    offcutBand,
     // Tape along one edge from `from` to `to` in that edge's own coordinate.
     setBand(edgeName: 'front' | 'rear' | 'bottom', from: number, to: number) {
       const b = bands[edgeName];
@@ -2130,6 +2187,15 @@ function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): Furnitur
   drill.add(cylinderY(24, 60, 150, 0xa8ada5, edge, 20));
   const bit = cylinderY(4, 0, 60, 0x8c928a, edge, 12);
   drill.add(bit);
+  // A Ø12 router spindle beside the drills on the top unit, for the handle channel.
+  const routerOff = 190;
+  const routerR = 6;
+  head.add(metalBox(0xd6d9d2, edge, box(routerOff - 50, routerOff + 50, 200, 330, -50, 50)));
+  const router = new Group();
+  router.position.x = routerOff;
+  head.add(router);
+  router.add(cylinderY(26, 70, 200, 0xa8ada5, edge, 20));
+  router.add(cylinderY(routerR, 0, 70, 0x8c928a, edge, 12));
   // Bottom unit under the rollers, drilling upwards, and its router for the groove.
   const under = new Group();
   bore.add(under);
@@ -2150,26 +2216,46 @@ function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): Furnitur
   BAND_PASSES.forEach((p) => bored.setBand(p.edge, -p.half, p.half));
   for (const z of [-150, 150]) bored.group.add(metalBox(DRILLED, edge, box(-SIDE.l / 2 - 70, -SIDE.l / 2, 0, 60, z - 50, z + 50)));
 
-  // Through-feed keys: the panel stops for each hole; the router cuts on the way.
-  const keys: { t: number; px: number; hz: number; hole: number; target: number }[] = [];
+  // Through-feed keys: the leading end comes in under the top router, which plunges through
+  // and cuts the channel's two inner edges; then the panel stops for each hole, and the
+  // bottom router cuts the groove on the way out. `down` is the router's plunge (0–1).
+  type Key = { t: number; px: number; hz: number; hole: number; target: number; down: number };
+  const keys: Key[] = [];
   let clock = 0.3;
   let px = -SIDE.l / 2 - 700;
   let hz = 0;
   const holes = SIDE_MACHINING.holes;
-  keys.push({ t: clock, px, hz, hole: -1, target: 0 });
+  const { notch } = SIDE_MACHINING;
+  keys.push({ t: clock, px, hz, hole: -1, target: -1, down: 0 });
+  // Tool centre one radius inside the offcut, starting off the front edge.
+  const notchPath: [number, number, number, number][] = [
+    [notch.u0 + routerR, notch.z1 + 30, 0, 0],
+    [notch.u0 + routerR, notch.z1 + 30, 1, 0.25],
+    [notch.u0 + routerR, notch.z0 + routerR, 1, 0.7],
+    [notch.u1 + 30, notch.z0 + routerR, 1, 0.7],
+    [notch.u1 + 30, notch.z0 + routerR, 0, 0.25],
+  ];
+  notchPath.forEach(([u, z, down, dur], i) => {
+    const npx = routerOff - u;
+    clock += i === 0 ? Math.max(Math.abs(npx - px) / 2200, Math.abs(z - hz) / 2600) : dur;
+    px = npx;
+    hz = z;
+    keys.push({ t: clock, px, hz, hole: -1, target: -1, down });
+  });
+  const notchEnd = clock;
   holes.forEach((h, i) => {
     clock += Math.max(Math.abs(-h.u - px) / 2200, Math.abs(h.z - hz) / 2600, 0.12);
     px = -h.u;
     hz = h.z;
-    keys.push({ t: clock, px, hz, hole: -1, target: i });
+    keys.push({ t: clock, px, hz, hole: -1, target: i, down: 0 });
     clock += 0.14;
-    keys.push({ t: clock, px, hz, hole: i, target: i });
+    keys.push({ t: clock, px, hz, hole: i, target: i, down: 0 });
   });
   const drilledAt = keys.filter((k) => k.hole >= 0).map((k) => k.t - 0.07);
   const holesEnd = clock;
   clock += (620 - px) / 1500;
   px = 620;
-  keys.push({ t: clock, px, hz: 0, hole: -1, target: holes.length - 1 });
+  keys.push({ t: clock, px, hz: 0, hole: -1, target: holes.length - 1, down: 0 });
   const flipAt = clock + 0.3;
   const boreLen = flipAt + 1.2;
 
@@ -2249,11 +2335,23 @@ function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): Furnitur
     const b = keys[ki < 0 ? keys.length - 1 : ki];
     const kk = b.t > a.t ? ease(clamp01((st - a.t) / (b.t - a.t))) : 1;
     const bpx = a.px + (b.px - a.px) * kk;
-    bored.group.position.x = bpx;
-    const target = holes[b.target];
-    const hz2 = a.hz + (b.hz - a.hz) * kk;
-    head.position.z = target.face === 'top' ? hz2 : head.position.z;
-    under.position.z = target.face === 'bottom' ? hz2 : under.position.z;
+    // While routing the panel and head move together at a steady feed.
+    const lin = b.t > a.t ? clamp01((st - a.t) / (b.t - a.t)) : 1;
+    const routing = b.target < 0 && a.down > 0 && b.down > 0;
+    const mk = routing ? lin : kk;
+    bored.group.position.x = a.px + (b.px - a.px) * mk;
+    const target = holes[Math.max(b.target, 0)];
+    const hz2 = a.hz + (b.hz - a.hz) * mk;
+    head.position.z = b.target < 0 || target.face === 'top' ? hz2 : head.position.z;
+    under.position.z = b.target >= 0 && target.face === 'bottom' ? hz2 : under.position.z;
+    // The bit runs 3 mm through the panel; it sits 60 above it when up.
+    router.position.y = 60 - 63 * (a.down + (b.down - a.down) * kk);
+    // The offcut drops once both edges are cut.
+    const drop = ease(span(st, notchEnd - 0.2, notchEnd + 0.3));
+    bored.offcut.visible = st < notchEnd + 0.3;
+    bored.offcut.position.y = -220 * drop;
+    bored.setBand('front', -SIDE.l / 2, st >= notchEnd - 0.2 ? notch.u0 : SIDE.l / 2);
+    bored.offcutBand.visible = st >= notchEnd - 0.2;
     const dip = b.hole >= 0 ? Math.sin(Math.PI * clamp01((st - a.t) / (b.t - a.t))) : 0;
     // Through holes are drilled from each face to half the thickness plus 3 mm.
     drill.position.y = target.face === 'top' ? 70 - 64 * dip : 70;
@@ -2278,8 +2376,9 @@ function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): Furnitur
     if (t < bandAt + 0.35) return 0;
     if (t < boreAt + 0.35) return 1;
     const st = t - boreAt - 0.7;
-    if (st < holesEnd) return 2;
-    return st < flipAt ? 3 : 4;
+    if (st < notchEnd + 0.1) return 2;
+    if (st < holesEnd) return 3;
+    return st < flipAt ? 4 : 5;
   };
 
   return {
@@ -2325,14 +2424,15 @@ function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): Furnitur
         return t < pickAt ? '01 네스팅 · 라벨 100 × 50' : '01 네스팅 · 하부장 측판 꺼내기';
       }
       if (s === 1) return `02 엣지밴딩 · ${BAND_PASSES[pass].label} 모서리 ${pass + 1}/3`;
-      if (s === 2) {
+      if (s === 2) return '03 스키퍼 라우터 · 목찬넬 60 × 40 따내기';
+      if (s === 3) {
         const st = t - boreAt - 0.7;
         const i = drilledAt.findIndex((d) => d > st);
         const h = holes[i < 0 ? holes.length - 1 : i];
-        if (h.face === 'top') return '03 스키퍼 윗면 · 연결 피스 Ø6';
-        return Math.abs(h.z - (SIDE.d / 2 - 37)) < 30 ? '03 스키퍼 아랫면 · 경첩 자리 Ø3' : '03 스키퍼 아랫면 · 선반핀 Ø3';
+        if (h.face === 'top') return '04 스키퍼 윗면 · 연결 피스 Ø6';
+        return Math.abs(h.z - (SIDE.d / 2 - 37)) < 30 ? '04 스키퍼 아랫면 · 경첩 자리 Ø3' : '04 스키퍼 아랫면 · 선반핀 Ø3';
       }
-      if (s === 3) return '04 아랫면 라우터 · 뒷판 홈 4×7';
+      if (s === 4) return '05 아랫면 라우터 · 뒷판 홈 4×7';
       return '가공 완료 · 측판 안쪽 면';
     },
     done: () => !reducedMotion && t >= end,
