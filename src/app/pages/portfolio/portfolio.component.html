@@ -121,7 +121,7 @@
           </div>
           <div class="story-meta"><b>{{ i + 1 }}</b></div>
           <h3>{{ step.title }}</h3>
-          <p>{{ step.text }}</p>
+          <p><app-partner-text [text]="step.text"></app-partner-text></p>
         </li>
       </ol>
       <dl class="case-facts">
@@ -130,14 +130,14 @@
           <dd>
             <p>{{ selected!.role }}</p>
             <ul class="role-list">
-              <li *ngFor="let item of selected!.roleItems">{{ item }}</li>
+              <li *ngFor="let item of selected!.roleItems"><app-partner-text [text]="item"></app-partner-text></li>
             </ul>
-            <p class="role-note" *ngIf="selected!.roleNote">{{ selected!.roleNote }}</p>
+            <p class="role-note" *ngIf="selected!.roleNote"><app-partner-text [text]="selected!.roleNote"></app-partner-text></p>
           </dd>
         </div>
         <div>
           <dt>{{ selected!.outcome ? '만들어낸 결과' : '핵심 판단' }}</dt>
-          <dd>{{ selected!.outcome?.result ?? selected!.keyDecision }}</dd>
+          <dd><app-partner-text [text]="selected!.outcome?.result ?? selected!.keyDecision"></app-partner-text></dd>
         </div>
       </dl>
       <p class="result-scope">{{ selected!.scopeLine }}</p>
@@ -167,7 +167,7 @@
     </section>
     <section class="evidence-section" *ngFor="let evidence of selected!.evidence" [attr.aria-labelledby]="evidence.id">
       <h2 class="detail-title" [id]="evidence.id">{{ evidence.title }}</h2>
-      <p class="showcase-intro">{{ evidence.introduction }}</p>
+      <p class="showcase-intro"><app-partner-text [text]="evidence.introduction"></app-partner-text></p>
       <div class="evidence-grid" [class.mdt-evidence]="evidence.id === 'mdt-visualization'">
         <figure *ngFor="let figure of evidence.figures">
           <h3>{{ figure.title }}</h3>
@@ -204,7 +204,7 @@
             <ul *ngIf="step.did.length">
               <li *ngFor="let item of step.did">{{ item }}</li>
             </ul>
-            <p class="step-note" *ngIf="step.didNote">{{ step.didNote }}</p>
+            <p class="step-note" *ngIf="step.didNote"><app-partner-text [text]="step.didNote"></app-partner-text></p>
           </li>
         </ol>
       </section>
@@ -422,7 +422,7 @@
         <div class="project-summary">
           <div>
             <h3>맡은 역할</h3>
-            <p>{{ role }}</p>
+            <p><app-partner-text [text]="role"></app-partner-text></p>
           </div>
           <div>
             <h3>결과</h3>

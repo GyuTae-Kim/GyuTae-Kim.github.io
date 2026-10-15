@@ -13,6 +13,7 @@ import { ArticleComponent } from './pages/article/article.component';
 import { AchievementsComponent } from './components/achievements/achievements.component';
 import { ModelViewportComponent } from './components/model-viewport/model-viewport.component';
 import { IconComponent } from './components/icon/icon.component';
+import { PartnerTextComponent } from './components/partner-text/partner-text.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { IconComponent } from './components/icon/icon.component';
     AchievementsComponent,
     ModelViewportComponent,
     IconComponent,
+    PartnerTextComponent,
   ],
   imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule],
   bootstrap: [AppComponent],

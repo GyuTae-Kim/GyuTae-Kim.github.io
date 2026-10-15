@@ -1,0 +1,9 @@
+{
+  "kimm": {
+    "name": "한국기계연구원",
+    "asset": "src/assets/partners/kimm.png",
+    "source_url": "https://www.kimm.re.kr/main/img/layout/logo.png",
+    "ci_page": "https://www.kimm.re.kr/sub060206",
+    "sha256": "df1369ae7d229ca763fe92aa4fa994c71a46c4fd4a986f5516baa22acb4ed489"
+  }
+}

@@ -23,7 +23,7 @@
       </nav>
       <section class="article-section" *ngFor="let section of post.sections" [attr.aria-labelledby]="section.id">
         <h2 [id]="section.id">{{ section.title }}</h2>
-        <p *ngFor="let text of section.paragraphs">{{ text }}</p>
+        <p *ngFor="let text of section.paragraphs"><app-partner-text [text]="text"></app-partner-text></p>
         <ol *ngIf="section.steps"><li *ngFor="let step of section.steps">{{ step }}</li></ol>
         <ul *ngIf="section.points"><li *ngFor="let point of section.points">{{ point }}</li></ul>
       </section>

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { CASE_STUDIES } from '../../portfolio-data';
 import { OTHER_PROJECTS } from '../../other-projects-data';
 import { PortfolioComponent } from './portfolio.component';
+import { PartnerTextComponent } from '../../components/partner-text/partner-text.component';
 
 describe('PortfolioComponent', () => {
   let fixture: ComponentFixture<PortfolioComponent>;
@@ -14,7 +15,7 @@ describe('PortfolioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [PortfolioComponent],
+      declarations: [PortfolioComponent, PartnerTextComponent],
       providers: [{ provide: ActivatedRoute, useValue: { paramMap: params } }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
