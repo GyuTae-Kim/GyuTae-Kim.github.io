@@ -4,11 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production --output-path docs --base-href / && node tools/route-pages.mjs docs",
+    "build": "ng build --configuration=production --output-path docs --base-href / && ng run portfolio:server:production && node tools/route-pages.mjs docs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "npm run build && npx gh-pages -d docs",
-    "preview": "ng serve --host 127.0.0.1 --port 4317"
+    "deploy": "npm run build && npm run check:seo && npx gh-pages -d docs --dotfiles",
+    "preview": "ng serve --host 127.0.0.1 --port 4317",
+    "check:seo": "node tools/check-seo.mjs docs"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +18,7 @@
     "@angular/core": "^15.2.0",
     "@angular/platform-browser": "^15.2.0",
     "@angular/platform-browser-dynamic": "^15.2.0",
+    "@angular/platform-server": "15.2.6",
     "@angular/router": "^15.2.0",
     "rxjs": "~7.8.0",
     "three": "0.160.1",
@@ -31,6 +33,7 @@
     "@types/three": "0.160.0",
     "gh-pages": "^5.0.0",
     "jasmine-core": "~4.5.0",
+    "jsdom": "^22.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
