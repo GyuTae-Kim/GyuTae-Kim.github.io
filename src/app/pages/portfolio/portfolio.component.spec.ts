@@ -32,6 +32,13 @@ describe('PortfolioComponent', () => {
     expect(page.querySelectorAll('.other-project').length).toBeGreaterThan(0);
   });
 
+  it('draws one cell per monitored component and both error collectors', () => {
+    const board = open().querySelector('#service-monitoring .watch-board')!;
+    expect(board.querySelectorAll('.watch-cells i').length).toBe(13);
+    expect(board.querySelector('.watch-head b')!.textContent).toContain('13곳');
+    expect(board.querySelectorAll('.watch-collect li').length).toBe(2);
+  });
+
   it('writes the contribution once instead of labelling each step', () => {
     const page = open('wedraw-pro');
     expect(page.querySelectorAll('.case-story .story-meta span').length).toBe(0);
