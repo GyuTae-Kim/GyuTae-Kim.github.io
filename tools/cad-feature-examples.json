@@ -1,0 +1,65 @@
+{
+  "description": "Training geometry and face annotations, not independent inference results.",
+  "examples": [
+    {
+      "id": "base-plate",
+      "source": "original/A_Base_Plate_V7 v6.step",
+      "sha256": "e3a7e80da9106b4ad1ddd158a71d5e3982af61d5f08de921a58eff4ba75aa76b",
+      "camera": [
+        1,
+        -1,
+        1.35
+      ]
+    },
+    {
+      "id": "triangle-rib",
+      "source": "augmented/Triangle_Rib_Part1_V5_C v1.step",
+      "sha256": "3e470dd8e9dd8d3829c6ee4c1889372fee1c617a90e7e7367aa79b8c805cb173",
+      "camera": [
+        -1.4,
+        -3,
+        1.0
+      ]
+    },
+    {
+      "id": "rotary-housing",
+      "source": "augmented/Rotary_Housing_V7 v1.step",
+      "sha256": "2dae670957ae2536e953c1da18cbf1761cae38fd4d9237b8c4c343f6758e21e1",
+      "camera": [
+        1,
+        -1,
+        1.6
+      ]
+    },
+    {
+      "id": "bed-plate",
+      "source": "augmented/Bed Plate_V5 v2.step",
+      "sha256": "a17a44d00aa99eaace7a29f90b84e7afaf48869d38d542f5c1ccb0fe17a2d4eb",
+      "camera": [
+        1,
+        -1,
+        1.2
+      ]
+    },
+    {
+      "id": "tail-block",
+      "source": "augmented/Tail_Holding Block_V5 v2.step",
+      "sha256": "3dc7686520dc38b688a1b236263b68c38931ef13d7cdb13ab12ad438f07816ad",
+      "camera": [
+        2.8280294620985327,
+        -0.35000000000000003,
+        1.0082193728272058
+      ]
+    },
+    {
+      "id": "z-holder",
+      "source": "original/C_L_Z Holder_V5 v1.step",
+      "sha256": "bcd18778655951c429a95151e52e5c47b7ad470750b29b90f08fbff2055d605b",
+      "camera": [
+        1,
+        -1,
+        1
+      ]
+    }
+  ]
+}
