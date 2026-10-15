@@ -1,0 +1,14 @@
+<ng-container *ngFor="let part of parts; let i = index">
+  <ng-container *ngIf="!part.partner; else mention">{{ part.text }}</ng-container>
+  <ng-template #mention>
+    <span class="partner-mention" (mouseenter)="show(i, $event)" (mouseleave)="hide()" (focusin)="show(i, $event)" (focusout)="hide()" (click)="show(i, $event)">
+      <button type="button" class="partner-trigger" [attr.aria-describedby]="tooltipId + '-' + i" [attr.aria-expanded]="active === i">{{ part.text }}</button>
+      <span class="partner-tooltip" role="tooltip" [id]="tooltipId + '-' + i" [class.open]="active === i" [attr.aria-hidden]="active !== i" [style.left.px]="left" [style.top.px]="top">
+        <span class="partner-card">
+          <img src="assets/partners/kimm.png" alt="KIMM 한국기계연구원 로고" width="824" height="148" />
+          <strong>한국기계연구원</strong>
+        </span>
+      </span>
+    </span>
+  </ng-template>
+</ng-container>

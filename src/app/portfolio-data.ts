@@ -83,7 +83,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     number: '01',
     headline: '3D 모델에서 가공 특징을 찾아 Fusion CAM 공정을 자동으로 만듭니다',
     outcome: {
-      result: '3D CAD의 형상을 읽는 AI, 학습용 라벨링 도구, 가공 전략 설계 엔진, Fusion CAM 연동과 디지털 트윈 결과 시각화를 하나의 흐름으로 연결했습니다. 모델을 받아 가공 특징을 식별하고, 공정을 생성한 뒤 시뮬레이션 결과를 살펴볼 수 있는 제조 소프트웨어를 만들었습니다.',
+      result: '3D CAD의 형상을 읽는 AI, 학습용 라벨링 도구, 가공 전략 설계 엔진과 Fusion CAM 연동을 개발했습니다. 디지털 트윈에서는 협력 기관이 수행한 시뮬레이션의 결과 시각화만 담당해, 절삭 부하와 가공 결과를 그래프와 3D로 살펴볼 수 있는 화면을 만들었습니다.',
       impact: [
         { title: '반복 작업을 줄이는 공정 설계', text: '면과 홀을 하나씩 선택하고 공정을 설정하는 반복 작업을 줄여, 숙련자가 공구 선택과 가공 조건 검토에 더 집중할 수 있을 것으로 기대합니다.' },
         { title: '제조 지식에 대한 접근성', text: '숙련자의 형상 해석과 공정 설계 절차를 소프트웨어로 축적해, CAM 경험이 적은 작업자와 소규모 제조 현장의 기술 활용을 도울 수 있습니다.' },
@@ -96,14 +96,14 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '±0.15 mm', label: '설계 대비 공차 · MDT 예시의 과삭 판정 기준' },
       { value: '1건', label: '라벨링 프로그램 등록 신청 접수' },
     ],
-    role: '형상 분석부터 가공 전략 설계와 Fusion 적용까지 직접 연구개발했습니다.',
+    role: '형상 분석부터 가공 전략 설계와 Fusion 적용까지 직접 연구개발했으며, 디지털 트윈에서는 시뮬레이션 결과 시각화만 담당했습니다.',
     roleItems: [
       '3D 모델 형상 분석과 그래프 입력',
       '가공 특징 인식 AI와 학습용 라벨링 프로그램',
       '가공 전략 설계와 Fusion CAM 공정 생성',
-      'MDT 데이터 연동과 절삭 부하·가공 결과 3D 시각화',
+      '협력 기관의 MDT 분석 결과를 그래프·3D로 시각화',
     ],
-    roleNote: '디지털 트윈(MDT) 시뮬레이션은 협력 기관이 맡았습니다.',
+    roleNote: '디지털 트윈(MDT) 시뮬레이션은 협력 기관이 담당했습니다. 본인은 제공된 시뮬레이션 결과의 시각화만 맡았습니다.',
     fixes: [
       {
         problem: '면 몇 개만 틀려도 가공 특징 묶음이 달라집니다.',
@@ -124,7 +124,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       '평균 지표, 클래스별 오류, 전부 맞은 부품 수',
       'Fusion 자동 회귀 테스트 (적용, 공구 변경, 오류 복구)',
       '소재 시뮬레이션과 기준 STEP 비교',
-      'MDT 결과의 절삭력·칩 두께 그래프와 설계 대비 3D 비교',
+      'MDT 결과 시각화 화면 (절삭력·칩 두께 그래프, 설계 대비 3D 비교)',
     ],
     unchecked: [
       '새 부품으로 한 독립 평가',
@@ -135,7 +135,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     source: '기술 문서와 코드 변경 이력으로 정리했습니다.',
     category: 'AI · CAD/CAM · BlueChain 애드인',
     title: '3D 모델을 읽고 가공 전략까지 설계하는 AI',
-    subtitle: '형상 분석 → AI 가공 특징 인식 → 가공 전략 설계 → 디지털 트윈 검증으로 이어지는 Fusion CAM 자동화',
+    subtitle: '형상 분석 → AI 가공 특징 인식 → 가공 전략 설계 → 디지털 트윈 결과 시각화로 이어지는 Fusion CAM 자동화',
     period: '2025–2026',
     tags: ['Python', 'OpenCascade', 'TensorFlow', 'Autodesk Fusion API', 'CAM'],
     story: [
@@ -172,15 +172,15 @@ export const CASE_STUDIES: CaseStudy[] = [
         imageAlt: 'Fusion의 내부 다단 포켓 황삭. 가운데 보스를 남기면서 주변 소재를 제거하는 공구 경로입니다.',
       },
       {
-        title: '디지털 트윈 검증',
-        text: '협력 기관의 MDT 시뮬레이션 결과를 연동해 절삭력·칩 두께를 그래프로 살펴보고, 가공 결과와 설계 모델의 차이를 3D로 확인합니다.',
-        did: ['MDT로 넘기는 데이터와 사전 검사', '공정·NC 구간별 절삭력과 칩 두께 그래프', '최댓값·평균·P95와 해당 시점의 공구·이송·회전수 확인', '가공 결과의 설계 대비 편차·가공면 파상도·형상 오차 시각화'],
-        didNote: '시뮬레이션은 협력 기관이 맡았습니다.',
+        title: '디지털 트윈 결과 시각화',
+        text: '협력 기관이 수행한 MDT 시뮬레이션 결과를 받아, 절삭력·칩 두께 그래프와 가공 결과의 설계 대비 차이를 보여주는 3D 화면을 만들었습니다.',
+        did: ['공정·NC 구간별 절삭력과 칩 두께 그래프', '최댓값·평균·P95와 해당 시점의 공구·이송·회전수 표시', '가공 결과의 설계 대비 편차·가공면 파상도·형상 오차 시각화'],
+        didNote: '시뮬레이션은 협력 기관, 결과 시각화는 본인이 담당했습니다.',
         image: 'assets/cases/feature-cam/step4.webp',
         imageAlt: 'MDT 가공 결과와 설계 모델의 3D 비교. 공차를 기준으로 설계면과 남은 소재를 구분합니다.',
       },
     ],
-    diagramLabels: ['형상 분석', 'AI 특징 인식', '가공 전략', 'MDT 검증'],
+    diagramLabels: ['형상 분석', 'AI 특징 인식', '가공 전략', 'MDT 결과 시각화'],
     thumb: 'assets/cases/feature-cam/thumb',
     concept: 'part',
     figure: {
@@ -249,7 +249,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         id: 'mdt-visualization', title: '숫자와 3D로 살펴보는 디지털 트윈 결과',
-        introduction: '공정별 절삭 부하를 시간축으로 보고, 시뮬레이션으로 가공된 소재를 설계 모델과 겹쳐 확인하는 결과 뷰어를 개발했습니다. 아래 화면은 보관된 MDT 분석 결과를 불러온 예시입니다.',
+        introduction: '디지털 트윈(MDT) 시뮬레이션은 협력 기관이 수행했습니다. 본인은 그 결과를 보여주는 그래프와 3D 시각화만 담당했습니다. 아래는 보관된 MDT 분석 결과의 절삭 부하와 가공 형상을 시각화한 화면입니다.',
         figures: [
           { title: '절삭력·칩 두께와 NC 구간', src: 'assets/cases/feature-cam/mdt-force.webp', alt: 'NC 구간별 최대 절삭력과 칩 두께, 평균·P95 통계, 시간별 절삭력 그래프가 있는 MDT 결과 뷰어', caption: '가공 구간을 선택해 절삭력·칩 두께를 비교하고, 최댓값 시점의 NC 블록·공구·이송·회전수를 함께 살펴봅니다.', kind: 'product' },
           { title: '가공 형상과 설계 대비 편차', src: 'assets/cases/feature-cam/mdt-surface.webp', alt: '설계 모델과 MDT 가공 결과를 겹쳐 설계면과 남은 소재를 색상으로 구분하는 3D 화면', caption: '3D 회전·확대와 방향 전환으로 가공 결과를 살펴봅니다. 공차 기준 색상과 영역 비율로 설계면·남은 소재·과삭 표시를 구분합니다.', kind: 'product' },
