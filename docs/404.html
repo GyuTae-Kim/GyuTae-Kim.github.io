@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
-    <title>페이지로 이동하는 중 — 김규태 · Sean Kim</title>
-    <script>
-        // GitHub Pages serves this page for unknown paths. index.html turns /#/path back into /path,
-        // and the app shows its own "없는 페이지" screen if the path really does not exist.
-        var locationPath = location.pathname + location.search + location.hash;
-        location.replace(location.protocol + '//' + location.host + '/#' + locationPath);
-    </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, follow" />
+  <title>없는 페이지 — 김규태 · Sean Kim</title>
+  <script>
+    // Older research links keep working; genuinely unknown paths retain HTTP 404.
+    if (/^\/blog\/.+/.test(location.pathname)) location.replace('/research');
+  </script>
 </head>
-
 <body style="font-family: sans-serif; background: #f4f3ec; color: #1e2522; padding: 40px 24px;">
-    <p>페이지로 이동하는 중입니다. 바로 넘어가지 않으면 <a href="/">홈으로 가기</a>를 눌러 주세요.</p>
+  <h1>없는 페이지입니다.</h1>
+  <p>주소가 바뀌었거나 잘못 입력된 것 같습니다. 아래에서 찾아 주세요.</p>
+  <nav aria-label="사이트 주요 페이지">
+    <a href="/">홈</a> · <a href="/portfolio">프로젝트</a> ·
+    <a href="/research">연구</a> · <a href="/contact">연락</a>
+  </nav>
 </body>
-
 </html>
