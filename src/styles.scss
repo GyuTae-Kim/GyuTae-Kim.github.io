@@ -726,9 +726,8 @@ app-icon.row-arrow {
 }
 
 /* project list */
-.portfolio-achievement-jump {
-  margin: -12px 0 28px;
-  font-size: var(--fs-1);
+.portfolio-jump {
+  margin-bottom: 20px;
 }
 .project-row {
   display: grid;
@@ -2248,38 +2247,103 @@ app-icon.row-arrow {
   .page-intro > p:not(.eyebrow) {
     font-size: var(--fs-2);
   }
+  /* On phones each project is a card: picture, number and category, title, flow line, two
+     numbers, and a footer with the period and the link. The whole card opens the project;
+     role and tags stay on its page. */
   .project-row {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 28px 0;
+    position: relative;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "fig fig fig"
+      "idx cat cat"
+      "title title title"
+      "sub sub sub"
+      "stats stats stats"
+      "per per more";
+    align-items: start;
+    gap: 0 10px;
+    margin-bottom: 16px;
+    padding: 0 16px 16px;
+    border: 1px solid var(--line);
+    background: var(--white);
+    box-shadow: var(--shadow);
   }
-  .project-row-meta {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px 16px;
+  .project-row + .project-row {
+    border-top-color: var(--line);
+  }
+  .project-row:active {
+    border-color: var(--ink);
+  }
+  .project-row-meta,
+  .project-row-content,
+  .project-summary,
+  .project-summary > div:last-child {
+    display: contents;
+  }
+  .row-figure {
+    grid-area: fig;
+    margin: 0 -16px 12px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  /* The list thumbnails are 16:10; fill the card's top edge without bands. */
+  .row-figure img {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .large-index {
+    grid-area: idx;
+    font: 600 var(--fs-1) / 1.6 var(--mono);
+    color: var(--blue);
   }
   .project-row-meta .eyebrow {
+    grid-area: cat;
     margin: 0;
     max-width: none;
   }
   .project-row-meta .row-period {
-    margin-left: auto;
+    grid-area: per;
+    align-self: center;
+    margin-top: 12px;
   }
-  .large-index {
-    font-size: var(--fs-5);
-  }
-  .row-figure {
-    flex: 1 1 100%;
-    margin-top: 4px;
+  .project-row-content > .text-link {
+    grid-area: more;
+    justify-self: end;
+    margin-top: 12px;
+    font-size: var(--fs-1);
   }
   .project-row-content h2 {
-    font-size: var(--fs-4);
+    grid-area: title;
+    margin-top: 6px;
+    font-size: var(--fs-3);
+    letter-spacing: -0.3px;
   }
-  .project-summary {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    margin: 20px 0;
+  .project-row-content h2 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .row-subtitle {
+    grid-area: sub;
+    margin-top: 4px;
+    font-size: var(--fs-1);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .project-row .mini-stats {
+    grid-area: stats;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .project-row .tags,
+  .project-summary > div:first-child,
+  .project-summary h3,
+  .project-summary .row-headline {
+    display: none;
   }
   .case-figure,
   .result-figure {
