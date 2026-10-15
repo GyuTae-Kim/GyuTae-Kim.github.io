@@ -33,7 +33,7 @@ PALETTE = {
 }
 
 
-def render(source, camera, target):
+def render(source, camera, target, training_labels=True):
     reader = STEPControl_Reader()
     assert reader.ReadFile(str(source)) == IFSelect_RetDone
     assert reader.TransferRoots() > 0
@@ -41,10 +41,12 @@ def render(source, camera, target):
     BRepMesh_IncrementalMesh(shape, 0.04, False, 0.16, True).Perform()
     triangles, colours, labels = [], [], []
     for face in TopologyExplorer(shape).faces():
-        entity = reader.WS().TransferReader().EntityFromShapeResult(face, 1)
-        annotation = StepRepr_RepresentationItem.DownCast(entity).Name().ToCString()
-        if annotation in ('2', '3'):
-            annotation = '7'
+        annotation = '7'
+        if training_labels:
+            entity = reader.WS().TransferReader().EntityFromShapeResult(face, 1)
+            annotation = StepRepr_RepresentationItem.DownCast(entity).Name().ToCString()
+            if annotation in ('2', '3'):
+                annotation = '7'
         label, colour = PALETTE[annotation]
         labels.append(label)
         loc = TopLoc_Location()
