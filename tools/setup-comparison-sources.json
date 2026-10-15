@@ -1,0 +1,54 @@
+{
+  "description": "Neutral STEP renders for +Z/-Z setup comparison; actual Fusion capture for the second-setup toolpath.",
+  "views": [
+    {
+      "source": "302_1.step",
+      "sha256": "9bc154266ec49fd90c096a5783ef489309ffa68b553355d894388686dcc7558d",
+      "camera": [
+        1,
+        -1,
+        1.35
+      ],
+      "asset": "src/assets/cases/feature-cam/setup-front.webp"
+    },
+    {
+      "source": "302_1.step",
+      "sha256": "9bc154266ec49fd90c096a5783ef489309ffa68b553355d894388686dcc7558d",
+      "camera": [
+        1,
+        1,
+        -1.35
+      ],
+      "asset": "src/assets/cases/feature-cam/setup-back.webp"
+    }
+  ],
+  "setups": [
+    {
+      "name": "Setup 1 +z",
+      "tool_axis": {
+        "x": "0.000000",
+        "y": "0.000000",
+        "z": "1.000000"
+      },
+      "setup_ref": "2e9774a9dbb77740bb288f91"
+    },
+    {
+      "name": "Setup 2 -z",
+      "tool_axis": {
+        "x": "0.000000",
+        "y": "0.000000",
+        "z": "-1.000000"
+      },
+      "setup_ref": "9c391f35fadb32f543dc545d"
+    }
+  ],
+  "payload": {
+    "source": "302_1-default-payload.json",
+    "sha256": "53f8a739be57e42506e862c133f6cd2e16248d04b88b5fc6b5b7e803372473e5"
+  },
+  "native": {
+    "source": "302_1/17-op20.png",
+    "sha256": "29093ad26183da167dab2c3375d6526956a8fdd785ea00f77a950b1c666fd3df",
+    "asset": "src/assets/cases/feature-cam/strategy-contour.webp"
+  }
+}

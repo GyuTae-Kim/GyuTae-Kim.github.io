@@ -168,13 +168,29 @@
     <section class="evidence-section" *ngFor="let evidence of selected!.evidence" [attr.aria-labelledby]="evidence.id">
       <h2 class="detail-title" [id]="evidence.id">{{ evidence.title }}</h2>
       <p class="showcase-intro"><app-partner-text [text]="evidence.introduction"></app-partner-text></p>
-      <div class="evidence-grid" [class.mdt-evidence]="evidence.id === 'mdt-visualization'">
-        <figure *ngFor="let figure of evidence.figures">
+      <div class="evidence-grid" [class.mdt-evidence]="evidence.id === 'mdt-visualization'" [class.strategy-evidence]="evidence.id === 'cam-strategy'">
+        <figure *ngFor="let figure of evidence.figures" [class.setup-change]="figure.setupViews">
           <h3>{{ figure.title }}</h3>
-          <button type="button" class="zoom-open" [attr.aria-label]="figure.title + ' 화면 크게 보기'" (click)="openZoom(figure.src, figure.alt)">
-            <img [src]="figure.src" [alt]="figure.alt" width="1200" height="1000" loading="lazy" />
-          </button>
-          <figcaption><span class="figure-kind">{{ kindLabels[figure.kind] }}</span>{{ figure.caption }}</figcaption>
+          <ng-container *ngIf="figure.setupViews as views; else evidenceImage">
+            <p class="setup-route" aria-label="가공 방향 전환 순서">
+              <strong>앞면 셋업 · +Z</strong><span aria-hidden="true">→</span><span class="setup-switch">부품 뒤집기 · 셋업 전환</span><span aria-hidden="true">→</span><strong>뒷면 셋업 · −Z</strong>
+            </p>
+            <div class="setup-views">
+              <div class="setup-view" *ngFor="let view of views">
+                <h4>{{ view.title }}</h4>
+                <button type="button" class="zoom-open" [attr.aria-label]="view.title + ' 그림 크게 보기'" (click)="openZoom(view.src, view.alt)">
+                  <img [src]="view.src" [alt]="view.alt" width="1200" height="1000" loading="lazy" />
+                </button>
+                <p><span class="figure-kind">{{ kindLabels[view.kind] }}</span>{{ view.caption }}</p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #evidenceImage>
+            <button type="button" class="zoom-open" [attr.aria-label]="figure.title + ' 화면 크게 보기'" (click)="openZoom(figure.src, figure.alt)">
+              <img [src]="figure.src" [alt]="figure.alt" width="1200" height="1000" loading="lazy" />
+            </button>
+          </ng-template>
+          <figcaption><span class="figure-kind" *ngIf="!figure.setupViews">{{ kindLabels[figure.kind] }}</span>{{ figure.caption }}</figcaption>
         </figure>
       </div>
     </section>
