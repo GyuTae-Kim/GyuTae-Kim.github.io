@@ -1,6 +1,7 @@
 import { CASE_STUDIES } from './portfolio-data';
 import { OTHER_PROJECTS } from './other-projects-data';
 import { OPENCAD_TOOLS } from './opencad-data';
+import { SITE_ARTICLES, SiteArticle } from './articles-data';
 
 export const SITE_URL = 'https://gyutae-kim.github.io';
 export const SITE_NAME = '김규태 · Sean Kim';
@@ -14,6 +15,7 @@ export interface SearchPage {
   imageAlt: string;
   kind: 'ProfilePage' | 'CollectionPage' | 'ContactPage' | 'WebPage';
   project?: { title: string; headline: string; tags: string[] };
+  article?: SiteArticle;
 }
 
 // Search copy describes the work and responsibility documented on each case page.
@@ -63,11 +65,20 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/opencad',
     title: 'OpenCAD 무료 캐드 뷰어·DWG·DXF 도구 | 김규태',
-    description: 'OpenCAD는 김규태가 만드는 무료 캐드 뷰어 프로젝트입니다. 설치·회원가입 없이 DWG·DXF 도면을 열고 측정·편집·저장하는 2D 웹 캐드를 사용해 보세요. STEP·SKP·NC 뷰어는 준비 중입니다.',
+    description: '김규태가 만드는 무료 오픈소스 캐드 뷰어 OpenCAD입니다. 설치·회원가입 없이 DWG·DXF 도면 열기·측정·편집·저장과 PDF 출력, NC·STEP·SKP 파일의 3D 보기를 지원합니다. 사용 안내와 지원 범위를 확인하세요.',
     image: 'assets/og/opencad.jpg',
     imageAlt: 'OpenCAD 표지. 브라우저에서 DWG·DXF 도면을 여는 2D 뷰어.',
     kind: 'CollectionPage',
   },
+  {
+    path: '/notes', title: 'AI·CAD/CAM·가구 제조 소프트웨어 개발 노트 | 김규태',
+    description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, 가구 설계·제조 데이터 개발에서 내린 판단과 검증 범위를 정리합니다.',
+    image: 'assets/og/portfolio.jpg', imageAlt: '김규태의 AI·CAD/CAM·제조 소프트웨어 개발 노트.', kind: 'CollectionPage',
+  },
+  ...SITE_ARTICLES.map((article): SearchPage => ({
+    path: article.path, title: `${article.title} | 김규태`, description: article.description,
+    image: article.image, imageAlt: article.imageAlt, kind: 'WebPage', article,
+  })),
   {
     path: '/contact',
     title: 'AI·CAD/CAM 개발자 채용·제조 기술 협업 | 김규태',
@@ -77,6 +88,11 @@ export const SEARCH_PAGES: SearchPage[] = [
     kind: 'ContactPage',
   },
 ];
+
+// Only aliases we actually publish are redirected. Unknown paths remain 404/noindex.
+export const SEARCH_ALIASES = SEARCH_PAGES.flatMap(({ path }) => path === '/'
+  ? [{ from: '/index.html', to: '/' }]
+  : [{ from: `${path}.html`, to: path }, { from: `${path}/index.html`, to: path }]);
 
 export function searchPage(url: string): SearchPage | undefined {
   const path = url.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
@@ -107,12 +123,15 @@ export function structuredData(page: SearchPage): object {
       ...(page.path === '/' ? { mainEntity: { '@id': personId } } : {}),
       ...(page.path !== '/' ? { breadcrumb: { '@id': `${url}#breadcrumb` } } : {}),
       ...(page.project ? { mainEntity: { '@id': `${url}#project` } } : {}),
+      ...(page.article ? { mainEntity: { '@id': `${url}#article` } } : {}),
     },
   ];
   if (page.path !== '/') {
     const crumbs = [{ name: '홈', item: `${SITE_URL}/` }];
     if (page.project) crumbs.push({ name: '프로젝트', item: `${SITE_URL}/portfolio` });
-    crumbs.push({ name: page.project?.title ?? page.title.split(' — ')[0], item: url });
+    if (page.article) crumbs.push(page.article.category === 'OpenCAD 사용 안내'
+      ? { name: 'OpenCAD', item: `${SITE_URL}/opencad` } : { name: '개발 노트', item: `${SITE_URL}/notes` });
+    crumbs.push({ name: page.project?.title ?? page.article?.title ?? page.title.split(' — ')[0], item: url });
     graph.push({
       '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`,
       itemListElement: crumbs.map((crumb, i) => ({ '@type': 'ListItem', position: i + 1, ...crumb })),
@@ -122,6 +141,17 @@ export function structuredData(page: SearchPage): object {
     '@type': 'CreativeWork', '@id': `${url}#project`, url, name: page.project.title,
     description: page.description, keywords: page.project.tags,
     author: { '@id': personId }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
+  });
+  if (page.article) graph.push({
+    '@type': 'TechArticle', '@id': `${url}#article`, headline: page.article.title,
+    description: page.description, url, inLanguage: 'ko', image: `${SITE_URL}/${page.image}`,
+    author: { '@id': personId }, mainEntityOfPage: { '@id': `${url}#webpage` },
+    articleSection: page.article.category,
+  });
+  if (page.path === '/notes') graph.push({
+    '@type': 'ItemList', '@id': `${url}#notes`, name: '제조 소프트웨어 개발 노트',
+    itemListElement: SITE_ARTICLES.filter((article) => article.category === '제조 소프트웨어 개발 노트')
+      .map((article, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE_URL + article.path, name: article.title })),
   });
   if (page.path === '/portfolio') graph.push({
     '@type': 'ItemList', '@id': `${url}#projects`, name: '개발 프로젝트',

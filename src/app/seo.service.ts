@@ -21,7 +21,7 @@ export class SeoService {
     this.meta.updateTag({ name: 'description', content: page.description });
     const image = `${SITE_URL}/${page.image}`;
     for (const [key, value] of Object.entries({
-      type: 'website', site_name: SITE_NAME, locale: 'ko_KR',
+      type: page.article ? 'article' : 'website', site_name: SITE_NAME, locale: 'ko_KR',
       title: page.title, description: page.description, url: SITE_URL + page.path,
       image, 'image:secure_url': image, 'image:type': SHARE_IMAGE.type,
       'image:width': String(SHARE_IMAGE.width), 'image:height': String(SHARE_IMAGE.height),

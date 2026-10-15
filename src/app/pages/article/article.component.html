@@ -1,0 +1,46 @@
+<div class="page-shell interior-page article-page">
+  <ng-container *ngIf="article as post; else archive">
+    <nav class="article-crumbs" aria-label="현재 위치">
+      <a routerLink="/">홈</a><span aria-hidden="true">/</span>
+      <a [routerLink]="post.category === 'OpenCAD 사용 안내' ? '/opencad' : '/notes'">{{ post.category }}</a>
+    </nav>
+    <article>
+      <header class="page-intro">
+        <p class="eyebrow">{{ post.category }} · 김규태 Sean Kim</p>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.lead }}</p>
+      </header>
+      <div class="article-actions" *ngIf="post.category === 'OpenCAD 사용 안내'">
+        <a class="button primary" href="https://gyutae-kim.github.io/2dcad-viewer/">무료 DWG·DXF 뷰어 열기<app-icon name="arrow-right"></app-icon></a>
+      </div>
+      <figure class="article-figure">
+        <img [src]="post.figure.src" [alt]="post.figure.alt" [width]="post.figure.width" [height]="post.figure.height" />
+        <figcaption>{{ post.figure.caption }}</figcaption>
+      </figure>
+      <nav class="article-contents" aria-label="글 목차">
+        <strong>이 글에서 확인할 내용</strong>
+        <ol><li *ngFor="let section of post.sections"><a [routerLink]="[]" [fragment]="section.id">{{ section.title }}</a></li></ol>
+      </nav>
+      <section class="article-section" *ngFor="let section of post.sections" [attr.aria-labelledby]="section.id">
+        <h2 [id]="section.id">{{ section.title }}</h2>
+        <p *ngFor="let text of section.paragraphs">{{ text }}</p>
+        <ol *ngIf="section.steps"><li *ngFor="let step of section.steps">{{ step }}</li></ol>
+        <ul *ngIf="section.points"><li *ngFor="let point of section.points">{{ point }}</li></ul>
+      </section>
+      <section class="article-section" *ngIf="post.sources?.length" aria-labelledby="article-sources">
+        <h2 id="article-sources">공개 구현과 사용 안내</h2>
+        <ul><li *ngFor="let source of post.sources"><a [href]="source.url" target="_blank" rel="noopener noreferrer">{{ source.label }}<app-icon name="external"></app-icon></a></li></ul>
+      </section>
+      <aside class="article-related" aria-labelledby="article-related">
+        <h2 id="article-related">함께 확인할 내용</h2>
+        <ul><li *ngFor="let link of post.related"><a [routerLink]="link.path">{{ link.label }}<app-icon name="arrow-right"></app-icon></a></li></ul>
+        <p>작성: <a routerLink="/">김규태 Sean Kim</a> · AI·CAD/CAM 소프트웨어 개발</p>
+      </aside>
+    </article>
+  </ng-container>
+  <ng-template #archive>
+    <header class="page-intro"><p class="eyebrow">김규태 Sean Kim</p><h1>제조 소프트웨어 개발 노트<span class="accent">.</span></h1><p>AI·CAD/CAM과 가구 제조 소프트웨어 개발에서 내린 판단을 정리합니다. 프로젝트별 역할과 검증 결과는 글에서 연결한 상세 사례에 있습니다.</p></header>
+    <div class="note-list"><article *ngFor="let note of notes"><p class="eyebrow">{{ note.category }}</p><h2><a [routerLink]="note.path">{{ note.title }}</a></h2><p>{{ note.description }}</p><a class="text-link" [routerLink]="note.path">글 읽기<app-icon name="arrow-right"></app-icon></a></article></div>
+    <aside class="article-related"><a routerLink="/portfolio">전체 개발 프로젝트 보기</a> · <a routerLink="/opencad">OpenCAD 사용 안내</a></aside>
+  </ng-template>
+</div>

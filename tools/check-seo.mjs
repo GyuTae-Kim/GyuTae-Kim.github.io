@@ -58,7 +58,7 @@ for (const page of SEARCH_PAGES) {
     ]) assert.equal(document.querySelector(selector).content, expected, file);
     const imageUrl = `${SITE_URL}/${page.image}`;
     const sharingTags = [
-      ['meta[property="og:type"]', 'website'],
+      ['meta[property="og:type"]', page.article ? 'article' : 'website'],
       ['meta[property="og:site_name"]', '김규태 · Sean Kim'],
       ['meta[property="og:title"]', page.title],
       ['meta[property="og:description"]', page.description],
@@ -100,6 +100,11 @@ for (const page of SEARCH_PAGES) {
     if (page.project) {
       assert.ok(root.textContent.includes(page.project.headline), `${file}: project content`);
       assert.ok(data['@graph'].some((node) => node['@type'] === 'CreativeWork'), file);
+    }
+    if (page.article) {
+      assert.ok(root.textContent.includes(page.article.lead), `${file}: article body`);
+      assert.ok(data['@graph'].some((node) => node['@type'] === 'TechArticle' && node.headline === page.article.title), `${file}: article structured data`);
+      for (const section of page.article.sections) assert.ok(document.getElementById(section.id), `${file}: article section ${section.id}`);
     }
     for (const anchor of root.querySelectorAll('a[href]')) {
       const link = new URL(anchor.href);

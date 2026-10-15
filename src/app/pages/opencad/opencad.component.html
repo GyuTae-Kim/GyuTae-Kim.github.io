@@ -9,6 +9,7 @@
       OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 뷰어 프로젝트입니다.
       공개된 2D 웹 캐드에서 설치나 회원가입 없이 DWG·DXF 도면을 확인하고, 치수를 재고,
       편집해 저장할 수 있습니다. 도면 파일은 서버로 보내지 않고 브라우저에서 처리합니다.
+      같은 뷰어에서 NC·STEP·SKP 파일도 3D 문서로 열어 볼 수 있습니다.
     </p>
   </div>
   <dl class="opencad-promise">
@@ -60,7 +61,7 @@
         </dl>
         <div class="tool-actions">
           <a class="button primary" [href]="tool.url" target="_blank" rel="noopener noreferrer"
-            >무료 DWG·DXF 뷰어 열기<app-icon name="external"></app-icon></a
+            >무료 캐드 뷰어 열기<app-icon name="external"></app-icon></a
           >
           <a
             *ngIf="tool.source"
@@ -75,7 +76,11 @@
     </article>
   </section>
 
-  <section class="opencad-section" aria-labelledby="opencad-planned-title">
+  <section class="opencad-section" aria-labelledby="opencad-guides-title">
+    <div class="section-title"><h2 id="opencad-guides-title">캐드 뷰어 사용 안내</h2></div>
+    <ul class="guide-list"><li *ngFor="let guide of guides"><h3><a [routerLink]="guide.path">{{ guide.title }}</a></h3><p>{{ guide.description }}</p></li></ul>
+  </section>
+  <section *ngIf="plannedTools.length" class="opencad-section" aria-labelledby="opencad-planned-title">
     <div class="section-title">
       <h2 id="opencad-planned-title">준비 중인 뷰어</h2>
     </div>

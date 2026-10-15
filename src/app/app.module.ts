@@ -8,6 +8,7 @@ import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
 import { OpenCadComponent } from './pages/opencad/opencad.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ArticleComponent } from './pages/article/article.component';
 
 import { AchievementsComponent } from './components/achievements/achievements.component';
 import { ModelViewportComponent } from './components/model-viewport/model-viewport.component';
@@ -22,6 +23,7 @@ import { IconComponent } from './components/icon/icon.component';
     BoardComponent,
     OpenCadComponent,
     NotFoundComponent,
+    ArticleComponent,
     AchievementsComponent,
     ModelViewportComponent,
     IconComponent,
