@@ -24,10 +24,11 @@ export class PortfolioComponent implements OnDestroy {
     part: '실제 엔진이 이 부품에 짜는 공정 순서와 공구로 그린 개념 모델입니다. 모델링, 특징 인식, 바이스 가공을 차례로 보여 줍니다.',
     furniture: '가구빌더 기본값과 엔진의 네스팅 결과로 그린 원룸 벽면 가구입니다. 설계, 제조, 조립과 설치를 차례로 보여 줍니다.',
   };
-  // Cases that were merged into a larger story keep their old addresses working.
+  // Projects that were merged or renamed keep their old addresses working.
   private readonly movedCases: Record<string, string> = {
     'fusion-cam': 'cad-feature-recognition',
     'sketchup-manufacturing': 'wedraw-pro',
+    'wedraw-order-operations': 'order-invoice-sync',
   };
   // Animated story images the reader has stopped; they show their still image instead.
   stopped = new Set<string>();
@@ -70,6 +71,10 @@ export class PortfolioComponent implements OnDestroy {
   get next(): CaseStudy {
     const i = this.cases.indexOf(this.selected!);
     return this.cases[(i + 1) % this.cases.length];
+  }
+  // Title of a project page, for links whose own text is only 「자세히」.
+  titleOf(id: string): string {
+    return [...this.cases, ...this.otherProjects].find((p) => p.id === id)?.title ?? '';
   }
   get nextOther(): OtherProject {
     const i = this.otherProjects.indexOf(this.other!);

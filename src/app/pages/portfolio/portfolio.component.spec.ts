@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 import { CASE_STUDIES } from '../../portfolio-data';
@@ -41,6 +41,34 @@ describe('PortfolioComponent', () => {
     expect(page.querySelector('.missing-note')).toBeNull();
     expect(page.querySelector('h1')!.textContent).toContain(OTHER_PROJECTS[0].title);
     expect(page.querySelector('.case-next strong')!.textContent).toContain(OTHER_PROJECTS[1].title);
+  });
+
+  it('lists the problems the monitoring caught, linking fixes told on another page', () => {
+    const page = open('service-monitoring');
+    const items = page.querySelectorAll('.caught-list li');
+    expect(items.length).toBe(OTHER_PROJECTS[0].caught!.length);
+    expect(page.querySelector('.caught-title b')!.textContent).toContain(`${items.length}건`);
+    expect(page.querySelector('.result-stats')!.textContent).toContain(`${items.length}건`);
+    expect(items[0].querySelector('time')!.getAttribute('datetime')).toBe(OTHER_PROJECTS[0].caught![0].date);
+    const link = page.querySelector('.caught-fixed a')!;
+    expect(link.getAttribute('href')).toBe('/portfolio/order-invoice-sync');
+    expect(link.getAttribute('aria-label')).toContain(OTHER_PROJECTS[1].title);
+  });
+
+  it('links every caught problem to a project that exists', () => {
+    const ids = [...CASE_STUDIES, ...OTHER_PROJECTS].map((p) => p.id);
+    for (const project of OTHER_PROJECTS) {
+      for (const item of project.caught ?? []) {
+        if (item.link) expect(ids).toContain(item.link);
+      }
+    }
+  });
+
+  it('sends the old invoice project address to its new page', () => {
+    const router = TestBed.inject(Router);
+    const navigate = spyOn(router, 'navigate').and.resolveTo(true);
+    expect(open('wedraw-order-operations').querySelector('.missing-note')).toBeNull();
+    expect(navigate).toHaveBeenCalledWith(['/portfolio', 'order-invoice-sync'], { replaceUrl: true });
   });
 
   it('draws one cell per monitored component and both error collectors', () => {
