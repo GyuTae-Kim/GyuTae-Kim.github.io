@@ -4,6 +4,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 import { CASE_STUDIES } from '../../portfolio-data';
+import { OTHER_PROJECTS } from '../../other-projects-data';
 import { PortfolioComponent } from './portfolio.component';
 
 describe('PortfolioComponent', () => {
@@ -26,14 +27,24 @@ describe('PortfolioComponent', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('lists the three projects and the other projects', () => {
+  it('lists the three projects and the other projects as rows that open their pages', () => {
     const page = open();
-    expect(page.querySelectorAll('.project-row').length).toBe(CASE_STUDIES.length);
-    expect(page.querySelectorAll('.other-project').length).toBeGreaterThan(0);
+    expect(page.querySelectorAll('.project-row').length).toBe(CASE_STUDIES.length + OTHER_PROJECTS.length);
+    const others = page.querySelectorAll('.other-projects .project-row');
+    expect(others.length).toBe(OTHER_PROJECTS.length);
+    expect(others[0].querySelector('h2 a')!.getAttribute('href')).toBe('/portfolio/' + OTHER_PROJECTS[0].id);
+    expect(page.querySelector('.watch-board')).toBeNull();
+  });
+
+  it('opens an other project on its own page', () => {
+    const page = open(OTHER_PROJECTS[0].id);
+    expect(page.querySelector('.missing-note')).toBeNull();
+    expect(page.querySelector('h1')!.textContent).toContain(OTHER_PROJECTS[0].title);
+    expect(page.querySelector('.case-next strong')!.textContent).toContain(OTHER_PROJECTS[1].title);
   });
 
   it('draws one cell per monitored component and both error collectors', () => {
-    const board = open().querySelector('#service-monitoring .watch-board')!;
+    const board = open('service-monitoring').querySelector('.watch-board')!;
     expect(board.querySelectorAll('.watch-cells i').length).toBe(13);
     expect(board.querySelector('.watch-head b')!.textContent).toContain('13곳');
     expect(board.querySelectorAll('.watch-collect li').length).toBe(2);
@@ -60,6 +71,6 @@ describe('PortfolioComponent', () => {
   it('says so when the project id does not exist', () => {
     const page = open('no-such-project');
     expect(page.querySelector('.missing-note')).not.toBeNull();
-    expect(page.querySelectorAll('.project-row').length).toBe(CASE_STUDIES.length);
+    expect(page.querySelectorAll('.project-row').length).toBe(CASE_STUDIES.length + OTHER_PROJECTS.length);
   });
 });

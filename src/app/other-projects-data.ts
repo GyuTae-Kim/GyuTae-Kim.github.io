@@ -1,9 +1,15 @@
-// Work outside the three main projects, shown under 「기타 프로젝트」 on /portfolio.
-// Same pattern as the main projects: numbers and one short line per piece of work up
-// front; problems and the remaining screens sit under 「자세히」.
+// Work outside the three main projects, listed under 「기타 프로젝트」 on /portfolio and
+// opened at /portfolio/<id>. Same pattern as the main projects: numbers and one short line
+// per piece of work up front; problems and the remaining screens sit under 「자세히」.
 export interface OtherProject {
   id: string;
+  // Numbered after the three main projects in the /portfolio list.
+  number: string;
   title: string;
+  // List row: one flow line, one result line, and the list thumbnail <thumb>-336/672.webp.
+  subtitle: string;
+  headline: string;
+  thumb: string;
   category: string;
   period: string;
   summary: string;
@@ -57,7 +63,11 @@ const SHOTS = 'assets/cases/operations/';
 export const OTHER_PROJECTS: OtherProject[] = [
   {
     id: 'service-monitoring',
+    number: '04',
     title: '서버부터 사용자 PC까지 장애를 잡아내는 감시 체계',
+    subtitle: '서버 13곳 감시 → 슬랙 경보와 정기 보고 → API 오류와 PC 앱 오류 수집 → 관리자 콘솔에서 원인 확인',
+    headline: '서버 장애와 사용자 PC의 오류를 한곳에서 찾습니다',
+    thumb: SHOTS + 'thumb-monitoring',
     category: '운영 자동화 · 서비스 안정성',
     period: '2026',
     summary:
@@ -195,11 +205,15 @@ export const OTHER_PROJECTS: OtherProject[] = [
   },
   {
     id: 'wedraw-order-operations',
+    number: '05',
     title: '송장 연동에서 반복되던 전송 오류 개선',
+    subtitle: '감시가 보낸 실패 알림 → 원인 분석 → 전송과 엑셀 업로드 처리 수정 → 회귀 테스트 32개',
+    headline: '6주 동안 매번 실패하던 송장 전체 전송을 고쳤습니다',
+    thumb: SHOTS + 'thumb-invoice',
     category: '웹 서비스 · 운영 문제 해결',
     period: '2026',
     summary:
-      '외부 쇼핑몰 연동에서 같은 송장이 두 번 전송되거나, 이미 등록된 주문을 계속 다시 보내 실패하던 문제를 고쳤습니다. 위의 감시 체계가 보낸 실패 알림을 따라가 원인을 찾았습니다.',
+      '외부 쇼핑몰 연동에서 같은 송장이 두 번 전송되거나, 이미 등록된 주문을 계속 다시 보내 실패하던 문제를 고쳤습니다. 서비스 감시 체계가 보낸 실패 알림을 따라가 원인을 찾았습니다.',
     stats: [
       { value: '2회 → 1회', label: '표기만 바뀐 송장의 전송 횟수' },
       { value: '2회 → 0회', label: '엑셀을 다시 올릴 때 대표 운송장 변경' },

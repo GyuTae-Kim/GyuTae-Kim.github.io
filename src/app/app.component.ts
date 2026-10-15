@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { CASE_STUDIES } from './portfolio-data';
+import { OTHER_PROJECTS } from './other-projects-data';
 import { siteUpdated } from './site-updated';
 @Component({
   selector: 'app-root',
@@ -24,7 +25,7 @@ export class AppComponent {
             : event.urlAfterRedirects.startsWith('/contact')
               ? '연락'
               : 'AI · 3D · CAD/CAM';
-        const caseStudy = CASE_STUDIES.find(
+        const caseStudy = [...CASE_STUDIES, ...OTHER_PROJECTS].find(
           (item) =>
             event.urlAfterRedirects.split('#')[0] === `/portfolio/${item.id}`,
         );
