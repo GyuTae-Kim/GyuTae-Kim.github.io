@@ -10,6 +10,7 @@ const { JSDOM } = require('jsdom');
 const titles = new Set();
 const descriptions = new Set();
 const paths = new Set(SEARCH_PAGES.map((page) => page.path));
+const verification = JSON.parse(readFileSync(new URL('./search-verification.json', import.meta.url), 'utf8'));
 const checkedImages = new Set();
 // Read JPEG frame dimensions from the actual deployed bytes, not the filename or tags.
 function jpegDimensions(bytes) {
@@ -36,6 +37,11 @@ for (const page of SEARCH_PAGES) {
     const dom = new JSDOM(raw.toString('utf8'), { url: SITE_URL + page.path });
     const document = dom.window.document;
     assert.equal(document.documentElement.lang, 'ko', file);
+    for (const [name, value] of Object.entries(verification)) {
+      const tags = document.querySelectorAll(`meta[name="${name}"]`);
+      assert.equal(tags.length, value ? 1 : 0, `${file}: verification tag count ${name}`);
+      if (value) assert.equal(tags[0].content, value, `${file}: verification token ${name}`);
+    }
     assert.equal(document.title, page.title, file);
     assert.equal(document.querySelectorAll('link[rel="canonical"]').length, 1, file);
     assert.equal(document.querySelector('link[rel="canonical"]').href, SITE_URL + page.path, file);
