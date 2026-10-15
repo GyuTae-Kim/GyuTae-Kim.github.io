@@ -1,12 +1,13 @@
 export interface CaseStudy {
   id: string;
   number: string;
-  // First-screen summary: one result line, the key judgement and a one-line scope.
+  // First-screen summary and the scope of the result.
   // The long problem/approach/validation text stays behind 「자세히」 on the case page.
   headline: string;
-  keyDecision: string;
+  keyDecision?: string;
+  outcome?: { result: string; impact: { title: string; text: string }[] };
   scopeLine: string;
-  // 2–3 numbers taken from the product screens and renders shown on the page.
+  // 2–3 summary figures backed by the implementation or source artifacts.
   stats: { value: string; label: string }[];
   // His contribution: one summary line (also on the /portfolio list), what he built, and
   // one note for the parts done by the team or a partner institution.
@@ -34,6 +35,12 @@ export interface CaseStudy {
   // The home viewer's concept model for this project, shown again on its page.
   concept?: 'part' | 'furniture';
   gallery?: { title: string; caption: string; legend: { label: string; color: string }[]; pairs: CaseFigure[][] };
+  recognition?: {
+    features: { name: string; description: string; color?: string }[];
+    note: string;
+    examples: (CaseFigure & { title: string; features: string })[];
+  };
+  evidence?: { id: string; title: string; introduction: string; figures: (CaseFigure & { title: string })[] }[];
 }
 
 // figure.kind: 'research' = rendered from the actual research data, 'product' = a real product
@@ -75,12 +82,18 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'cad-feature-recognition',
     number: '01',
     headline: '3D 모델에서 가공 특징을 찾아 Fusion CAM 공정을 자동으로 만듭니다',
-    keyDecision:
-      '평균 지표가 좋아져도 부품 계열별 오류가 늘어난 인식 후보는 채택하지 않았습니다.',
+    outcome: {
+      result: '3D CAD의 형상을 읽는 AI, 학습용 라벨링 도구, 가공 전략 설계 엔진, Fusion CAM 연동과 디지털 트윈 결과 시각화를 하나의 흐름으로 연결했습니다. 모델을 받아 가공 특징을 식별하고, 공정을 생성한 뒤 시뮬레이션 결과를 살펴볼 수 있는 제조 소프트웨어를 만들었습니다.',
+      impact: [
+        { title: '반복 작업을 줄이는 공정 설계', text: '면과 홀을 하나씩 선택하고 공정을 설정하는 반복 작업을 줄여, 숙련자가 공구 선택과 가공 조건 검토에 더 집중할 수 있을 것으로 기대합니다.' },
+        { title: '제조 지식에 대한 접근성', text: '숙련자의 형상 해석과 공정 설계 절차를 소프트웨어로 축적해, CAM 경험이 적은 작업자와 소규모 제조 현장의 기술 활용을 도울 수 있습니다.' },
+        { title: '가상 검증을 통한 자원 절약', text: '실제 가공 전에 절삭 부하와 설계 대비 편차를 살펴보는 흐름은 시행착오로 소모되는 소재·공구·시간을 줄이는 기반이 될 수 있습니다.' },
+      ],
+    },
     scopeLine: '검증은 Fusion·MDT 시뮬레이션까지 · 실제 가공 품질 승인 아님',
     stats: [
-      { value: '22개', label: '부품 하나에 자동 생성한 공정' },
-      { value: '±0.15 mm', label: '과삭 허용 오차 · MDT 시뮬레이션에서 초과 없음' },
+      { value: '9종', label: '식별하는 가공 피쳐 · 스톡 포함' },
+      { value: '±0.15 mm', label: '설계 대비 공차 · MDT 예시의 과삭 판정 기준' },
       { value: '1건', label: '라벨링 프로그램 등록 신청 접수' },
     ],
     role: '형상 분석부터 가공 전략 설계와 Fusion 적용까지 직접 연구개발했습니다.',
@@ -88,7 +101,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       '3D 모델 형상 분석과 그래프 입력',
       '가공 특징 인식 AI와 학습용 라벨링 프로그램',
       '가공 전략 설계와 Fusion CAM 공정 생성',
-      'MDT로 넘기는 데이터와 결과 확인 화면',
+      'MDT 데이터 연동과 절삭 부하·가공 결과 3D 시각화',
     ],
     roleNote: '디지털 트윈(MDT) 시뮬레이션은 협력 기관이 맡았습니다.',
     fixes: [
@@ -111,6 +124,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       '평균 지표, 클래스별 오류, 전부 맞은 부품 수',
       'Fusion 자동 회귀 테스트 (적용, 공구 변경, 오류 복구)',
       '소재 시뮬레이션과 기준 STEP 비교',
+      'MDT 결과의 절삭력·칩 두께 그래프와 설계 대비 3D 비교',
     ],
     unchecked: [
       '새 부품으로 한 독립 평가',
@@ -134,15 +148,15 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: 'AI 가공 특징 인식',
-        text: '면마다 기하 정보를 벡터로 바꿔 그래프 신경망에 넣고, 포켓·구멍·필렛 같은 가공 특징을 찾습니다.',
+        text: '그래프 신경망의 면 분류와 형상 조합 분석으로 스톡·홀·포켓·챔퍼·필렛 등 9종의 가공 피쳐를 식별합니다.',
         did: [
           '학습 데이터를 만드는 라벨링 프로그램',
           '형상 계열 기준 데이터 분할',
           '포켓, 필렛, 챔퍼가 헷갈리는 합성 형상',
           '입력, 증강, 라벨 변경별 영향 비교',
         ],
-        image: 'assets/cases/feature-cam/step2.webp',
-        imageAlt: '합성 부품 네 개의 면을 가공 특징별로 색칠한 렌더. 포켓·구멍은 파랑, 필렛은 주황, 챔퍼는 보라입니다.',
+        image: 'assets/cases/feature-cam/examples/base-plate.webp',
+        imageAlt: '여러 홀과 포켓이 있는 베이스 플레이트 학습 모델. 면의 가공 피쳐 라벨을 색상으로 구분했습니다.',
       },
       {
         title: '가공 전략 설계',
@@ -154,16 +168,16 @@ export const CASE_STUDIES: CaseStudy[] = [
           'Fusion API로 셋업과 공정 생성',
           '공구를 바꾸거나 적용이 실패해도 기존 작업 유지',
         ],
-        image: 'assets/cases/feature-cam/step3.webp',
-        imageAlt: '22개 공정 중 외곽 황삭, 드릴, 개방 포켓, 윤곽 정삭 단계의 Fusion 소재 시뮬레이션',
+        image: 'assets/cases/feature-cam/strategy-pocket.webp',
+        imageAlt: 'Fusion의 내부 다단 포켓 황삭. 가운데 보스를 남기면서 주변 소재를 제거하는 공구 경로입니다.',
       },
       {
         title: '디지털 트윈 검증',
-        text: '설계한 공정을 협력 기관의 디지털 트윈(MDT)에 넘겨 절삭력과 가공 결과를 시뮬레이션으로 검증합니다.',
-        did: ['MDT로 넘기는 데이터와 사전 검사', '절삭력, 설계 대비 편차를 보는 화면'],
+        text: '협력 기관의 MDT 시뮬레이션 결과를 연동해 절삭력·칩 두께를 그래프로 살펴보고, 가공 결과와 설계 모델의 차이를 3D로 확인합니다.',
+        did: ['MDT로 넘기는 데이터와 사전 검사', '공정·NC 구간별 절삭력과 칩 두께 그래프', '최댓값·평균·P95와 해당 시점의 공구·이송·회전수 확인', '가공 결과의 설계 대비 편차·가공면 파상도·형상 오차 시각화'],
         didNote: '시뮬레이션은 협력 기관이 맡았습니다.',
         image: 'assets/cases/feature-cam/step4.webp',
-        imageAlt: 'MDT 결과로 그린 설계 대비 편차 3D 지도. ±0.15 mm를 넘는 과삭이 없습니다.',
+        imageAlt: 'MDT 가공 결과와 설계 모델의 3D 비교. 공차를 기준으로 설계면과 남은 소재를 구분합니다.',
       },
     ],
     diagramLabels: ['형상 분석', 'AI 특징 인식', '가공 전략', 'MDT 검증'],
@@ -171,8 +185,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     concept: 'part',
     figure: {
       src: 'assets/cases/feature-cam/hero.webp',
-      alt: 'Fusion 소재 시뮬레이션. 자동으로 만든 공정으로 302 변형 부품을 깎은 결과가 모두 허용 오차 안(초록)에 있습니다.',
-      caption: '자동으로 만든 공정으로 표준시편(302 변형)을 깎은 Fusion 소재 시뮬레이션. 초록은 허용 오차 안입니다.',
+      alt: 'Fusion 소재 시뮬레이션. 자동 생성한 공정으로 가공한 302 변형 부품을 공차 기준 색상으로 표시한 화면입니다.',
+      caption: '자동 생성한 공정으로 표준시편(302 변형)을 가공한 Fusion 소재 시뮬레이션. 초록은 공차 이내의 영역입니다.',
       kind: 'product',
     },
     gallery: {
@@ -200,6 +214,49 @@ export const CASE_STUDIES: CaseStudy[] = [
         ],
       ],
     },
+    recognition: {
+      features: [
+        { name: '스톡', description: '소재·기준 형상', color: '#bcc8ce' },
+        { name: '블라인드홀', description: '바닥이 막힌 홀', color: '#7c62b5' },
+        { name: '쓰루홀', description: '부품을 관통하는 홀', color: '#287abb' },
+        { name: '오픈포켓', description: '측면으로 열린 포켓', color: '#168f8b' },
+        { name: '클로즈포켓', description: '둘레가 닫힌 포켓', color: '#d49a32' },
+        { name: '챔퍼', description: '모서리의 모따기', color: '#da6e58' },
+        { name: '필렛', description: '둥글게 연결한 모서리', color: '#c84e86' },
+        { name: '카운터보어', description: '단차가 있는 원통형 홀' },
+        { name: '카운터싱크', description: '입구가 원뿔형인 홀' },
+      ],
+      note: 'AI가 면 단위로 기본 7종을 분류하고, 홀·단차·챔퍼의 형상 조합을 분석해 카운터보어와 카운터싱크를 식별합니다. 아래는 실제 학습용 STEP 모델 6개를 정답 라벨로 색칠한 예시입니다.',
+      examples: [
+        { title: '복합 베이스 플레이트', src: 'assets/cases/feature-cam/examples/base-plate.webp', alt: '다수의 홀과 개방·폐쇄 포켓을 함께 가진 베이스 플레이트의 학습 라벨', caption: '기본 라벨 6종 · 177개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 스톡', kind: 'research' },
+        { title: '삼각 리브 부품', src: 'assets/cases/feature-cam/examples/triangle-rib.webp', alt: '홀·포켓·챔퍼·필렛을 구분한 삼각 리브 부품의 학습 라벨', caption: '기본 라벨 7종 · 139개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 필렛 · 스톡', kind: 'research' },
+        { title: '회전축 하우징', src: 'assets/cases/feature-cam/examples/rotary-housing.webp', alt: '원통형 중심부와 다수의 홀을 가진 회전축 하우징의 학습 라벨', caption: '기본 라벨 6종 · 78개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 필렛 · 스톡', kind: 'research' },
+        { title: '베드 플레이트', src: 'assets/cases/feature-cam/examples/bed-plate.webp', alt: '홀·포켓과 모서리 필렛이 함께 있는 베드 플레이트의 학습 라벨', caption: '기본 라벨 7종 · 74개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 필렛 · 스톡', kind: 'research' },
+        { title: '테일 고정 블록', src: 'assets/cases/feature-cam/examples/tail-block.webp', alt: '열린 포켓의 바닥 필렛과 홀을 구분한 테일 고정 블록의 학습 라벨', caption: '기본 라벨 7종 · 58개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 필렛 · 스톡', kind: 'research' },
+        { title: 'Z축 홀더', src: 'assets/cases/feature-cam/examples/z-holder.webp', alt: '여러 방향의 홀과 포켓이 결합된 Z축 홀더의 학습 라벨', caption: '기본 라벨 6종 · 87개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 스톡', kind: 'research' },
+      ],
+    },
+    evidence: [
+      {
+        id: 'cam-strategy', title: '인식한 피쳐가 실제 공정이 되는 과정',
+        introduction: '같은 부품의 Fusion CAM 화면입니다. 형상과 가공 목적에 따라 황삭·드릴링·포켓·윤곽 경로를 나누어 생성합니다. 파란 선은 절삭 경로, 노란 선은 경로 사이의 연결·이동을 나타냅니다.',
+        figures: [
+          { title: '1 · 외곽 소재 황삭', src: 'assets/cases/feature-cam/strategy-stock.webp', alt: '부품 바깥쪽 소재를 층별로 제거하는 Fusion 외곽 황삭 경로', caption: '부품 외곽에 남은 소재를 여러 깊이로 나누어 제거합니다.', kind: 'product' },
+          { title: '2 · 홀 드릴링', src: 'assets/cases/feature-cam/strategy-drill.webp', alt: '네 개 홀 위치에 생성된 Fusion 드릴링 경로', caption: '홀의 위치와 깊이에 맞춰 드릴을 선택하고 축 방향의 가공 경로를 만듭니다.', kind: 'product' },
+          { title: '3 · 내부 다단 포켓 황삭', src: 'assets/cases/feature-cam/strategy-pocket.webp', alt: '중앙 보스를 남기고 주변의 여러 높이 포켓을 가공하는 Fusion 경로', caption: '중앙의 원통 보스는 남기고 주변 포켓의 소재를 제거합니다. 촘촘한 파란 선은 깊이별로 반복하는 절삭 경로입니다.', kind: 'product' },
+          { title: '4 · 외곽 윤곽 정삭', src: 'assets/cases/feature-cam/strategy-contour.webp', alt: '부품 바깥 벽면의 최종 윤곽을 따라가는 Fusion 정삭 경로', caption: '황삭 뒤 외곽 벽면을 최종 형상에 맞춰 다듬습니다. 부품 둘레를 따라가는 경로가 가공 대상을 보여줍니다.', kind: 'product' },
+        ],
+      },
+      {
+        id: 'mdt-visualization', title: '숫자와 3D로 살펴보는 디지털 트윈 결과',
+        introduction: '공정별 절삭 부하를 시간축으로 보고, 시뮬레이션으로 가공된 소재를 설계 모델과 겹쳐 확인하는 결과 뷰어를 개발했습니다. 아래 화면은 보관된 MDT 분석 결과를 불러온 예시입니다.',
+        figures: [
+          { title: '절삭력·칩 두께와 NC 구간', src: 'assets/cases/feature-cam/mdt-force.webp', alt: 'NC 구간별 최대 절삭력과 칩 두께, 평균·P95 통계, 시간별 절삭력 그래프가 있는 MDT 결과 뷰어', caption: '가공 구간을 선택해 절삭력·칩 두께를 비교하고, 최댓값 시점의 NC 블록·공구·이송·회전수를 함께 살펴봅니다.', kind: 'product' },
+          { title: '가공 형상과 설계 대비 편차', src: 'assets/cases/feature-cam/mdt-surface.webp', alt: '설계 모델과 MDT 가공 결과를 겹쳐 설계면과 남은 소재를 색상으로 구분하는 3D 화면', caption: '3D 회전·확대와 방향 전환으로 가공 결과를 살펴봅니다. 공차 기준 색상과 영역 비율로 설계면·남은 소재·과삭 표시를 구분합니다.', kind: 'product' },
+          { title: '가공면 파상도·형상 오차 맵', src: 'assets/cases/feature-cam/mdt-finish.webp', alt: 'MDT 가공면 파상도 맵과 색상별 면적 비율, 최대 위치 보기 기능', caption: '해당 출력을 포함한 분석에서는 가공면 파상도와 형상 오차를 색상 맵으로 확인합니다. 실제 측정 조도와 구분해 표시합니다.', kind: 'product' },
+        ],
+      },
+    ],
   },
   {
     id: 'panel-classification',

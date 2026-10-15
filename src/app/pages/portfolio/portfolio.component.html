@@ -136,11 +136,57 @@
           </dd>
         </div>
         <div>
-          <dt>핵심 판단</dt>
-          <dd>{{ selected!.keyDecision }}</dd>
+          <dt>{{ selected!.outcome ? '만들어낸 결과' : '핵심 판단' }}</dt>
+          <dd>{{ selected!.outcome?.result ?? selected!.keyDecision }}</dd>
         </div>
       </dl>
       <p class="result-scope">{{ selected!.scopeLine }}</p>
+    </section>
+    <section class="recognition-showcase" *ngIf="selected!.recognition as recognition" aria-labelledby="recognition-title">
+      <h2 class="detail-title" id="recognition-title"><span>AI</span>식별하는 가공 피쳐 {{ recognition.features.length }}종</h2>
+      <ul class="feature-catalog" aria-label="지원 가공 피쳐">
+        <li *ngFor="let feature of recognition.features">
+          <i *ngIf="feature.color" [style.background]="feature.color" aria-hidden="true"></i>
+          <strong>{{ feature.name }}</strong><span>{{ feature.description }}</span>
+        </li>
+      </ul>
+      <p class="showcase-intro">{{ recognition.note }}</p>
+      <div class="training-examples">
+        <figure *ngFor="let example of recognition.examples">
+          <button type="button" class="zoom-open" [attr.aria-label]="example.title + ' 학습 모델 크게 보기'" (click)="openZoom(example.src, example.alt)">
+            <img [src]="example.src" [alt]="example.alt" width="960" height="720" loading="lazy" />
+          </button>
+          <figcaption>
+            <h3>{{ example.title }}</h3>
+            <p class="example-count">{{ example.caption }}</p>
+            <p>{{ example.features }}</p>
+          </figcaption>
+        </figure>
+      </div>
+      <p class="showcase-note">색상은 위 목록의 기본 피쳐와 같습니다. 학습에 사용한 형상과 라벨을 보여주는 자료이며, 새로운 부품에 대한 예측 정확도를 나타내지는 않습니다.</p>
+    </section>
+    <section class="evidence-section" *ngFor="let evidence of selected!.evidence" [attr.aria-labelledby]="evidence.id">
+      <h2 class="detail-title" [id]="evidence.id">{{ evidence.title }}</h2>
+      <p class="showcase-intro">{{ evidence.introduction }}</p>
+      <div class="evidence-grid" [class.mdt-evidence]="evidence.id === 'mdt-visualization'">
+        <figure *ngFor="let figure of evidence.figures">
+          <h3>{{ figure.title }}</h3>
+          <button type="button" class="zoom-open" [attr.aria-label]="figure.title + ' 화면 크게 보기'" (click)="openZoom(figure.src, figure.alt)">
+            <img [src]="figure.src" [alt]="figure.alt" width="1200" height="1000" loading="lazy" />
+          </button>
+          <figcaption><span class="figure-kind">{{ kindLabels[figure.kind] }}</span>{{ figure.caption }}</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="case-impact" *ngIf="selected!.outcome as outcome" aria-labelledby="impact-title">
+      <h2 class="detail-title" id="impact-title">이 기술로 기대하는 변화</h2>
+      <div class="impact-grid">
+        <article *ngFor="let item of outcome.impact">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.text }}</p>
+        </article>
+      </div>
+      <p class="showcase-note">위 내용은 기술 활용에 대한 기대 효과입니다. 현장 도입에 따른 시간·비용 절감량은 별도 실증이 필요합니다.</p>
     </section>
     <section class="case-concept" *ngIf="selected!.concept as concept" aria-labelledby="case-concept-title">
       <h2 class="detail-title" id="case-concept-title"><span>3D</span>개념 모델로 보는 과정</h2>
