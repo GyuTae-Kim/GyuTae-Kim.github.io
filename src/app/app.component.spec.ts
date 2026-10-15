@@ -15,6 +15,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const menu = (fixture.nativeElement as HTMLElement).querySelectorAll('nav[aria-label="주요 메뉴"] a');
-    expect(Array.from(menu).map((a) => a.textContent?.trim())).toEqual(['프로젝트', '연구', '연락']);
+    expect(Array.from(menu).map((a) => a.textContent?.trim())).toEqual(['프로젝트', '연구', '오픈캐드', '연락']);
   });
 });
