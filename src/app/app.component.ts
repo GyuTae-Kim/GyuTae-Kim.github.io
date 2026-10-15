@@ -15,16 +15,18 @@ export class AppComponent {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const path = event.urlAfterRedirects.split(/[?#]/)[0];
-        const known = path === '/' || /^\/(research|portfolio|contact)(\/|$)/.test(path);
+        const known = path === '/' || /^\/(research|portfolio|opencad|contact)(\/|$)/.test(path);
         const section = !known
           ? '없는 페이지'
           : event.urlAfterRedirects.startsWith('/research')
           ? '연구'
           : event.urlAfterRedirects.startsWith('/portfolio')
             ? '프로젝트'
-            : event.urlAfterRedirects.startsWith('/contact')
-              ? '연락'
-              : 'AI · 3D · CAD/CAM';
+            : event.urlAfterRedirects.startsWith('/opencad')
+              ? '오픈캐드'
+              : event.urlAfterRedirects.startsWith('/contact')
+                ? '연락'
+                : 'AI · 3D · CAD/CAM';
         const caseStudy = [...CASE_STUDIES, ...OTHER_PROJECTS].find(
           (item) =>
             event.urlAfterRedirects.split('#')[0] === `/portfolio/${item.id}`,

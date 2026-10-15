@@ -1,0 +1,103 @@
+<div class="page-shell interior-page opencad-page">
+  <div class="page-intro">
+    <p class="eyebrow">OpenCAD · 개인 프로젝트</p>
+    <h1>
+      CAD 파일을 프로그램 없이<br class="desktop-break" />
+      브라우저에서 엽니다<span class="accent">.</span>
+    </h1>
+    <p>
+      CAD 파일은 대부분 그 파일을 만든 프로그램에 묶여 있어서, 프로그램을 사지 않으면 도면 한 장
+      열어 보기도 어렵습니다. OpenCAD는 설치도 서버도 없이 브라우저에서 CAD 파일을 여는 도구를
+      만드는 개인 프로젝트입니다.
+    </p>
+  </div>
+  <dl class="opencad-promise">
+    <div>
+      <dt>설치</dt>
+      <dd>주소를 열면 바로 씁니다.</dd>
+    </div>
+    <div>
+      <dt>파일</dt>
+      <dd>서버로 보내지 않고 브라우저 안에서 읽습니다.</dd>
+    </div>
+    <div>
+      <dt>비용</dt>
+      <dd>무료이고, 코드를 MIT 라이선스로 공개합니다.</dd>
+    </div>
+  </dl>
+
+  <section class="opencad-section" aria-labelledby="opencad-live-title">
+    <div class="section-title">
+      <h2 id="opencad-live-title">지금 쓸 수 있는 뷰어</h2>
+    </div>
+    <article class="tool-card" *ngFor="let tool of liveTools" [attr.aria-labelledby]="tool.id">
+      <figure class="tool-shot" *ngIf="tool.figure">
+        <img
+          [src]="tool.figure.base + '-1440.webp'"
+          [attr.srcset]="srcset(tool.figure.base)"
+          sizes="(max-width: 1000px) 100vw, 640px"
+          [alt]="tool.figure.alt"
+          width="1440"
+          height="900"
+          fetchpriority="high"
+        />
+        <figcaption>
+          <span class="figure-kind">실제 화면</span>{{ tool.figure.caption }}
+        </figcaption>
+      </figure>
+      <div class="tool-body">
+        <p class="tool-meta"><span class="tool-status live">공개</span>{{ tool.kind }}</p>
+        <h3 [id]="tool.id">{{ tool.name }}</h3>
+        <p class="tool-ext">
+          <code *ngFor="let ext of tool.extensions">{{ ext }}</code>
+        </p>
+        <p class="tool-summary">{{ tool.summary }}</p>
+        <dl class="tool-features">
+          <div *ngFor="let feature of tool.features">
+            <dt>{{ feature.label }}</dt>
+            <dd>{{ feature.text }}</dd>
+          </div>
+        </dl>
+        <div class="tool-actions">
+          <a class="button primary" [href]="tool.url" target="_blank" rel="noopener noreferrer"
+            >뷰어 열기<app-icon name="external"></app-icon></a
+          >
+          <a
+            *ngIf="tool.source"
+            class="button outline"
+            [href]="tool.source"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><app-icon name="github"></app-icon>소스 코드</a
+          >
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="opencad-section" aria-labelledby="opencad-planned-title">
+    <div class="section-title">
+      <h2 id="opencad-planned-title">준비 중인 뷰어</h2>
+    </div>
+    <p class="section-lead">
+      다른 형식도 같은 방식으로, 서버 없이 브라우저 안에서 여는 뷰어를 차례로 만들 계획입니다.
+    </p>
+    <ul class="tool-plans">
+      <li class="plan-card" *ngFor="let tool of plannedTools">
+        <p class="tool-meta"><span class="tool-status">준비 중</span>{{ tool.kind }}</p>
+        <h3>{{ tool.name }}</h3>
+        <p class="tool-ext">
+          <code *ngFor="let ext of tool.extensions">{{ ext }}</code>
+        </p>
+        <p class="plan-summary">{{ tool.summary }}</p>
+      </li>
+    </ul>
+  </section>
+
+  <aside class="end-note">
+    열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면
+    <a href="https://github.com/GyuTae-Kim/2dcad-viewer/issues" target="_blank" rel="noopener noreferrer"
+      >GitHub 이슈</a
+    >나 <a routerLink="/contact">메일</a>로 알려 주세요.
+  </aside>
+</div>

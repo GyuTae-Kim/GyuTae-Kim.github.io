@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
+import { OpenCadComponent } from './pages/opencad/opencad.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'portfolio/:id', component: PortfolioComponent },
   { path: 'research', component: BoardComponent },
+  { path: 'opencad', component: OpenCadComponent },
   { path: 'blog', redirectTo: 'research', pathMatch: 'full' },
   { path: 'blog/:post', redirectTo: 'research' },
   { path: '**', component: NotFoundComponent },
