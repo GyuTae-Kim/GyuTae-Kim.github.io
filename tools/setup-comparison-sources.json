@@ -2,8 +2,8 @@
   "description": "Neutral STEP renders for +Z/-Z setup comparison; actual Fusion capture for the second-setup toolpath.",
   "views": [
     {
-      "source": "302_1-source.step",
-      "sha256": "0ca49b6ca8cd91ed02bc7b4a57a7e0f308446f35c208f04114e2e457ba6e0132",
+      "source": "302_1.step",
+      "sha256": "9bc154266ec49fd90c096a5783ef489309ffa68b553355d894388686dcc7558d",
       "camera": [
         1,
         -1,
@@ -12,8 +12,8 @@
       "asset": "src/assets/cases/feature-cam/setup-front.webp"
     },
     {
-      "source": "302_1-source.step",
-      "sha256": "0ca49b6ca8cd91ed02bc7b4a57a7e0f308446f35c208f04114e2e457ba6e0132",
+      "source": "302_1.step",
+      "sha256": "9bc154266ec49fd90c096a5783ef489309ffa68b553355d894388686dcc7558d",
       "camera": [
         1,
         1,
