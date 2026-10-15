@@ -1,54 +1,101 @@
 {
-  "description": "Neutral STEP renders for +Z/-Z setup comparison; actual Fusion capture for the second-setup toolpath.",
+  "description": "Actual Autodesk Fusion CAM viewport captures of the +Z front setup and -Z reverse setup. WebP encoding is lossless; no synthetic rendering or image compositing.",
+  "capture_method": "Application.activeViewport.saveAsImageFile(path, 1200, 1000)",
+  "fusion_version": "2705.1.15",
+  "source_archive": {
+    "file": "302_1-default-candidate.f3d",
+    "sha256": "ff8a3a6e284fa7342155f34f47ab33066028d1d7311f4a29e1a11e485694e165"
+  },
+  "capture_script_sha256": "bcaf8e57e8876ae35527a1289abb5fdda4aea94511da63c7854bdf6ceb3dab7e",
+  "captured_at": 1792087057.225775,
+  "framing": "Orthographic camera; fit model then increase view extents by 1.2. Reverse setup uses negative model Z as camera up.",
   "views": [
     {
-      "source": "302_1.step",
-      "sha256": "9bc154266ec49fd90c096a5783ef489309ffa68b553355d894388686dcc7558d",
-      "camera": [
-        1,
-        -1,
-        1.35
+      "image": "fusion-front.png",
+      "sha256": "08001dd8b36dab74603aac905c8c2207cebe5d95822d6fd62631b86a194da470",
+      "operation_id": 75,
+      "operation": "[황삭] 내부 다단 포켓 (3개 영역) #00e9cc1e (2)",
+      "strategy": "pocket2d",
+      "setup_axis": "+Z",
+      "has_toolpath": true,
+      "valid": true,
+      "generating": false,
+      "has_error": false,
+      "eye": [
+        17.508217443398912,
+        -17.508217443398912,
+        18.508217444995168
       ],
-      "asset": "src/assets/cases/feature-cam/setup-front.webp"
+      "target": [
+        0.0,
+        8.881784197001252e-16,
+        1.0000000015962571
+      ],
+      "up": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "asset": "src/assets/cases/feature-cam/setup-front-cam.webp",
+      "asset_sha256": "066eaf964f2e0d886b2b927846faf44c404567347df177e43b137f517c439ee8"
     },
     {
-      "source": "302_1.step",
-      "sha256": "9bc154266ec49fd90c096a5783ef489309ffa68b553355d894388686dcc7558d",
-      "camera": [
-        1,
-        1,
-        -1.35
+      "image": "fusion-back-face.png",
+      "sha256": "9567fe9259c90b73d47358b918866b4db581cf132ee08ecd4a653b913ea8928c",
+      "operation_id": 83,
+      "operation": "[황삭] 상면 #be28712e (2)",
+      "strategy": "face",
+      "setup_axis": "-Z",
+      "has_toolpath": true,
+      "valid": true,
+      "generating": false,
+      "has_error": false,
+      "eye": [
+        17.508217443398912,
+        -17.508217443398912,
+        -16.508217441802657
       ],
-      "asset": "src/assets/cases/feature-cam/setup-back.webp"
-    }
-  ],
-  "setups": [
-    {
-      "name": "Setup 1 +z",
-      "tool_axis": {
-        "x": "0.000000",
-        "y": "0.000000",
-        "z": "1.000000"
-      },
-      "setup_ref": "2e9774a9dbb77740bb288f91"
+      "target": [
+        0.0,
+        8.881784197001252e-16,
+        1.0000000015962571
+      ],
+      "up": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "asset": "src/assets/cases/feature-cam/setup-back-face-cam.webp",
+      "asset_sha256": "0679ae1fea31534c3120611d5dfc55704986d41721427ee5b57628a903dd902f"
     },
     {
-      "name": "Setup 2 -z",
-      "tool_axis": {
-        "x": "0.000000",
-        "y": "0.000000",
-        "z": "-1.000000"
-      },
-      "setup_ref": "9c391f35fadb32f543dc545d"
+      "image": "fusion-back-contour.png",
+      "sha256": "fb451d67deae7373fb42118211f6caac676b8d7ac16b800d87a74ed026a69e7d",
+      "operation_id": 85,
+      "operation": "[정삭] 외곽 윤곽 #7cbe9ab5 (2)",
+      "strategy": "contour2d",
+      "setup_axis": "-Z",
+      "has_toolpath": true,
+      "valid": true,
+      "generating": false,
+      "has_error": false,
+      "eye": [
+        17.508217443398912,
+        -17.508217443398912,
+        -16.508217441802657
+      ],
+      "target": [
+        0.0,
+        8.881784197001252e-16,
+        1.0000000015962571
+      ],
+      "up": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "asset": "src/assets/cases/feature-cam/setup-back-contour-cam.webp",
+      "asset_sha256": "dccb5fc27b1085cd1fb063ff1463be23e7820dfe4a0e558354b8652ab9127486"
     }
-  ],
-  "payload": {
-    "source": "302_1-default-payload.json",
-    "sha256": "53f8a739be57e42506e862c133f6cd2e16248d04b88b5fc6b5b7e803372473e5"
-  },
-  "native": {
-    "source": "302_1/17-op20.png",
-    "sha256": "29093ad26183da167dab2c3375d6526956a8fdd785ea00f77a950b1c666fd3df",
-    "asset": "src/assets/cases/feature-cam/strategy-contour.webp"
-  }
+  ]
 }

@@ -251,14 +251,14 @@ export const CASE_STUDIES: CaseStudy[] = [
           { title: '3 · 내부 다단 포켓 황삭', src: 'assets/cases/feature-cam/strategy-pocket.webp', alt: '중앙 보스를 남기고 주변의 여러 높이 포켓을 가공하는 Fusion 경로', caption: '중앙의 원통 보스는 남기고 주변 포켓의 소재를 제거합니다. 촘촘한 파란 선은 깊이별로 반복하는 절삭 경로입니다.', kind: 'product' },
           {
             title: '4 · 가공 방향 전환 후 뒷면 가공',
-            src: 'assets/cases/feature-cam/strategy-contour.webp',
+            src: 'assets/cases/feature-cam/setup-back-contour-cam.webp',
             alt: '두 번째 셋업에서 반대면의 외곽을 정삭하는 Fusion 공구 경로',
             caption: '앞면의 홀·포켓 가공을 마치면 부품을 뒤집어 고정하는 다음 셋업으로 전환합니다. 모델 좌표계 기준 공구 접근 방향을 +Z에서 −Z로 바꾸고, 뒷면 상면 황삭 → 외곽 황삭 → 윤곽 정삭을 이어갑니다.',
             kind: 'product',
             setupViews: [
-              { title: '셋업 1 · 앞면 방향 (+Z)', src: 'assets/cases/feature-cam/setup-front.webp', alt: '실제 302 변형 STEP 설계 형상을 앞면의 +Z 방향 쪽에서 바라본 렌더', caption: '실제 STEP 설계 형상을 앞면 쪽에서 본 모습입니다. 1–3번 공정은 이 방향의 셋업에서 진행합니다.', kind: 'research' },
-              { title: '셋업 전환 · 뒷면 방향 (−Z)', src: 'assets/cases/feature-cam/setup-back.webp', alt: '같은 302 변형 STEP 설계 형상을 반대면의 −Z 방향 쪽에서 바라본 렌더', caption: '같은 부품을 반대면에서 본 모습입니다. 부품을 뒤집어 고정하는 두 번째 셋업의 가공 방향을 보여줍니다.', kind: 'research' },
-              { title: '셋업 2 · 뒷면 윤곽 정삭', src: 'assets/cases/feature-cam/strategy-contour.webp', alt: '가공 방향을 −Z로 전환한 두 번째 셋업의 실제 Fusion 뒷면 외곽 정삭 경로', caption: '방향 전환 후 이어지는 실제 Fusion CAM 공정입니다. 부품 아래쪽의 파란 선이 뒷면 외곽을 따르는 정삭 경로입니다.', kind: 'product' },
+              { title: '셋업 1 · 앞면 포켓 황삭 (+Z)', src: 'assets/cases/feature-cam/setup-front-cam.webp', alt: '앞면의 +Z 방향에서 내부 다단 포켓 황삭 경로를 표시한 실제 Fusion 캡처', caption: 'Fusion에서 앞면의 내부 포켓 황삭 경로를 표시한 화면입니다. 1–3번 공정은 이 +Z 방향의 셋업에서 진행합니다.', kind: 'product' },
+              { title: '셋업 2 · 뒷면 상면 황삭 (−Z)', src: 'assets/cases/feature-cam/setup-back-face-cam.webp', alt: '반대면의 −Z 방향에서 뒷면 상면 황삭 경로를 표시한 실제 Fusion 캡처', caption: '같은 부품을 반대면에서 본 Fusion 화면입니다. 부품을 뒤집는 셋업 전환 후, −Z 방향의 뒷면 상면 황삭부터 이어갑니다.', kind: 'product' },
+              { title: '셋업 2 · 뒷면 윤곽 정삭', src: 'assets/cases/feature-cam/setup-back-contour-cam.webp', alt: '같은 뒷면 시점에서 외곽 윤곽 정삭 경로를 표시한 실제 Fusion 캡처', caption: '같은 뒷면 시점에서 외곽 윤곽의 정삭 경로를 표시했습니다. 뒷면의 상면·외곽 황삭 다음에 정삭이 이어집니다.', kind: 'product' },
             ],
           },
         ],
