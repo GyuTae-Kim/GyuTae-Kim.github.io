@@ -260,7 +260,7 @@
         </div>
         <div class="watch-groups">
           <section class="watch-group" *ngFor="let group of watch.groups">
-            <h4><span>{{ group.name }}</span><b>{{ groupCount(group) }}곳</b></h4>
+            <h3><span>{{ group.name }}</span><b>{{ groupCount(group) }}곳</b></h3>
             <ul>
               <li *ngFor="let target of group.targets">
                 <span class="watch-cells" aria-hidden="true"
@@ -273,7 +273,7 @@
           </section>
         </div>
         <div class="watch-ops">
-          <span>업무 처리도 함께 확인</span>
+          <span>업무 결과도 확인</span>
           <ul><li *ngFor="let item of watch.operations">{{ item }}</li></ul>
         </div>
         <div class="watch-head watch-collect-head">
@@ -290,6 +290,27 @@
           </li>
         </ol>
       </div>
+      <section class="caught" *ngIf="other!.caught?.length" aria-labelledby="caught-title">
+        <h3 class="caught-title" id="caught-title">감시가 찾아낸 실제 문제 <b>{{ other!.caught!.length }}건</b></h3>
+        <div class="operation-evidence caught-shot" *ngIf="other!.caughtShot as shot">
+          <ng-container *ngTemplateOutlet="shots; context: { $implicit: [shot] }"></ng-container>
+        </div>
+        <ol class="caught-list">
+          <li *ngFor="let item of other!.caught">
+            <time class="caught-date" [attr.datetime]="item.date">{{ item.date.slice(5).replace('-', '.') }}</time>
+            <p class="caught-found">{{ item.found }}</p>
+            <p class="caught-fixed">
+              <app-icon name="check"></app-icon><span>{{ item.fixed }}</span
+              ><a
+                *ngIf="item.link"
+                [routerLink]="['/portfolio', item.link]"
+                [attr.aria-label]="titleOf(item.link) + ' 자세히 보기'"
+                >자세히<app-icon name="arrow-right"></app-icon></a
+              >
+            </p>
+          </li>
+        </ol>
+      </section>
       <div class="operation-evidence" *ngIf="other!.evidence.length" aria-label="실제 운영 화면">
         <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.evidence }"></ng-container>
       </div>
