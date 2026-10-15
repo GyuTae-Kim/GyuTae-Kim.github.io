@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CASE_STUDIES } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
+import { IconComponent } from '../../components/icon/icon.component';
 import { BoardComponent } from './board.component';
 
 describe('BoardComponent', () => {
@@ -10,7 +11,7 @@ describe('BoardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [BoardComponent],
+      declarations: [BoardComponent, IconComponent],
     }).compileComponents();
     fixture = TestBed.createComponent(BoardComponent);
     fixture.detectChanges();

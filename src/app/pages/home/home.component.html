@@ -29,7 +29,7 @@
     <ul class="profile-links">
       <li>
         <a href="mailto:GyuTae.K1020@gmail.com"
-          >이메일 <span aria-hidden="true">↗</span></a
+          ><app-icon name="mail"></app-icon>이메일</a
         >
       </li>
       <li>
@@ -37,7 +37,7 @@
           href="https://github.com/GyuTae-Kim"
           target="_blank"
           rel="noopener noreferrer"
-          >GitHub <span aria-hidden="true">↗</span></a
+          ><app-icon name="github"></app-icon>GitHub</a
         >
       </li>
     </ul>
@@ -68,7 +68,7 @@
             <li *ngFor="let label of furniture.diagramLabels">{{ label }}</li>
           </ol>
         </div>
-        <span class="row-arrow" aria-hidden="true">→</span>
+        <app-icon class="row-arrow" name="arrow-right"></app-icon>
       </a>
     </section>
 
@@ -77,7 +77,7 @@
         <span class="section-no">01</span>
         <h2 id="work-title">주요 프로젝트</h2>
         <a class="text-link" routerLink="/portfolio"
-          >전체 보기 <span aria-hidden="true">→</span></a
+          >전체 보기<app-icon name="arrow-right"></app-icon></a
         >
       </div>
       <ol class="index-rows">
@@ -107,12 +107,12 @@
               ><b>{{ project.stats[0].value }}</b
               ><span>{{ project.stats[0].label }}</span></span
             >
-            <span class="row-arrow" aria-hidden="true">→</span>
+            <app-icon class="row-arrow" name="arrow-right"></app-icon>
           </a>
         </li>
       </ol>
       <a class="text-link" routerLink="/portfolio" fragment="other-projects"
-        >기타 프로젝트 · 서비스 감시와 송장 연동 개선 <span aria-hidden="true">→</span></a
+        >기타 프로젝트 · 서비스 감시와 송장 연동 개선<app-icon name="arrow-right"></app-icon></a
       >
     </section>
 
@@ -125,7 +125,7 @@
         <span class="section-no">02</span>
         <h2 id="research-title">학부연구생 때의 연구</h2>
         <a class="text-link" routerLink="/research"
-          >전체 보기 <span aria-hidden="true">→</span></a
+          >전체 보기<app-icon name="arrow-right"></app-icon></a
         >
       </div>
       <p class="section-lead">
@@ -210,7 +210,7 @@
             </div>
           </dl>
           <a class="text-link" routerLink="/contact"
-            >연락하기 <span aria-hidden="true">→</span></a
+            >연락하기<app-icon name="arrow-right"></app-icon></a
           >
         </div>
       </div>

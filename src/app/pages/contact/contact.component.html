@@ -29,14 +29,17 @@
 
   <div class="contact-grid">
     <section class="contact-panel email-panel" aria-labelledby="email-title">
-      <span class="eyebrow" id="email-title">이메일</span>
+      <span class="eyebrow" id="email-title"
+        ><app-icon name="mail"></app-icon>이메일</span
+      >
       <p class="contact-email">{{ email }}</p>
       <div class="contact-actions">
         <a class="button primary" [href]="mailto"
-          >메일 쓰기 <span aria-hidden="true">→</span></a
+          >메일 쓰기<app-icon name="arrow-right"></app-icon></a
         >
         <button type="button" class="button outline" (click)="copyEmail()">
-          {{ copied ? "복사했습니다" : "주소 복사" }}
+          <app-icon [name]="copied ? 'check' : 'copy'"></app-icon
+          >{{ copied ? "복사했습니다" : "주소 복사" }}
         </button>
       </div>
       <p class="copy-status" [class.sr-only]="copied" role="status">
@@ -44,19 +47,22 @@
       </p>
     </section>
     <section class="contact-panel github-panel" aria-labelledby="github-title">
-      <span class="eyebrow" id="github-title">GitHub</span>
+      <span class="eyebrow" id="github-title"
+        ><app-icon name="github"></app-icon>GitHub</span
+      >
       <a
         class="github-profile"
         href="https://github.com/GyuTae-Kim"
         target="_blank"
         rel="noopener noreferrer"
-        >GyuTae-Kim <span aria-hidden="true">↗</span></a
+        >GyuTae-Kim<app-icon name="external"></app-icon></a
       >
       <p>학부연구생 때 강화학습과 컴퓨터 비전 연구로 공개한 저장소</p>
       <ul class="repo-list">
         <li *ngFor="let repo of repos">
           <a [href]="repo.url" target="_blank" rel="noopener noreferrer"
-            ><code>{{ repo.name }}</code><span>{{ repo.title }}</span></a
+            ><code>{{ repo.name }}</code><span>{{ repo.title }}</span
+            ><app-icon name="external"></app-icon></a
           >
         </li>
       </ul>
@@ -68,7 +74,7 @@
       <span class="section-no">01</span>
       <h2 id="topics-title">주요 프로젝트</h2>
       <a class="text-link" routerLink="/portfolio"
-        >전체 보기 <span aria-hidden="true">→</span></a
+        >전체 보기<app-icon name="arrow-right"></app-icon></a
       >
     </div>
     <ol class="topic-grid">

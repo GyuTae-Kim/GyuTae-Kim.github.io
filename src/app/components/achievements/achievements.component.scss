@@ -37,6 +37,12 @@
   font-weight: 600;
   color: var(--ink);
 }
+.achievement-kind app-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: -4px;
+  color: var(--blue);
+}
 .achievement-status {
   font-size: var(--fs-1);
   font-weight: 500;

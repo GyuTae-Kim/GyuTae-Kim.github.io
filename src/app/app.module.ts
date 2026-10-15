@@ -10,6 +10,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 import { AchievementsComponent } from './components/achievements/achievements.component';
 import { ModelViewportComponent } from './components/model-viewport/model-viewport.component';
+import { IconComponent } from './components/icon/icon.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ModelViewportComponent } from './components/model-viewport/model-viewpo
     NotFoundComponent,
     AchievementsComponent,
     ModelViewportComponent,
+    IconComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   bootstrap: [AppComponent],
