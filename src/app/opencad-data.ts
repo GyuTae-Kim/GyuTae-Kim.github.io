@@ -23,11 +23,11 @@ export interface OpenCadTool {
 export const OPENCAD_TOOLS: OpenCadTool[] = [
   {
     id: '2d-viewer',
-    name: '2D 도면 뷰어',
+    name: 'OpenCAD 무료 2D 캐드 뷰어',
     kind: '2D 도면',
     extensions: ['.dwg', '.dxf'],
     summary:
-      'DWG와 DXF 도면을 브라우저에서 열어 보고, 치수를 재고, 고쳐서 다시 저장합니다. 화면 배치와 명령 이름, 단축키는 AutoCAD와 같게 맞췄습니다.',
+      'DWG·DXF 도면을 열고 거리·각도·면적을 측정하는 무료 캐드 뷰어입니다. 선 그리기와 도면 수정, DWG·DXF 저장과 PDF·PNG·SVG 출력도 지원합니다.',
     url: 'https://gyutae-kim.github.io/2dcad-viewer/',
     source: 'https://github.com/GyuTae-Kim/2dcad-viewer',
     features: [
