@@ -29,7 +29,7 @@ export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() fixedModel?: ModelId;
 
   models = VIEW_MODELS;
-  readonly reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  readonly reducedMotion = typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   model: ModelId = 'part';
   // With motion each model plays its three layers on its own, e.g. modelling →
   // recognition → machining.
@@ -158,6 +158,7 @@ export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private webglAvailable() {
+    if (typeof window === 'undefined') return false;
     try {
       const canvas = document.createElement('canvas');
       return !!(window.WebGLRenderingContext && (canvas.getContext('webgl2') || canvas.getContext('webgl')));

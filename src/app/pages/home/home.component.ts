@@ -32,6 +32,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   constructor(private readonly zone: NgZone) {}
 
   ngAfterViewInit() {
+    if (typeof IntersectionObserver === 'undefined') return;
     // Highlight the section that crosses the upper middle of the screen.
     this.observer = new IntersectionObserver(
       (entries) => {

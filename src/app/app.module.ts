@@ -26,7 +26,7 @@ import { IconComponent } from './components/icon/icon.component';
     ModelViewportComponent,
     IconComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
