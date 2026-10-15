@@ -20,7 +20,7 @@
       [routerLink]="[]"
       [fragment]="work.id"
       ><span>0{{ i + 1 }}</span
-      >{{ work.shortTitle }} <span aria-hidden="true">↓</span></a
+      >{{ work.shortTitle }}<app-icon name="arrow-down"></app-icon></a
     >
   </nav>
   <article
@@ -40,7 +40,10 @@
         target="_blank"
         rel="noopener noreferrer"
         [attr.aria-label]="work.title + ' 공개 코드를 GitHub 새 창에서 열기'"
-        >공개 코드 <span aria-hidden="true">↗</span></a
+        ><app-icon name="github"></app-icon>공개 코드<app-icon
+          class="link-mark"
+          name="external"
+        ></app-icon></a
       >
     </div>
     <section
@@ -94,7 +97,8 @@
           [attr.aria-pressed]="stopped.has(fig.src)"
           (click)="toggleMotion(fig.src)"
         >
-          {{ stopped.has(fig.src) ? "▶ 다시 재생" : "❚❚ 정지" }}
+          <app-icon [name]="stopped.has(fig.src) ? 'play' : 'pause'"></app-icon
+          >{{ stopped.has(fig.src) ? "다시 재생" : "정지" }}
         </button>
         <figcaption>{{ fig.caption }}</figcaption>
       </figure>
@@ -119,7 +123,7 @@
       <p class="result-scope">{{ result.scope }}</p>
     </section>
     <details class="result-details research-details">
-      <summary>자세히 · 직접 한 일, 실행 조건, 원인과 한계</summary>
+      <summary><app-icon name="chevron"></app-icon>자세히 · 직접 한 일, 실행 조건, 원인과 한계</summary>
       <section class="detail-block">
         <h3 class="detail-title"><span>01</span>직접 한 일</h3>
         <div [class.research-layout]="!!work.image">
@@ -150,7 +154,7 @@
                 [href]="work.image"
                 target="_blank"
                 rel="noopener noreferrer"
-                >원본 그림 크게 보기 ↗</a
+                >원본 그림 크게 보기<app-icon name="external"></app-icon></a
               >
             </figcaption>
           </figure>
@@ -232,7 +236,7 @@
       <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
       <p>{{ work.connection }}</p>
       <a class="text-link" [routerLink]="['/portfolio', work.relatedProjectId]"
-        >{{ projectTitle(work.relatedProjectId) }} <span aria-hidden="true">→</span></a
+        >{{ projectTitle(work.relatedProjectId) }}<app-icon name="arrow-right"></app-icon></a
       >
     </div>
   </article>
@@ -243,7 +247,7 @@
       데이터와 가공 특징 인식, CAD/CAM 도구의 실행과 검증으로 넓혀 가고 있습니다.
     </p>
     <a class="button primary" routerLink="/portfolio"
-      >최근 연구개발 프로젝트 <span aria-hidden="true">→</span></a
+      >최근 연구개발 프로젝트<app-icon name="arrow-right"></app-icon></a
     >
   </section>
 </div>

@@ -38,7 +38,7 @@
       />
     </div>
     <span class="viewer-hint" *ngIf="state === 'live'" aria-hidden="true"
-      >드래그해서 돌려 보기</span
+      ><app-icon name="orbit"></app-icon>드래그해서 돌려 보기</span
     >
     <button
       class="viewer-reset"
@@ -46,7 +46,7 @@
       *ngIf="state === 'live'"
       (click)="resetView()"
     >
-      처음 시점
+      <app-icon name="reset"></app-icon>처음 시점
     </button>
     <button
       class="viewer-pause"
@@ -55,7 +55,8 @@
       [attr.aria-pressed]="paused"
       (click)="togglePause()"
     >
-      {{ paused ? "▶ 재생" : "❚❚ 정지" }}
+      <app-icon [name]="paused ? 'play' : 'pause'"></app-icon
+      >{{ paused ? "재생" : "정지" }}
     </button>
   </div>
   <div class="viewer-layers" role="group" aria-label="단계 선택">
@@ -77,7 +78,7 @@
       <strong>{{ view.title }}</strong>
       <p>{{ view.text }}</p>
       <a class="text-link" *ngIf="!fixedModel" [routerLink]="['/portfolio', info.caseId]"
-        >이 흐름의 실제 프로젝트 <span aria-hidden="true">→</span></a
+        >이 흐름의 실제 프로젝트<app-icon name="arrow-right"></app-icon></a
       >
     </div>
     <div class="viewer-side">

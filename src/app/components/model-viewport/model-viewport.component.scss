@@ -134,6 +134,22 @@
   white-space: nowrap;
 }
 .viewer-hint,
+.viewer-reset,
+.viewer-pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.viewer-hint app-icon,
+.viewer-reset app-icon {
+  width: 15px;
+  height: 15px;
+}
+.viewer-pause app-icon {
+  width: 11px;
+  height: 11px;
+}
+.viewer-hint,
 .viewer-reset {
   position: absolute;
   bottom: 10px;

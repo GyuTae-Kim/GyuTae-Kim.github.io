@@ -6,6 +6,7 @@
       fragment="related-achievements"
     >
       <span class="achievement-kind"
+        ><app-icon [name]="kindIcons[achievement.kind]"></app-icon
         >{{ achievement.kind }}
         <span class="achievement-status">{{ achievement.status }}</span></span
       >
@@ -41,7 +42,9 @@
         *ngFor="let achievement of achievements"
       >
         <div class="achievement-topline">
-          <span class="achievement-kind">{{ achievement.kind }}</span
+          <span class="achievement-kind"
+            ><app-icon [name]="kindIcons[achievement.kind]"></app-icon
+            >{{ achievement.kind }}</span
           ><span class="achievement-status">{{ achievement.status }}</span>
         </div>
         <h3>{{ achievement.title }}</h3>
@@ -63,8 +66,8 @@
           *ngIf="showProjectLinks"
           class="text-link achievement-project"
           [routerLink]="['/portfolio', achievement.relatedProjectId]"
-          >{{ projectTitle(achievement.relatedProjectId) }}
-          <span aria-hidden="true">→</span></a
+          >{{ projectTitle(achievement.relatedProjectId)
+          }}<app-icon name="arrow-right"></app-icon></a
         >
       </article>
     </div>

@@ -12,13 +12,13 @@
       </p>
     </div>
     <nav class="archive-nav" aria-label="프로젝트 목록 바로가기">
-      <a [routerLink]="[]" fragment="other-projects">기타 프로젝트 <span aria-hidden="true">↓</span></a>
+      <a [routerLink]="[]" fragment="other-projects">기타 프로젝트<app-icon name="arrow-down"></app-icon></a>
     </nav>
     <a
       class="text-link portfolio-achievement-jump"
       [routerLink]="[]"
       fragment="achievements"
-      >특허·프로그램 성과 보기 <span aria-hidden="true">↓</span></a
+      >특허·프로그램 성과 보기<app-icon name="arrow-down"></app-icon></a
     >
     <article class="project-row" *ngFor="let project of cases">
       <div class="project-row-meta">
@@ -42,7 +42,7 @@
       <div class="project-row-content">
         <h2>
           <a [routerLink]="['/portfolio', project.id]"
-            >{{ project.title }} <span aria-hidden="true">→</span></a
+            >{{ project.title }}<app-icon name="arrow-right"></app-icon></a
           >
         </h2>
         <p class="row-subtitle">{{ project.subtitle }}</p>
@@ -65,7 +65,7 @@
           </div>
         </div>
         <a class="text-link" [routerLink]="['/portfolio', project.id]"
-          >프로젝트 보기 <span aria-hidden="true">→</span></a
+          >프로젝트 보기<app-icon name="arrow-right"></app-icon></a
         >
       </div>
     </article>
@@ -94,12 +94,12 @@
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: project.evidence }"></ng-container>
         </div>
         <details class="result-details">
-          <summary>자세히 · 문제와 해결<ng-container *ngIf="project.moreEvidence.length">, 화면</ng-container></summary>
+          <summary><app-icon name="chevron"></app-icon>자세히 · 문제와 해결<ng-container *ngIf="project.moreEvidence.length">, 화면</ng-container></summary>
           <ol class="fix-list">
             <li *ngFor="let item of project.fixes">
-              <p class="fix-problem"><span>문제</span>{{ item.problem }}</p>
-              <b aria-hidden="true">→</b>
-              <p class="fix-answer"><span>해결</span>{{ item.fix }}</p>
+              <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+              <b><app-icon name="arrow-right"></app-icon></b>
+              <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
             </li>
           </ol>
           <div class="operation-evidence" *ngIf="project.moreEvidence.length">
@@ -124,7 +124,9 @@
     </aside>
   </ng-container>
   <ng-template #caseDetail>
-    <a class="back-link" routerLink="/portfolio">← 프로젝트 목록</a>
+    <a class="back-link" routerLink="/portfolio"
+      ><app-icon name="arrow-left"></app-icon>프로젝트 목록</a
+    >
     <div class="page-intro detail-intro">
       <p class="eyebrow">
         프로젝트 {{ selected!.number }} · {{ selected!.category }}
@@ -156,7 +158,8 @@
           [attr.aria-pressed]="stopped.has(selected!.figure.src)"
           (click)="toggleMotion(selected!.figure.src)"
         >
-          {{ stopped.has(selected!.figure.src) ? "▶ 재생" : "❚❚ 정지" }}
+          <app-icon [name]="stopped.has(selected!.figure.src) ? 'play' : 'pause'"></app-icon
+          >{{ stopped.has(selected!.figure.src) ? "재생" : "정지" }}
         </button>
         <figcaption>
           <span
@@ -200,7 +203,8 @@
               [attr.aria-pressed]="stopped.has(step.image)"
               (click)="toggleMotion(step.image)"
             >
-              {{ stopped.has(step.image) ? "▶ 재생" : "❚❚ 정지" }}
+              <app-icon [name]="stopped.has(step.image) ? 'play' : 'pause'"></app-icon
+              >{{ stopped.has(step.image) ? "재생" : "정지" }}
             </button>
           </div>
           <div class="story-meta"><b>{{ i + 1 }}</b></div>
@@ -232,7 +236,7 @@
       <app-model-viewport [fixedModel]="concept"></app-model-viewport>
     </section>
     <details class="result-details case-details">
-      <summary>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
+      <summary><app-icon name="chevron"></app-icon>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
       <section class="detail-block" aria-labelledby="detail-work">
         <h2 class="detail-title" id="detail-work"><span>01</span>단계마다 한 일</h2>
         <ol class="step-work">
@@ -269,9 +273,9 @@
         <h2 class="detail-title" id="detail-fixes"><span>02</span>문제와 해결</h2>
         <ol class="fix-list">
           <li *ngFor="let item of selected!.fixes">
-            <p class="fix-problem"><span>문제</span>{{ item.problem }}</p>
-            <b aria-hidden="true">→</b>
-            <p class="fix-answer"><span>해결</span>{{ item.fix }}</p>
+            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+            <b><app-icon name="arrow-right"></app-icon></b>
+            <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
           </li>
         </ol>
       </section>
@@ -303,7 +307,7 @@
       <h3>이어지는 학부 연구</h3>
       <div class="related-work" *ngFor="let work of related">
         <a class="text-link" routerLink="/research" [fragment]="work.id"
-          >{{ work.title }} <span aria-hidden="true">→</span></a
+          >{{ work.title }}<app-icon name="arrow-right"></app-icon></a
         >
         <p>{{ work.connection }}</p>
       </div>
@@ -312,7 +316,7 @@
       <a [routerLink]="['/portfolio', next.id]"
         ><span class="eyebrow">다음 프로젝트 {{ next.number }}</span
         ><strong>{{ next.title }}</strong
-        ><span class="row-arrow" aria-hidden="true">→</span></a
+        ><app-icon class="row-arrow" name="arrow-right"></app-icon></a
       >
     </nav>
   </ng-template>
@@ -327,6 +331,8 @@
       <img [src]="zoom.src" [alt]="zoom.alt" />
       <p>{{ zoom.alt }}</p>
     </ng-container>
-    <button type="button" class="zoom-close" (click)="closeZoom()">닫기</button>
+    <button type="button" class="zoom-close" (click)="closeZoom()">
+      <app-icon name="close"></app-icon>닫기
+    </button>
   </dialog>
 </div>

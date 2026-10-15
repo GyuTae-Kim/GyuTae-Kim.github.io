@@ -211,6 +211,15 @@ main:focus {
 .site-footer dd a:hover {
   color: var(--blue);
 }
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.footer-link app-icon {
+  width: 15px;
+  height: 15px;
+}
 
 /* ---------- shared pieces ---------- */
 .page-shell {
@@ -252,7 +261,7 @@ main:focus {
 }
 .text-link {
   display: inline-flex;
-  gap: 14px;
+  gap: 10px;
   align-items: center;
   padding: 2px 0;
   border-bottom: 1px solid currentColor;
@@ -291,6 +300,10 @@ main:focus {
 .row-arrow {
   font-size: var(--fs-4);
   line-height: 1;
+}
+app-icon.row-arrow {
+  width: 20px;
+  height: 20px;
   color: var(--muted);
   transition: transform 0.2s, color 0.2s;
 }
@@ -298,6 +311,9 @@ main:focus {
   position: absolute;
   top: 22px;
   right: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: var(--fs-1);
   padding: 4px 11px;
   border: 1px solid var(--line-strong);
@@ -306,6 +322,10 @@ main:focus {
 }
 .motion-toggle:hover {
   border-color: var(--ink);
+}
+.motion-toggle app-icon {
+  width: 12px;
+  height: 12px;
 }
 /* Reduced motion already shows the still image, so there is nothing to stop. */
 @media (prefers-reduced-motion: reduce) {
@@ -402,13 +422,17 @@ main:focus {
 .profile-links a {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   min-height: 36px;
   font-size: var(--fs-2);
   font-weight: 600;
 }
 .profile-links a:hover {
   color: var(--blue);
+}
+.profile-links app-icon {
+  width: 18px;
+  height: 18px;
 }
 .index-main {
   min-width: 0;
@@ -799,6 +823,7 @@ main:focus {
 .back-link {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   min-height: 36px;
   font-size: var(--fs-1);
   color: var(--muted);
@@ -1030,7 +1055,8 @@ main:focus {
   border: 1px solid var(--line);
 }
 .zoom-dialog p {
-  margin: 10px 40px 0 0;
+  /* leaves room for the close button at the bottom right */
+  margin: 10px 84px 0 0;
   font-size: var(--fs-1);
   line-height: 1.6;
   color: var(--muted);
@@ -1039,6 +1065,9 @@ main:focus {
   position: absolute;
   right: 16px;
   bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: var(--fs-1);
   padding: 4px 11px;
   border: 1px solid var(--line-strong);
@@ -1169,7 +1198,9 @@ main:focus {
   word-break: keep-all;
 }
 .fix-list p span {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: var(--fs-1);
   font-weight: 650;
   margin-bottom: 2px;
@@ -1406,6 +1437,15 @@ main:focus {
   background: var(--white);
   color: var(--blue);
 }
+.source-link app-icon {
+  width: 16px;
+  height: 16px;
+}
+.source-link .link-mark {
+  width: 13px;
+  height: 13px;
+  color: var(--muted);
+}
 .research-overview {
   margin-bottom: 40px;
 }
@@ -1599,14 +1639,29 @@ main:focus {
   padding-top: 10px;
 }
 .result-details > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
   cursor: pointer;
   font-size: var(--fs-2);
   font-weight: 600;
   color: var(--blue);
   padding: 8px 0;
 }
+.result-details > summary::-webkit-details-marker {
+  display: none;
+}
+.result-details > summary app-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
 .result-details[open] > summary {
   margin-bottom: 22px;
+}
+.result-details[open] > summary app-icon {
+  transform: rotate(90deg);
 }
 .research-layout {
   display: grid;
@@ -1845,8 +1900,14 @@ main:focus {
   background: var(--sheet);
 }
 .contact-panel > .eyebrow {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--blue);
+}
+.contact-panel > .eyebrow app-icon {
+  width: 18px;
+  height: 18px;
 }
 .email-panel {
   border-top: 3px solid var(--blue);
@@ -1865,6 +1926,7 @@ main:focus {
   gap: 10px;
 }
 .button.outline {
+  gap: 8px;
   border-color: var(--ink);
   background: transparent;
   color: var(--ink);
@@ -1881,7 +1943,9 @@ main:focus {
   min-height: 21px;
 }
 .github-profile {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: var(--fs-4);
   font-weight: 600;
   margin: 18px 0 6px;
@@ -1889,9 +1953,10 @@ main:focus {
 .github-profile:hover {
   color: var(--blue);
 }
-.github-profile span {
+.github-profile app-icon {
+  width: 18px;
+  height: 18px;
   color: var(--muted);
-  margin-left: 8px;
 }
 .github-panel > p {
   font-size: var(--fs-1);
@@ -1908,8 +1973,21 @@ main:focus {
 }
 .repo-list a {
   display: grid;
-  gap: 2px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  align-items: center;
   padding: 9px 0;
+}
+.repo-list app-icon {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 15px;
+  height: 15px;
+  color: var(--muted);
+}
+.repo-list a:hover app-icon {
+  color: var(--blue);
 }
 .repo-list code {
   font: 500 var(--fs-1) / 1.5 var(--mono);
