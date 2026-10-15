@@ -5,6 +5,7 @@ AI, 3D 형상, CAD/CAM 연구개발 포트폴리오 사이트의 소스입니다
 - `/`: 소개, 3D 개념 모델 뷰어, 주요 프로젝트, 학부연구생 때의 연구, 특허와 프로그램
 - `/portfolio`, `/portfolio/:id`: 프로젝트 세 개(가공 특징 인식과 CAM 자동화, 가구 패널 인식, Wedraw Pro)와 기타 프로젝트
 - `/research`: 학부연구생 때 공개한 연구 세 개와 실험 결과
+- `/opencad`: 개인 프로젝트 OpenCAD의 뷰어 목록. 공개한 2D 도면 뷰어(별도 저장소 [2dcad-viewer](https://github.com/GyuTae-Kim/2dcad-viewer))로 가는 입구와 준비 중인 STEP, SKP, NC 뷰어
 - `/contact`: 이메일과 GitHub
 
 ## 기술
@@ -13,7 +14,7 @@ Angular 15, TypeScript, SCSS, three.js(홈 3D 뷰어, 화면에 가까워질 때
 
 ## 구조
 
-- `src/app/portfolio-data.ts`, `other-projects-data.ts`, `research-data.ts`, `achievement-data.ts`: 페이지에 나오는 내용
+- `src/app/portfolio-data.ts`, `other-projects-data.ts`, `research-data.ts`, `achievement-data.ts`, `opencad-data.ts`: 페이지에 나오는 내용. 새 OpenCAD 뷰어를 공개하면 `opencad-data.ts`에서 그 항목에 `url`과 화면 캡처(`src/assets/opencad/`)를 넣습니다.
 - `src/app/components/model-viewport/`: 홈 3D 뷰어. 가공 부품(모델링 → 특징 인식 → 바이스 가공)과 원룸 벽면 가구(설계 → 제조 → 설치)를 직접 만든 기하로 그립니다. WebGL이 없거나 움직임 줄이기 설정이면 `src/assets/viewer/`의 정지 이미지를 보여 줍니다.
 - `src/assets/cases/`, `src/assets/research/`: 프로젝트와 연구 그림. 목록용 썸네일은 `thumb-336.webp`, `thumb-672.webp`입니다.
 - `src/assets/og/`: 링크 미리보기 이미지(1200×630)
@@ -41,7 +42,7 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 
 ## 검색 노출 관리 (구글 · 네이버)
 
-`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 9개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
+`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 10개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
 
 - `src/app/site-seo.ts`: 제목·설명·대표 주소·공유 이미지와 Person, WebSite, 페이지, 프로젝트, 탐색 경로 구조화 데이터의 공통 원본입니다. 새 프로젝트는 기존 프로젝트 데이터에서 자동으로 가져옵니다.
 - `src/app/seo.service.ts`: 직접 방문과 사이트 안에서 이동할 때 같은 검색 정보를 유지합니다. 없는 페이지에는 `noindex`를 적용합니다.
@@ -63,9 +64,9 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 
 ### 카카오톡 · 슬랙 링크 미리보기
 
-홈·프로젝트·연구·연락 페이지의 초기 HTML `<head>`에 Open Graph와 Twitter Card 메타정보를 넣습니다. `og:image`는 로그인 없이 접근 가능한 절대 HTTPS 주소이며, JPEG 형식·1200×630 크기·이미지 설명을 함께 제공합니다. 홈·연락은 홈 표지, 프로젝트 목록과 기타 프로젝트는 프로젝트 표지, 주요 프로젝트 3개와 연구는 해당 표지를 사용합니다. 별도의 카카오 또는 슬랙 앱 등록 없이 일반 링크 미리보기에 필요한 정보를 제공합니다.
+홈·프로젝트·연구·연락 페이지의 초기 HTML `<head>`에 Open Graph와 Twitter Card 메타정보를 넣습니다. `og:image`는 로그인 없이 접근 가능한 절대 HTTPS 주소이며, JPEG 형식·1200×630 크기·이미지 설명을 함께 제공합니다. 홈·연락은 홈 표지, 프로젝트 목록과 기타 프로젝트는 프로젝트 표지, 주요 프로젝트 3개·연구·오픈캐드는 해당 표지를 사용합니다. 별도의 카카오 또는 슬랙 앱 등록 없이 일반 링크 미리보기에 필요한 정보를 제공합니다.
 
-`npm run check:seo`는 9개 페이지와 HTML 별칭에서 공유 태그의 유일성·올바른 이미지 주소를 확인합니다. 슬랙의 부분 요청을 고려해 공유 메타정보가 HTML의 첫 8 KiB 안에 있는지도 검사합니다. 실제 JPEG 파일의 크기(1200×630)와 자체 용량 예산(512 KiB 이하)도 검증합니다.
+`npm run check:seo`는 10개 페이지와 HTML 별칭에서 공유 태그의 유일성·올바른 이미지 주소를 확인합니다. 슬랙의 부분 요청을 고려해 공유 메타정보가 HTML의 첫 8 KiB 안에 있는지도 검사합니다. 실제 JPEG 파일의 크기(1200×630)와 자체 용량 예산(512 KiB 이하)도 검증합니다.
 
 배포 후에는 다음을 확인합니다.
 

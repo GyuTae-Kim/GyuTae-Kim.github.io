@@ -4,6 +4,7 @@ import { renderModule, ServerModule } from '@angular/platform-server';
 import { AppModule } from './app/app.module';
 import { AppComponent } from './app/app.component';
 export { SEARCH_PAGES, SITE_URL } from './app/site-seo';
+export { OPENCAD_TOOLS } from './app/opencad-data';
 
 enableProdMode();
 

@@ -51,6 +51,14 @@ export const SEARCH_PAGES: SearchPage[] = [
     kind: 'CollectionPage',
   },
   {
+    path: '/opencad',
+    title: 'OpenCAD · 브라우저 CAD 뷰어 — 김규태 · Sean Kim',
+    description: '설치 없이 브라우저에서 CAD 파일을 여는 개인 프로젝트 OpenCAD입니다. 공개된 DWG·DXF 2D 도면 뷰어와 준비 중인 STEP·SKP·NC 뷰어를 소개합니다.',
+    image: 'assets/og/opencad.jpg',
+    imageAlt: 'OpenCAD 표지. 브라우저에서 DWG·DXF 도면을 여는 2D 뷰어.',
+    kind: 'CollectionPage',
+  },
+  {
     path: '/contact',
     title: '연락 · 연구개발 협업 — 김규태 · Sean Kim',
     description: 'AI·3D 형상·CAD/CAM·가구 제조 데이터 분야의 연구개발 포지션과 협업 제안을 위한 김규태(Sean Kim)의 이메일과 GitHub 연락처입니다.',

@@ -4,12 +4,14 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const { SEARCH_PAGES, SITE_URL } = require('../dist/server/main.js');
+const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS } = require('../dist/server/main.js');
 const outDir = resolve(process.argv[2] || 'docs');
 const { JSDOM } = require('jsdom');
 const titles = new Set();
 const descriptions = new Set();
 const paths = new Set(SEARCH_PAGES.map((page) => page.path));
+// These linked applications belong to separate repositories on the same Pages host.
+const hostedApps = new Set(OPENCAD_TOOLS.filter((tool) => tool.url).map((tool) => tool.url));
 const verification = JSON.parse(readFileSync(new URL('./search-verification.json', import.meta.url), 'utf8'));
 const checkedImages = new Set();
 // Read JPEG frame dimensions from the actual deployed bytes, not the filename or tags.
@@ -102,7 +104,7 @@ for (const page of SEARCH_PAGES) {
     for (const anchor of root.querySelectorAll('a[href]')) {
       const link = new URL(anchor.href);
       if (link.origin !== SITE_URL) continue;
-      assert.ok(paths.has(link.pathname) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
+      assert.ok(paths.has(link.pathname) || hostedApps.has(link.href) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
       if (link.pathname === page.path && link.hash) {
         assert.ok(document.getElementById(decodeURIComponent(link.hash.slice(1))), `${file}: broken fragment ${link.hash}`);
       }

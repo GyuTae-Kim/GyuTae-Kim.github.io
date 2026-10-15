@@ -2052,6 +2052,167 @@ app-icon.row-arrow {
   color: var(--accent);
   margin-right: 4px;
 }
+/* ---------- opencad ---------- */
+.opencad-promise {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 56px;
+  border: 1px solid var(--ink);
+  background: var(--sheet);
+}
+.opencad-promise div {
+  padding: 12px 18px 14px;
+  border-left: 1px solid var(--line);
+}
+.opencad-promise div:first-child {
+  border-left: 0;
+}
+.opencad-promise dt {
+  font-size: var(--fs-1);
+  font-weight: 650;
+  color: var(--blue);
+}
+.opencad-promise dd {
+  margin: 2px 0 0;
+  font-size: var(--fs-2);
+  font-weight: 600;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.opencad-section {
+  margin-bottom: 56px;
+}
+.tool-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 36px;
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid var(--ink);
+  border-top: 3px solid var(--blue);
+  background: var(--sheet);
+}
+.tool-shot {
+  margin: 0;
+}
+.tool-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1440 / 900;
+  border: 1px solid var(--ink);
+  /* the viewer's own background, so the frame does not flash white while loading */
+  background: #232833;
+}
+.tool-shot figcaption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: var(--fs-1);
+  color: var(--muted);
+}
+.tool-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--fs-1);
+  color: var(--muted);
+}
+.tool-status {
+  font: 600 var(--fs-1) / 1 var(--sans);
+  padding: 5px 8px;
+  border: 1px dashed var(--line-strong);
+  color: var(--muted);
+}
+.tool-status.live {
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: var(--white);
+}
+.tool-body h3 {
+  margin-top: 14px;
+  font-size: var(--fs-5);
+  letter-spacing: -0.8px;
+  line-height: 1.35;
+}
+.tool-ext {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.tool-ext code {
+  font: 500 var(--fs-1) / 1.6 var(--mono);
+  padding: 1px 8px;
+  border: 1px solid var(--ink);
+  background: var(--white);
+}
+.tool-summary {
+  margin-top: 16px;
+  font-size: var(--fs-2);
+  line-height: 1.85;
+  color: var(--muted);
+}
+.tool-features {
+  margin: 18px 0 0;
+  border-top: 1px solid var(--ink);
+}
+.tool-features div {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tool-features dt {
+  font-size: var(--fs-1);
+  font-weight: 650;
+  color: var(--blue);
+}
+.tool-features dd {
+  margin: 0;
+  font-size: var(--fs-2);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+.tool-plans {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.plan-card {
+  padding: 18px 20px 20px;
+  border: 1px dashed var(--line-strong);
+}
+.plan-card h3 {
+  margin-top: 14px;
+  font-size: var(--fs-4);
+  letter-spacing: -0.5px;
+  line-height: 1.4;
+}
+.plan-card .tool-ext code {
+  border-color: var(--line-strong);
+  background: transparent;
+  color: var(--muted);
+}
+.plan-summary {
+  margin-top: 12px;
+  font-size: var(--fs-2);
+  line-height: 1.75;
+  color: var(--muted);
+  word-break: keep-all;
+}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2110,6 +2271,10 @@ app-icon.row-arrow {
   .project-row {
     grid-template-columns: 220px 1fr;
     gap: 26px;
+  }
+  .tool-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 @media (max-width: 767px) {
@@ -2511,6 +2676,33 @@ app-icon.row-arrow {
   }
   .contact-email {
     font-size: var(--fs-4);
+  }
+  .opencad-promise {
+    grid-template-columns: 1fr;
+    margin-bottom: 44px;
+  }
+  .opencad-promise div {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .opencad-promise div:first-child {
+    border-top: 0;
+  }
+  .opencad-section {
+    margin-bottom: 44px;
+  }
+  .tool-card {
+    padding: 16px 16px 20px;
+  }
+  .tool-plans {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+@media (max-width: 439px) {
+  /* four menu items next to the full name still fit on a 390 px phone */
+  .site-header nav {
+    gap: 12px;
   }
 }
 @media (max-width: 389px) {
