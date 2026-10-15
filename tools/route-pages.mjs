@@ -41,6 +41,7 @@ for (const page of SEARCH_PAGES) {
 const redirects = {
   '/portfolio/fusion-cam': '/portfolio/cad-feature-recognition',
   '/portfolio/sketchup-manufacturing': '/portfolio/wedraw-pro',
+  '/portfolio/wedraw-order-operations': '/portfolio/order-invoice-sync',
   '/blog': '/research',
 };
 for (const [from, to] of Object.entries(redirects)) {
