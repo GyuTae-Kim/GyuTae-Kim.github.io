@@ -15,14 +15,59 @@
       한계는 「자세히」에 있습니다.
     </p>
   </div>
-  <nav class="archive-nav" aria-label="연구 목록">
-    <a
-      *ngFor="let work of works; let i = index"
-      [routerLink]="[]"
-      [fragment]="work.id"
-      ><span>0{{ i + 1 }}</span
-      >{{ work.shortTitle }}<app-icon name="arrow-down"></app-icon></a
-    >
+  <nav class="research-list" aria-label="연구 목록">
+    <article class="project-row" *ngFor="let work of works; let i = index">
+      <div class="project-row-meta">
+        <span class="large-index">0{{ i + 1 }}</span>
+        <p class="eyebrow">{{ work.category }}</p>
+        <span class="row-period">{{ work.period }}</span>
+        <a
+          class="row-figure"
+          *ngIf="work.result as result"
+          [routerLink]="[]"
+          [fragment]="work.id"
+          tabindex="-1"
+          aria-hidden="true"
+          ><img
+            [src]="result.thumb + '-672.webp'"
+            [attr.srcset]="srcset(result.thumb)"
+            sizes="(max-width: 720px) 100vw, 300px"
+            alt=""
+            width="560"
+            height="390"
+            loading="lazy"
+        /></a>
+      </div>
+      <div class="project-row-content">
+        <h2>
+          <a [routerLink]="[]" [fragment]="work.id"
+            >{{ work.title }}<app-icon name="arrow-right"></app-icon></a
+          >
+        </h2>
+        <p class="row-subtitle">{{ work.summary }}</p>
+        <div class="tags">
+          <span *ngFor="let tag of work.tags">{{ tag }}</span>
+        </div>
+        <div class="project-summary">
+          <div>
+            <h3>직접 한 일</h3>
+            <p>{{ work.built.join(' · ') }}</p>
+          </div>
+          <div *ngIf="work.result as result">
+            <h3>결과</h3>
+            <p class="row-headline">{{ result.headline }}</p>
+            <ul class="mini-stats">
+              <li *ngFor="let stat of result.stats.slice(0, 2)">
+                <b>{{ stat.value }}</b> {{ stat.label }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <a class="text-link" [routerLink]="[]" [fragment]="work.id"
+          >연구 보기<app-icon name="arrow-right"></app-icon></a
+        >
+      </div>
+    </article>
   </nav>
   <article
     class="research-entry"
