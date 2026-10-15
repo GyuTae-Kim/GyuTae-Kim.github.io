@@ -72,7 +72,7 @@
     <section class="other-projects" id="other-projects" aria-labelledby="other-projects-title">
       <div class="archive-intro">
         <h2 id="other-projects-title">기타 프로젝트</h2>
-        <p>제품을 운영하면서 서비스 감시 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.</p>
+        <p>제품을 운영하면서 서비스 감시와 오류 수집 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.</p>
       </div>
       <article class="research-entry other-project" *ngFor="let project of otherProjects" [id]="project.id" [attr.aria-labelledby]="project.id + '-title'">
         <p class="eyebrow">{{ project.category }} · {{ project.period }}</p>
@@ -90,6 +90,44 @@
           </li>
         </ol>
         <div class="tags"><span *ngFor="let tag of project.tags">{{ tag }}</span></div>
+        <div class="watch-board" *ngIf="project.watch as watch" role="group" aria-label="감시 범위">
+          <div class="watch-head">
+            <span class="watch-label">서버 감시</span>
+            <p><b>{{ watchCount(watch) }}곳</b>을 1분마다 확인합니다</p>
+            <span class="watch-legend" aria-hidden="true"><i></i>운영<i class="dev"></i>개발</span>
+          </div>
+          <div class="watch-groups">
+            <section class="watch-group" *ngFor="let group of watch.groups">
+              <h4><span>{{ group.name }}</span><b>{{ groupCount(group) }}곳</b></h4>
+              <ul>
+                <li *ngFor="let target of group.targets">
+                  <span class="watch-cells" aria-hidden="true"
+                    ><i *ngFor="let env of target.envs" [class.dev]="env === '개발'"></i
+                  ></span>
+                  <strong>{{ target.name }}<span class="sr-only"> ({{ target.envs.join(', ') }})</span></strong>
+                  <small>{{ target.check }}</small>
+                </li>
+              </ul>
+            </section>
+          </div>
+          <div class="watch-ops">
+            <span>업무 처리도 함께 확인</span>
+            <ul><li *ngFor="let item of watch.operations">{{ item }}</li></ul>
+          </div>
+          <div class="watch-head watch-collect-head">
+            <span class="watch-label">오류 수집</span>
+            <p>오류는 생길 때마다 모읍니다</p>
+          </div>
+          <ol class="watch-collect">
+            <li *ngFor="let lane of watch.collectors">
+              <p class="collect-source"><strong>{{ lane.source }}</strong><small>{{ lane.sourceNote }}</small></p>
+              <app-icon name="arrow-right"></app-icon>
+              <p class="collect-how">{{ lane.how }}</p>
+              <app-icon name="arrow-right"></app-icon>
+              <p class="collect-view"><strong>{{ lane.view }}</strong><small>{{ lane.viewNote }}</small></p>
+            </li>
+          </ol>
+        </div>
         <div class="operation-evidence" *ngIf="project.evidence.length" aria-label="실제 운영 화면">
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: project.evidence }"></ng-container>
         </div>

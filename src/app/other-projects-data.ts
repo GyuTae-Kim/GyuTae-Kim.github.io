@@ -16,6 +16,30 @@ export interface OtherProject {
   evidence: OperationShot[];
   moreEvidence: OperationShot[];
   scope: string;
+  // What the monitoring watches, drawn as a board under the work items.
+  watch?: WatchBoard;
+}
+
+// Services are named by their role, not by product name.
+export interface WatchBoard {
+  groups: WatchGroup[];
+  // Business work checked beside the servers (alerts, queues, integrations).
+  operations: string[];
+  // Errors gathered as they happen, from the servers and from the users' PC apps.
+  collectors: { source: string; sourceNote: string; how: string; view: string; viewNote: string }[];
+}
+
+export interface WatchGroup {
+  name: string;
+  targets: { name: string; check: string; envs: string[] }[];
+}
+
+export function watchCount(board: WatchBoard): number {
+  return board.groups.reduce((sum, group) => sum + groupCount(group), 0);
+}
+
+export function groupCount(group: WatchGroup): number {
+  return group.targets.reduce((sum, target) => sum + target.envs.length, 0);
 }
 
 export interface OperationShot {
@@ -33,23 +57,23 @@ const SHOTS = 'assets/cases/operations/';
 export const OTHER_PROJECTS: OtherProject[] = [
   {
     id: 'service-monitoring',
-    title: '서비스 장애를 감지하고 원인까지 찾는 감시 체계',
+    title: '서버부터 사용자 PC까지 장애를 잡아내는 감시 체계',
     category: '운영 자동화 · 서비스 안정성',
     period: '2026',
     summary:
-      '운영 중인 서비스 3개의 구성요소 13곳을 1분마다 확인하고, 이상이 이어지면 슬랙으로 알리는 감시 체계를 만들었습니다. 관리자 화면에서 상태, 응답 추이, 장애 이력을 함께 봅니다.',
+      '운영 중인 서비스 3개의 구성요소 13곳을 1분마다 확인하고, 이상이 이어지면 슬랙으로 알리는 감시 체계를 만들었습니다. 서버의 API 오류와, 서버까지 오지 않는 사용자 PC 프로그램의 오류도 관리자 화면에 모아 원인을 찾습니다.',
     stats: [
-      { value: '13곳', label: '1분마다 확인하는 구성요소' },
-      { value: '3회 연속', label: '실패해야 장애 경보 · 복구 때 한 번 더 알림' },
+      { value: '13곳', label: '1분마다 확인하는 서버 구성요소' },
+      { value: 'PC 앱 3종', label: '서버까지 오지 않는 가구빌더, 커넥터, 플로터 오류도 수집' },
       { value: '2.3초 → 0.5초', label: '감시가 찾은 느린 조회를 고친 결과' },
     ],
-    role: '감시 기준과 알림 흐름을 설계하고, 감시 프로그램, 상태 조회 API, 관리자 서버 상태 화면을 직접 개발했습니다.',
-    tags: ['Python', 'React', 'TypeScript', 'PostgreSQL', 'Slack API'],
+    role: '감시 기준과 알림 흐름을 설계했습니다. 감시 프로그램과 서버 상태 화면, API 오류와 PC 앱 오류 수집, 이를 모아 보는 관리자 콘솔까지 직접 개발했습니다.',
+    tags: ['Python', 'FastAPI', 'Ruby', 'React', 'TypeScript', 'PostgreSQL', 'Slack API'],
     work: [
-      { title: '판정 기준', text: '정상, 성능 저하, 장애, 확인 불가 4가지로 판정' },
-      { title: '알림과 보고', text: '장애와 복구는 한 번씩 알리고, 하루 두 번 정기 보고' },
-      { title: '원인 확인 화면', text: '상태, 응답 추이, 장애 이력을 한 화면에서 확인' },
-      { title: '처리 결과 추적', text: '요청 접수와 실제 업무 완료를 나눠서 확인' },
+      { title: '서버 감시', text: '13곳을 정상, 성능 저하, 장애, 확인 불가로 판정' },
+      { title: '알림과 보고', text: '3번 연속 실패하면 경보, 복구 때 한 번 더, 하루 두 번 정기 보고' },
+      { title: 'API 오류 수집', text: '같은 오류끼리 묶고 처리 상태와 이력을 남김' },
+      { title: 'PC 앱 오류 수집', text: '가구빌더와 커넥터의 오류를 작업 중단 없이 모음' },
     ],
     fixes: [
       {
@@ -67,6 +91,18 @@ export const OTHER_PROJECTS: OtherProject[] = [
       {
         problem: '감시가 운영 DB에서 평균 4~5초 걸리는 조회를 잡아냈습니다.',
         fix: '조회를 고쳐 운영 규모 테스트 데이터에서 2.3초를 0.5초로 줄였습니다.',
+      },
+      {
+        problem: '서버가 늦거나 끊겼을 때 오류 전송을 기다리면 가구빌더 편집과 출력이 함께 멈춥니다.',
+        fix: '오류 지점에서는 메모리에 담기만 하고, 전송은 따로 5초 제한으로 보냅니다. 같은 오류는 1분에 한 번만 보냅니다.',
+      },
+      {
+        problem: '오류 메시지에 토큰이나 파일 경로가 섞여 들어올 수 있습니다.',
+        fix: 'PC와 서버 양쪽에서 민감한 부분을 지운 첫 줄만 남기고, 도면 내용은 보내지 않습니다.',
+      },
+      {
+        problem: '자동 테스트가 일부러 낸 실패가 운영 오류 목록에 섞였습니다.',
+        fix: '테스트 실행 중에 난 오류는 보내지 않게 막았습니다.',
       },
     ],
     evidence: [
@@ -111,6 +147,51 @@ export const OTHER_PROJECTS: OtherProject[] = [
     ],
     scope:
       '구현 코드, 운영 문서, 실제 슬랙 메시지와 관리자 화면으로 정리 · 화면의 내부 정보는 가림 · 2.3초 → 0.5초는 운영 DB가 아닌 운영 규모 테스트 데이터로 잰 값',
+    watch: {
+      groups: [
+        {
+          name: '설계·가공 플랫폼',
+          targets: [
+            { name: 'Nginx', check: '앞단 서버 자체 응답', envs: ['운영', '개발'] },
+            { name: 'API 서버', check: '상태 응답과 엔진 로드', envs: ['운영', '개발'] },
+            { name: 'GPU 워커', check: '마지막 하트비트', envs: ['운영', '개발'] },
+            { name: 'DB', check: '연결과 느린 조회', envs: ['운영', '개발'] },
+          ],
+        },
+        {
+          name: '가구 주문 서비스',
+          targets: [
+            { name: '웹 서비스', check: '첫 화면과 앱 파일 응답', envs: ['운영'] },
+            { name: 'DB', check: '연결과 느린 조회', envs: ['운영'] },
+            { name: 'DB 함수 호출', check: '함수별 평균 응답 시간', envs: ['운영'] },
+          ],
+        },
+        {
+          name: '공장 관리 서비스',
+          targets: [
+            { name: '웹 서비스', check: '로그인 화면과 앱 파일 응답', envs: ['운영'] },
+            { name: 'API 서버', check: '읽기 전용 요청 응답', envs: ['운영'] },
+          ],
+        },
+      ],
+      operations: ['정기 작업', '결제 후처리', '작업 대기열', '외부 연동', '알림톡 발송'],
+      collectors: [
+        {
+          source: '서버 API',
+          sourceNote: '설계·가공 플랫폼',
+          how: '5xx와 처리하지 못한 예외는 모두, 4xx는 표본만',
+          view: 'API 오류 화면',
+          viewNote: '같은 오류끼리 묶고 처리 상태와 이력을 남김',
+        },
+        {
+          source: '사용자 PC 앱',
+          sourceNote: '가구빌더, 커넥터, 플로터',
+          how: '작업을 멈추지 않고 오류 위치와 대상만 전송',
+          view: '로컬 앱 이슈 화면',
+          viewNote: '프로그램별 추이, 오류 코드별 묶음, 처리 완료 표시',
+        },
+      ],
+    },
   },
   {
     id: 'wedraw-order-operations',

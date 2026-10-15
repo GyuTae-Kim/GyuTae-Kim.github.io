@@ -89,6 +89,221 @@
   word-break: keep-all;
 }
 
+/* Everything the monitor checks: one square per component, like the status page's cells. */
+.watch-board {
+  margin: 24px 0 0;
+  border: 1px solid var(--ink);
+  background: var(--sheet);
+}
+
+.watch-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.watch-label {
+  font: 600 var(--fs-1) / 1 var(--mono);
+  color: var(--blue);
+}
+
+.watch-head p {
+  margin: 0;
+  font-size: var(--fs-3);
+  font-weight: 600;
+}
+
+.watch-head p b {
+  font-size: var(--fs-5);
+  font-weight: 750;
+  letter-spacing: -0.5px;
+  color: var(--accent);
+}
+
+.watch-legend {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-1);
+  color: var(--muted);
+}
+
+.watch-legend i + i {
+  margin-left: 8px;
+}
+
+.watch-board i {
+  display: inline-block;
+  width: 10px;
+  height: 14px;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.watch-board i.dev {
+  background: var(--white);
+}
+
+.watch-groups {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+}
+
+.watch-group {
+  padding: 14px 18px 16px;
+  border-left: 1px solid var(--line);
+}
+
+.watch-group:first-child {
+  border-left: 0;
+}
+
+.watch-group h4 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: var(--fs-2);
+  line-height: 1.4;
+}
+
+.watch-group h4 b {
+  font: 600 var(--fs-1) / 1 var(--mono);
+  color: var(--accent);
+}
+
+.watch-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.watch-group li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: baseline;
+}
+
+.watch-cells {
+  grid-row: span 2;
+  display: inline-flex;
+  gap: 3px;
+  align-self: start;
+  padding-top: 4px;
+}
+
+.watch-group strong {
+  font-size: var(--fs-2);
+  line-height: 1.45;
+}
+
+.watch-group small {
+  font-size: var(--fs-1);
+  line-height: 1.5;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.watch-ops {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-1);
+}
+
+.watch-ops > span {
+  font-weight: 650;
+  color: var(--blue);
+}
+
+.watch-ops ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.watch-ops li {
+  padding: 3px 10px;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+}
+
+/* Errors gathered as they happen: where they come from → how → which admin screen. */
+.watch-collect-head {
+  border-top: 1px solid var(--ink);
+}
+
+.watch-collect {
+  list-style: none;
+  margin: 0;
+  padding: 14px 18px 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.watch-collect li {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) 22px minmax(0, 1.1fr) 22px minmax(0, 1.2fr);
+  align-items: center;
+  column-gap: 8px;
+}
+
+.watch-collect p {
+  margin: 0;
+  word-break: keep-all;
+}
+
+.watch-collect app-icon {
+  justify-self: center;
+  color: var(--line-strong);
+}
+
+.collect-source,
+.collect-view {
+  display: grid;
+  gap: 2px;
+  padding: 9px 14px 10px;
+  height: 100%;
+  align-content: center;
+}
+
+.collect-source {
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.collect-view {
+  background: var(--white);
+  border: 1px solid var(--ink);
+  border-left: 3px solid var(--blue);
+}
+
+.watch-collect strong {
+  font-size: var(--fs-2);
+  line-height: 1.45;
+}
+
+.watch-collect small,
+.collect-how {
+  font-size: var(--fs-1);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
 .operation-evidence {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -145,5 +360,39 @@
 
   .operation-evidence {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .watch-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .watch-group {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .watch-group:first-child {
+    border-top: 0;
+  }
+
+  .watch-legend {
+    margin-left: 0;
+  }
+
+  .watch-collect {
+    gap: 18px;
+  }
+
+  .watch-collect li {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+  }
+
+  .watch-collect app-icon {
+    transform: rotate(90deg);
+  }
+
+  .collect-how {
+    text-align: center;
   }
 }

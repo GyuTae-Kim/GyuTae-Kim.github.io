@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS, thumbSrcset } from '../../portfolio-data';
-import { OTHER_PROJECTS } from '../../other-projects-data';
+import { OTHER_PROJECTS, groupCount, watchCount } from '../../other-projects-data';
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -11,6 +11,8 @@ import { OTHER_PROJECTS } from '../../other-projects-data';
 export class PortfolioComponent implements OnDestroy {
   cases = CASE_STUDIES;
   otherProjects = OTHER_PROJECTS;
+  watchCount = watchCount;
+  groupCount = groupCount;
   selected: CaseStudy | undefined;
   // An id in the address that matches no project.
   missing = false;
