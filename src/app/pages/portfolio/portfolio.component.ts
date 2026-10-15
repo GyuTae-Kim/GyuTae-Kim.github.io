@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CASE_STUDIES, CaseStudy, FIGURE_KIND_LABELS, thumbSrcset } from '../../portfolio-data';
-import { OTHER_PROJECTS, groupCount, watchCount } from '../../other-projects-data';
+import { OTHER_PROJECTS, OtherProject, groupCount, watchCount } from '../../other-projects-data';
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -14,6 +14,8 @@ export class PortfolioComponent implements OnDestroy {
   watchCount = watchCount;
   groupCount = groupCount;
   selected: CaseStudy | undefined;
+  // An 「기타 프로젝트」 entry opened at /portfolio/<id>.
+  other: OtherProject | undefined;
   // An id in the address that matches no project.
   missing = false;
   kindLabels = FIGURE_KIND_LABELS;
@@ -42,7 +44,8 @@ export class PortfolioComponent implements OnDestroy {
         return;
       }
       this.selected = this.cases.find((c) => c.id === id);
-      this.missing = !!id && !this.selected;
+      this.other = this.otherProjects.find((p) => p.id === id);
+      this.missing = !!id && !this.selected && !this.other;
     });
   }
   toggleMotion(src: string): void {
@@ -67,6 +70,10 @@ export class PortfolioComponent implements OnDestroy {
   get next(): CaseStudy {
     const i = this.cases.indexOf(this.selected!);
     return this.cases[(i + 1) % this.cases.length];
+  }
+  get nextOther(): OtherProject {
+    const i = this.otherProjects.indexOf(this.other!);
+    return this.otherProjects[(i + 1) % this.otherProjects.length];
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

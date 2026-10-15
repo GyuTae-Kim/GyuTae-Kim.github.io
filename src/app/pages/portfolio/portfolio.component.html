@@ -1,5 +1,5 @@
 <div class="page-shell interior-page">
-  <ng-container *ngIf="!selected; else caseDetail">
+  <ng-container *ngIf="!selected && !other; else selected ? caseDetail : otherDetail">
     <p class="missing-note" *ngIf="missing" role="status">
       찾는 프로젝트가 없습니다. 아래 목록에서 골라 주세요.
     </p>
@@ -11,150 +11,24 @@
         잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.
       </p>
     </div>
-    <nav class="archive-nav" aria-label="프로젝트 목록 바로가기">
+    <nav class="archive-nav portfolio-jump" aria-label="프로젝트 목록 바로가기">
       <a [routerLink]="[]" fragment="other-projects">기타 프로젝트<app-icon name="arrow-down"></app-icon></a>
+      <a [routerLink]="[]" fragment="achievements">특허·프로그램 성과<app-icon name="arrow-down"></app-icon></a>
     </nav>
-    <a
-      class="text-link portfolio-achievement-jump"
-      [routerLink]="[]"
-      fragment="achievements"
-      >특허·프로그램 성과 보기<app-icon name="arrow-down"></app-icon></a
-    >
-    <article class="project-row" *ngFor="let project of cases">
-      <div class="project-row-meta">
-        <span class="large-index">{{ project.number }}</span>
-        <p class="eyebrow">{{ project.category }}</p>
-        <span class="row-period">{{ project.period }}</span>
-        <a
-          class="row-figure"
-          [routerLink]="['/portfolio', project.id]"
-          tabindex="-1"
-          aria-hidden="true"
-          ><img
-            [src]="project.thumb + '-672.webp'"
-            [attr.srcset]="srcset(project.thumb)"
-            sizes="(max-width: 720px) 100vw, 300px"
-            alt=""
-            width="560"
-            height="390"
-        /></a>
-      </div>
-      <div class="project-row-content">
-        <h2>
-          <a [routerLink]="['/portfolio', project.id]"
-            >{{ project.title }}<app-icon name="arrow-right"></app-icon></a
-          >
-        </h2>
-        <p class="row-subtitle">{{ project.subtitle }}</p>
-        <div class="tags">
-          <span *ngFor="let tag of project.tags">{{ tag }}</span>
-        </div>
-        <div class="project-summary">
-          <div>
-            <h3>맡은 역할</h3>
-            <p>{{ project.role }} {{ project.roleNote }}</p>
-          </div>
-          <div>
-            <h3>결과</h3>
-            <p class="row-headline">{{ project.headline }}</p>
-            <ul class="mini-stats">
-              <li *ngFor="let stat of project.stats.slice(0, 2)">
-                <b>{{ stat.value }}</b> {{ stat.label }}
-              </li>
-            </ul>
-          </div>
-        </div>
-        <a class="text-link" [routerLink]="['/portfolio', project.id]"
-          >프로젝트 보기<app-icon name="arrow-right"></app-icon></a
-        >
-      </div>
-    </article>
+    <ng-container *ngFor="let project of cases">
+      <ng-container
+        *ngTemplateOutlet="row; context: { $implicit: project, role: project.roleNote ? project.role + ' ' + project.roleNote : project.role }"
+      ></ng-container>
+    </ng-container>
     <section class="other-projects" id="other-projects" aria-labelledby="other-projects-title">
       <div class="archive-intro">
         <h2 id="other-projects-title">기타 프로젝트</h2>
         <p>제품을 운영하면서 서비스 감시와 오류 수집 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.</p>
       </div>
-      <article class="research-entry other-project" *ngFor="let project of otherProjects" [id]="project.id" [attr.aria-labelledby]="project.id + '-title'">
-        <p class="eyebrow">{{ project.category }} · {{ project.period }}</p>
-        <h3 class="other-project-title" [id]="project.id + '-title'">{{ project.title }}</h3>
-        <p class="research-summary">{{ project.summary }}</p>
-        <ul class="result-stats">
-          <li *ngFor="let stat of project.stats">
-            <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
-          </li>
-        </ul>
-        <dl class="case-facts single"><div><dt>맡은 역할</dt><dd>{{ project.role }}</dd></div></dl>
-        <ol class="work-chips" aria-label="한 일">
-          <li *ngFor="let item of project.work; let i = index">
-            <b>{{ i + 1 }}</b><strong>{{ item.title }}</strong><span>{{ item.text }}</span>
-          </li>
-        </ol>
-        <div class="tags"><span *ngFor="let tag of project.tags">{{ tag }}</span></div>
-        <div class="watch-board" *ngIf="project.watch as watch" role="group" aria-label="감시 범위">
-          <div class="watch-head">
-            <span class="watch-label">서버 감시</span>
-            <p><b>{{ watchCount(watch) }}곳</b>을 1분마다 확인합니다</p>
-            <span class="watch-legend" aria-hidden="true"><i></i>운영<i class="dev"></i>개발</span>
-          </div>
-          <div class="watch-groups">
-            <section class="watch-group" *ngFor="let group of watch.groups">
-              <h4><span>{{ group.name }}</span><b>{{ groupCount(group) }}곳</b></h4>
-              <ul>
-                <li *ngFor="let target of group.targets">
-                  <span class="watch-cells" aria-hidden="true"
-                    ><i *ngFor="let env of target.envs" [class.dev]="env === '개발'"></i
-                  ></span>
-                  <strong>{{ target.name }}<span class="sr-only"> ({{ target.envs.join(', ') }})</span></strong>
-                  <small>{{ target.check }}</small>
-                </li>
-              </ul>
-            </section>
-          </div>
-          <div class="watch-ops">
-            <span>업무 처리도 함께 확인</span>
-            <ul><li *ngFor="let item of watch.operations">{{ item }}</li></ul>
-          </div>
-          <div class="watch-head watch-collect-head">
-            <span class="watch-label">오류 수집</span>
-            <p>오류는 생길 때마다 모읍니다</p>
-          </div>
-          <ol class="watch-collect">
-            <li *ngFor="let lane of watch.collectors">
-              <p class="collect-source"><strong>{{ lane.source }}</strong><small>{{ lane.sourceNote }}</small></p>
-              <app-icon name="arrow-right"></app-icon>
-              <p class="collect-how">{{ lane.how }}</p>
-              <app-icon name="arrow-right"></app-icon>
-              <p class="collect-view"><strong>{{ lane.view }}</strong><small>{{ lane.viewNote }}</small></p>
-            </li>
-          </ol>
-        </div>
-        <div class="operation-evidence" *ngIf="project.evidence.length" aria-label="실제 운영 화면">
-          <ng-container *ngTemplateOutlet="shots; context: { $implicit: project.evidence }"></ng-container>
-        </div>
-        <details class="result-details">
-          <summary><app-icon name="chevron"></app-icon>자세히 · 문제와 해결<ng-container *ngIf="project.moreEvidence.length">, 화면</ng-container></summary>
-          <ol class="fix-list">
-            <li *ngFor="let item of project.fixes">
-              <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
-              <b><app-icon name="arrow-right"></app-icon></b>
-              <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
-            </li>
-          </ol>
-          <div class="operation-evidence" *ngIf="project.moreEvidence.length">
-            <ng-container *ngTemplateOutlet="shots; context: { $implicit: project.moreEvidence }"></ng-container>
-          </div>
-        </details>
-        <p class="result-scope">{{ project.scope }}</p>
-      </article>
+      <ng-container *ngFor="let project of otherProjects">
+        <ng-container *ngTemplateOutlet="row; context: { $implicit: project, role: project.role }"></ng-container>
+      </ng-container>
     </section>
-    <ng-template #shots let-list>
-      <figure *ngFor="let shot of list">
-        <button type="button" class="zoom-open" [attr.aria-label]="shot.title + ' 크게 보기'" (click)="openZoom(shot.full, shot.alt)">
-          <img [src]="shot.src" [alt]="shot.alt" [width]="shot.width" [height]="shot.height" loading="lazy" />
-        </button>
-        <figcaption><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
-      </figure>
-    </ng-template>
     <app-achievements></app-achievements>
     <aside class="end-note">
       학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는
@@ -357,6 +231,155 @@
         ><app-icon class="row-arrow" name="arrow-right"></app-icon></a
       >
     </nav>
+  </ng-template>
+  <ng-template #otherDetail>
+    <a class="back-link" routerLink="/portfolio" fragment="other-projects"
+      ><app-icon name="arrow-left"></app-icon>프로젝트 목록</a
+    >
+    <div class="page-intro detail-intro">
+      <p class="eyebrow">기타 프로젝트 {{ other!.number }} · {{ other!.category }}</p>
+      <h1>{{ other!.title }}</h1>
+      <p>{{ other!.subtitle }}</p>
+      <div class="tags">
+        <span *ngFor="let tag of other!.tags">{{ tag }}</span>
+      </div>
+    </div>
+    <article class="other-project" aria-labelledby="other-headline">
+      <h2 class="result-headline" id="other-headline">{{ other!.headline }}</h2>
+      <p class="research-summary">{{ other!.summary }}</p>
+      <ul class="result-stats">
+        <li *ngFor="let stat of other!.stats">
+          <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+        </li>
+      </ul>
+      <div class="watch-board" *ngIf="other!.watch as watch" role="group" aria-label="감시 범위">
+        <div class="watch-head">
+          <span class="watch-label">서버 감시</span>
+          <p><b>{{ watchCount(watch) }}곳</b>을 1분마다 확인합니다</p>
+          <span class="watch-legend" aria-hidden="true"><i></i>운영<i class="dev"></i>개발</span>
+        </div>
+        <div class="watch-groups">
+          <section class="watch-group" *ngFor="let group of watch.groups">
+            <h4><span>{{ group.name }}</span><b>{{ groupCount(group) }}곳</b></h4>
+            <ul>
+              <li *ngFor="let target of group.targets">
+                <span class="watch-cells" aria-hidden="true"
+                  ><i *ngFor="let env of target.envs" [class.dev]="env === '개발'"></i
+                ></span>
+                <strong>{{ target.name }}<span class="sr-only"> ({{ target.envs.join(', ') }})</span></strong>
+                <small>{{ target.check }}</small>
+              </li>
+            </ul>
+          </section>
+        </div>
+        <div class="watch-ops">
+          <span>업무 처리도 함께 확인</span>
+          <ul><li *ngFor="let item of watch.operations">{{ item }}</li></ul>
+        </div>
+        <div class="watch-head watch-collect-head">
+          <span class="watch-label">오류 수집</span>
+          <p>오류는 생길 때마다 모읍니다</p>
+        </div>
+        <ol class="watch-collect">
+          <li *ngFor="let lane of watch.collectors">
+            <p class="collect-source"><strong>{{ lane.source }}</strong><small>{{ lane.sourceNote }}</small></p>
+            <app-icon name="arrow-right"></app-icon>
+            <p class="collect-how">{{ lane.how }}</p>
+            <app-icon name="arrow-right"></app-icon>
+            <p class="collect-view"><strong>{{ lane.view }}</strong><small>{{ lane.viewNote }}</small></p>
+          </li>
+        </ol>
+      </div>
+      <div class="operation-evidence" *ngIf="other!.evidence.length" aria-label="실제 운영 화면">
+        <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.evidence }"></ng-container>
+      </div>
+      <dl class="case-facts single"><div><dt>맡은 역할</dt><dd>{{ other!.role }}</dd></div></dl>
+      <ol class="work-chips" aria-label="한 일">
+        <li *ngFor="let item of other!.work; let i = index">
+          <b>{{ i + 1 }}</b><strong>{{ item.title }}</strong><span>{{ item.text }}</span>
+        </li>
+      </ol>
+      <details class="result-details">
+        <summary><app-icon name="chevron"></app-icon>자세히 · 문제와 해결<ng-container *ngIf="other!.moreEvidence.length">, 화면</ng-container></summary>
+        <ol class="fix-list">
+          <li *ngFor="let item of other!.fixes">
+            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+            <b><app-icon name="arrow-right"></app-icon></b>
+            <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
+          </li>
+        </ol>
+        <div class="operation-evidence" *ngIf="other!.moreEvidence.length">
+          <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.moreEvidence }"></ng-container>
+        </div>
+      </details>
+      <p class="result-scope">{{ other!.scope }}</p>
+    </article>
+    <nav class="case-next" aria-label="다음 프로젝트">
+      <a [routerLink]="['/portfolio', nextOther.id]"
+        ><span class="eyebrow">다음 기타 프로젝트 {{ nextOther.number }}</span
+        ><strong>{{ nextOther.title }}</strong
+        ><app-icon class="row-arrow" name="arrow-right"></app-icon></a
+      >
+    </nav>
+  </ng-template>
+  <ng-template #row let-project let-role="role">
+    <article class="project-row">
+      <div class="project-row-meta">
+        <span class="large-index">{{ project.number }}</span>
+        <p class="eyebrow">{{ project.category }}</p>
+        <span class="row-period">{{ project.period }}</span>
+        <a
+          class="row-figure"
+          [routerLink]="['/portfolio', project.id]"
+          tabindex="-1"
+          aria-hidden="true"
+          ><img
+            [src]="project.thumb + '-672.webp'"
+            [attr.srcset]="srcset(project.thumb)"
+            sizes="(max-width: 720px) 100vw, 300px"
+            alt=""
+            width="560"
+            height="390"
+        /></a>
+      </div>
+      <div class="project-row-content">
+        <h2>
+          <a [routerLink]="['/portfolio', project.id]"
+            >{{ project.title }}<app-icon name="arrow-right"></app-icon></a
+          >
+        </h2>
+        <p class="row-subtitle">{{ project.subtitle }}</p>
+        <div class="tags">
+          <span *ngFor="let tag of project.tags">{{ tag }}</span>
+        </div>
+        <div class="project-summary">
+          <div>
+            <h3>맡은 역할</h3>
+            <p>{{ role }}</p>
+          </div>
+          <div>
+            <h3>결과</h3>
+            <p class="row-headline">{{ project.headline }}</p>
+            <ul class="mini-stats">
+              <li *ngFor="let stat of project.stats.slice(0, 2)">
+                <b>{{ stat.value }}</b> {{ stat.label }}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <a class="text-link" [routerLink]="['/portfolio', project.id]"
+          >프로젝트 보기<app-icon name="arrow-right"></app-icon></a
+        >
+      </div>
+    </article>
+  </ng-template>
+  <ng-template #shots let-list>
+    <figure *ngFor="let shot of list">
+      <button type="button" class="zoom-open" [attr.aria-label]="shot.title + ' 크게 보기'" (click)="openZoom(shot.full, shot.alt)">
+        <img [src]="shot.src" [alt]="shot.alt" [width]="shot.width" [height]="shot.height" loading="lazy" />
+      </button>
+      <figcaption><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
+    </figure>
   </ng-template>
   <dialog
     #zoomDialog

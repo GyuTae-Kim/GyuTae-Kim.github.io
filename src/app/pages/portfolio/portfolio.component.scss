@@ -27,11 +27,17 @@
   scroll-margin-top: calc(var(--header-h) + 20px);
 }
 
-.other-project-title {
-  font-size: var(--fs-5);
-  letter-spacing: -0.7px;
-  line-height: 1.45;
-  margin: 8px 0;
+/* The intro already draws the line above the first row. */
+@media (min-width: 768px) {
+  .other-projects .archive-intro + .project-row {
+    border-top: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .other-projects .archive-intro {
+    margin-bottom: 16px;
+  }
 }
 
 .other-project .result-stats b {
@@ -105,8 +111,9 @@
   border-bottom: 1px solid var(--ink);
 }
 
+/* Korean words spread apart in the mono face, so these labels use the text face. */
 .watch-label {
-  font: 600 var(--fs-1) / 1 var(--mono);
+  font: 650 var(--fs-1) / 1 var(--sans);
   color: var(--blue);
 }
 

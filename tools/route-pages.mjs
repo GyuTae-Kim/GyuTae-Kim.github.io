@@ -11,19 +11,22 @@ const site = 'https://gyutae-kim.github.io';
 const suffix = ' — 김규태 · Sean Kim';
 const base = readFileSync(join(outDir, 'index.html'), 'utf8');
 
-// Case ids, titles and headlines come from the same data the app renders.
-const data = readFileSync('src/app/portfolio-data.ts', 'utf8');
-const cases = data
-  .split(/\n  \{\n    id: /)
-  .slice(1)
-  .map((block) => ({
-    id: block.match(/^'([^']+)'/)[1],
-    number: block.match(/\n    number: '([^']+)'/)[1],
-    title: block.match(/\n    title: '([^']+)'/)[1],
-    headline: block.match(/\n    headline: '([^']+)'/)[1],
-  }));
+// Project ids, titles and headlines come from the same data the app renders.
+function projects(file) {
+  return readFileSync(file, 'utf8')
+    .split(/\n  \{\n    id: /)
+    .slice(1)
+    .map((block) => ({
+      id: block.match(/^'([^']+)'/)[1],
+      number: block.match(/\n    number: '([^']+)'/)[1],
+      title: block.match(/\n    title: '([^']+)'/)[1],
+      headline: block.match(/\n    headline: '([^']+)'/)[1],
+    }));
+}
+const cases = projects('src/app/portfolio-data.ts');
+const others = projects('src/app/other-projects-data.ts');
 
-const caseLinks = cases.map((c) => ({ href: `/portfolio/${c.id}`, label: c.title }));
+const caseLinks = [...cases, ...others].map((c) => ({ href: `/portfolio/${c.id}`, label: c.title }));
 
 const routes = [
   {
@@ -43,6 +46,15 @@ const routes = [
     description: `${c.headline}. 맡은 역할과 단계마다 한 일을 정리했습니다.`,
     image: `assets/og/${c.id}.jpg`,
     imageAlt: `도면 시트 모양의 표지. 프로젝트 ${c.number}, ${c.title}.`,
+    links: [{ href: '/portfolio', label: '프로젝트 목록' }],
+  })),
+  ...others.map((c) => ({
+    files: [`portfolio/${c.id}.html`],
+    path: `/portfolio/${c.id}`,
+    title: c.title,
+    description: `${c.headline}. 맡은 역할과 문제와 해결을 정리했습니다.`,
+    image: 'assets/og/portfolio.jpg',
+    imageAlt: `도면 시트 모양의 표지. 기타 프로젝트 ${c.number}, ${c.title}.`,
     links: [{ href: '/portfolio', label: '프로젝트 목록' }],
   })),
   {
