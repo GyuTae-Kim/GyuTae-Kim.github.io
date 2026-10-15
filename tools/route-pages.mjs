@@ -1,5 +1,5 @@
-// Writes a copy of the built index.html for each app route, so GitHub Pages answers deep
-// links with 200 instead of the 404 redirect, and link previews get the page's own title,
+// Writes a copy of the built index.html for each app route (and each old address the app
+// redirects), so GitHub Pages answers deep links with 200 instead of the 404 redirect, and link previews get the page's own title,
 // description and image. Each copy also carries a <noscript> summary with links for readers
 // and crawlers that do not run JavaScript. Also writes sitemap.xml for the same routes.
 // Usage: node tools/route-pages.mjs [build-dir]
@@ -26,6 +26,15 @@ function projects(file) {
 const cases = projects('src/app/portfolio-data.ts');
 const others = projects('src/app/other-projects-data.ts');
 
+// Old project addresses the app redirects (PortfolioComponent.movedCases) get a copy of the
+// new page too, so a shared old link still answers 200 with the right preview.
+const moved = readFileSync('src/app/pages/portfolio/portfolio.component.ts', 'utf8').match(
+  /movedCases: Record<string, string> = \{([^}]*)\}/,
+);
+if (!moved) throw new Error('missing movedCases');
+const aliases = [...moved[1].matchAll(/'([^']+)': '([^']+)'/g)].map(([, from, to]) => ({ from, to }));
+const aliasFiles = (id) => aliases.filter((a) => a.to === id).map((a) => `portfolio/${a.from}.html`);
+
 const caseLinks = [...cases, ...others].map((c) => ({ href: `/portfolio/${c.id}`, label: c.title }));
 
 const routes = [
@@ -40,7 +49,7 @@ const routes = [
     links: caseLinks,
   },
   ...cases.map((c) => ({
-    files: [`portfolio/${c.id}.html`],
+    files: [`portfolio/${c.id}.html`, ...aliasFiles(c.id)],
     path: `/portfolio/${c.id}`,
     title: c.title,
     description: `${c.headline}. 맡은 역할과 단계마다 한 일을 정리했습니다.`,
@@ -49,7 +58,7 @@ const routes = [
     links: [{ href: '/portfolio', label: '프로젝트 목록' }],
   })),
   ...others.map((c) => ({
-    files: [`portfolio/${c.id}.html`],
+    files: [`portfolio/${c.id}.html`, ...aliasFiles(c.id)],
     path: `/portfolio/${c.id}`,
     title: c.title,
     description: `${c.headline}. 맡은 역할과 문제와 해결을 정리했습니다.`,
