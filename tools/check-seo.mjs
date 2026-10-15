@@ -124,7 +124,7 @@ for (const page of SEARCH_PAGES) {
 }
 const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { contentType: 'text/xml' });
 const sitemapUrls = [...sitemap.window.document.querySelectorAll('loc')].map((loc) => loc.textContent);
-assert.deepEqual(sitemapUrls, SEARCH_PAGES.map((page) => SITE_URL + page.path));
+assert.deepEqual(sitemapUrls, [...new Set([...SEARCH_PAGES.map((page) => SITE_URL + page.path), ...[...hostedApps].filter((url) => new URL(url).origin === SITE_URL)])]);
 sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
