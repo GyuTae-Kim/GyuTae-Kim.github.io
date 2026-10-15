@@ -5,7 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { SEARCH_PAGES, SITE_URL, renderPage } = require('../dist/server/main.js');
+const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage } = require('../dist/server/main.js');
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
 const escape = (text) => text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -51,7 +51,10 @@ for (const [from, to] of Object.entries(redirects)) {
 }
 
 // Omit lastmod: a build timestamp isn't evidence that each page's content changed.
-const urls = SEARCH_PAGES.map(({ path }) => `  <url><loc>${SITE_URL}${path}</loc></url>`).join('\n');
+// Include published applications under this verified host; planned tools have no URL.
+const sitemapUrls = [...new Set([...SEARCH_PAGES.map(({ path }) => SITE_URL + path),
+  ...OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? [url] : [])])];
+const urls = sitemapUrls.map((url) => `  <url><loc>${escape(url)}</loc></url>`).join('\n');
 writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
 writePage('.nojekyll', '');
-console.log(`sitemap.xml → ${SEARCH_PAGES.length} URLs`);
+console.log(`sitemap.xml → ${sitemapUrls.length} URLs`);
