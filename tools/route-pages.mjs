@@ -3,9 +3,12 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { createRequire } from 'node:module';
+import { assertContentDate, contentFingerprint, validateDate } from './content-dates.mjs';
 
 const require = createRequire(import.meta.url);
-const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage } = require('../dist/server/main.js');
+const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage, contentModified } = require('../dist/server/main.js');
+const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json', import.meta.url), 'utf8'));
+const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
 const escape = (text) => text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -27,6 +30,8 @@ function writePage(file, html) {
 
 for (const page of SEARCH_PAGES) {
   const html = await renderPage(base, SITE_URL + page.path);
+  assertContentDate(page.path, history[page.path], contentFingerprint(html, path => readFileSync(resolve('src' + path))));
+  if (contentModified(page.path) !== history[page.path].lastmod) throw new Error('Rebuild browser/server after updating content dates.');
   if (!html.includes('<h1') || !html.includes('id="site-structured-data"')) {
     throw new Error(`Incomplete render: ${page.path}`);
   }
@@ -50,11 +55,15 @@ for (const [from, to] of Object.entries(redirects)) {
   for (const file of [`${from.slice(1)}.html`, `${from.slice(1)}/index.html`]) writePage(file, html);
 }
 
-// Omit lastmod: a build timestamp isn't evidence that each page's content changed.
 // Include published applications under this verified host; planned tools have no URL.
 const sitemapUrls = [...new Set([...SEARCH_PAGES.map(({ path }) => SITE_URL + path),
   ...OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? [url] : [])])];
-const urls = sitemapUrls.map((url) => `  <url><loc>${escape(url)}</loc></url>`).join('\n');
+const urls = sitemapUrls.map((url) => {
+  const path = new URL(url).pathname;
+  const lastmod = contentModified(path) || linkedDates[url]?.lastmod;
+  validateDate(lastmod);
+  return `  <url><loc>${escape(url)}</loc><lastmod>${lastmod}</lastmod></url>`;
+}).join('\n');
 writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
 writePage('.nojekyll', '');
 console.log(`sitemap.xml → ${sitemapUrls.length} URLs`);

@@ -42,13 +42,30 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 
 ## 검색 노출 관리 (구글 · 네이버)
 
-`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 10개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
+`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 15개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
 
 - `src/app/site-seo.ts`: 제목·설명·대표 주소·공유 이미지와 Person, WebSite, 페이지, 프로젝트, 탐색 경로 구조화 데이터의 공통 원본입니다. 새 프로젝트는 기존 프로젝트 데이터에서 자동으로 가져옵니다.
-- `src/app/seo.service.ts`: 직접 방문과 사이트 안에서 이동할 때 같은 검색 정보를 유지합니다. 없는 페이지에는 `noindex`를 적용합니다.
-- `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, `sitemap.xml`, `.nojekyll`을 만듭니다. 사이트맵에는 실제 콘텐츠 변경일을 추적하기 전까지 `lastmod`를 쓰지 않습니다.
+- `src/app/seo.service.ts`: 초기 HTML과 브라우저 이동에 공통으로 쓰는 메타데이터 생성 코드입니다. 제목·설명·작성자·canonical·Open Graph·Twitter·구조화 데이터를 생성합니다. 필드 구성은 같고 페이지별 값과 구조화 데이터 종류만 달라집니다. `src/index.html`에 이 정보를 중복 작성하지 않습니다. 없는 페이지에는 `noindex`를 적용합니다.
+- `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, `sitemap.xml`, `.nojekyll`을 만듭니다. 사이트맵의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
 - `tools/search-verification.json`: Search Console과 서치어드바이저가 제공한 HTML 태그의 `content` 값을 넣습니다. 빈 값은 태그를 생성하지 않습니다. 생성된 `docs/index.html`을 직접 수정하면 다음 빌드 때 사라집니다.
 - `npm run check:seo`: 빌드 후 전체 본문·메타데이터·구조화 데이터·내부 링크·이미지·사이트맵·robots.txt·404를 검사합니다.
+
+### 콘텐츠 수정일 관리
+
+`src/app/content-history.json`은 페이지별 실제 수정 시각과 콘텐츠 지문을 저장합니다. 초기 날짜는 Git의 본문·메타데이터·이미지 변경 이력에서 복원했습니다. 이후 본문·검색 정보·사용 이미지가 바뀌면 실제 수정 시각을 UTC로 지정해 갱신합니다. 아래 시각은 예시이므로 실제 작업 시각으로 바꾸세요.
+
+```sh
+npm run update:content-dates -- --at 2026-10-16T00:00:00Z
+npm run test:content-dates
+npm run build
+npm run check:seo
+```
+
+변경된 페이지만 새 날짜를 기록합니다. 단순 재빌드·CSS·번들 파일명·푸터 배포 표시가 바뀌어도 기존 날짜를 유지합니다. 미래 날짜와 변경 전보다 이른 날짜는 거부합니다. 콘텐츠를 바꾸고 기록을 갱신하지 않으면 빌드가 실패하므로, 기록 파일과 생성된 `docs/`를 함께 커밋하세요. 글의 작성일을 추정해 `datePublished`를 만들지는 않습니다.
+
+PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 검사를 실행합니다.
+
+통합 사이트맵에 포함한 별도 저장소 뷰어의 날짜는 `tools/linked-content-dates.json`에서 관리합니다. 뷰어를 먼저 배포한 뒤 `npm run sync:viewer-date`로 공개된 뷰어 사이트맵 날짜를 가져오고 다시 빌드합니다. 두 저장소를 함께 준비할 때는 `npm run sync:viewer-date -- --file /절대경로/2dcad-viewer/dist/sitemap.xml`로 검증된 뷰어 산출물을 읽을 수 있습니다. 일반 빌드에는 네트워크나 다른 체크아웃이 필요하지 않습니다. 뷰어 배포가 끝나기 전에 새 날짜를 담은 통합 사이트맵을 배포하지 마세요.
 
 ### 배포 후 등록
 

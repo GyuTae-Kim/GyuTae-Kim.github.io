@@ -12,12 +12,14 @@ export class SeoService {
     this.meta.updateTag({ name: 'robots', content: page ? 'index, follow, max-image-preview:large' : 'noindex, follow' });
     if (!page) {
       this.title.setTitle('없는 페이지 — 김규태 · Sean Kim');
+      this.meta.updateTag({ name: 'description', content: '요청한 페이지를 찾을 수 없습니다. 김규태의 프로젝트·연구·OpenCAD 안내에서 다시 찾아 주세요.' });
       this.document.querySelector('link[rel="canonical"]')?.remove();
       this.document.getElementById('site-structured-data')?.remove();
       this.document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"]').forEach((tag) => tag.remove());
       return;
     }
     this.title.setTitle(page.title);
+    this.meta.updateTag({ name: 'author', content: SITE_NAME });
     this.meta.updateTag({ name: 'description', content: page.description });
     const image = `${SITE_URL}/${page.image}`;
     for (const [key, value] of Object.entries({
@@ -45,5 +47,11 @@ export class SeoService {
       this.document.head.appendChild(data);
     }
     data.textContent = JSON.stringify(structuredData(page)).replace(/</g, '\\u003c');
+    // One writer for SSR and browser navigation. Keep sharing tags ahead of
+    // styles and large body data for clients that fetch only the first 8 KiB.
+    const anchor = this.document.head.querySelector('base');
+    for (const tag of Array.from(this.document.head.querySelectorAll('meta[name="description"], meta[name="robots"], meta[name="author"], meta[property^="og:"], meta[name^="twitter:"], link[rel="canonical"], #site-structured-data'))) {
+      this.document.head.insertBefore(tag, anchor);
+    }
   }
 }

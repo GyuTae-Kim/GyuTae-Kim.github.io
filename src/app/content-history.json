@@ -1,0 +1,62 @@
+{
+  "/": {
+    "lastmod": "2026-10-15T17:10:49Z",
+    "fingerprint": "76f439c997e8100e20b794adc9e6d184a33c5bba75ec8abc99f4ba4348c62bdd"
+  },
+  "/portfolio": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "ba02dbae88514cd8198aa54a1caca3b17421e08691ffac552f82917adf44ee2b"
+  },
+  "/portfolio/cad-feature-recognition": {
+    "lastmod": "2026-10-15T18:01:14Z",
+    "fingerprint": "cc5134662f1d8de9b8518fcdff58d0edae0410f2183e47582b96232ab327eeeb"
+  },
+  "/portfolio/panel-classification": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "4d23e53c3ad57ba8ad8c7208142d0d7792efe5a20b14f9b823115e81e331bffa"
+  },
+  "/portfolio/wedraw-pro": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "3a01da0be92c373429c37240d98de80d4002a3365f92e69e4a6b2bf38634d755"
+  },
+  "/portfolio/service-monitoring": {
+    "lastmod": "2026-10-15T11:21:06Z",
+    "fingerprint": "c9dfbf55253c6c3383ced82489f5de48995a5fa5657966e22dfda9d9539985d1"
+  },
+  "/portfolio/order-invoice-sync": {
+    "lastmod": "2026-10-15T11:21:06Z",
+    "fingerprint": "ff1a1609495f3328fe270bfc680e2f4a95dc3944b9f180f602fa3913a6759cc8"
+  },
+  "/research": {
+    "lastmod": "2026-10-15T17:22:57Z",
+    "fingerprint": "250d286dec85ebc0e153243e2e471dfef59f5326f8e1f41d96e92d94cbf79a6d"
+  },
+  "/opencad": {
+    "lastmod": "2026-10-15T16:36:17Z",
+    "fingerprint": "01be54225c41580ae41b61987990ccaf5fe18377ff2e1dc29e83a6d31a5a701b"
+  },
+  "/notes": {
+    "lastmod": "2026-10-15T16:36:17Z",
+    "fingerprint": "182d7278473e7bd245b984a6771ca0a3b490294dbf93b8db65b205a5c3185ad5"
+  },
+  "/opencad/guides/open-dwg-dxf": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "a230069f65a543c467949cd2639ecca596126f25d58bb9e16ce8b2a7be53d38f"
+  },
+  "/opencad/guides/measure-export": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "721831091bd3261a656c7ed5f3fdebbcc9a12f441d34b08bd3c7bff27f941e9a"
+  },
+  "/notes/cad-cam-feature-recognition": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "51a2fc24864454ae52c7754a594a1106f566a4a0d3cdd5cb0c6ef5e7d2fbf5f1"
+  },
+  "/notes/furniture-manufacturing-data": {
+    "lastmod": "2026-10-15T17:29:09Z",
+    "fingerprint": "df4cd80b9f3d82242bcd61c70e5de63f9b9b968e922ca7ac4cb412760915ad73"
+  },
+  "/contact": {
+    "lastmod": "2026-10-15T17:10:49Z",
+    "fingerprint": "42b44b4a84b2cb9f1358b0f71b5d0325f3b89aa341b2dd2ca0e87653d9adcb69"
+  }
+}

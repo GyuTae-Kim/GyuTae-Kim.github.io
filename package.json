@@ -9,7 +9,10 @@
     "test": "ng test",
     "deploy": "npm run build && npm run check:seo && npx gh-pages -d docs --dotfiles",
     "preview": "ng serve --host 127.0.0.1 --port 4317",
-    "check:seo": "node tools/check-seo.mjs docs"
+    "check:seo": "node tools/check-seo.mjs docs",
+    "update:content-dates": "ng run portfolio:server:production && node tools/update-content-dates.mjs",
+    "test:content-dates": "node --test tools/content-dates.test.mjs",
+    "sync:viewer-date": "node tools/sync-linked-dates.mjs"
   },
   "private": true,
   "dependencies": {
