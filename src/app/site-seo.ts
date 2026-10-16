@@ -79,10 +79,10 @@ export const SEARCH_PAGES: SearchPage[] = [
   })),
   {
     path: '/opencad',
-    title: 'OpenCAD 무료 캐드 뷰어·DWG·DXF 도구 | 김규태',
-    description: '김규태가 만드는 무료 오픈소스 캐드 뷰어 OpenCAD입니다. 설치·회원가입 없이 DWG·DXF 도면 열기·측정·편집·저장과 PDF 출력을 지원합니다. 사용 안내와 지원 범위를 확인하세요.',
+    title: 'OpenCAD 무료 캐드 뷰어·DWG·STEP·SKP·NC | 김규태',
+    description: '김규태가 만드는 무료 오픈소스 캐드 뷰어 OpenCAD입니다. 설치·회원가입 없이 DWG·DXF 도면 열기·측정·편집과 PDF 출력, STEP·SKP 3D 모델 보기, NC 가공 프로그램의 공구 경로 확인을 지원합니다.',
     image: 'assets/og/opencad.jpg',
-    imageAlt: 'OpenCAD 표지. 브라우저에서 DWG·DXF 도면을 여는 2D 뷰어.',
+    imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 가공 프로그램을 브라우저에서 여는 뷰어 네 가지의 화면.',
     kind: 'CollectionPage',
   },
   {
