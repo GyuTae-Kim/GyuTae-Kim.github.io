@@ -44,20 +44,20 @@
     "fingerprint": "ffe15ce9e15d3cf3a386b3e538c169e7c235329e643d60ff74d35cd777de9e29"
   },
   "/opencad": {
-    "lastmod": "2026-10-16T03:42:13Z",
-    "fingerprint": "5b9ff7ede5e0863be18035a40e90c7db3670891766c26e4d26ed281864547a1b"
+    "lastmod": "2026-10-16T05:38:19Z",
+    "fingerprint": "cc8caac41ff3db3981d3e1925a07c7fa2759d2c8398041abf3821ad35445b1aa"
   },
   "/notes": {
     "lastmod": "2026-10-15T16:36:17Z",
     "fingerprint": "182d7278473e7bd245b984a6771ca0a3b490294dbf93b8db65b205a5c3185ad5"
   },
   "/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-15T17:29:09Z",
-    "fingerprint": "a230069f65a543c467949cd2639ecca596126f25d58bb9e16ce8b2a7be53d38f"
+    "lastmod": "2026-10-16T05:38:19Z",
+    "fingerprint": "82b181aff8ebbfff53b6627ef9e674abfe908c7cb9ca9119ae3dc08b6414a73b"
   },
   "/opencad/guides/measure-export": {
-    "lastmod": "2026-10-15T17:29:09Z",
-    "fingerprint": "721831091bd3261a656c7ed5f3fdebbcc9a12f441d34b08bd3c7bff27f941e9a"
+    "lastmod": "2026-10-16T05:38:19Z",
+    "fingerprint": "31bcdfb5f328d66fe139f96b7729ff3c2e8b52fd6301f603ff37d6f82b1c5f97"
   },
   "/notes/cad-cam-feature-recognition": {
     "lastmod": "2026-10-15T17:29:09Z",

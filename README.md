@@ -5,7 +5,7 @@ AI, 3D 형상, CAD/CAM 연구개발 포트폴리오 사이트의 소스입니다
 - `/`: 소개, 3D 개념 모델 뷰어, 주요 프로젝트, 학부연구생 때의 연구, 특허와 프로그램
 - `/portfolio`, `/portfolio/:id`: 프로젝트 세 개(가공 특징 인식과 CAM 자동화, 가구 패널 인식, Wedraw Pro)와 기타 프로젝트
 - `/research`, `/research/:id`: 학부연구생 때 공개한 연구 세 개의 카드 목록과 개별 실험 결과
-- `/opencad`: 개인 프로젝트 OpenCAD의 뷰어 목록. 공개한 2D 도면 뷰어(별도 저장소 [2dcad-viewer](https://github.com/GyuTae-Kim/2dcad-viewer))로 가는 입구와 준비 중인 STEP, SKP, NC 뷰어
+- `/opencad`: 개인 프로젝트 OpenCAD의 뷰어 목록. 공개한 2D 도면 뷰어(별도 저장소 [2dcad-viewer](https://github.com/GyuTae-Kim/2dcad-viewer))와 STEP, SKP, NC 뷰어([opencad-step](https://github.com/GyuTae-Kim/opencad-step), [opencad-skp](https://github.com/GyuTae-Kim/opencad-skp), [opencad-nc](https://github.com/GyuTae-Kim/opencad-nc))로 가는 입구
 - `/contact`: 이메일과 GitHub
 
 ## 기술
@@ -67,7 +67,7 @@ npm run check:seo
 
 PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 검사를 실행합니다.
 
-통합 사이트맵에 포함한 별도 저장소 뷰어의 날짜는 `tools/linked-content-dates.json`에서 관리합니다. 뷰어를 먼저 배포한 뒤 `npm run sync:viewer-date`로 공개된 뷰어 사이트맵 날짜를 가져오고 다시 빌드합니다. 두 저장소를 함께 준비할 때는 `npm run sync:viewer-date -- --file /절대경로/2dcad-viewer/dist/sitemap.xml`로 검증된 뷰어 산출물을 읽을 수 있습니다. 일반 빌드에는 네트워크나 다른 체크아웃이 필요하지 않습니다. 뷰어 배포가 끝나기 전에 새 날짜를 담은 통합 사이트맵을 배포하지 마세요.
+통합 사이트맵에 포함한 별도 저장소 뷰어의 날짜는 `tools/linked-content-dates.json`에서 관리합니다. 뷰어를 먼저 배포한 뒤 `npm run sync:viewer-date`로 공개된 뷰어 사이트맵 날짜를 가져오고 다시 빌드합니다. 두 저장소를 함께 준비할 때는 `npm run sync:viewer-date -- --file /절대경로/2dcad-viewer/dist/sitemap.xml`로 검증된 뷰어 산출물을 읽을 수 있습니다. 일반 빌드에는 네트워크나 다른 체크아웃이 필요하지 않습니다. 뷰어 배포가 끝나기 전에 새 날짜를 담은 통합 사이트맵을 배포하지 마세요. STEP, SKP, NC 뷰어는 아직 자체 사이트맵이 없어, 각 저장소의 `main`에서 배포된 앱을 마지막으로 바꾼 커밋 시각(`git log -1 --format=%cI origin/main`을 UTC로 바꾼 값)을 직접 기록합니다.
 
 ### 배포 후 등록
 
@@ -94,7 +94,7 @@ PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 
 - 슬랙은 [공식 로봇 안내](https://api.slack.com/robots)에 따르면 링크 메타정보를 약 30분 캐시합니다. 변경 직후에는 캐시 갱신 이후의 새 공유로 확인합니다.
 - 실제 카카오톡·슬랙에서 카드가 표시되는지 확인하는 작업은 로컬 HTML 검사와 구분합니다. 대화방에 테스트 메시지를 보내려면 대상 대화방과 발송 승인을 먼저 확인합니다.
 
-검색 문구는 실제 화면과 프로젝트 근거에 맞춥니다. 개인 사이트는 AI·CAD/CAM 개발자 채용과 제조 소프트웨어 협업을 중심으로 담당 역할·검증 범위를 설명하고, OpenCAD 목록은 무료 DWG·DXF 뷰어의 실제 지원 기능과 공개 주소를 안내합니다. 검색어 반복이나 확인되지 않은 경력·수치·호환성·인증을 넣지 않습니다. 페이지별 제목·설명은 `src/app/site-seo.ts`에서 관리하며 Open Graph·Twitter 및 구조화 데이터에도 같은 설명을 적용합니다.
+검색 문구는 실제 화면과 프로젝트 근거에 맞춥니다. 개인 사이트는 AI·CAD/CAM 개발자 채용과 제조 소프트웨어 협업을 중심으로 담당 역할·검증 범위를 설명하고, OpenCAD 목록은 무료 DWG·DXF, STEP, SKP, NC 뷰어의 실제 지원 기능과 공개 주소를 안내하고, 아직 읽지 못하는 버전(예: SketchUp 2020 이하)은 지원한다고 쓰지 않습니다. 검색어 반복이나 확인되지 않은 경력·수치·호환성·인증을 넣지 않습니다. 페이지별 제목·설명은 `src/app/site-seo.ts`에서 관리하며 Open Graph·Twitter 및 구조화 데이터에도 같은 설명을 적용합니다.
 
 
 ### 사용 안내와 개발 노트
