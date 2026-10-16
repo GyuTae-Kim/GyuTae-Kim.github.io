@@ -43,7 +43,16 @@ for (const page of SEARCH_PAGES) {
   const rendered = await renderPage(base, SITE_URL + page.path);
   // Extract matching shared CSS after rendering the real route. Keep the full
   // stylesheet for hover states, client-side navigation and no-JS fallbacks.
-  const html = (await critical.process(rendered)).replace('<style>', '<style data-site-styles>');
+  let html = await critical.process(rendered);
+  let inlineStyles = '';
+  html = html.replace(/<style>([\s\S]*?)<\/style>/, (_, css) => {
+    inlineStyles = `<style data-site-styles>${css}</style>`;
+    return '';
+  });
+  if (!inlineStyles) throw new Error(`Missing critical CSS: ${page.path}`);
+  // Keep sharing metadata in the first 8 KiB; the optimizer otherwise prepends
+  // CSS ahead of the title and Open Graph tags.
+  html = html.replace('</head>', `${inlineStyles}</head>`);
   assertContentDate(page.path, history[page.path], contentFingerprint(html, path => readFileSync(resolve('src' + path))));
   if (contentModified(page.path) !== history[page.path].lastmod) throw new Error('Rebuild browser/server after updating content dates.');
   if (!html.includes('<h1') || !html.includes('id="site-structured-data"')) {
