@@ -12,10 +12,18 @@ export function contentFingerprint(html, assetBytes, pageUrl = 'https://gyutae-k
     const withoutDates = (value) => Array.isArray(value) ? value.map(withoutDates)
       : value && typeof value === 'object' ? Object.fromEntries(Object.entries(value)
         .filter(([key]) => !['dateModified', 'datePublished'].includes(key)).map(([key, item]) => [key, withoutDates(item)])) : value;
+    // Partner tooltip counters depend on which routes were rendered earlier.
+    // Preserve their associations without treating a new counter as edited content.
+    const tooltipIds = new Map();
+    const attributeValue = (node, attr) => {
+      if (!['id', 'aria-describedby'].includes(attr.name) || !node.closest('app-partner-text') || !/^kimm-partner-\d+-\d+$/.test(attr.value)) return attr.value;
+      if (!tooltipIds.has(attr.value)) tooltipIds.set(attr.value, `partner-tooltip-${tooltipIds.size + 1}`);
+      return tooltipIds.get(attr.value);
+    };
     const tree = (node) => node.nodeType === 3 ? node.textContent.replace(/\s+/g, ' ').trim()
       : node.nodeType !== 1 || ['SCRIPT', 'STYLE'].includes(node.tagName) ? null
         : [node.tagName.toLowerCase(), [...node.attributes].filter((a) => !/^_ng|^ng-/.test(a.name))
-          .map(a => [a.name, a.value]).sort(([a], [b]) => a.localeCompare(b)), [...node.childNodes].map(tree).filter(Boolean)];
+          .map(a => [a.name, attributeValue(node, a)]).sort(([a], [b]) => a.localeCompare(b)), [...node.childNodes].map(tree).filter(Boolean)];
     const metadata = [...doc.querySelectorAll('meta[name="description"], meta[name="robots"], meta[name="author"], meta[property^="og:"], meta[name^="twitter:"]')]
       .map(el => [el.getAttribute('name') ?? el.getAttribute('property'), el.getAttribute('content')]).sort(([a], [b]) => a.localeCompare(b));
     const images = new Set([...doc.querySelectorAll('main img[src], main img[srcset], main source[srcset]')].flatMap(el => [
