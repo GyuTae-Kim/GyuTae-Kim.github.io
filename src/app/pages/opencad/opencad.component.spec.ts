@@ -39,6 +39,15 @@ describe('OpenCadComponent', () => {
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]')).toBeNull();
   });
 
+  it('preserves every published screenshot and prioritizes only the first image', () => {
+    const shots = Array.from(page.querySelectorAll('.tool-shot img'));
+    expect(shots.length).toBe(4);
+    expect(shots.map((img) => img.getAttribute('fetchpriority'))).toEqual(['high', null, null, null]);
+    expect(shots.slice(1).every((img) => img.getAttribute('loading') === 'lazy')).toBeTrue();
+    const skp = page.querySelector('#skp-viewer')!.closest('.tool-card')!;
+    expect(skp.textContent).toContain('SketchUp 2021~2026');
+  });
+
   it('links the task guides', () => {
     const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('[aria-labelledby="opencad-guides-title"] .guide-list a'));
     expect(guides.map((link) => link.getAttribute('href'))).toEqual([

@@ -83,7 +83,7 @@ export const SEARCH_PAGES: SearchPage[] = [
     title: 'OpenCAD 무료 캐드·STEP·SKP·NC 뷰어 | 김규태',
     description: 'DWG·DXF 캐드 도면, STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로를 확인하는 무료 OpenCAD 뷰어 모음입니다. 형식별 실행 링크와 지원 범위, 오픈소스 3D 코어를 소개합니다.',
     image: 'assets/og/opencad.jpg',
-    imageAlt: 'OpenCAD 표지. 브라우저에서 DWG·DXF 도면을 여는 2D 뷰어.',
+    imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 공구 경로 뷰어 네 가지의 화면.',
     kind: 'CollectionPage',
   },
   {

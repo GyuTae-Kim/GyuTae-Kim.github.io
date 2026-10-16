@@ -1,6 +1,6 @@
 {
   "/": {
-    "lastmod": "2026-10-16T05:34:02Z",
+    "lastmod": "2026-10-16T05:50:59Z",
     "fingerprint": "1aa2bd23cb5fb53cd92eb03b703989e4c47a2739423c5e0f4c27d5a61cdfea1e"
   },
   "/portfolio": {
@@ -44,20 +44,20 @@
     "fingerprint": "ffe15ce9e15d3cf3a386b3e538c169e7c235329e643d60ff74d35cd777de9e29"
   },
   "/opencad": {
-    "lastmod": "2026-10-16T05:34:02Z",
-    "fingerprint": "c64d9ed3617ba4d1f9ffb876cc1d206ef05946664f22f48c88748f8e9ee5e49a"
+    "lastmod": "2026-10-16T05:53:04Z",
+    "fingerprint": "88d25b36374400049b3c3bc4eef0a09dcce7b0dc264fbe1fde987407eae38ec8"
   },
   "/notes": {
     "lastmod": "2026-10-15T16:36:17Z",
     "fingerprint": "182d7278473e7bd245b984a6771ca0a3b490294dbf93b8db65b205a5c3185ad5"
   },
   "/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-15T17:29:09Z",
-    "fingerprint": "a230069f65a543c467949cd2639ecca596126f25d58bb9e16ce8b2a7be53d38f"
+    "lastmod": "2026-10-16T05:38:19Z",
+    "fingerprint": "82b181aff8ebbfff53b6627ef9e674abfe908c7cb9ca9119ae3dc08b6414a73b"
   },
   "/opencad/guides/measure-export": {
-    "lastmod": "2026-10-15T17:29:09Z",
-    "fingerprint": "721831091bd3261a656c7ed5f3fdebbcc9a12f441d34b08bd3c7bff27f941e9a"
+    "lastmod": "2026-10-16T05:38:19Z",
+    "fingerprint": "31bcdfb5f328d66fe139f96b7729ff3c2e8b52fd6301f603ff37d6f82b1c5f97"
   },
   "/notes/cad-cam-feature-recognition": {
     "lastmod": "2026-10-15T17:29:09Z",
@@ -68,20 +68,20 @@
     "fingerprint": "df4cd80b9f3d82242bcd61c70e5de63f9b9b968e922ca7ac4cb412760915ad73"
   },
   "/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-16T05:34:02Z",
-    "fingerprint": "f6e6fbe1f7cfd2109fbf46ea1f5d9ac5b2dd014d5658f8fdfaed420dc58eb338"
+    "lastmod": "2026-10-16T05:50:59Z",
+    "fingerprint": "44b7e37f42a9c0c053994d3bf9b34bb119e513ce9edf7b5791a41962128a005e"
   },
   "/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-16T05:34:02Z",
-    "fingerprint": "86ee2a81fa34bec569442d4d2363ef11a389d999062145decf60df212bdaaf1d"
+    "lastmod": "2026-10-16T05:53:04Z",
+    "fingerprint": "af30304f02dae445adb133505008f188c28f2a4188a363eb9fb99776fff2aaca"
   },
   "/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-16T05:34:02Z",
-    "fingerprint": "184901d3bda2d51783683ddb1a694398910e94ea535e54ae816fe303d8324436"
+    "lastmod": "2026-10-16T05:50:59Z",
+    "fingerprint": "eb7c348369523a6a5edab34b63b9bdfcbcb96862750b7b98142d4e5a96113917"
   },
   "/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-16T05:34:02Z",
-    "fingerprint": "53130d7b4b9584da5ce89f18dc222f702cc2f19225b516dc539fc03d8b539d3b"
+    "lastmod": "2026-10-16T05:50:59Z",
+    "fingerprint": "fdcc7fc3ba57d88480107d121ad384e0102a7c87ec0999f11de7b7fcf08c313e"
   },
   "/contact": {
     "lastmod": "2026-10-16T04:41:50Z",

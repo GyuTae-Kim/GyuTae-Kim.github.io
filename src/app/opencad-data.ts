@@ -41,6 +41,11 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     summary: 'STEP·STP 3D CAD 파일을 설치 없이 브라우저에서 여는 무료 뷰어입니다. 조립 구조와 부품 색을 확인하고, 두 점 사이 거리를 재거나 PNG로 저장할 수 있습니다.',
     introduction: '협력사에서 받은 STEP 모델을 확인할 때 CAD 프로그램을 설치하지 않고 부품과 조립 구조를 살펴볼 수 있습니다. STEP 해석은 웹 워커에서, 3D 표시는 공통 OpenCAD 뷰어 코어에서 처리합니다.',
     url: 'https://gyutae-kim.github.io/opencad-step/', source: 'https://github.com/GyuTae-Kim/opencad-step',
+    figure: {
+      base: 'assets/opencad/viewer-step',
+      alt: 'OpenCAD STEP 뷰어로 예제 조립 모형을 연 화면. 가운데에 받침판 위의 블록 두 개와 핀, 고리가 3D로 보이고, 오른쪽 패널에 제품 나무와 부품별 보이기 목록이 있습니다.',
+      caption: '예제 조립 모형을 연 화면',
+    },
     features: [
       { label: '형식', text: 'STEP AP203·AP214·AP242의 B-rep, 조립, 색과 단위' },
       { label: '탐색', text: '제품 나무에서 부품 선택·숨기기, 선택한 부품으로 화면 맞추기' },
@@ -58,8 +63,13 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     summary: 'SketchUp 2021~2026에서 저장한 SKP 파일을 브라우저에서 여는 무료 뷰어입니다. 태그·재질과 그룹·컴포넌트를 살펴보고 거리를 측정할 수 있습니다.',
     introduction: '가구·인테리어 설계의 SketchUp 모델을 전달받았을 때 브라우저에서 형태와 구성을 확인하는 도구입니다. 로컬 파일을 웹 워커에서 읽고 OpenCAD 3D 코어로 표시합니다.',
     url: 'https://gyutae-kim.github.io/opencad-skp/', source: 'https://github.com/GyuTae-Kim/opencad-skp',
+    figure: {
+      base: 'assets/opencad/viewer-skp',
+      alt: 'OpenCAD SketchUp 뷰어로 예제 집 모형을 연 화면. 가운데에 빨간 지붕의 집과 나무, 잔디 바닥이 3D로 보이고, 오른쪽 패널에 태그 5개와 재질 11개 목록이 있습니다.',
+      caption: '예제 집 모형을 연 화면',
+    },
     features: [
-      { label: '형식', text: 'SketchUp 2021~2026에서 저장한 .skp 파일' },
+      { label: '형식', text: 'SketchUp 2021~2026에서 저장한 .skp 파일. 2020 이하 버전 파일은 아직 열지 못합니다.' },
       { label: '탐색', text: '태그 켜고 끄기, 재질 확인, 그룹·컴포넌트 선택과 숨기기' },
       { label: '보기', text: '표준 뷰, 원근·평행 투영, 음영·모서리·와이어프레임·X-ray' },
       { label: '측정', text: '두 점 사이 거리·축별 차이 확인과 PNG 저장' },
@@ -75,6 +85,11 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     summary: 'G-code·Heidenhain 평문·woodWOP MPR 파일의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생할 수 있습니다.',
     introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain·MPR 데이터를 해석하고, 코드·공구·정보 패널을 3D 경로와 연결합니다.',
     url: 'https://gyutae-kim.github.io/opencad-nc/', source: 'https://github.com/GyuTae-Kim/opencad-nc',
+    figure: {
+      base: 'assets/opencad/viewer-nc',
+      alt: 'OpenCAD NC 뷰어로 예제 G-code를 연 화면. 가운데에 바깥 윤곽, 원형 포켓, 드릴 구멍의 공구 경로가 공구마다 다른 색으로 보이고, 오른쪽 패널에 재생 막대와 G-code 줄 목록이 있습니다.',
+      caption: '예제 G-code를 연 화면',
+    },
     features: [
       { label: '형식', text: 'ISO·Fanuc·LinuxCNC·GRBL·Mach3 계열 G-code, Heidenhain 평문, woodWOP MPR' },
       { label: '경로', text: '3D 공구 경로와 코드 줄 연결, 공구별 표시, 가공 순서 재생' },

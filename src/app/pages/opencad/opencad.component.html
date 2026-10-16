@@ -27,14 +27,14 @@
   </dl>
 
   <nav class="opencad-jump-links" aria-label="파일 형식별 뷰어 선택">
-    <a *ngFor="let tool of liveTools" [routerLink]="[]" [fragment]="tool.id">{{ tool.kind }}</a>
+    <a *ngFor="let tool of liveTools; let i = index" [routerLink]="[]" [fragment]="tool.id">{{ tool.kind }}</a>
   </nav>
 
   <section class="opencad-section" aria-labelledby="opencad-live-title">
     <div class="section-title">
       <h2 id="opencad-live-title">지금 쓸 수 있는 뷰어</h2>
     </div>
-    <article class="tool-card" *ngFor="let tool of liveTools" [class.tool-card-text]="!tool.figure" [attr.aria-labelledby]="tool.id">
+    <article class="tool-card" *ngFor="let tool of liveTools; let i = index" [class.tool-card-text]="!tool.figure" [attr.aria-labelledby]="tool.id">
       <figure class="tool-shot" *ngIf="tool.figure">
         <img
           [src]="tool.figure.base + '-1440.webp'"
@@ -43,7 +43,8 @@
           [alt]="tool.figure.alt"
           width="1440"
           height="900"
-          fetchpriority="high"
+          [attr.loading]="i === 0 ? null : 'lazy'"
+          [attr.fetchpriority]="i === 0 ? 'high' : null"
         />
         <figcaption>
           <span class="figure-kind">실제 화면</span>{{ tool.figure.caption }}
