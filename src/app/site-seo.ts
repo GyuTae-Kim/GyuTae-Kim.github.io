@@ -54,8 +54,7 @@ export const SEARCH_PAGES: SearchPage[] = [
     path: `/portfolio/${project.id}`,
     title: PROJECT_SEARCH_COPY[project.id]?.title ?? `${project.title} — ${SITE_NAME}`,
     description: PROJECT_SEARCH_COPY[project.id]?.description ?? `${project.headline}. ${project.role}`,
-    image: CASE_STUDIES.some((item) => item.id === project.id)
-      ? `assets/og/${project.id}.jpg` : 'assets/og/portfolio.jpg',
+    image: `assets/og/${project.id}.jpg`,
     imageAlt: `프로젝트 ${project.number}, ${project.title}.`,
     kind: 'WebPage',
     project,
@@ -72,8 +71,12 @@ export const SEARCH_PAGES: SearchPage[] = [
     path: `/research/${research.id}`,
     title: `${research.title} — ${SITE_NAME}`,
     description: `${research.summary} ${research.outcome}`,
-    image: 'assets/og/research.jpg',
-    imageAlt: '강화학습과 컴퓨터 비전 연구, TSP 경로 그림.',
+    image: research.id === 'graph-tsp' ? 'assets/og/research.jpg' : `assets/og/${research.id}.jpg`,
+    imageAlt: research.id === 'graph-tsp'
+      ? '강화학습으로 TSP 경로를 만드는 그래프 모델. 학습 정책과 최원 삽입 경로 비교.'
+      : research.id === 'fashion-classification'
+        ? 'ResNet 의류 분류 연구. Fashion-MNIST 예측 예시와 직접 구현한 학습·평가 흐름.'
+        : '가상 착용 앱 연구. 인물 사진·입힐 옷·착용 결과를 비교한 공개 코드 재실행 예시.',
     kind: 'WebPage',
     research,
   })),
