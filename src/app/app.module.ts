@@ -14,6 +14,7 @@ import { AchievementsComponent } from './components/achievements/achievements.co
 import { ModelViewportComponent } from './components/model-viewport/model-viewport.component';
 import { IconComponent } from './components/icon/icon.component';
 import { PartnerTextComponent } from './components/partner-text/partner-text.component';
+import { PanelCatalogComponent } from './components/panel-catalog/panel-catalog.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PartnerTextComponent } from './components/partner-text/partner-text.com
     ModelViewportComponent,
     IconComponent,
     PartnerTextComponent,
+    PanelCatalogComponent,
   ],
   imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule],
   bootstrap: [AppComponent],

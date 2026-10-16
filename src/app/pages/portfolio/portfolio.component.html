@@ -144,9 +144,7 @@
     </section>
     <section class="panel-recognition" *ngIf="selected!.panelTypes as types" aria-labelledby="panel-types-title">
       <h2 class="detail-title" id="panel-types-title">AI가 인식하는 패널 {{ types.length }}종</h2>
-      <ul class="feature-catalog" aria-label="AI가 인식하는 패널 종류">
-        <li *ngFor="let type of types"><strong>{{ type }}</strong></li>
-      </ul>
+      <app-panel-catalog [types]="types"></app-panel-catalog>
     </section>
     <section class="design-parameters" *ngIf="selected!.designParameters as parameters" aria-labelledby="design-parameters-title">
       <h2 class="detail-title" id="design-parameters-title">패널 인식으로 구성하는 가구 설계 파라미터</h2>
