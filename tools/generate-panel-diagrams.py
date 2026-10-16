@@ -1,0 +1,106 @@
+"""Generate original SVG location diagrams for the furniture panel tooltips.
+
+These are explanatory cabinet/drawer diagrams, not AI predictions or research renders.
+Run from any directory with Python's standard library; outputs are deterministic.
+"""
+from html import escape
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / 'src/assets/cases/panel/types'
+
+# Axis-aligned panels in a common cabinet coordinate system: X width, Y depth, Z up.
+CARCASS = {
+    'back': (0, .62, .22, 1.04, .66, 1.75),
+    'left': (0, 0, .2, .045, .66, 1.75),
+    'base': (0, 0, .18, 1.045, .66, .23),
+    'right': (1, 0, .2, 1.045, .66, 1.75),
+    'shelf': (.045, .04, .9, 1, .6, .94),
+    'top': (0, 0, 1.7, 1.045, .66, 1.75),
+    'kick': (0, .08, 0, 1.045, .12, .18),
+}
+EXTRA = {
+    'door': (.05, -.15, .24, .98, -.11, 1.47),
+    'band': (.05, .50, 1.53, 1, .62, 1.59),
+    'channel-h': (.05, -.03, 1.48, 1, .12, 1.52),
+    'channel-v': (.05, .09, 1.48, 1, .13, 1.66),
+    'ep': (1.1, 0, .02, 1.145, .66, 1.76),
+    'divider': (.53, .04, .24, .57, .62, 1.68),
+}
+DRAWER = {
+    'bottom': (.06, -.55, .75, .98, .12, .79),
+    'left': (.06, -.55, .79, .10, .12, 1.15),
+    'back': (.10, .08, .79, .94, .12, 1.15),
+    'right': (.94, -.55, .79, .98, .12, 1.15),
+    'front': (.10, -.55, .79, .94, -.51, 1.15),
+}
+PANELS = {
+    'door': ('도어', ['door']),
+    'side-panel': ('측판', ['right']),
+    'base-panel': ('지판', ['base']),
+    'band': ('밴드목', ['band']),
+    'channel': ('찬넬', ['channel-h', 'channel-v']),
+    'top-panel': ('천판', ['top']),
+    'back-panel': ('뒷판(우라판)', ['back']),
+    'kickboard': ('걸레받이', ['kick']),
+    'shelf': ('선반', ['shelf']),
+    'drawer-bottom': ('서랍 바닥판', ['bottom']),
+    'ep-panel': ('EP 패널', ['ep']),
+    'drawer-side': ('서랍 측판', ['left', 'right']),
+    'drawer-front-back': ('서랍 앞뒤판', ['front', 'back']),
+    'absolute-divider': ('절대 디바이더', ['divider']),
+    'proportional-divider': ('비율 디바이더', ['divider']),
+}
+
+
+def point(x, y, z):
+    return (65 + x * 205 + y * 100, 270 + x * 20 - y * 48 - z * 128)
+
+
+def polygon(vertices, fill, stroke, opacity):
+    coordinates = ' '.join(f'{x:.1f},{y:.1f}' for x, y in (point(*p) for p in vertices))
+    return f'<polygon points="{coordinates}" fill="{fill}" stroke="{stroke}" stroke-width="1.3" stroke-linejoin="round" opacity="{opacity}"/>'
+
+
+def box(bounds, highlighted=False, opacity=.42):
+    x0, y0, z0, x1, y1, z1 = bounds
+    faces = [
+        [(x0,y0,z0),(x1,y0,z0),(x1,y0,z1),(x0,y0,z1)],
+        [(x1,y0,z0),(x1,y1,z0),(x1,y1,z1),(x1,y0,z1)],
+        [(x0,y0,z1),(x1,y0,z1),(x1,y1,z1),(x0,y1,z1)],
+    ]
+    colours = ['#2c659d', '#204c77', '#5c93c6'] if highlighted else ['#e0e6ec', '#ccd6df', '#edf1f5']
+    return ''.join(polygon(face, colour, '#204c77' if highlighted else '#a5b4c3', 1 if highlighted else opacity) for face, colour in zip(faces, colours))
+
+
+def render(key, label, selection):
+    drawer = key.startswith('drawer-')
+    drawing = []
+    # Gray context remains visible; selected parts are drawn last as an explanatory overlay.
+    for name, bounds in CARCASS.items():
+        if drawer and name == 'shelf':
+            continue
+        drawing.append(box(bounds, opacity=.24 if drawer else .42))
+    if drawer:
+        for name, bounds in DRAWER.items():
+            if name not in selection:
+                drawing.append(box(bounds, opacity=.85))
+        selected = DRAWER
+    else:
+        selected = {**CARCASS, **EXTRA}
+    for name in selection:
+        drawing.append(box(selected[name], highlighted=True))
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" role="img" aria-labelledby="title description">
+<title id="title">{escape(label)} 위치</title>
+<desc id="description">가구의 다른 부위는 회색, {escape(label)} 부위는 파란색으로 표시한 위치 안내용 개념도입니다.</desc>
+<rect width="420" height="300" fill="#f6f8fa"/>
+{''.join(drawing)}
+</svg>
+'''
+
+
+if __name__ == '__main__':
+    OUT.mkdir(parents=True, exist_ok=True)
+    for key, (label, selection) in PANELS.items():
+        (OUT / f'{key}.svg').write_text(render(key, label, selection), encoding='utf-8')
+    print(f'Generated {len(PANELS)} original SVG panel diagrams.')

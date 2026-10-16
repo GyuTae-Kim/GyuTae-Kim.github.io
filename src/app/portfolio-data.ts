@@ -1,3 +1,5 @@
+import { PANEL_TYPES, PanelType } from './panel-types-data';
+
 export interface CaseStudy {
   id: string;
   number: string;
@@ -8,7 +10,7 @@ export interface CaseStudy {
   outcome?: { result: string; impact: { title: string; text: string }[] };
   scopeLine: string;
   expandedDetails?: boolean;
-  panelTypes?: string[];
+  panelTypes?: PanelType[];
   designParameters?: {
     introduction: string;
     groups: { title: string; items: string[] }[];
@@ -294,11 +296,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: '13개', label: '가구별로 구성하는 설계 파라미터' },
       { value: '1건', label: '공동발명 특허 출원' },
     ],
-    panelTypes: [
-      '도어', '측판', '지판', '밴드목', '찬넬',
-      '천판', '뒷판(우라판)', '걸레받이', '선반', '서랍 바닥판',
-      'EP 패널', '서랍 측판', '서랍 앞뒤판', '절대 디바이더', '비율 디바이더',
-    ],
+    panelTypes: PANEL_TYPES,
     designParameters: {
       introduction: 'AI가 구분한 패널 종류와 접합 관계를 바탕으로 가구의 설계 파라미터를 구성합니다. 고객이 웹에서 값을 바꾸면 계수식으로 패널의 위치와 크기를 함께 갱신해 원하는 사양의 발주로 이어집니다.',
       groups: [

@@ -1,0 +1,116 @@
+:host {
+  display: block;
+}
+
+.panel-catalog {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.panel-type-item {
+  min-width: 0;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-trigger {
+  appearance: none;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: 600 var(--fs-2) / 1.75 var(--sans);
+  text-align: left;
+  text-decoration: underline dotted;
+  text-underline-offset: .24em;
+  text-decoration-thickness: 1px;
+  cursor: help;
+}
+
+.panel-trigger:hover,
+.panel-trigger:focus-visible {
+  color: var(--blue);
+}
+
+.panel-tooltip {
+  position: fixed;
+  z-index: 1100;
+  width: min(340px, calc(100vw - 24px));
+  padding: 8px 0;
+  box-sizing: border-box;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.panel-tooltip.open {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.panel-card {
+  display: grid;
+  gap: 8px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid var(--line-strong);
+  border-top: 2px solid var(--blue);
+  background: var(--white);
+  box-shadow: 0 8px 28px rgb(0 0 0 / .12);
+  color: var(--ink);
+  text-align: left;
+  white-space: normal;
+}
+
+.panel-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(222px, 28vh);
+  aspect-ratio: 7 / 5;
+  object-fit: contain;
+  border: 0;
+  background: #f6f8fa;
+}
+
+.panel-card strong {
+  font-size: var(--fs-2);
+  line-height: 1.5;
+}
+
+.panel-card p {
+  margin: 0;
+  font-size: var(--fs-1);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.panel-card small {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.panel-card i {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  background: #2c659d;
+}
+
+@media (max-width: 600px) {
+  .panel-catalog {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .panel-type-item {
+    padding: 10px 4px;
+  }
+}
