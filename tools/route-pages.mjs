@@ -3,6 +3,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { createRequire } from 'node:module';
+import Beasties from 'beasties';
 import { assertContentDate, contentFingerprint, validateDate } from './content-dates.mjs';
 
 const require = createRequire(import.meta.url);
@@ -11,6 +12,16 @@ const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json
 const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
+const stylesheet = base.match(/<link\b[^>]*href="(styles\.[^"]+\.css)"[^>]*>/)?.[1];
+if (!stylesheet) throw new Error('Missing shared stylesheet');
+// Keep font faces available immediately. Family names use CSS variables, so do
+// not rely on the critical-CSS processor to infer which faces are needed.
+const faces = readFileSync(join(outDir, stylesheet), 'utf8').match(/@font-face\{[^}]+\}/g)?.join('');
+if (!faces) throw new Error('Missing local font faces');
+base = base.replace('</head>', `<style data-site-fonts>${faces}</style></head>`);
+const critical = new Beasties({ path: outDir, preload: 'swap', noscriptFallback: true,
+  pruneSource: false, reduceInlineStyles: false, mergeStylesheets: false,
+  fonts: false, logLevel: 'warn' });
 const escape = (text) => text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 // Verification tokens are public. Keep real tokens here across future builds, rather
@@ -29,7 +40,19 @@ function writePage(file, html) {
 }
 
 for (const page of SEARCH_PAGES) {
-  const html = await renderPage(base, SITE_URL + page.path);
+  const rendered = await renderPage(base, SITE_URL + page.path);
+  // Extract matching shared CSS after rendering the real route. Keep the full
+  // stylesheet for hover states, client-side navigation and no-JS fallbacks.
+  let html = await critical.process(rendered);
+  let inlineStyles = '';
+  html = html.replace(/<style>([\s\S]*?)<\/style>/, (_, css) => {
+    inlineStyles = `<style data-site-styles>${css}</style>`;
+    return '';
+  });
+  if (!inlineStyles) throw new Error(`Missing critical CSS: ${page.path}`);
+  // Keep sharing metadata in the first 8 KiB; the optimizer otherwise prepends
+  // CSS ahead of the title and Open Graph tags.
+  html = html.replace('</head>', `${inlineStyles}</head>`);
   assertContentDate(page.path, history[page.path], contentFingerprint(html, path => readFileSync(resolve('src' + path))));
   if (contentModified(page.path) !== history[page.path].lastmod) throw new Error('Rebuild browser/server after updating content dates.');
   if (!html.includes('<h1') || !html.includes('id="site-structured-data"')) {

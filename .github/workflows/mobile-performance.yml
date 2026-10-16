@@ -1,0 +1,69 @@
+name: Mobile performance comparison
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'src/index.html'
+      - 'src/styles.scss'
+      - 'src/assets/fonts/**'
+      - 'tools/route-pages.mjs'
+      - 'tools/prepare-site-fonts.py'
+      - 'tools/performance-summary.mjs'
+      - 'tools/serve-performance.mjs'
+      - '.github/workflows/mobile-performance.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check:seo
+      - name: Get successful master build as comparison baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .runtime/performance
+          gh run list --repo "$GITHUB_REPOSITORY" --workflow seo-check.yml --branch master --status success --limit 1 --json databaseId,headSha,url > .runtime/performance/baseline-run.json
+          baseline_run=$(node -p "require('./.runtime/performance/baseline-run.json')[0].databaseId")
+          gh run download "$baseline_run" --repo "$GITHUB_REPOSITORY" --name portfolio-pages --dir .runtime/performance/baseline
+      - name: Compare cold mobile loads on the same runner
+        timeout-minutes: 8
+        run: |
+          npm install --prefix "$RUNNER_TEMP/mobile-audit" --no-package-lock --no-audit --no-fund lighthouse@13.5.0
+          node tools/serve-performance.mjs .runtime/performance/baseline 4320 > "$RUNNER_TEMP/mobile-baseline-server.log" 2>&1 &
+          baseline_pid=$!
+          node tools/serve-performance.mjs docs 4321 > "$RUNNER_TEMP/mobile-candidate-server.log" 2>&1 &
+          candidate_pid=$!
+          trap 'kill "$baseline_pid" "$candidate_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4320/ > /dev/null && curl --fail --silent http://127.0.0.1:4321/ > /dev/null; then break; fi
+            sleep 0.2
+          done
+          for round in 1 2 3; do
+            for variant in baseline candidate; do
+              port=4320
+              if [ "$variant" = candidate ]; then port=4321; fi
+              "$RUNNER_TEMP/mobile-audit/node_modules/.bin/lighthouse" "http://127.0.0.1:$port/" --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu" --only-categories=performance,accessibility,best-practices,seo --output=json --output=html --output-path=".runtime/performance/$variant-$round" --quiet
+            done
+          done
+          node tools/performance-summary.mjs .runtime/performance >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-performance-comparison
+          path: |
+            .runtime/performance/*.json
+            .runtime/performance/*.html
+          include-hidden-files: true

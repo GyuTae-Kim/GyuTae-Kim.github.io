@@ -1,3 +1,11 @@
+@import './assets/fonts/site-sans';
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/assets/fonts/jetbrains-mono-latin.woff2') format('woff2');
+}
 /* Drawing-sheet design: paper, ink lines, drawing blue for actions, rust for dimensions. */
 :root {
   --paper: #f4f3ec;
@@ -15,9 +23,9 @@
   --surface: #ebeae2;
   --grid-minor: rgba(30, 37, 34, 0.045);
   --grid-major: rgba(30, 37, 34, 0.085);
-  --mono: "JetBrains Mono", "Pretendard Variable", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --mono: "JetBrains Mono", "Portfolio Sans", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --sans:
-    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Portfolio Sans", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   /* Seven-step type scale; Korean text never goes below 13px. */
   --fs-1: 13px;
