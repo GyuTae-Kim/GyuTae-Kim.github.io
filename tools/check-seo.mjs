@@ -16,6 +16,8 @@ const paths = new Set(SEARCH_PAGES.map((page) => page.path));
 const hostedApps = new Set(OPENCAD_TOOLS.filter((tool) => tool.url).map((tool) => tool.url));
 const verification = JSON.parse(readFileSync(new URL('./search-verification.json', import.meta.url), 'utf8'));
 const checkedImages = new Set();
+// Detail covers must stay tied to their subject instead of falling back to a collection cover.
+const detailCovers = JSON.parse(readFileSync(new URL('./sharing-cover-sources.json', import.meta.url), 'utf8'));
 // Read JPEG frame dimensions from the actual deployed bytes, not the filename or tags.
 function jpegDimensions(bytes) {
   assert.equal(bytes.readUInt16BE(0), 0xffd8, 'sharing image must be a JPEG');
@@ -36,6 +38,8 @@ function jpegDimensions(bytes) {
 let checkedLinks = 0;
 let commonHeadShape;
 for (const page of SEARCH_PAGES) {
+  const detailCover = detailCovers.find((cover) => cover.route === page.path);
+  if (detailCover) assert.equal(page.image, detailCover.output.replace(/^src\//, ''), `${page.path}: subject-specific sharing image`);
   const files = page.path === '/' ? ['index.html'] : [`${page.path.slice(1)}.html`, `${page.path.slice(1)}/index.html`];
   for (const file of files) {
     const raw = readFileSync(join(outDir, file));

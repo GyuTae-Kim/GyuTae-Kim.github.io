@@ -351,7 +351,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     category: 'AI · 가구 · 파라메트릭 설계',
     title: '가구 패널을 인식해 크기 변경을 계산하는 AI',
-    subtitle: '모델 분석 → AI 패널 인식 → 파라미터 관계 수식화 → 제조 데이터 생성',
+    subtitle: '모델 분석 → AI 패널 인식 → 파라미터 관계 수식화 → 제조 데이터 생성·확인',
     period: '2025–2026',
     tags: ['TensorFlow', 'Hierarchical CADNet 기반', '그래프 입력', '선형회귀', 'BOM·도면'],
     story: [
@@ -373,6 +373,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         ],
         image: 'assets/cases/panel/step2.webp',
         imageAlt: '분해한 가구 몸통의 패널을 역할별 색으로 칠하고 접촉 관계를 그래프로 정리한 개념도',
+        imageCaption: '개념도 · 패널 종류와 접촉 관계를 설명합니다.',
       },
       {
         title: '파라미터 관계 수식화',
@@ -383,14 +384,15 @@ export const CASE_STUDIES: CaseStudy[] = [
         imageAlt: '가구 폭을 바꾸기 전과 후. 맞닿은 패널들이 함께 늘어나고 옮겨 간 모습',
       },
       {
-        title: '제조 데이터 생성',
-        text: '정해진 가구에 연결 피스와 하드웨어를 배치하고 BOM, 도면, 엣지밴딩을 계산해 제조 가능한 데이터로 만듭니다.',
-        did: ['연결 피스 위치와 하드웨어 배치', 'BOM, 도면, 엣지밴딩 계산'],
+        title: '제조 데이터 생성·확인',
+        text: '연결 피스와 하드웨어를 배치하고 BOM·도면·엣지밴딩을 계산합니다. 생성한 가공 코드는 NC 뷰어에서 가공 면과 홀 위치를 확인합니다.',
+        did: ['연결 피스 위치와 하드웨어 배치', 'BOM, 도면, 엣지밴딩 계산', '생성한 가공 코드의 가공 면·홀 위치 확인'],
         image: 'assets/cases/panel/step4.webp',
         imageAlt: 'NC 뷰어에서 판재 아랫면의 드릴 가공 60개를 3D로 확인하는 화면',
+        imageCaption: '생성한 가공 코드를 NC 뷰어에서 확인하는 화면입니다. 판재의 가공 면과 홀 위치를 살펴봅니다.',
       },
     ],
-    diagramLabels: ['패널·접합면', 'AI 패널 인식', '관계 수식화', '제조 데이터'],
+    diagramLabels: ['패널·접합면', 'AI 패널 인식', '관계 수식화', '제조 데이터 확인'],
     thumb: 'assets/cases/panel/thumb',
     figure: {
       src: 'assets/cases/panel/step3.webp',
