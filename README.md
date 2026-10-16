@@ -44,6 +44,8 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 
 `npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 15개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
 
+`angular.json`의 production 빌드는 핵심 CSS 인라인(`optimization.styles.inlineCritical`)을 끄고 전체 스타일시트를 렌더 차단 `<link>`로 불러옵니다. Angular는 핵심 CSS를 본문이 빈 `docs/index.html` 기준으로 계산하므로, 켜 두면 `html`·`body` 규칙만 인라인되고 서버 렌더링한 본문이 스타일 없이 먼저 보입니다.
+
 - `src/app/site-seo.ts`: 제목·설명·대표 주소·공유 이미지와 Person, WebSite, 페이지, 프로젝트, 탐색 경로 구조화 데이터의 공통 원본입니다. 새 프로젝트는 기존 프로젝트 데이터에서 자동으로 가져옵니다.
 - `src/app/seo.service.ts`: 초기 HTML과 브라우저 이동에 공통으로 쓰는 메타데이터 생성 코드입니다. 제목·설명·작성자·canonical·Open Graph·Twitter·구조화 데이터를 생성합니다. 필드 구성은 같고 페이지별 값과 구조화 데이터 종류만 달라집니다. `src/index.html`에 이 정보를 중복 작성하지 않습니다. 없는 페이지에는 `noindex`를 적용합니다.
 - `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, `sitemap.xml`, `.nojekyll`을 만듭니다. 사이트맵의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
