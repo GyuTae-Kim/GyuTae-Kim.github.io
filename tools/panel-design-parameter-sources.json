@@ -1,0 +1,117 @@
+{
+  "description": "Furniture design controls verified from Prisme development sources. Availability depends on furniture type, panel roles and contact pairs. The legacy band_depth alias is not counted separately.",
+  "parameters": [
+    {
+      "key": "lower_width",
+      "label": "너비"
+    },
+    {
+      "key": "lower_depth",
+      "label": "깊이"
+    },
+    {
+      "key": "lower_height",
+      "label": "높이"
+    },
+    {
+      "key": "kickboard_height",
+      "label": "걸레받이 높이"
+    },
+    {
+      "key": "kickboard_y_offset",
+      "label": "걸레받이 들임 · 앞뒤 위치"
+    },
+    {
+      "key": "channel_depth",
+      "label": "찬넬 깊이"
+    },
+    {
+      "key": "channel_height",
+      "label": "찬넬 높이"
+    },
+    {
+      "key": "front_finish_width",
+      "label": "코너장 멍판 너비 · 전면마감재"
+    },
+    {
+      "key": "shelf_count",
+      "label": "선반 수량"
+    },
+    {
+      "key": "vertical_band_enabled",
+      "label": "세로 밴드목 사용 여부"
+    },
+    {
+      "key": "vertical_band_width",
+      "label": "세로 밴드목 너비"
+    },
+    {
+      "key": "door_top_margin",
+      "label": "도어 상단 여유"
+    },
+    {
+      "key": "door_bottom_margin",
+      "label": "도어 하단 여유"
+    }
+  ],
+  "sources": [
+    {
+      "repository": "prisme-engine",
+      "revision": "a8cae6cfdc571fb1abaa240487b7a900ce601941",
+      "files": [
+        {
+          "path": "legacy/prisme/functions/linear_regression.py",
+          "sha256": "2d36e152323b361251c3aec2a9bd316707824f9822635757385b964b68177561"
+        },
+        {
+          "path": "legacy/prisme/object/parameteric.py",
+          "sha256": "8f9b6d07a8f38f703931fe0897ed2c388d937c916de30cbf3ca9059abc3a53db"
+        }
+      ]
+    },
+    {
+      "repository": "prisme-service",
+      "revision": "108dbed8e4a6165b5c1b313adc2dc7f9d1e8248b",
+      "files": [
+        {
+          "path": "src/prisme_service/services/builder_geometry_compatibility.py",
+          "sha256": "bf44a8f575cf3e51ec03992ec40c59654d89ded9ff216a0c469ba384e68dfb58"
+        }
+      ]
+    },
+    {
+      "repository": "prisme-server",
+      "revision": "db1df6805e0b4fa6d10526ad0a67a0da6e2af78a",
+      "files": [
+        {
+          "path": "app_openapi/static/openapi/sink_parametric.js",
+          "sha256": "5382641f7df65c18b562ca9f991be00b355fb3b32a8d4bfce6776c0c4bf62b58"
+        },
+        {
+          "path": "app_openapi/v1/aflow/module_graph_schema.py",
+          "sha256": "b795fce296f9028962d8d72f9c1abaeb80bb0d76b78bb2eae8888ebdfca486c9"
+        },
+        {
+          "path": "app_openapi/v1/aflow/views/export_module_gltf.py",
+          "sha256": "e50322c6674b33d61252d03cbf739e27172520e6bf8d9d674e204c42b03af444"
+        },
+        {
+          "path": "app_api/v1/aflow/views/train_module_parametric.py",
+          "sha256": "d232d782c79077ccefde0ffc76e9ebdfe373ac1dc5672c8ffc52241245f6eabb"
+        },
+        {
+          "path": "app_openapi/static/openapi/module_graph.js",
+          "sha256": "2d4b1a618245e96c971d56bd0d4a16d816b92b93fd4a481f84ea2d40abf05755"
+        },
+        {
+          "path": "docs/module-drawing-rules/sink_lower_corner.md",
+          "sha256": "2d1ca95890ceb5a1020b4fd4aa7157013793898a5312f4c0af8b20898fa5ad37"
+        },
+        {
+          "path": "docs/module-drawing-rules/index.md",
+          "sha256": "37d7c622eaf4c2a142114cb088c5727a13cc093ab7bd273f4ea19437d5e263d3"
+        }
+      ]
+    }
+  ]
+}

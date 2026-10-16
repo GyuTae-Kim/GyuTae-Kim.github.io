@@ -4,7 +4,8 @@
 
 .recognition-showcase,
 .evidence-section,
-.case-impact {
+.case-impact,
+.design-parameters {
   margin: 40px 0;
 }
 
@@ -13,6 +14,31 @@
   font-size: var(--fs-2);
   line-height: 1.8;
   color: var(--muted);
+  word-break: keep-all;
+}
+
+.parameter-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.parameter-groups section {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  background: var(--sheet);
+}
+
+.parameter-groups h3 {
+  margin: 0 0 10px;
+  font-size: var(--fs-2);
+}
+
+.parameter-groups ul {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--fs-1);
+  line-height: 1.9;
   word-break: keep-all;
 }
 
@@ -239,7 +265,8 @@
 
 @media (max-width: 900px) {
   .training-examples,
-  .mdt-evidence {
+  .mdt-evidence,
+  .parameter-groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -263,6 +290,7 @@
   }
 
   .training-examples,
+  .parameter-groups,
   .evidence-grid,
   .setup-views,
   .mdt-evidence figure:last-child,

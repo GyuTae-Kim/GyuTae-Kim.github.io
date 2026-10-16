@@ -140,7 +140,20 @@
           <dd><app-partner-text [text]="selected!.outcome?.result ?? selected!.keyDecision"></app-partner-text></dd>
         </div>
       </dl>
-      <p class="result-scope">{{ selected!.scopeLine }}</p>
+      <p class="result-scope" *ngIf="selected!.scopeLine">{{ selected!.scopeLine }}</p>
+    </section>
+    <section class="design-parameters" *ngIf="selected!.designParameters as parameters" aria-labelledby="design-parameters-title">
+      <h2 class="detail-title" id="design-parameters-title">패널 인식으로 구성하는 가구 설계 파라미터</h2>
+      <p class="showcase-intro">{{ parameters.introduction }}</p>
+      <div class="parameter-groups">
+        <section *ngFor="let group of parameters.groups">
+          <h3>{{ group.title }}</h3>
+          <ul>
+            <li *ngFor="let item of group.items">{{ item }}</li>
+          </ul>
+        </section>
+      </div>
+      <p class="showcase-note">{{ parameters.note }}</p>
     </section>
     <section class="recognition-showcase" *ngIf="selected!.recognition as recognition" aria-labelledby="recognition-title">
       <h2 class="detail-title" id="recognition-title"><span>AI</span>식별하는 가공 피쳐 {{ recognition.features.length }}종</h2>
@@ -209,8 +222,16 @@
       <p class="case-concept-note">{{ conceptNotes[concept] }}</p>
       <app-model-viewport [fixedModel]="concept"></app-model-viewport>
     </section>
-    <details class="result-details case-details">
-      <summary><app-icon name="chevron"></app-icon>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
+    <div class="case-details" *ngIf="selected!.expandedDetails; else collapsedCaseDetails">
+      <ng-container *ngTemplateOutlet="caseDetailsContent"></ng-container>
+    </div>
+    <ng-template #collapsedCaseDetails>
+      <details class="result-details case-details">
+        <summary><app-icon name="chevron"></app-icon>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
+        <ng-container *ngTemplateOutlet="caseDetailsContent"></ng-container>
+      </details>
+    </ng-template>
+    <ng-template #caseDetailsContent>
       <section class="detail-block" aria-labelledby="detail-work">
         <h2 class="detail-title" id="detail-work"><span>01</span>단계마다 한 일</h2>
         <ol class="step-work">
@@ -255,23 +276,23 @@
       </section>
       <section class="detail-block" aria-labelledby="detail-checks">
         <h2 class="detail-title" id="detail-checks"><span>03</span>검증</h2>
-        <div class="check-grid">
+        <div class="check-grid" [class.single]="!selected!.unchecked.length">
           <div class="check-done">
             <h3>검증한 것</h3>
             <ul>
               <li *ngFor="let item of selected!.checked">{{ item }}</li>
             </ul>
           </div>
-          <div class="check-out">
+          <div class="check-out" *ngIf="selected!.unchecked.length">
             <h3>범위 밖</h3>
             <ul>
               <li *ngFor="let item of selected!.unchecked">{{ item }}</li>
             </ul>
           </div>
         </div>
-        <p class="case-source">{{ selected!.source }}</p>
+        <p class="case-source" *ngIf="selected!.source">{{ selected!.source }}</p>
       </section>
-    </details>
+    </ng-template>
     <app-achievements
       [projectId]="selected!.id"
       anchorId="related-achievements"
