@@ -61,7 +61,7 @@ export const OPENCAD_TOOLS: OpenCadTool[] = [
     id: 'nc-viewer',
     name: 'NC 뷰어',
     kind: 'CNC 가공 프로그램',
-    extensions: ['.nc', '.h', '.mpr'],
-    summary: 'G-code, Heidenhain 평문, woodWOP MPR로 쓴 CNC 가공 프로그램입니다. 장비는 이 코드대로 공구를 움직입니다.',
+    extensions: ['.nc', '.gcode', '.h', '.mpr'],
+    summary: '장비가 공구를 어떻게 움직일지 적은 CNC 가공 프로그램입니다.',
   },
 ];
