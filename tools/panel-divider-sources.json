@@ -1,0 +1,29 @@
+{
+  "description": "Divider tooltip explanations and original comparison diagrams follow the implemented resize policies. The drawings are schematic front views, with panel thickness omitted.",
+  "repository": "prisme-server",
+  "revision": "db1df6805e0b4fa6d10526ad0a67a0da6e2af78a",
+  "sources": [
+    {
+      "path": "app_openapi/views.py",
+      "symbols": [
+        "_absolute_divider_fixed_compartment_state",
+        "_capture_absolute_divider_anchor_state",
+        "_capture_module_proportional_divider_axis_state",
+        "_restore_module_proportional_divider_axis_state"
+      ]
+    },
+    {
+      "path": "app_openapi/v1/aflow/tests/test_sink_parametric_common.py",
+      "symbols": [
+        "test_absolute_divider_keeps_absolute_height_offset",
+        "test_proportional_divider_keeps_relative_height_ratio",
+        "test_absolute_divider_freezes_internal_panels_on_width_growth",
+        "test_module_level_proportional_divider_keeps_module_center_on_width_growth"
+      ]
+    }
+  ],
+  "diagrams": {
+    "absolute-divider": "Distance from the anchored boundary remains constant as the cabinet grows. The drawing shows the left compartment fixed.",
+    "proportional-divider": "Divider position follows its ratio within the containing space. The drawing shows a centered divider preserving a 1:1 split."
+  }
+}

@@ -74,6 +74,8 @@ def box(bounds, highlighted=False, opacity=.42):
 
 
 def render(key, label, selection):
+    if key in {'absolute-divider', 'proportional-divider'}:
+        return divider_comparison(key, label)
     drawer = key.startswith('drawer-')
     drawing = []
     # Gray context remains visible; selected parts are drawn last as an explanatory overlay.
@@ -96,6 +98,34 @@ def render(key, label, selection):
 <rect width="420" height="300" fill="#f6f8fa"/>
 {''.join(drawing)}
 </svg>
+'''
+
+
+def divider_comparison(key, label):
+    absolute = key == 'absolute-divider'
+    title = '기준면과의 거리 유지' if absolute else '공간의 비율 유지'
+    panels = []
+    for x, width, heading in [(20, 125, '폭 변경 전'), (205, 190, '폭 증가 후')]:
+        offset = 50 if absolute else width / 2
+        divider_x = x + offset
+        panels.append(f'''<text x="{x + width / 2}" y="63" text-anchor="middle" font-size="15">{heading}</text>
+<rect x="{x}" y="83" width="{width}" height="126" fill="#edf1f5" stroke="#a5b4c3" stroke-width="2"/>
+<rect x="{divider_x - 3}" y="83" width="6" height="126" fill="#2c659d"/>
+<path d="M{x},225v10 M{x},230H{divider_x} M{divider_x},225v10" fill="none" stroke="#2c659d" stroke-width="1.5"/>
+<text x="{x + offset / 2}" y="255" text-anchor="middle" font-size="15" fill="#204c77">{'일정' if absolute else '1'}</text>''')
+        if not absolute:
+            panels.append(f'''<path d="M{divider_x},230H{x + width} M{x + width},225v10" fill="none" stroke="#2c659d" stroke-width="1.5"/>
+<text x="{divider_x + (width - offset) / 2}" y="255" text-anchor="middle" font-size="15" fill="#204c77">1</text>''')
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" role="img" aria-labelledby="title description">
+<title id="title">{label}: {title}</title>
+<desc id="description">가구 폭을 늘릴 때 {'왼쪽 기준면과 칸막이의 거리는 그대로이고 오른쪽 칸만 늘어납니다.' if absolute else '가운데 칸막이가 이동해 양쪽 칸의 1대1 비율을 유지합니다.'}</desc>
+<rect width="420" height="300" fill="#f6f8fa"/>
+<g font-family="Arial, sans-serif" fill="#29343d">
+<text x="210" y="29" text-anchor="middle" font-size="19" font-weight="bold">{title}</text>
+{''.join(panels)}
+<path d="M158,145h32m-7,-6 7,6-7,6" fill="none" stroke="#687785" stroke-width="2"/>
+<text x="210" y="285" text-anchor="middle" font-size="12" fill="#687785">정면에서 본 폭 변경 예시 · 판 두께 생략</text>
+</g></svg>
 '''
 
 

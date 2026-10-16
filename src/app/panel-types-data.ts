@@ -20,12 +20,14 @@ const panels: [string, string, string, string][] = [
   ['ep-panel', 'EP 패널', '가구 몸통의 바깥쪽에 덧대어 노출되는 옆면 등을 마감하는 패널입니다.', '몸통 측판 바깥에 덧댄 외부 마감 패널'],
   ['drawer-side', '서랍 측판', '서랍 상자의 왼쪽과 오른쪽 벽을 이루는 판입니다.', '꺼낸 서랍 상자의 좌우 측판'],
   ['drawer-front-back', '서랍 앞뒤판', '서랍 상자의 앞뒤 벽을 이루며 좌우 측판과 바닥판을 연결하는 판입니다.', '꺼낸 서랍 상자의 앞쪽과 뒤쪽 판'],
-  ['absolute-divider', '절대 디바이더', '가구 안쪽에서 수납공간을 여러 칸으로 나누는 내부 칸막이 패널입니다.', '가구 내부 공간을 세로로 나누는 칸막이'],
-  ['proportional-divider', '비율 디바이더', '가구 안쪽에서 수납공간을 여러 칸으로 나누는 내부 칸막이 패널입니다.', '가구 내부 공간을 세로로 나누는 칸막이'],
+  ['absolute-divider', '절대 디바이더', '기준면에서 정해 둔 거리를 유지하는 내부 칸막이입니다. 가구 폭이 늘어나도 그림의 왼쪽 칸 너비는 그대로 두고, 나머지 공간이 늘어납니다.', '폭 변경 전후에 기준면과 칸막이의 거리가 같은 모습'],
+  ['proportional-divider', '비율 디바이더', '내부 공간에서 정해 둔 비율에 맞춰 위치가 바뀌는 칸막이입니다. 그림처럼 가운데를 나누는 경우, 가구 폭이 늘어나면 양쪽 칸이 같은 비율로 넓어집니다.', '폭 변경 전후에 칸막이가 이동해 양쪽 공간의 1대1 비율을 유지하는 모습'],
 ];
 
 export const PANEL_TYPES: PanelType[] = panels.map(([id, name, description, location]) => ({
   id, name, description,
   image: `assets/cases/panel/types/${id}.svg`,
-  imageAlt: `${location} 위치를 파란색으로 강조한 개념도`,
+  imageAlt: id.endsWith('divider')
+    ? `${location}. 해당 패널을 파란색으로 강조한 개념도`
+    : `${location} 위치를 파란색으로 강조한 개념도`,
 }));
