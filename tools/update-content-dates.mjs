@@ -1,0 +1,17 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { contentFingerprint, updatedHistory, validateDate } from './content-dates.mjs';
+const require = createRequire(import.meta.url);
+const { SEARCH_PAGES, SITE_URL, renderPage } = require('../dist/server/main.js');
+const file = new URL('../src/app/content-history.json', import.meta.url);
+const history = JSON.parse(readFileSync(file, 'utf8'));
+const at = process.argv[process.argv.indexOf('--at') + 1];
+if (!process.argv.includes('--at')) throw new Error('Provide the actual content update time: --at YYYY-MM-DDTHH:mm:ssZ');
+validateDate(at);
+const base = readFileSync('src/index.html', 'utf8');
+const hashes = {};
+for (const page of SEARCH_PAGES) hashes[page.path] = contentFingerprint(await renderPage(base, SITE_URL + page.path), path => readFileSync('src' + path));
+const next = updatedHistory(history, hashes, at);
+const changed = Object.keys(next).filter(path => next[path] !== history[path]);
+writeFileSync(file, JSON.stringify(next, null, 2) + '\n');
+console.log(`Content dates: ${changed.length} changed pages${changed.length ? ': ' + changed.join(', ') : '; unchanged dates retained'}. Rebuild before publishing.`);

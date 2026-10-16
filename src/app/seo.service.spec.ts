@@ -1,6 +1,6 @@
 import { Meta, Title } from '@angular/platform-browser';
 import { SeoService } from './seo.service';
-import { SEARCH_PAGES, SHARE_IMAGE, SITE_URL } from './site-seo';
+import { SEARCH_PAGES, SHARE_IMAGE, SITE_URL, contentModified } from './site-seo';
 
 describe('SeoService', () => {
   let document: Document;
@@ -36,6 +36,8 @@ describe('SeoService', () => {
       expect(document.querySelectorAll('script[type="application/ld+json"]').length).toBe(1);
       const data = JSON.parse(document.getElementById('site-structured-data')!.textContent!);
       expect(data['@graph'].some((node: { url?: string }) => node.url === SITE_URL + page.path)).toBeTrue();
+      expect(data['@graph'].find((node: { '@type'?: string; url?: string }) => node['@type'] === page.kind && node.url === SITE_URL + page.path).dateModified).toBe(contentModified(page.path));
+      expect(document.querySelector<HTMLMetaElement>('meta[name="author"]')?.content).toBe('김규태 · Sean Kim');
     }
   });
 
@@ -46,6 +48,7 @@ describe('SeoService', () => {
     expect(document.querySelector('link[rel="canonical"]')).toBeNull();
     expect(document.getElementById('site-structured-data')).toBeNull();
     expect(document.querySelector('meta[property="og:image"]')).toBeNull();
+    expect(document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content).toContain('요청한 페이지를 찾을 수 없습니다');
     seo.update('/research');
     expect(document.querySelector<HTMLMetaElement>('meta[name="robots"]')?.content).toContain('index, follow');
     expect(document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href).toBe(SITE_URL + '/research');

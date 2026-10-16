@@ -2,11 +2,15 @@ import { CASE_STUDIES } from './portfolio-data';
 import { OTHER_PROJECTS } from './other-projects-data';
 import { OPENCAD_TOOLS } from './opencad-data';
 import { SITE_ARTICLES, SiteArticle } from './articles-data';
+import contentHistory from './content-history.json';
 
 export const SITE_URL = 'https://gyutae-kim.github.io';
 export const SITE_NAME = '김규태 · Sean Kim';
 // All sharing covers use the same small, widely supported JPEG format.
 export const SHARE_IMAGE = { width: 1200, height: 630, type: 'image/jpeg' };
+export function contentModified(path: string): string {
+  return (contentHistory as Record<string, { lastmod: string }>)[path]?.lastmod ?? '';
+}
 export interface SearchPage {
   path: string;
   title: string;
@@ -119,6 +123,7 @@ export function structuredData(page: SearchPage): object {
     {
       '@type': page.kind, '@id': `${url}#webpage`, url, name: page.title,
       description: page.description, inLanguage: 'ko', isPartOf: { '@id': websiteId },
+      dateModified: contentModified(page.path),
       about: { '@id': personId },
       ...(page.path === '/' ? { mainEntity: { '@id': personId } } : {}),
       ...(page.path !== '/' ? { breadcrumb: { '@id': `${url}#breadcrumb` } } : {}),
@@ -147,6 +152,7 @@ export function structuredData(page: SearchPage): object {
     description: page.description, url, inLanguage: 'ko', image: `${SITE_URL}/${page.image}`,
     author: { '@id': personId }, mainEntityOfPage: { '@id': `${url}#webpage` },
     articleSection: page.article.category,
+    dateModified: contentModified(page.path),
   });
   if (page.path === '/notes') graph.push({
     '@type': 'ItemList', '@id': `${url}#notes`, name: '제조 소프트웨어 개발 노트',
