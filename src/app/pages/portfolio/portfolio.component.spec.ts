@@ -41,19 +41,17 @@ describe('PortfolioComponent', () => {
     const page = open(OTHER_PROJECTS[0].id);
     expect(page.querySelector('.missing-note')).toBeNull();
     expect(page.querySelector('h1')!.textContent).toContain(OTHER_PROJECTS[0].title);
-    expect(page.querySelector('.case-next strong')!.textContent).toContain(OTHER_PROJECTS[1].title);
+    expect(page.querySelector('.case-next')).toBeNull();
   });
 
-  it('lists the problems the monitoring caught, linking fixes told on another page', () => {
+  it('lists the problems the monitoring caught without linking to removed projects', () => {
     const page = open('service-monitoring');
     const items = page.querySelectorAll('.caught-list li');
     expect(items.length).toBe(OTHER_PROJECTS[0].caught!.length);
     expect(page.querySelector('.caught-title b')!.textContent).toContain(`${items.length}건`);
     expect(page.querySelector('.result-stats')!.textContent).toContain(`${items.length}건`);
     expect(items[0].querySelector('time')!.getAttribute('datetime')).toBe(OTHER_PROJECTS[0].caught![0].date);
-    const link = page.querySelector('.caught-fixed a')!;
-    expect(link.getAttribute('href')).toBe('/portfolio/order-invoice-sync');
-    expect(link.getAttribute('aria-label')).toContain(OTHER_PROJECTS[1].title);
+    expect(page.querySelector('.caught-fixed a')).toBeNull();
   });
 
   it('links every caught problem to a project that exists', () => {
@@ -65,11 +63,14 @@ describe('PortfolioComponent', () => {
     }
   });
 
-  it('sends the old invoice project address to its new page', () => {
+  it('shows the missing-project notice for removed project addresses', () => {
     const router = TestBed.inject(Router);
     const navigate = spyOn(router, 'navigate').and.resolveTo(true);
-    expect(open('wedraw-order-operations').querySelector('.missing-note')).toBeNull();
-    expect(navigate).toHaveBeenCalledWith(['/portfolio', 'order-invoice-sync'], { replaceUrl: true });
+    for (const id of ['order-invoice-sync', 'wedraw-order-operations']) {
+      expect(open(id).querySelector('.missing-note')).not.toBeNull();
+      fixture.destroy();
+    }
+    expect(navigate).not.toHaveBeenCalled();
   });
 
   it('draws one cell per monitored component and both error collectors', () => {

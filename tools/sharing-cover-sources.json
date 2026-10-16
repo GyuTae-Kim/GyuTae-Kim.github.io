@@ -34,17 +34,5 @@
     "source": "src/assets/cases/operations/dashboard-live-public-1100.webp",
     "caption": "실제 관리자 상태 화면 · 내부 정보 가림",
     "output": "src/assets/og/service-monitoring.jpg"
-  },
-  {
-    "id": "order-invoice-sync",
-    "route": "/portfolio/order-invoice-sync",
-    "sheet": "B-05",
-    "kicker": "프로젝트 05 · 웹 서비스 · 운영 문제 해결",
-    "title": ["송장 연동의", "전송·업로드 오류를", "고쳤습니다"],
-    "summary": "전송 충돌·중복 전송·엑셀 재업로드 개선",
-    "role": "기존 팀 기능의 전송·업로드 처리 개선",
-    "source": "src/assets/cases/operations/invoice-registration-public-1100.webp",
-    "caption": "개선한 로직이 연결되는 송장 등록 화면 · 내부 정보 가림",
-    "output": "src/assets/og/order-invoice-sync.jpg"
   }
 ]

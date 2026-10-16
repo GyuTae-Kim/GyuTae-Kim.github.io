@@ -31,7 +31,6 @@ describe('HomeComponent', () => {
       expect(row.querySelector('.row-note')!.textContent!.trim().length).toBeGreaterThan(15);
     });
     expect(rows[0].querySelector('.row-note')!.textContent).toContain('디지털 트윈은 결과 시각화만');
-    expect(root.querySelector('.operation-card[href="/portfolio/order-invoice-sync"] .row-note')!.textContent).toContain('팀원이 만든 연동');
   });
 
   it('keeps research image context and individual case links', () => {

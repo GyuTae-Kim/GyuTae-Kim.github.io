@@ -450,7 +450,7 @@
         </div>
       </section>
     </article>
-    <nav class="case-next" aria-label="다음 프로젝트">
+    <nav class="case-next" *ngIf="otherProjects.length > 1" aria-label="다음 프로젝트">
       <a [routerLink]="['/portfolio', nextOther.id]"
         ><span class="eyebrow">다음 기타 프로젝트 {{ nextOther.number }}</span
         ><strong>{{ nextOther.title }}</strong

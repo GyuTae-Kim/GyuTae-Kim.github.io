@@ -28,7 +28,6 @@ export class PortfolioComponent implements OnDestroy {
   private readonly movedCases: Record<string, string> = {
     'fusion-cam': 'cad-feature-recognition',
     'sketchup-manufacturing': 'wedraw-pro',
-    'wedraw-order-operations': 'order-invoice-sync',
   };
   // Animated story images the reader has stopped; they show their still image instead.
   stopped = new Set<string>();

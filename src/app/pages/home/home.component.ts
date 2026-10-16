@@ -22,10 +22,6 @@ const PROJECT_INTROS: Record<string, { result: string; role: string }> = {
     result: '서버 상태뿐 아니라 송장·알림톡의 처리 실패까지 감지하고, 운영 문제 6건의 원인을 고쳤습니다.',
     role: '감시 기준부터 오류 수집·알림·관리자 콘솔까지 직접 개발했습니다.',
   },
-  'order-invoice-sync': {
-    result: '동시 전송 충돌과 같은 송장의 중복 전송, 엑셀 재업로드 때의 불필요한 변경을 고쳤습니다.',
-    role: '팀원이 만든 연동의 실패 감지와 전송·업로드 처리를 개선했습니다.',
-  },
 };
 
 const RESEARCH_ROLES: Record<string, string> = {
