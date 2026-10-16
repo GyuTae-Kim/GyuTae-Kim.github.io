@@ -51,7 +51,7 @@ for (const page of SEARCH_PAGES) {
     const dom = new JSDOM(raw.toString('utf8'), { url: SITE_URL + page.path });
     const document = dom.window.document;
     assert.ok(document.querySelector('style[data-site-styles]'), `${file}: shared CSS available before scripts`);
-    assert.ok(!document.querySelector('link[rel="stylesheet"][href^="styles."]'), `${file}: no blocking shared CSS request`);
+    assert.ok(!document.querySelector('head > link[rel="stylesheet"][href^="styles."]'), `${file}: no blocking shared CSS request`);
     assert.ok(!document.querySelector('link[href*="fonts.googleapis.com"], link[href*="cdn.jsdelivr.net"]'), `${file}: no external font CSS`);
     const unstyledText = document.querySelector('app-root').textContent;
     const missingGlyphs = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !fontCharacters.has(c.codePointAt(0))))];

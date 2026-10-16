@@ -2,8 +2,8 @@
 
 Portfolio Sans is a character subset of Pretendard Variable 1.3.9. The outlines
 and variable weight axis are preserved; the derivative is renamed under the OFL.
-The core file contains the navigation, home heading and basic Latin characters.
-The content file contains the other characters used by the checked-in source.
+The core file contains all characters used by the compiled home page and basic
+Latin characters. The content file contains the other source characters.
 Each face declares a disjoint Unicode range, so text uses the matching file only.
 Keep both OFL license files with the deployed fonts.
 
@@ -26,3 +26,7 @@ python tools/prepare-site-fonts.py <downloaded-original.woff2> src/assets/fonts
 not present upstream (which intentionally use the system fallback). The build's
 SEO check validates visible document text against this coverage so new content
 cannot silently fall outside the subset. CSS-only changes retain content dates.
+The existing `docs/index.html` determines the home-page character group; after
+editing home content, regenerate once more after building the new HTML to keep
+the home page in a single font file. Characters in newer source remain covered
+by the content file even before that regrouping.
