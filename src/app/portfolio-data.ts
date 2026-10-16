@@ -2,11 +2,17 @@ export interface CaseStudy {
   id: string;
   number: string;
   // First-screen summary and the scope of the result.
-  // The long problem/approach/validation text stays behind 「자세히」 on the case page.
+  // Detailed sections may be shown directly or grouped behind 「자세히」.
   headline: string;
   keyDecision?: string;
   outcome?: { result: string; impact: { title: string; text: string }[] };
   scopeLine: string;
+  expandedDetails?: boolean;
+  designParameters?: {
+    introduction: string;
+    groups: { title: string; items: string[] }[];
+    note: string;
+  };
   // 2–3 summary figures backed by the implementation or source artifacts.
   stats: { value: string; label: string }[];
   // His contribution: one summary line (also on the /portfolio list), what he built, and
@@ -279,17 +285,30 @@ export const CASE_STUDIES: CaseStudy[] = [
     number: '02',
     headline: '가구 크기를 바꾸면 패널이 규칙대로 함께 움직입니다',
     keyDecision:
-      '규칙 시뮬레이션을 매번 돌리지 않고, 규칙으로 만든 샘플을 선형회귀로 맞춰 계수식만으로 패널을 움직이게 했습니다.',
-    scopeLine: '사내 가구 데이터로 한 연구 · 정확도 수치는 원본 결과 파일이 없어 생략',
+      '패널의 위치·크기 변화를 선형회귀로 계수식에 담아, 고객이 웹에서 설계 파라미터를 실시간으로 수정하고 발주할 수 있도록 했습니다.',
+    scopeLine: '',
+    expandedDetails: true,
     stats: [
-      { value: '15종', label: '인식하는 패널 역할' },
-      { value: '4종', label: '패널이 따라 움직이는 설계 값 (크기, 걸레받이 등)' },
+      { value: '15종', label: 'AI가 인식하는 패널 종류' },
+      { value: '13개', label: '가구별로 구성하는 설계 파라미터' },
       { value: '1건', label: '공동발명 특허 출원' },
     ],
+    designParameters: {
+      introduction: 'AI가 구분한 패널 종류와 접합 관계를 바탕으로 가구의 설계 파라미터를 구성합니다. 고객이 웹에서 값을 바꾸면 계수식으로 패널의 위치와 크기를 함께 갱신해 원하는 사양의 발주로 이어집니다.',
+      groups: [
+        { title: '기본 크기', items: ['너비', '깊이', '높이'] },
+        { title: '걸레받이', items: ['걸레받이 높이', '걸레받이 들임 · 앞뒤 위치'] },
+        { title: '찬넬', items: ['찬넬 깊이', '찬넬 높이'] },
+        { title: '코너장 마감', items: ['코너장 멍판 너비 · 전면마감재'] },
+        { title: '내부 구성', items: ['선반 수량', '세로 밴드목 사용 여부', '세로 밴드목 너비'] },
+        { title: '도어 여유', items: ['도어 상단 여유', '도어 하단 여유'] },
+      ],
+      note: '가구 유형과 포함된 패널에 따라 조절할 수 있는 항목이 달라집니다.',
+    },
     role: '팀 프로젝트에서 AI 연구를 직접 맡았습니다.',
     roleItems: [
       '가구 모델의 패널과 접합면 분석',
-      '패널 역할 15종을 인식하는 AI',
+      '패널 종류 15종을 인식하는 AI',
       '크기 변경 규칙을 선형회귀로 수식화',
       '브라우저에서 계수식만으로 패널 이동',
     ],
@@ -297,11 +316,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     fixes: [
       {
         problem: '크기와 모양이 비슷해도 패널마다 가구 안에서 맡는 역할이 다릅니다.',
-        fix: '패널이 어디에 어떻게 맞닿는지를 그래프로 넣어 역할을 인식했습니다.',
+        fix: '패널의 형상과 접합 관계를 그래프로 분석하고, AI로 측판·지판·천판 등 15종 패널 종류를 구분했습니다.',
       },
       {
-        problem: '비슷한 변형 가구가 학습과 평가에 섞이면 점수를 믿기 어렵습니다.',
-        fix: '원본 이름으로 형상 계열을 묶어 같은 분할에 넣었습니다.',
+        problem: '고객이 웹에서 가구의 치수와 구성을 실시간으로 조절하고, 원하는 사양으로 바로 발주하고 싶어합니다.',
+        fix: '머신러닝(선형회귀)으로 패널의 위치·크기를 계산하는 계수식을 구성했습니다. 브라우저에서 가볍게 실시간으로 파라미터를 수정하고 가구를 발주할 수 있도록 했습니다.',
       },
       {
         problem: '바뀌지 않아야 할 값까지 회귀식이 건드릴 수 있습니다.',
@@ -315,13 +334,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       '패널 단위 지표',
       '파라미터를 바꾼 뒤 패널 위치 회귀 테스트 (하부 코너장 등)',
     ],
-    unchecked: [
-      '정확도와 개선율 수치 (원본 결과 파일 없음)',
-      '새 가구로 한 외부 검증',
-      '좌표가 바뀌어도 늘 같은 예측',
-    ],
-    source:
-      '남아 있는 코드와 연구 노트로 정리했습니다. 관련 특허는 공동발명으로 출원된 상태이고, 이 구현이 청구항을 그대로 옮긴 것은 아닙니다.',
+    unchecked: [],
+    source: '',
     relatedResearch: [
       {
         id: 'graph-tsp',
@@ -356,8 +370,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: '파라미터 관계 수식화',
-        text: '전체 크기, 걸레받이, 코너장 멍판, 찬넬 크기를 바꿀 때 패널이 움직이는 규칙을 팀과 정리하고, 선형회귀로 수식화합니다.',
-        did: ['규칙으로 기준값을 흔든 샘플 생성', '패널마다 위치와 크기를 선형회귀로 맞춤', '브라우저에서 계수식만으로 패널 이동'],
+        text: '너비·깊이·높이, 걸레받이·찬넬, 코너장 멍판과 도어 여유 등을 바꾸는 규칙을 팀과 정리하고, 선형회귀로 패널의 위치·크기 변화를 수식화합니다.',
+        did: ['규칙으로 기준값을 흔든 샘플 생성', '패널마다 위치와 크기를 선형회귀로 맞춤', '웹에서 계수식으로 실시간 치수 수정과 발주 연결'],
         didNote: '가구 규칙은 팀과 함께 정리했습니다.',
         image: 'assets/cases/panel/hero.webp',
         imageAlt: '가구 폭을 바꾸기 전과 후. 맞닿은 패널들이 함께 늘어나고 옮겨 간 모습',
