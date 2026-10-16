@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { SeoService } from './seo.service';
 import { siteUpdated } from './site-updated';
-import { initAnalytics, trackPage } from './analytics';
+import { initAnalytics, showAnalyticsSettings, trackPage } from './analytics';
 import { GA4_MEASUREMENT_ID } from './analytics-config';
-import { searchPage } from './site-seo';
+import { analyticsPage } from './analytics-pages';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,13 +12,14 @@ import { searchPage } from './site-seo';
 })
 export class AppComponent {
   updated = siteUpdated();
+  showAnalyticsSettings = showAnalyticsSettings;
   constructor(router: Router, seo: SeoService) {
     initAnalytics(GA4_MEASUREMENT_ID, 'portfolio');
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         seo.update(event.urlAfterRedirects);
-        const page = searchPage(event.urlAfterRedirects);
-        trackPage(page?.path ?? '/404', page?.title ?? '없는 페이지 — 김규태 · Sean Kim');
+        const page = analyticsPage(event.urlAfterRedirects);
+        trackPage(page.path, page.title, page.group);
       }
     });
   }
