@@ -17,43 +17,39 @@ describe('OpenCadComponent', () => {
     page = fixture.nativeElement as HTMLElement;
   });
 
-  it('opens every published viewer and its source in a new tab', () => {
-    const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('.tool-card .tool-actions a'));
+  it('opens the published 2D viewer and its source in a new tab', () => {
+    const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('.tool-card:first-of-type .tool-actions a'));
     expect(links.map((link) => link.href)).toEqual([
       'https://gyutae-kim.github.io/2dcad-viewer/',
       'https://github.com/GyuTae-Kim/2dcad-viewer',
-      'https://gyutae-kim.github.io/opencad-step/',
-      'https://github.com/GyuTae-Kim/opencad-step',
-      'https://gyutae-kim.github.io/opencad-skp/',
-      'https://github.com/GyuTae-Kim/opencad-skp',
-      'https://gyutae-kim.github.io/opencad-nc/',
-      'https://github.com/GyuTae-Kim/opencad-nc',
     ]);
     expect(links.every((link) => link.target === '_blank' && link.rel.includes('noopener'))).toBeTrue();
   });
 
-  it('shows the 2D and 3D viewers as published cards, with no planned list left', () => {
-    const cards = Array.from(page.querySelectorAll('.tool-card'));
-    expect(cards.map((card) => card.querySelector('h3')?.textContent?.trim())).toEqual([
-      'OpenCAD 무료 캐드 뷰어',
-      'STEP 뷰어',
-      'SKP 뷰어',
-      'NC 뷰어',
-    ]);
-    expect(cards.every((card) => card.querySelector('.tool-shot img') && card.querySelector('.tool-status.live'))).toBeTrue();
+  it('keeps 2D capabilities separate and exposes the three published 3D apps with introductions', () => {
+    expect(page.querySelector('.tool-card .tool-meta')?.textContent).toContain('2D 도면');
+    expect(page.querySelector('.tool-card')?.textContent).not.toMatch(/STEP|SKP|NC|3D/);
     expect(page.querySelectorAll('.plan-card').length).toBe(0);
-    // Only the first screenshot competes for the initial load.
-    const shots = Array.from(page.querySelectorAll('.tool-shot img'));
-    expect(shots.map((img) => img.getAttribute('fetchpriority'))).toEqual(['high', null, null, null]);
+    for (const id of ['step', 'skp', 'nc']) {
+      const card = page.querySelector(`#${id}-viewer`)!.closest('.tool-card')!;
+      expect(card.querySelector(`a[href="https://gyutae-kim.github.io/opencad-${id}/"]`)).not.toBeNull();
+      expect(card.querySelector(`a[href="/opencad/projects/${id}-viewer"]`)).not.toBeNull();
+    }
+    expect(page.querySelector('a[href="/opencad/projects/viewer3d"]')).not.toBeNull();
+    expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]')).toBeNull();
   });
 
-  it('says which SketchUp files the SKP viewer cannot open yet', () => {
-    const skp = Array.from(page.querySelectorAll('.tool-card')).find((card) => card.querySelector('h3')?.textContent?.includes('SKP'));
-    expect(skp?.textContent).toContain('2020 이하 버전 파일은 아직 열지 못합니다');
+  it('preserves every published screenshot and prioritizes only the first image', () => {
+    const shots = Array.from(page.querySelectorAll('.tool-shot img'));
+    expect(shots.length).toBe(4);
+    expect(shots.map((img) => img.getAttribute('fetchpriority'))).toEqual(['high', null, null, null]);
+    expect(shots.slice(1).every((img) => img.getAttribute('loading') === 'lazy')).toBeTrue();
+    const skp = page.querySelector('#skp-viewer')!.closest('.tool-card')!;
+    expect(skp.textContent).toContain('SketchUp 2021~2026');
   });
 
   it('links the task guides', () => {
-    const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('.guide-list a'));
+    const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('[aria-labelledby="opencad-guides-title"] .guide-list a'));
     expect(guides.map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
     ]);

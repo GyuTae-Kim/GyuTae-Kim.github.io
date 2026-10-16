@@ -1,6 +1,6 @@
 import { CASE_STUDIES } from './portfolio-data';
 import { OTHER_PROJECTS } from './other-projects-data';
-import { OPENCAD_TOOLS } from './opencad-data';
+import { OPENCAD_TOOLS, OPENCAD_PROJECTS, OpenCadProject } from './opencad-data';
 import { SITE_ARTICLES, SiteArticle } from './articles-data';
 import contentHistory from './content-history.json';
 import { RESEARCH_WORKS, ResearchWork } from './research-data';
@@ -22,6 +22,7 @@ export interface SearchPage {
   project?: { title: string; headline: string; tags: string[] };
   research?: ResearchWork;
   article?: SiteArticle;
+  tool?: OpenCadProject;
 }
 
 // Search copy describes the work and responsibility documented on each case page.
@@ -82,10 +83,10 @@ export const SEARCH_PAGES: SearchPage[] = [
   })),
   {
     path: '/opencad',
-    title: 'OpenCAD 무료 캐드 뷰어·DWG·STEP·SKP·NC | 김규태',
-    description: '김규태가 만드는 무료 오픈소스 캐드 뷰어 OpenCAD입니다. 설치·회원가입 없이 DWG·DXF 도면 열기·측정·편집과 PDF 출력, STEP·SKP 3D 모델 보기, NC 가공 프로그램의 공구 경로 확인을 지원합니다.',
+    title: 'OpenCAD 무료 캐드·STEP·SKP·NC 뷰어 | 김규태',
+    description: 'DWG·DXF 캐드 도면, STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로를 확인하는 무료 OpenCAD 뷰어 모음입니다. 형식별 실행 링크와 지원 범위, 오픈소스 3D 코어를 소개합니다.',
     image: 'assets/og/opencad.jpg',
-    imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 가공 프로그램을 브라우저에서 여는 뷰어 네 가지의 화면.',
+    imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 공구 경로 뷰어 네 가지의 화면.',
     kind: 'CollectionPage',
   },
   {
@@ -96,6 +97,11 @@ export const SEARCH_PAGES: SearchPage[] = [
   ...SITE_ARTICLES.map((article): SearchPage => ({
     path: article.path, title: `${article.title} | 김규태`, description: article.description,
     image: article.image, imageAlt: article.imageAlt, kind: 'WebPage', article,
+  })),
+  ...OPENCAD_PROJECTS.map((tool): SearchPage => ({
+    path: tool.path, title: tool.searchTitle, description: tool.summary,
+    image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 무료 캐드 뷰어와 오픈소스 프로젝트.',
+    kind: 'WebPage', tool,
   })),
   {
     path: '/contact',
@@ -144,15 +150,17 @@ export function structuredData(page: SearchPage): object {
       ...(page.project ? { mainEntity: { '@id': `${url}#project` } } : {}),
       ...(page.research ? { mainEntity: { '@id': `${url}#research` } } : {}),
       ...(page.article ? { mainEntity: { '@id': `${url}#article` } } : {}),
+      ...(page.tool ? { mainEntity: { '@id': `${url}#software` } } : {}),
     },
   ];
   if (page.path !== '/') {
     const crumbs = [{ name: '홈', item: `${SITE_URL}/` }];
     if (page.project) crumbs.push({ name: '프로젝트', item: `${SITE_URL}/portfolio` });
     if (page.research) crumbs.push({ name: '연구', item: `${SITE_URL}/research` });
+    if (page.tool) crumbs.push({ name: 'OpenCAD', item: `${SITE_URL}/opencad` });
     if (page.article) crumbs.push(page.article.category === 'OpenCAD 사용 안내'
       ? { name: 'OpenCAD', item: `${SITE_URL}/opencad` } : { name: '개발 노트', item: `${SITE_URL}/notes` });
-    crumbs.push({ name: page.project?.title ?? page.research?.title ?? page.article?.title ?? page.title.split(' — ')[0], item: url });
+    crumbs.push({ name: page.project?.title ?? page.research?.title ?? page.article?.title ?? page.tool?.name ?? page.title.split(' — ')[0], item: url });
     graph.push({
       '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`,
       itemListElement: crumbs.map((crumb, i) => ({ '@type': 'ListItem', position: i + 1, ...crumb })),
@@ -197,6 +205,17 @@ export function structuredData(page: SearchPage): object {
     itemListElement: OPENCAD_TOOLS.filter((tool) => tool.url).map((tool, i) => ({
       '@type': 'ListItem', position: i + 1, name: tool.name, url: tool.url,
     })),
+  });
+  if (page.tool) graph.push({
+    '@type': page.tool.url ? 'SoftwareApplication' : 'SoftwareSourceCode',
+    '@id': `${url}#software`, name: page.tool.name, description: page.description,
+    url: page.tool.url ?? url, author: { '@id': personId }, inLanguage: 'ko',
+    license: 'https://opensource.org/license/mit',
+    ...(page.tool.url ? {
+      applicationCategory: 'DesignApplication', operatingSystem: 'Web',
+      browserRequirements: 'JavaScript and WebGL2',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'KRW' },
+    } : { codeRepository: page.tool.source, programmingLanguage: 'TypeScript' }),
   });
   return { '@context': 'https://schema.org', '@graph': graph };
 }

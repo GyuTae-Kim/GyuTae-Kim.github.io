@@ -19,6 +19,8 @@ describe('published HTML aliases', () => {
       ['/research/graph-tsp.html', '/research/graph-tsp'],
       ['/research/virtual-try-on/index.html', '/research/virtual-try-on'],
       ['/opencad/guides/measure-export.html', '/opencad/guides/measure-export'],
+      ['/opencad/projects/nc-viewer.html', '/opencad/projects/nc-viewer'],
+      ['/opencad/projects/viewer3d/index.html', '/opencad/projects/viewer3d'],
     ]) {
       await zone.run(() => router.navigateByUrl(`${from}?utm_source=search#main`));
       expect(router.url).toBe(`${to}?utm_source=search#main`);

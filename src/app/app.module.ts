@@ -7,6 +7,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
 import { OpenCadComponent } from './pages/opencad/opencad.component';
+import { OpenCadProjectComponent } from './pages/opencad-project/opencad-project.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ArticleComponent } from './pages/article/article.component';
 
@@ -24,6 +25,7 @@ import { PanelCatalogComponent } from './components/panel-catalog/panel-catalog.
     PortfolioComponent,
     BoardComponent,
     OpenCadComponent,
+    OpenCadProjectComponent,
     NotFoundComponent,
     ArticleComponent,
     AchievementsComponent,
