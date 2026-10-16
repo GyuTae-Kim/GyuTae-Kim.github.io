@@ -25,6 +25,26 @@ jobs:
       - run: npm test -- --watch=false --browsers=ChromeHeadless
         env:
           CHROME_BIN: /usr/bin/google-chrome
+      - name: Capture mobile guide previews
+        timeout-minutes: 3
+        run: |
+          mkdir -p .runtime/mobile-previews
+          python3 -m http.server 4318 --bind 127.0.0.1 --directory docs > "$RUNNER_TEMP/seo-preview-server.log" 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4318/ > /dev/null; then break; fi
+            sleep 0.2
+          done
+          for guide in open-step-stp open-skp check-nc-toolpath; do
+            profile_dir=$(mktemp -d "$RUNNER_TEMP/seo-chrome-XXXXXX")
+            timeout 45s /usr/bin/google-chrome --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=390,844 --virtual-time-budget=2000 --user-data-dir="$profile_dir" --screenshot="$PWD/.runtime/mobile-previews/$guide.png" "http://127.0.0.1:4318/opencad/guides/$guide" 2> "$RUNNER_TEMP/seo-$guide.log"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mobile-guide-previews
+          path: .runtime/mobile-previews
+          include-hidden-files: true
       - uses: actions/upload-artifact@v4
         with:
           name: portfolio-pages

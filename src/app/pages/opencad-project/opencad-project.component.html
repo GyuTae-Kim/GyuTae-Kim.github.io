@@ -26,6 +26,10 @@
       <h2 id="project-support">지원 범위와 확인할 점</h2><ul><li *ngFor="let limitation of project.limitations">{{ limitation }}</li></ul>
       <p>WebGL2와 JavaScript를 지원하는 브라우저를 사용하세요. OpenCAD는 김규태가 개발하는 MIT 라이선스 오픈소스 프로젝트입니다.</p>
     </section>
+    <section *ngIf="guides.length" class="project-section" aria-labelledby="project-guides">
+      <h2 id="project-guides">파일 열기와 표시 문제 점검</h2>
+      <ul><li *ngFor="let guide of guides"><a [routerLink]="guide.path">{{ guide.title }}</a></li></ul>
+    </section>
     <aside class="project-section" aria-labelledby="project-related">
       <h2 id="project-related">함께 쓰는 OpenCAD 프로젝트</h2>
       <ul><li *ngFor="let item of related"><a [routerLink]="item.path">{{ item.name }}</a> — {{ item.kind }}</li></ul>

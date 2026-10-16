@@ -140,11 +140,15 @@ for (const page of SEARCH_PAGES) {
       assert.ok(root.textContent.includes(page.article.lead), `${file}: article body`);
       assert.ok(data['@graph'].some((node) => node['@type'] === 'TechArticle' && node.headline === page.article.title && node.dateModified === contentModified(page.path)), `${file}: article structured data`);
       for (const section of page.article.sections) assert.ok(document.getElementById(section.id), `${file}: article section ${section.id}`);
+      if (page.article.viewer) {
+        const actions = [...root.querySelectorAll('.article-actions a')].map(link => link.href);
+        assert.deepEqual(actions, [page.article.viewer.url, ...(page.article.viewer.sampleUrl ? [page.article.viewer.sampleUrl] : [])], `${file}: guide opens its own viewer and sample`);
+      }
     }
     for (const anchor of root.querySelectorAll('a[href]')) {
       const link = new URL(anchor.href);
       if (link.origin !== SITE_URL) continue;
-      assert.ok(paths.has(link.pathname) || hostedApps.has(link.href) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
+      assert.ok(paths.has(link.pathname) || hostedApps.has(link.origin + link.pathname) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
       if (link.pathname === page.path && link.hash) {
         assert.ok(document.getElementById(decodeURIComponent(link.hash.slice(1))), `${file}: broken fragment ${link.hash}`);
       }

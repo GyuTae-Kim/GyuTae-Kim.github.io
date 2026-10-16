@@ -10,11 +10,12 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.lead }}</p>
       </header>
-      <div class="article-actions" *ngIf="post.category === 'OpenCAD 사용 안내'">
-        <a class="button primary" href="https://gyutae-kim.github.io/2dcad-viewer/">무료 DWG·DXF 뷰어 열기<app-icon name="arrow-right"></app-icon></a>
+      <div class="article-actions" *ngIf="post.viewer as viewer">
+        <a class="button primary" [href]="viewer.url">{{ viewer.label }}<app-icon name="arrow-right"></app-icon></a>
+        <a *ngIf="viewer.sampleUrl" class="button outline" [href]="viewer.sampleUrl">예제로 먼저 보기<app-icon name="arrow-right"></app-icon></a>
       </div>
       <figure class="article-figure">
-        <img [src]="post.figure.src" [alt]="post.figure.alt" [width]="post.figure.width" [height]="post.figure.height" />
+        <img [src]="post.figure.src" [attr.srcset]="post.figure.srcset || null" [attr.sizes]="post.figure.srcset ? '(max-width: 760px) 100vw, 960px' : null" [alt]="post.figure.alt" [width]="post.figure.width" [height]="post.figure.height" />
         <figcaption>{{ post.figure.caption }}</figcaption>
       </figure>
       <nav class="article-contents" aria-label="글 목차">

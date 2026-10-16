@@ -16,6 +16,12 @@ test('only changed pages receive a new date and stale records fail validation', 
   assert.throws(() => assertContentDate('/notes', history['/notes'], 'c'), /content changed/);
   assert.throws(() => updatedHistory(history, { '/': 'c' }, '2025-12-01T00:00:00Z'), /later modification/);
 });
+test('render-order tooltip ids do not edit content, while real anchors and associations still matter', () => {
+  const tooltip = (counter, anchor = 'formats', target = counter) => `<main><h1 id="${anchor}">Guide</h1><app-partner-text><button aria-describedby="kimm-partner-${target}-1">협력 기관</button><span role="tooltip" id="kimm-partner-${counter}-1">KIMM</span></app-partner-text></main>`;
+  assert.equal(contentFingerprint(tooltip(55), bytes), contentFingerprint(tooltip(79), bytes));
+  assert.notEqual(contentFingerprint(tooltip(55), bytes), contentFingerprint(tooltip(55, 'support'), bytes));
+  assert.notEqual(contentFingerprint(tooltip(55), bytes), contentFingerprint(tooltip(55, 'formats', 99), bytes));
+});
 test('responsive image bytes and application-relative images are included', () => {
   const html = page('Body').replace('src="/assets/a.jpg"', 'src="a.jpg" srcset="a.jpg 1x, b.jpg 2x"');
   const assets = { '/2dcad-viewer/a.jpg': Buffer.from('a'), '/2dcad-viewer/b.jpg': Buffer.from('b') };
