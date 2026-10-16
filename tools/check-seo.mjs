@@ -176,6 +176,9 @@ sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
+for (const app of hostedApps) {
+  if (new URL(app).origin === SITE_URL) assert.ok(robots.includes(`Sitemap: ${app}sitemap.xml`), `Missing application sitemap discovery: ${app}`);
+}
 const notFound = new JSDOM(readFileSync(join(outDir, '404.html'), 'utf8'));
 assert.match(notFound.window.document.querySelector('meta[name="robots"]').content, /noindex/);
 assert.ok(!notFound.window.document.querySelector('meta[http-equiv="refresh"]'));

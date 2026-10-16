@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://gyutae-kim.github.io/sitemap.xml
+Sitemap: https://gyutae-kim.github.io/2dcad-viewer/sitemap.xml
+Sitemap: https://gyutae-kim.github.io/opencad-step/sitemap.xml
+Sitemap: https://gyutae-kim.github.io/opencad-skp/sitemap.xml
+Sitemap: https://gyutae-kim.github.io/opencad-nc/sitemap.xml
