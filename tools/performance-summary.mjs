@@ -25,7 +25,7 @@ for (const variant of ['baseline', 'candidate']) {
 const report = { baselineRun: JSON.parse(readFileSync(join(directory, 'baseline-run.json'), 'utf8'))[0], results };
 writeFileSync(join(directory, 'comparison.json'), JSON.stringify(report, null, 2) + '\n');
 console.log('### Mobile lab comparison (three cold loads per variant)\n');
-console.log('Both compiled artifacts are served on the same runner. This isolates asset changes; these are not production PageSpeed scores or real-user measurements.\n');
+console.log('Both compiled artifacts are served with gzip on the same runner. This isolates asset changes; these are not production PageSpeed scores or real-user measurements.\n');
 console.log('| Variant | Performance | FCP (ms) | LCP (ms) | CLS | TBT (ms) | Font KiB | Font requests |');
 console.log('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
 for (const [variant, { median: r }] of Object.entries(results)) {

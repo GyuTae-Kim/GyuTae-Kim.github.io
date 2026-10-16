@@ -10,6 +10,7 @@ on:
       - 'tools/route-pages.mjs'
       - 'tools/prepare-site-fonts.py'
       - 'tools/performance-summary.mjs'
+      - 'tools/serve-performance.mjs'
       - '.github/workflows/mobile-performance.yml'
 
 permissions:
@@ -41,9 +42,9 @@ jobs:
         timeout-minutes: 8
         run: |
           npm install --prefix "$RUNNER_TEMP/mobile-audit" --no-package-lock --no-audit --no-fund lighthouse@13.5.0
-          python3 -m http.server 4320 --bind 127.0.0.1 --directory .runtime/performance/baseline > "$RUNNER_TEMP/mobile-baseline-server.log" 2>&1 &
+          node tools/serve-performance.mjs .runtime/performance/baseline 4320 > "$RUNNER_TEMP/mobile-baseline-server.log" 2>&1 &
           baseline_pid=$!
-          python3 -m http.server 4321 --bind 127.0.0.1 --directory docs > "$RUNNER_TEMP/mobile-candidate-server.log" 2>&1 &
+          node tools/serve-performance.mjs docs 4321 > "$RUNNER_TEMP/mobile-candidate-server.log" 2>&1 &
           candidate_pid=$!
           trap 'kill "$baseline_pid" "$candidate_pid" 2>/dev/null || true' EXIT
           for attempt in {1..30}; do
