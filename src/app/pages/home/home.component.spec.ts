@@ -2,6 +2,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CASE_STUDIES } from '../../portfolio-data';
+import { OTHER_PROJECTS } from '../../other-projects-data';
+import { RESEARCH_WORKS } from '../../research-data';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
@@ -18,10 +20,29 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('lists the main projects without ownership labels', () => {
-    const rows = (fixture.nativeElement as HTMLElement).querySelectorAll('.case-row');
+  it('links every project to its case and shows its result and contribution', () => {
+    const root = fixture.nativeElement as HTMLElement;
+    const rows = root.querySelectorAll('.case-row');
     expect(rows.length).toBe(CASE_STUDIES.length);
-    rows.forEach((row) => expect(row.textContent).not.toMatch(/리딩|팀과 함께|협력 기관/));
+    [...CASE_STUDIES, ...OTHER_PROJECTS].forEach((project) => {
+      const row = root.querySelector(`.case-row[href="/portfolio/${project.id}"], .operation-card[href="/portfolio/${project.id}"]`)!;
+      expect(row).withContext(project.id).not.toBeNull();
+      expect(row.querySelector('.row-result')!.textContent!.trim().length).toBeGreaterThan(15);
+      expect(row.querySelector('.row-note')!.textContent!.trim().length).toBeGreaterThan(15);
+    });
+    expect(rows[0].querySelector('.row-note')!.textContent).toContain('디지털 트윈은 결과 시각화만');
+    expect(root.querySelector('.operation-card[href="/portfolio/order-invoice-sync"] .row-note')!.textContent).toContain('팀원이 만든 연동');
+  });
+
+  it('keeps research image context and individual case links', () => {
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('#research .section-lead')!.textContent).toContain('공개 코드를 재실행');
+    RESEARCH_WORKS.filter((work) => work.result).forEach((work) => {
+      const row = root.querySelector(`.research-row[href="/research/${work.id}"]`)!;
+      expect(row).withContext(work.id).not.toBeNull();
+      expect(row.textContent).toContain(work.previewLabel);
+      expect(row.querySelector('.row-note')!.textContent!.trim().length).toBeGreaterThan(15);
+    });
   });
 
   it('uses small thumbnails for the rows', () => {

@@ -1,3 +1,138 @@
 :host {
   display: block;
 }
+
+.case-row {
+  grid-template-columns: 168px minmax(0, 1fr) auto;
+}
+
+.home-fact {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: var(--fs-1);
+  line-height: 1.6;
+
+  b {
+    color: var(--accent);
+    font-size: var(--fs-3);
+  }
+}
+
+.operations-heading {
+  margin: 30px 0 14px;
+
+  h3 {
+    font-size: var(--fs-3);
+    line-height: 1.5;
+  }
+
+  p {
+    margin-top: 4px;
+    font-size: var(--fs-2);
+    line-height: 1.7;
+    color: var(--muted);
+  }
+}
+
+.operations-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.operation-card {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 12px;
+  height: 100%;
+  padding: 16px;
+  border: 1px solid var(--line);
+  transition: border-color 0.2s, background-color 0.2s;
+
+  > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 560 / 390;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    background: var(--white);
+  }
+
+  > .row-result,
+  > .row-note,
+  > .operation-link {
+    grid-column: 1 / -1;
+  }
+
+  &:hover {
+    border-color: var(--ink);
+    background: var(--white);
+  }
+
+  &:hover strong,
+  &:hover .operation-link {
+    color: var(--blue);
+  }
+}
+
+.operation-title {
+  display: grid;
+  align-content: center;
+  gap: 4px;
+
+  strong {
+    font-size: var(--fs-3);
+    line-height: 1.5;
+    word-break: keep-all;
+  }
+}
+
+.operation-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: var(--fs-1);
+  font-weight: 600;
+
+  app-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .case-row {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+
+  .row-note {
+    display: block;
+
+    b {
+      display: table;
+      margin-bottom: 6px;
+    }
+  }
+
+  .operations-list {
+    grid-template-columns: 1fr;
+  }
+
+  .operation-card {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 389px) {
+  .case-row {
+    grid-template-columns: 92px minmax(0, 1fr);
+  }
+}
