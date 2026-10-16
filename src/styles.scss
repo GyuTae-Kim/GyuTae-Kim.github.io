@@ -187,7 +187,8 @@ main:focus {
 }
 .site-footer dl {
   display: grid;
-  grid-template-columns: 1.2fr 1.6fr 1.6fr 0.8fr;
+  /* the email and GitHub columns never get narrower than their address, so it does not break mid-word */
+  grid-template-columns: 1.2fr minmax(max-content, 1.6fr) minmax(max-content, 1.6fr) 0.8fr;
   margin: 0;
   border: 1px solid var(--ink);
 }
