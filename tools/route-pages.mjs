@@ -61,8 +61,10 @@ const sitemapUrls = [...new Set([...SEARCH_PAGES.map(({ path }) => SITE_URL + pa
 const urls = sitemapUrls.map((url) => {
   const path = new URL(url).pathname;
   const lastmod = contentModified(path) || linkedDates[url]?.lastmod;
-  validateDate(lastmod);
-  return `  <url><loc>${escape(url)}</loc><lastmod>${lastmod}</lastmod></url>`;
+  // Separate apps may not publish a trustworthy content date yet. The optional
+  // lastmod is omitted until they do; deployment time is not a content date.
+  const modified = lastmod ? `<lastmod>${validateDate(lastmod)}</lastmod>` : '';
+  return `  <url><loc>${escape(url)}</loc>${modified}</url>`;
 }).join('\n');
 writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
 writePage('.nojekyll', '');

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://gyutae-kim.github.io/</loc><lastmod>2026-10-16T05:15:40Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/</loc><lastmod>2026-10-16T05:34:02Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/portfolio</loc><lastmod>2026-10-16T04:41:50Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/portfolio/cad-feature-recognition</loc><lastmod>2026-10-15T18:01:14Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/portfolio/panel-classification</loc><lastmod>2026-10-16T04:57:46Z</lastmod></url>
@@ -11,12 +11,19 @@
   <url><loc>https://gyutae-kim.github.io/research/graph-tsp</loc><lastmod>2026-10-16T04:57:46Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/research/fashion-classification</loc><lastmod>2026-10-16T04:57:46Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/research/virtual-try-on</loc><lastmod>2026-10-16T05:02:27Z</lastmod></url>
-  <url><loc>https://gyutae-kim.github.io/opencad</loc><lastmod>2026-10-16T03:42:13Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/opencad</loc><lastmod>2026-10-16T05:34:02Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/notes</loc><lastmod>2026-10-15T16:36:17Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/opencad/guides/open-dwg-dxf</loc><lastmod>2026-10-15T17:29:09Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/opencad/guides/measure-export</loc><lastmod>2026-10-15T17:29:09Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/notes/cad-cam-feature-recognition</loc><lastmod>2026-10-15T17:29:09Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/notes/furniture-manufacturing-data</loc><lastmod>2026-10-15T17:29:09Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/opencad/projects/step-viewer</loc><lastmod>2026-10-16T05:34:02Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/opencad/projects/skp-viewer</loc><lastmod>2026-10-16T05:34:02Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/opencad/projects/nc-viewer</loc><lastmod>2026-10-16T05:34:02Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/opencad/projects/viewer3d</loc><lastmod>2026-10-16T05:34:02Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/contact</loc><lastmod>2026-10-16T04:41:50Z</lastmod></url>
   <url><loc>https://gyutae-kim.github.io/2dcad-viewer/</loc><lastmod>2026-10-16T03:10:44Z</lastmod></url>
+  <url><loc>https://gyutae-kim.github.io/opencad-step/</loc></url>
+  <url><loc>https://gyutae-kim.github.io/opencad-skp/</loc></url>
+  <url><loc>https://gyutae-kim.github.io/opencad-nc/</loc></url>
 </urlset>

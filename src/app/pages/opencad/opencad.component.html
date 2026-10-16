@@ -3,12 +3,12 @@
     <p class="eyebrow">OpenCAD · 개인 프로젝트</p>
     <h1>
       무료 캐드 뷰어로<br class="desktop-break" />
-      DWG·DXF 도면을 엽니다<span class="accent">.</span>
+      도면·3D 모델·공구 경로를 엽니다<span class="accent">.</span>
     </h1>
     <p>
       OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 뷰어 프로젝트입니다.
-      공개된 2D 웹 캐드에서 설치나 회원가입 없이 DWG·DXF 도면을 확인하고, 치수를 재고,
-      편집해 저장할 수 있습니다. 도면 파일은 서버로 보내지 않고 브라우저에서 처리합니다.
+      DWG·DXF 2D 도면, STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로를
+      형식별 무료 뷰어에서 확인하세요. 설치나 회원가입 없이 파일을 브라우저에서 처리합니다.
     </p>
   </div>
   <dl class="opencad-promise">
@@ -26,11 +26,15 @@
     </div>
   </dl>
 
+  <nav class="opencad-jump-links" aria-label="파일 형식별 뷰어 선택">
+    <a *ngFor="let tool of liveTools" [routerLink]="[]" [fragment]="tool.id">{{ tool.kind }}</a>
+  </nav>
+
   <section class="opencad-section" aria-labelledby="opencad-live-title">
     <div class="section-title">
       <h2 id="opencad-live-title">지금 쓸 수 있는 뷰어</h2>
     </div>
-    <article class="tool-card" *ngFor="let tool of liveTools" [attr.aria-labelledby]="tool.id">
+    <article class="tool-card" *ngFor="let tool of liveTools" [class.tool-card-text]="!tool.figure" [attr.aria-labelledby]="tool.id">
       <figure class="tool-shot" *ngIf="tool.figure">
         <img
           [src]="tool.figure.base + '-1440.webp'"
@@ -60,8 +64,9 @@
         </dl>
         <div class="tool-actions">
           <a class="button primary" [href]="tool.url" target="_blank" rel="noopener noreferrer"
-            >무료 캐드 뷰어 열기<app-icon name="external"></app-icon></a
+            >{{ tool.name }} 열기<app-icon name="external"></app-icon></a
           >
+          <a *ngIf="tool.path" class="button outline" [routerLink]="tool.path">사용법·지원 범위<app-icon name="arrow-right"></app-icon></a>
           <a
             *ngIf="tool.source"
             class="button outline"
@@ -73,6 +78,11 @@
         </div>
       </div>
     </article>
+  </section>
+
+  <section class="opencad-section" aria-labelledby="opencad-core-title">
+    <div class="section-title"><h2 id="opencad-core-title">뷰어를 연결하는 오픈소스 코어</h2></div>
+    <ul class="guide-list"><li *ngFor="let project of libraries"><h3><a [routerLink]="project.path">{{ project.name }}</a></h3><p>{{ project.summary }}</p></li></ul>
   </section>
 
   <section class="opencad-section" aria-labelledby="opencad-guides-title">

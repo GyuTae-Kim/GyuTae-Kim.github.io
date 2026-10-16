@@ -87,7 +87,11 @@ for (const page of SEARCH_PAGES) {
     ];
     // Slack can fetch only an initial byte range. Keep all sharing tags ahead of CSS
     // and large JSON-LD blocks, where a bot can find them without running JavaScript.
-    const prefix = new JSDOM(raw.subarray(0, 8192).toString('utf8'));
+    // The byte window can end halfway through an inline stylesheet. CSS is not
+    // part of this metadata assertion; remove style text to avoid parser noise.
+    const prefixHtml = raw.subarray(0, 8192).toString('utf8')
+      .replace(/<style\b[^>]*>[\s\S]*?(?:<\/style\s*>|$)/gi, '');
+    const prefix = new JSDOM(prefixHtml);
     for (const [selector, expected] of sharingTags) {
       assert.equal(document.querySelectorAll(selector).length, 1, `${file}: duplicate ${selector}`);
       assert.equal(document.querySelector(selector)?.content, expected, `${file}: ${selector}`);
@@ -105,6 +109,14 @@ for (const page of SEARCH_PAGES) {
     assert.ok(data['@graph'].some((node) => node['@type'] === page.kind && node.url === SITE_URL + page.path), file);
     const pageNode = data['@graph'].find(node => node['@type'] === page.kind && node.url === SITE_URL + page.path);
     assert.equal(pageNode.dateModified, validateDate(contentModified(page.path)), `${file}: structured modification date`);
+    if (page.tool) {
+      const software = data['@graph'].find(node => node['@id'] === `${SITE_URL + page.path}#software`);
+      assert.equal(software['@type'], page.tool.url ? 'SoftwareApplication' : 'SoftwareSourceCode');
+      assert.equal(software.url, page.tool.url ?? SITE_URL + page.path);
+      assert.ok(document.querySelector(`a[href="${page.tool.source}"]`), `${file}: project source entry`);
+      if (page.tool.url) assert.ok(document.querySelector(`a[href="${page.tool.url}"]`), `${file}: app entry`);
+      else assert.ok(!document.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]'), `${file}: no unpublished app URL`);
+    }
     const root = document.querySelector('app-root');
     assert.equal(root.querySelectorAll('h1').length, 1, `${file}: one visible page heading`);
     assert.ok(root.querySelector('main').textContent.trim().length > 150, `${file}: real body content`);
@@ -150,10 +162,11 @@ const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { c
 const sitemapUrls = [...sitemap.window.document.querySelectorAll('loc')].map((loc) => loc.textContent);
 assert.deepEqual(sitemapUrls, [...new Set([...SEARCH_PAGES.map((page) => SITE_URL + page.path), ...[...hostedApps].filter((url) => new URL(url).origin === SITE_URL)])]);
 for (const entry of sitemap.window.document.querySelectorAll('url')) {
-  assert.equal(entry.querySelectorAll('lastmod').length, 1);
   const url = entry.querySelector('loc').textContent;
   const expected = contentModified(new URL(url).pathname) || linkedDates[url]?.lastmod;
-  assert.equal(entry.querySelector('lastmod').textContent, validateDate(expected), url);
+  const localPage = paths.has(new URL(url).pathname);
+  assert.equal(entry.querySelectorAll('lastmod').length, expected || localPage ? 1 : 0, url);
+  if (expected || localPage) assert.equal(entry.querySelector('lastmod')?.textContent, validateDate(expected), url);
 }
 sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');

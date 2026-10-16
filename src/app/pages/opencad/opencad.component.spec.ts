@@ -18,7 +18,7 @@ describe('OpenCadComponent', () => {
   });
 
   it('opens the published 2D viewer and its source in a new tab', () => {
-    const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('.tool-card .tool-actions a'));
+    const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('.tool-card:first-of-type .tool-actions a'));
     expect(links.map((link) => link.href)).toEqual([
       'https://gyutae-kim.github.io/2dcad-viewer/',
       'https://github.com/GyuTae-Kim/2dcad-viewer',
@@ -26,20 +26,21 @@ describe('OpenCadComponent', () => {
     expect(links.every((link) => link.target === '_blank' && link.rel.includes('noopener'))).toBeTrue();
   });
 
-  it('keeps the published viewer to 2D and lists the 3D viewers as planned, without links', () => {
+  it('keeps 2D capabilities separate and exposes the three published 3D apps with introductions', () => {
     expect(page.querySelector('.tool-card .tool-meta')?.textContent).toContain('2D 도면');
     expect(page.querySelector('.tool-card')?.textContent).not.toMatch(/STEP|SKP|NC|3D/);
-    const plans = Array.from(page.querySelectorAll('.plan-card'));
-    expect(plans.map((card) => card.querySelector('h3')?.textContent?.trim())).toEqual([
-      'STEP 뷰어',
-      'SKP 뷰어',
-      'NC 뷰어',
-    ]);
-    expect(page.querySelectorAll('.plan-card a').length).toBe(0);
+    expect(page.querySelectorAll('.plan-card').length).toBe(0);
+    for (const id of ['step', 'skp', 'nc']) {
+      const card = page.querySelector(`#${id}-viewer`)!.closest('.tool-card')!;
+      expect(card.querySelector(`a[href="https://gyutae-kim.github.io/opencad-${id}/"]`)).not.toBeNull();
+      expect(card.querySelector(`a[href="/opencad/projects/${id}-viewer"]`)).not.toBeNull();
+    }
+    expect(page.querySelector('a[href="/opencad/projects/viewer3d"]')).not.toBeNull();
+    expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]')).toBeNull();
   });
 
   it('links the task guides', () => {
-    const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('.guide-list a'));
+    const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('[aria-labelledby="opencad-guides-title"] .guide-list a'));
     expect(guides.map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
     ]);

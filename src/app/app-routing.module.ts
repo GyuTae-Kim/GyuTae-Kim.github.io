@@ -5,6 +5,8 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { BoardComponent } from './pages/board/board.component';
 import { OpenCadComponent } from './pages/opencad/opencad.component';
+import { OpenCadProjectComponent } from './pages/opencad-project/opencad-project.component';
+import { OPENCAD_PROJECTS } from './opencad-data';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ArticleComponent } from './pages/article/article.component';
 import { SITE_ARTICLES } from './articles-data';
@@ -18,6 +20,7 @@ export const APP_ROUTES: Routes = [
     canActivate: [(route: ActivatedRouteSnapshot) => inject(Router).createUrlTree([to], { queryParams: route.queryParams, fragment: route.fragment ?? undefined })],
   })),
   ...SITE_ARTICLES.map((article) => ({ path: article.path.slice(1), component: ArticleComponent, data: { article } })),
+  ...OPENCAD_PROJECTS.map((tool) => ({ path: tool.path.slice(1), component: OpenCadProjectComponent, data: { tool } })),
   { path: '', component: HomeComponent },
   { path: 'notes', component: ArticleComponent },
   { path: 'contact', component: ContactComponent },

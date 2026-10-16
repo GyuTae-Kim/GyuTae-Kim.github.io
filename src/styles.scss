@@ -2103,6 +2103,9 @@ app-icon.row-arrow {
 .tool-shot {
   margin: 0;
 }
+.tool-card.tool-card-text { grid-template-columns: minmax(0, 1fr); }
+.opencad-jump-links { display: flex; flex-wrap: wrap; gap: 12px; margin: -24px 0 40px; }
+.opencad-jump-links a { color: var(--blue); border: 1px solid var(--line-strong); padding: 10px 14px; font-size: var(--fs-1); }
 .tool-shot img {
   display: block;
   width: 100%;
