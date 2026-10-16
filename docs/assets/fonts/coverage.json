@@ -1,5 +1,6 @@
 {
   "sourceSha256": "9599f12fd42fc0bce1cd50b47a0c022e108d7aa64dd0d1bb0ed44f3282d900b4",
+  "homeTextSha256": "be0ac6657a04c0b1a36f41903fb1185f014364f6a66228a337418a83824851ff",
   "covered": [
     32,
     33,
@@ -787,11 +788,11 @@
   "files": [
     {
       "name": "site-sans-core.woff2",
-      "bytes": 30212
+      "bytes": 79040
     },
     {
       "name": "site-sans-content.woff2",
-      "bytes": 115540
+      "bytes": 73404
     }
   ]
 }
