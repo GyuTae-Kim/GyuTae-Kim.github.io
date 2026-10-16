@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 import { validateDate } from './content-dates.mjs';
 const selected = process.argv.indexOf('--url');
-const url = selected >= 0 ? process.argv[selected + 1] : 'https://gyutae-kim.github.io/2dcad-viewer/';
+const url = selected >= 0 ? process.argv[selected + 1] : 'https://gyutae-kim.github.io/opencad-dwgdxf/';
 const address = new URL(url);
 if (address.origin !== 'https://gyutae-kim.github.io' || !/^\/[a-z0-9-]+\/$/.test(address.pathname) || address.search || address.hash) {
   throw new Error('Provide a canonical application URL on the verified Pages host.');
