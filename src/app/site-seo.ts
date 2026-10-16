@@ -3,6 +3,7 @@ import { OTHER_PROJECTS } from './other-projects-data';
 import { OPENCAD_TOOLS } from './opencad-data';
 import { SITE_ARTICLES, SiteArticle } from './articles-data';
 import contentHistory from './content-history.json';
+import { RESEARCH_WORKS, ResearchWork } from './research-data';
 
 export const SITE_URL = 'https://gyutae-kim.github.io';
 export const SITE_NAME = '김규태 · Sean Kim';
@@ -19,6 +20,7 @@ export interface SearchPage {
   imageAlt: string;
   kind: 'ProfilePage' | 'CollectionPage' | 'ContactPage' | 'WebPage';
   project?: { title: string; headline: string; tags: string[] };
+  research?: ResearchWork;
   article?: SiteArticle;
 }
 
@@ -66,6 +68,15 @@ export const SEARCH_PAGES: SearchPage[] = [
     imageAlt: '강화학습과 컴퓨터 비전 연구, TSP 경로 그림.',
     kind: 'CollectionPage',
   },
+  ...RESEARCH_WORKS.map((research): SearchPage => ({
+    path: `/research/${research.id}`,
+    title: `${research.title} — ${SITE_NAME}`,
+    description: `${research.summary} ${research.outcome}`,
+    image: 'assets/og/research.jpg',
+    imageAlt: '강화학습과 컴퓨터 비전 연구, TSP 경로 그림.',
+    kind: 'WebPage',
+    research,
+  })),
   {
     path: '/opencad',
     title: 'OpenCAD 무료 캐드 뷰어·DWG·DXF 도구 | 김규태',
@@ -128,15 +139,17 @@ export function structuredData(page: SearchPage): object {
       ...(page.path === '/' ? { mainEntity: { '@id': personId } } : {}),
       ...(page.path !== '/' ? { breadcrumb: { '@id': `${url}#breadcrumb` } } : {}),
       ...(page.project ? { mainEntity: { '@id': `${url}#project` } } : {}),
+      ...(page.research ? { mainEntity: { '@id': `${url}#research` } } : {}),
       ...(page.article ? { mainEntity: { '@id': `${url}#article` } } : {}),
     },
   ];
   if (page.path !== '/') {
     const crumbs = [{ name: '홈', item: `${SITE_URL}/` }];
     if (page.project) crumbs.push({ name: '프로젝트', item: `${SITE_URL}/portfolio` });
+    if (page.research) crumbs.push({ name: '연구', item: `${SITE_URL}/research` });
     if (page.article) crumbs.push(page.article.category === 'OpenCAD 사용 안내'
       ? { name: 'OpenCAD', item: `${SITE_URL}/opencad` } : { name: '개발 노트', item: `${SITE_URL}/notes` });
-    crumbs.push({ name: page.project?.title ?? page.article?.title ?? page.title.split(' — ')[0], item: url });
+    crumbs.push({ name: page.project?.title ?? page.research?.title ?? page.article?.title ?? page.title.split(' — ')[0], item: url });
     graph.push({
       '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`,
       itemListElement: crumbs.map((crumb, i) => ({ '@type': 'ListItem', position: i + 1, ...crumb })),
@@ -145,6 +158,11 @@ export function structuredData(page: SearchPage): object {
   if (page.project) graph.push({
     '@type': 'CreativeWork', '@id': `${url}#project`, url, name: page.project.title,
     description: page.description, keywords: page.project.tags,
+    author: { '@id': personId }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
+  });
+  if (page.research) graph.push({
+    '@type': 'CreativeWork', '@id': `${url}#research`, url, name: page.research.title,
+    description: page.description, keywords: page.research.tags,
     author: { '@id': personId }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
   });
   if (page.article) graph.push({
@@ -163,6 +181,12 @@ export function structuredData(page: SearchPage): object {
     '@type': 'ItemList', '@id': `${url}#projects`, name: '개발 프로젝트',
     itemListElement: SEARCH_PAGES.filter((item) => item.project).map((item, i) => ({
       '@type': 'ListItem', position: i + 1, url: SITE_URL + item.path, name: item.project!.title,
+    })),
+  });
+  if (page.path === '/research') graph.push({
+    '@type': 'ItemList', '@id': `${url}#research`, name: '학부연구생 때의 연구',
+    itemListElement: RESEARCH_WORKS.map((work, i) => ({
+      '@type': 'ListItem', position: i + 1, url: `${SITE_URL}/research/${work.id}`, name: work.title,
     })),
   });
   if (page.path === '/opencad') graph.push({

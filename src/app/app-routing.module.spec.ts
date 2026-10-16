@@ -16,6 +16,8 @@ describe('published HTML aliases', () => {
     for (const [from, to] of [
       ['/index.html', '/'], ['/portfolio.html', '/portfolio'],
       ['/portfolio/cad-feature-recognition/index.html', '/portfolio/cad-feature-recognition'],
+      ['/research/graph-tsp.html', '/research/graph-tsp'],
+      ['/research/virtual-try-on/index.html', '/research/virtual-try-on'],
       ['/opencad/guides/measure-export.html', '/opencad/guides/measure-export'],
     ]) {
       await zone.run(() => router.navigateByUrl(`${from}?utm_source=search#main`));

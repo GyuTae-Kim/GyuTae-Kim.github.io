@@ -6,7 +6,11 @@ export interface ResearchWork {
   summary: string;
   flow: { label: string; text: string }[];
   category: string;
-  // 「자세히」 lists, one short line each: what he built, what came from others, what the work does not show.
+  previewLabel: string;
+  role: string;
+  outcome: string;
+  fixes: { problem: string; fix: string; label?: string }[];
+  // Original contribution and reused work are visible beside the project outcome.
   built: string[];
   borrowed: string[];
   limits: string[];
@@ -38,7 +42,7 @@ export interface ResearchFigure {
 }
 
 // Results of running the public code, shown as a result card: one headline, the strongest
-// figures and 2–3 numbers up front; run conditions, tables and caveats sit under "자세히".
+// figures and 2–3 numbers, with run conditions and comparisons always visible.
 // Numbers come only from those runs (commands, seeds and caveats are kept with the figures).
 export interface ResearchResult {
   headline: string;
@@ -66,13 +70,21 @@ export interface ResearchResult {
 export const RESEARCH_WORKS: ResearchWork[] = [
   {
     id: 'graph-tsp',
+    previewLabel: '경로 탐색 재실행 예시',
+    role: '참고 논문의 그래프 표현과 Q-learning 아이디어를 바탕으로, TSP 환경·모델·학습 루프·삽입 규칙을 연결하는 실험 코드를 구현했습니다.',
+    outcome: '도시의 위치·거리·방문 상태를 그래프로 입력하고, 모델이 고른 도시를 삽입 휴리스틱으로 경로에 추가하는 탐색 프로그램을 만들었습니다. 공개 코드 재실행에서는 기준선과 비교해 학습이 제대로 작동하지 않는 원인도 추적했습니다.',
+    fixes: [
+      { problem: '도시 수와 방문 상태가 달라져도 같은 모델로 다음 후보를 평가해야 합니다.', fix: '도시와 거리를 그래프로 표현하고 Structure2Vec으로 관계를 임베딩해, 방문하지 않은 도시의 Q값을 평가하도록 구성했습니다.' },
+      { problem: '다음 도시를 고르는 것만으로는 경로의 어느 위치에 넣을지 정해지지 않습니다.', fix: '도시 선택은 학습 모델이, 삽입 위치는 경로 길이가 가장 덜 늘어나는 자리를 찾는 휴리스틱이 맡도록 결합했습니다.' },
+      { problem: '짧은 경로가 나와도 학습 효과인지 삽입 규칙의 효과인지 구분하기 어렵습니다.', fix: '무작위 도시 순서에도 같은 삽입 규칙을 적용해 비교하고 Q값과 TD 목표 계산을 추적했습니다. 단축 학습에서는 학습 정책의 개선을 확인하지 못했습니다.', label: '분석·검증' },
+    ],
     built: [
       '노드, 엣지, 방문 상태를 담은 그래프 환경과 경로 비용 기록',
       'Structure2Vec 임베딩과 Q값 평가',
       '여러 스텝 보상 누적과 경험 샘플링을 잇는 탐색 루프',
       '도시는 모델이 고르고 넣을 자리는 삽입 휴리스틱이 정하는 구조',
     ],
-    borrowed: ['NeurIPS 2017 그래프 조합 최적화 연구의 방법 (논문 저자 아님)'],
+    borrowed: ['NeurIPS 2017 그래프 조합 최적화 연구의 Structure2Vec·강화학습 접근'],
     limits: [
       '원논문 그대로의 재현 아님 (target network 없음, n-step 방식 다름)',
       '설정된 에피소드의 1%만 학습',
@@ -84,18 +96,18 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     relatedProjectId: 'panel-classification',
     title: '강화학습으로 TSP 경로를 만드는 그래프 모델',
     shortTitle: 'TSP 경로 탐색',
-    summary: '도시를 그래프로 표현하고, 다음에 갈 도시를 강화학습으로 고르게 했습니다.',
+    summary: '도시를 그래프로 표현하고, 경로에 추가할 도시를 강화학습으로 고르는 탐색 프로그램을 구현했습니다.',
     flow: [
       { label: '그래프로 표현', text: '도시, 거리, 방문 여부' },
       { label: 'Structure2Vec + Q-learning', text: '도시마다 Q값 계산' },
-      { label: '다음 도시 선택', text: '경로가 가장 덜 늘어나는 자리에 삽입' },
+      { label: '도시 선택과 경로 삽입', text: '모델이 고른 도시를 휴리스틱으로 삽입' },
     ],
     category: '강화학습 · 그래프 신경망',
     tags: ['Reinforcement learning', 'Structure2Vec', 'Q-learning', 'Graph neural network', 'TensorFlow'],
     source: 'https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V',
     period: '2021 · 학부연구생',
     result: {
-      headline: '학습한 정책이 무작위 순서와 다르지 않았습니다',
+      headline: '단축 학습에서는 무작위 삽입 대비 개선을 확인하지 못했습니다',
       thumb: 'assets/research/results/tsp/thumb',
       figures: [
         {
@@ -105,15 +117,15 @@ export const RESEARCH_WORKS: ResearchWork[] = [
           still: 'assets/research/results/tsp/tour-race-poster.webp',
           alt: '같은 도시 50개에서 학습 정책과 최원 삽입이 경로를 한 도시씩 쌓아 가는 애니메이션. 학습 정책은 번호 순서대로 도시를 골라 OR-Tools 대비 1.12배, 최원 삽입은 1.08배 경로를 만듭니다.',
           caption:
-            '같은 도시 50개에서 학습 정책(왼쪽)은 도시를 번호 순서대로 골라 OR-Tools보다 1.12배 긴 경로를 만들었고, 최원 삽입(오른쪽)은 1.08배였습니다.',
+            '도시 50개인 한 문제의 경로 생성 과정입니다. 학습 정책(왼쪽)은 번호 순서대로 도시를 골라 OR-Tools 해보다 1.12배, 최원 삽입(오른쪽)은 1.08배 긴 경로를 만들었습니다. 아래 표는 여러 문제의 평균입니다.',
         },
       ],
       stats: [
-        { value: '+12%', label: 'OR-Tools보다 긴 경로' },
-        { value: '차이 없음', label: '무작위 순서 삽입과 비교' },
+        { value: '+12%', label: '위 50도시 예시 · OR-Tools 해보다 긴 경로' },
+        { value: '개선 미확인', label: '무작위 순서 삽입과 비교한 단축 학습' },
         { value: '2가지', label: '코드에서 찾은 원인' },
       ],
-      homeStat: { value: '2가지', label: '코드에서 찾은 실패 원인' },
+      homeStat: { value: '2단계', label: 'AI 도시 선택 + 휴리스틱 경로 삽입' },
       summary:
         '원래 설정으로 학습해 보니, 정책이 모든 도시에 같은 Q값을 내며 번호 순서대로 도시를 골랐습니다.',
       story: [
@@ -122,7 +134,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
         { label: '원인', text: '정규화 없는 이웃 합으로 값이 폭증했고, TD 목표가 시작 도시만 봤다' },
       ],
       retry: ['작은 문제에서 정답과 먼저 맞춰 보기', '이웃 합 정규화와 목표값 수정', '무작위 순서 기준선을 처음부터 두기'],
-      scope: '설정된 에피소드의 1%(100회)만 돌린 결과',
+      scope: '공개 코드 재실행 · 원래 10,000회 설정 중 100회 학습 · 완전 학습 성능과 구분',
       details: {
         environment: 'TensorFlow 2.15 · seed 3개 · 에피소드 10,000 → 100',
         figures: [
@@ -179,6 +191,14 @@ export const RESEARCH_WORKS: ResearchWork[] = [
   },
   {
     id: 'fashion-classification',
+    previewLabel: 'Fashion-MNIST 예측 예시',
+    role: '사전학습 ResNet50V2를 이용한 의류 분류 학습 코드와 클래스별 샘플링·평가 흐름을 구현하고, 혼동행렬로 오분류를 분석했습니다.',
+    outcome: 'K-Fashion 사진을 드레스·아우터·바지·상의로 분류하는 학습·분석 파이프라인을 만들었습니다. 이후 공개 코드의 설정을 대체 데이터에서 하나씩 바꿔, 데이터 증강과 숏컷 연결이 예측에 미치는 영향을 분리해 확인했습니다.',
+    fixes: [
+      { problem: '의류 종류별 사진 수가 달라 학습 표본이 일부 클래스에 치우칩니다.', fix: '학습·검증 데이터에서 각각 가장 적은 클래스의 표본 수에 맞춰 다운샘플링했습니다.' },
+      { problem: '전체 점수만으로는 어떤 옷을 서로 혼동하는지 알기 어렵습니다.', fix: '클래스별 정밀도·재현율과 혼동행렬을 기록하고, 드레스·아우터 등 혼동 사례를 사진과 함께 분석했습니다.' },
+      { problem: '예측이 한쪽으로 쏠리는 현상에 데이터와 코드 설정이 함께 영향을 줄 수 있습니다.', fix: 'Fashion-MNIST로 재실행하며 증강·숏컷·정규화 설정을 하나씩 바꿔 비교했습니다. 이 보완 실험의 수치는 원래 K-Fashion 성능과 구분해 표시합니다.', label: '보완 실험' },
+    ],
     built: [
       'ResNet50V2 분류 학습 코드',
       '학습, 검증 데이터를 클래스별로 다운샘플링',
@@ -190,7 +210,6 @@ export const RESEARCH_WORKS: ResearchWork[] = [
       'README의 평가는 검증 데이터를 다시 써서 독립 테스트가 아님',
       '오류 원인(불균형, 촬영 구도)까지는 검증하지 않음',
       '여기 올린 결과는 대체 데이터(Fashion-MNIST)로 10 epoch 학습한 것',
-      '맨 위 그림은 다른 seed로 학습한 두 모델의 답 (정확도 47.2%, 94.2%)',
     ],
     credit: 'ImageNet 사전학습 ResNet50V2 활용',
     connection:
@@ -211,38 +230,39 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     imageAlt:
       '공개 K-fashion 실험의 4개 클래스 혼동행렬. 여러 실제 클래스의 예측이 클래스 2로 몰려 있다.',
     imageCaption:
-      'K-Fashion으로 학습한 공개 저장소 그림 · README 수치와 같은 조건인지는 확인 못 함',
+      '원래 K-Fashion 실험의 혼동행렬입니다. 행은 실제, 열은 예측 클래스이며 0=드레스, 1=아우터, 2=바지, 3=상의입니다. 여러 실제 클래스가 바지(2)로 예측되는 쏠림을 확인했습니다. 아래 Fashion-MNIST 재실행과는 다른 자료입니다.',
     period: '2021 · 학부연구생',
     result: {
-      headline: '설정 오류 두 곳 때문에 정확도가 절반에 머물렀습니다',
+      headline: '대체 데이터에서 증강·숏컷 설정의 영향을 분리했습니다',
       thumb: 'assets/research/results/classification/thumb',
       figures: [
         {
-          src: 'assets/research/results/classification/prediction-gallery.webp',
-          width: 2000,
-          height: 857,
-          alt: '테스트 이미지 8장에 대한 두 모델의 답. 원래 설정은 드레스 하나, 코트 둘, 바지 하나를 틀렸고, 증강을 끈 모델은 8장을 모두 맞혔습니다.',
-          caption: '같은 테스트 이미지에 대한 두 모델의 답입니다. 원래 설정은 코트를 드레스나 티셔츠로 답했고, 증강만 끈 모델은 모두 맞혔습니다.',
+          src: 'assets/research/results/classification/accuracy-bars.webp',
+          width: 1600,
+          height: 982,
+          alt: 'Fashion-MNIST 독립 테스트에서 원래 설정 48.9%, 숏컷 수정 78.7%, 증강 끔 94.4%, 여러 설정을 함께 수정한 경우 96.4%인 정확도 비교',
+          caption: 'Fashion-MNIST 4클래스의 독립 테스트 정확도(seed 0)입니다. 증강을 끄는 실험과 숏컷을 고치는 실험을 각각 비교했고, 마지막 막대는 숏컷·증강·L2 설정을 함께 바꾼 결과입니다. K-Fashion 성능을 나타내는 그래프는 아닙니다.',
+          compact: true,
         },
       ],
       stats: [
-        { value: '48.9% → 94.4%', label: '증강만 껐을 때 정확도' },
-        { value: '+29.8%p', label: '숏컷 연결만 고쳤을 때' },
-        { value: '0%', label: '원래 설정의 코트 정답률' },
+        { value: '48.9% → 94.4%', label: '증강만 끈 비교 · Fashion-MNIST · seed 0' },
+        { value: '+29.8%p', label: '숏컷 연결만 수정 · 같은 seed 0' },
+        { value: '0%', label: '원래 설정의 코트 재현율 · 같은 seed 0' },
       ],
+      homeStat: { value: '4종', label: '드레스 · 아우터 · 바지 · 상의 분류' },
       summary:
         '공개 데이터 Fashion-MNIST로 같은 코드를 돌려도 예측이 한쪽으로 쏠렸습니다. 원인은 증강 설정과 숏컷 연결 오류였습니다.',
-      scope: '대체 공개 데이터 결과 · K-Fashion 성능 아님',
+      scope: '공개 코드 보완 실험 · Fashion-MNIST 4클래스 · 아래 수치는 K-Fashion 성능과 구분',
       details: {
         environment: 'RTX A6000 · TensorFlow 2.15 · Fashion-MNIST 4클래스(드레스, 코트, 바지, 티셔츠) · 10 epoch',
         figures: [
           {
-            src: 'assets/research/results/classification/accuracy-bars.webp',
-            width: 1600,
-            height: 982,
-            alt: '설정별 독립 테스트 정확도 막대. 원래 설정 48.9%, 숏컷 연결 수정 78.7%, 증강 끔 94.4%, 모두 수정 96.4%.',
-            caption: '설정을 하나씩 고쳤을 때의 독립 테스트 정확도입니다(seed 0).',
-            compact: true,
+            src: 'assets/research/results/classification/prediction-gallery.webp',
+            width: 2000,
+            height: 857,
+            alt: 'Fashion-MNIST 테스트 사진 8장. 원래 설정의 두 코트 예측은 드레스·티셔츠였고, 증강을 끈 모델은 8장을 모두 맞힌 예시',
+            caption: 'Fashion-MNIST 사진 8장의 예측 예시입니다. 이 이미지를 만든 두 모델의 전체 정확도는 47.2%·94.2%로, 위 그래프의 seed 0과는 다른 실행입니다. 예시 8장의 정답 수를 전체 정확도로 읽지 않도록 구분했습니다.',
           },
         ],
         table: {
@@ -281,6 +301,14 @@ export const RESEARCH_WORKS: ResearchWork[] = [
   },
   {
     id: 'virtual-try-on',
+    previewLabel: '가상 착용 재실행 예시',
+    role: '공개 가상 착용 모델에 필요한 입력 전처리와 의류 마스크를 구성하고, Flask 업로드 API와 Kotlin·Retrofit Android 클라이언트를 연결했습니다.',
+    outcome: '인물 사진과 선택한 의류를 받아 전처리, 착용 이미지 생성, 앱으로 결과 반환까지 이어지는 통합 흐름을 만들었습니다. 생성 모델과 포즈·인체 파싱 모델은 재사용했으며, 직접 구현한 범위는 입력 구성·마스크 처리·서버와 앱의 연결입니다.',
+    fixes: [
+      { problem: '가상 착용 모델은 인물 사진뿐 아니라 포즈·신체 부위·의류 영역을 정해진 형식으로 요구합니다.', fix: '공개 인체 파싱·포즈 추정 모델의 출력을 ACGPN 입력 형식으로 맞추고, GrabCut으로 의류 마스크를 만드는 전처리를 연결했습니다.' },
+      { problem: '여러 모델의 파일 입출력을 사용자가 직접 다루기에는 과정이 복잡합니다.', fix: 'Flask 업로드 API가 전처리와 추론을 이어 실행하고 결과 이미지를 반환하도록 구성하고, Android 클라이언트를 Retrofit으로 연결했습니다.' },
+      { problem: '의류 마스크에 배경이 섞이면 생성된 옷과 몸통이 함께 번질 수 있습니다.', fix: '공개 코드 재실행에서 GrabCut 초기 사각형이 이미지 경계를 넘는 문제를 찾고, 사각형을 이미지 안으로 제한한 비교 실험으로 마스크 IoU 변화를 확인했습니다.', label: '보완 실험' },
+    ],
     built: [
       '인체 파싱, 포즈, 의류 마스크를 ACGPN 입력 형식으로 정리',
       'OpenCV GrabCut으로 의류 마스크 생성',
@@ -299,9 +327,9 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     relatedProjectId: 'cad-feature-recognition',
     title: '인물 사진에 옷을 입혀 보는 가상 착용 앱',
     shortTitle: '가상 착용 앱',
-    summary: '인물 사진과 옷 사진을 올리면 옷을 갈아입힌 이미지를 돌려주는 서버와 Android 앱을 만들었습니다.',
+    summary: 'Android 앱에서 인물 사진과 입힐 옷을 선택하면, 서버가 가상 착용 이미지를 돌려주는 흐름을 만들었습니다.',
     flow: [
-      { label: '인물 사진과 옷 사진', text: 'Android 앱에서 업로드' },
+      { label: '인물 사진·입힐 옷 선택', text: 'Android 앱에서 인물 사진과 의류 ID 전송' },
       { label: '인체 파싱, 포즈, 옷 마스크', text: 'ACGPN 입력 형식으로 정리' },
       { label: '착용 이미지 생성', text: 'Flask 서버가 앱으로 반환' },
     ],
@@ -310,7 +338,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     source: 'https://github.com/GyuTae-Kim/Deeplearning_Try_On',
     period: '2021 · 학부연구생',
     result: {
-      headline: '옷 마스크가 배경까지 번지는 원인을 찾았습니다',
+      headline: '업로드부터 착용 결과 반환까지 확인하고 마스크 오류를 분석했습니다',
       thumb: 'assets/research/results/try-on/thumb',
       figures: [
         {
@@ -318,15 +346,8 @@ export const RESEARCH_WORKS: ResearchWork[] = [
           width: 1920,
           height: 2480,
           alt: '착용 전후 세 사례. 원래 사진과 입힐 옷을 올리면 상의만 바뀐 착용 결과가 나옵니다. 얼굴은 모자이크했습니다.',
-          caption: '원래 사진과 입힐 옷을 올리면 서버가 상의만 바꿔 입힌 이미지를 돌려줍니다.',
+          caption: '공개 모델과 서버 코드를 재실행한 착용 예시 3건입니다. 각 행의 왼쪽은 인물 사진, 가운데는 입힐 옷, 오른쪽은 반환된 이미지입니다. 얼굴은 모자이크했고, VITON-HD 테스트 이미지를 사용했습니다.',
           compact: true,
-        },
-        {
-          src: 'assets/research/results/try-on/pose-showcase.webp',
-          width: 1920,
-          height: 1520,
-          alt: '인물 네 명의 사진 위에 겹친 포즈 골격(위)과 신체 부위별 색으로 칠한 인체 파싱(아래). 얼굴은 모자이크했습니다.',
-          caption: '같은 서버가 찾은 포즈(위)와 신체 부위 분할(아래)입니다. 이 결과로 옷을 몸에 맞춰 놓습니다.',
         },
       ],
       stats: [
@@ -334,18 +355,19 @@ export const RESEARCH_WORKS: ResearchWork[] = [
         { value: '0.93 → 0.96', label: '사각형을 고친 뒤 마스크 IoU' },
         { value: '4.9초', label: '요청 한 번 · CPU 중앙값' },
       ],
+      homeStat: { value: '3단계', label: '전처리 → 착용 이미지 생성 → 앱 반환' },
       summary:
-        '앱과 같은 업로드 요청으로 착용 이미지를 받아 보니, 옷 40벌 중 13벌은 GrabCut 사각형이 이미지 밖으로 나가 마스크가 배경까지 번졌습니다.',
-      scope: 'VITON-HD 테스트 이미지(CC BY-NC 4.0) · 얼굴 모자이크',
+        '서버 업로드 API를 재실행해 착용 이미지를 받아 보니, 옷 40벌 중 13벌은 GrabCut 사각형이 이미지 밖으로 나가 마스크가 배경까지 번졌습니다.',
+      scope: '공개 코드 재실행 · VITON-HD 테스트 이미지(CC BY-NC 4.0) · 얼굴 모자이크 · 아래 시간은 CPU 실험값',
       details: {
-        environment: 'Apple M1 Pro CPU · PyTorch · 공개 가중치 · 공개한 서버 코드 그대로',
+        environment: 'Apple M1 Pro CPU · PyTorch · 공개 가중치 · 서버 업로드 API 재실행',
         figures: [
           {
-            src: 'assets/research/results/try-on/pipeline-compact.webp',
+            src: 'assets/research/results/try-on/pose-showcase.webp',
             width: 1920,
-            height: 645,
-            alt: '한 사람에 대한 사진, 인체 파싱, 포즈, 의류 마스크와 착용 결과. 얼굴은 모자이크했습니다.',
-            caption: '사진에서 인체 파싱과 포즈를, 옷 사진에서 의류 마스크를 만들어 ACGPN에 넣으면 착용 결과가 나옵니다.',
+            height: 1520,
+            alt: '인물 네 명의 사진 위에 겹친 포즈 골격(위)과 신체 부위별 색으로 칠한 인체 파싱(아래). 얼굴은 모자이크했습니다.',
+            caption: '연결한 공개 모델의 포즈 추정(위)과 인체 파싱(아래) 결과입니다. 직접 구현한 전처리가 이 출력을 가상 착용 모델의 입력으로 구성합니다.',
           },
         ],
         table: {

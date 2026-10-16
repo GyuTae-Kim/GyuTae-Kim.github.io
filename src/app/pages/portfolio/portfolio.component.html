@@ -306,7 +306,7 @@
     <div class="related-research" *ngIf="selected!.relatedResearch as related">
       <h3>이어지는 학부 연구</h3>
       <div class="related-work" *ngFor="let work of related">
-        <a class="text-link" routerLink="/research" [fragment]="work.id"
+        <a class="text-link" [routerLink]="['/research', work.id]"
           >{{ work.title }}<app-icon name="arrow-right"></app-icon></a
         >
         <p>{{ work.connection }}</p>
