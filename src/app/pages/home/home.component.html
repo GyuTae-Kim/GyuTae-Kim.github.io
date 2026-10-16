@@ -11,9 +11,9 @@
       >
     </h1>
     <p class="profile-text">
-      AI·CAD/CAM 개발자 김규태입니다. 3D 형상에서 가공 특징과 가구 패널을
-      인식하는 AI를 연구하고 Fusion CAM 자동화를 만들었습니다. SketchUp 기반
-      Wedraw Pro에서는 가구 제조 데이터 출력과 생산 투입 단계를 리딩했습니다.
+      3D 형상을 읽는 AI를 설계 변경과 가공 공정으로 연결합니다.
+      Fusion CAM 자동화를 연구개발하고, 팀에서는 Wedraw Pro의 제조 데이터
+      출력과 생산 투입을 리딩했습니다. 서비스 운영에서 드러난 오류도 추적해 고칩니다.
     </p>
     <nav class="index-nav" aria-label="이 페이지의 구성">
       <a
@@ -63,7 +63,7 @@
         <div>
           <span class="product-kicker">지금 팀과 만드는 제품 · 진행 중</span>
           <strong>Wedraw Pro</strong>
-          <p class="product-line">{{ furniture.subtitle }}</p>
+          <p class="product-line">설계가 BOM·도면·가공 파일로 이어지는 팀 제품</p>
           <ol class="flow-chips">
             <li *ngFor="let label of furniture.diagramLabels">{{ label }}</li>
           </ol>
@@ -75,11 +75,15 @@
     <section class="index-section" id="work" aria-labelledby="work-title">
       <div class="section-title">
         <span class="section-no">01</span>
-        <h2 id="work-title">AI·CAD/CAM 주요 프로젝트</h2>
+        <h2 id="work-title">AI에서 제조로 잇는 개발</h2>
         <a class="text-link" routerLink="/portfolio"
           >전체 보기<app-icon name="arrow-right"></app-icon></a
         >
       </div>
+      <p class="section-lead">
+        형상을 인식하고, 바꾸고, 공장이 쓸 데이터로 만드는 세 프로젝트입니다.
+        각 사례에 직접 맡은 역할과 문제·해결, 구현 결과를 정리했습니다.
+      </p>
       <ol class="index-rows">
         <li *ngFor="let project of cases">
           <a class="index-row case-row" [routerLink]="['/portfolio', project.id]">
@@ -101,19 +105,42 @@
                 >{{ project.number }} · {{ project.category }}</span
               >
               <strong class="row-title">{{ project.title }}</strong>
-              <span class="row-result">{{ project.headline }}</span>
+              <span class="row-result">{{ project.intro.result }}</span>
+              <span class="row-note"><b>담당</b>{{ project.intro.role }}</span>
+              <span class="home-fact"
+                ><b>{{ project.stats[0].value }}</b>{{ project.stats[0].label }}</span
+              >
             </span>
-            <span class="row-stat"
-              ><b>{{ project.stats[0].value }}</b
-              ><span>{{ project.stats[0].label }}</span></span
-            >
             <app-icon class="row-arrow" name="arrow-right"></app-icon>
           </a>
         </li>
       </ol>
-      <a class="text-link" routerLink="/portfolio" fragment="other-projects"
-        >기타 프로젝트 · 서비스 감시와 송장 연동 개선<app-icon name="arrow-right"></app-icon></a
-      >
+      <div class="operations-heading">
+        <h3>운영에서 발견한 문제까지</h3>
+        <p>실제 업무의 실패를 감지하고, 원인을 고친 사례입니다.</p>
+      </div>
+      <ul class="operations-list">
+        <li *ngFor="let project of operations">
+          <a class="operation-card" [routerLink]="['/portfolio', project.id]">
+            <img
+              [src]="project.thumb + '-336.webp'"
+              [attr.srcset]="srcset(project.thumb)"
+              sizes="(max-width: 767px) 96px, 110px"
+              alt=""
+              width="560"
+              height="390"
+              loading="lazy"
+            />
+            <span class="operation-title">
+              <span class="row-meta">{{ project.number }} · {{ project.category }}</span>
+              <strong>{{ project.id === 'service-monitoring' ? '서비스 감시와 오류 추적' : '송장 전송·업로드 개선' }}</strong>
+            </span>
+            <span class="row-result">{{ project.intro.result }}</span>
+            <span class="row-note"><b>담당</b>{{ project.intro.role }}</span>
+            <span class="operation-link">사례 보기<app-icon name="arrow-right"></app-icon></span>
+          </a>
+        </li>
+      </ul>
     </section>
 
     <section
@@ -123,14 +150,15 @@
     >
       <div class="section-title">
         <span class="section-no">02</span>
-        <h2 id="research-title">학부연구생 때의 연구</h2>
+        <h2 id="research-title">직접 구현하며 배운 AI 연구</h2>
         <a class="text-link" routerLink="/research"
           >전체 보기<app-icon name="arrow-right"></app-icon></a
         >
       </div>
       <p class="section-lead">
-        학부연구생 때는 강화학습과 컴퓨터 비전 연구를 많이 했습니다. 코드를 공개한
-        세 프로젝트를 골라 무엇을 만들었고 어디서 막혔는지 적었습니다.
+        학부연구생 때 강화학습·의류 분류·가상 착용을 연구했습니다.
+        논문과 공개 모델을 바탕으로 직접 구현한 부분, 실험에서 부딪힌 문제와 결과를 소개합니다.
+        아래 이미지는 공개 코드를 재실행한 예시입니다.
       </p>
       <ol class="index-rows">
         <li *ngFor="let work of research">
@@ -153,7 +181,7 @@
               <strong class="row-title">{{ work.title }}</strong>
               <span class="row-result">{{ work.summary }}</span>
               <span class="row-note"
-                ><b>직접 한 일</b>{{ work.role }}</span
+                ><b>담당</b>{{ work.homeRole }}</span
               >
             </span>
             <span class="row-stat" *ngIf="work.result!.homeStat ?? work.result!.stats[0] as stat"
@@ -191,14 +219,14 @@
         />
         <div>
           <p class="about-statement">
-            현실에 적용 가능한 AI로, 사람들의 일과 생활을 조금 더 편하게
-            만들고 싶습니다.
+            반복하던 판단과 입력을 줄여, 사람이 중요한 일에 집중하도록 돕고 싶습니다.
           </p>
           <p>
-            3D 모델만 보고 가공 공정을 짜 주는 AI, 가구 설계를 공장이 바로 쓰는
-            제조 데이터로 바꿔 주는 도구처럼 손이 많이 가던 일을 덜어 주는
-            기술을 만들어 왔습니다. 만든 것이 현장에서 실제로 쓰이는지, 그래서
-            일이 줄었는지를 가장 먼저 봅니다.
+            연구에서는 형상을 해석하고 규칙을 학습하는 방법을 구현했습니다.
+            제품에서는 이를 설계 수정, 제조 데이터 출력, 생산 전 확인으로 연결했습니다.
+            운영에서는 처리 결과와 오류를 모아 놓친 문제를 찾고 원인을 고쳤습니다.
+            이런 도구가 설계 정보를 다시 입력하는 수고와 가공 전 시행착오를 줄이고,
+            작은 제조 현장에서도 축적된 기술을 활용하는 데 도움이 되길 기대합니다.
           </p>
           <dl class="skill-list" aria-label="다뤄 본 기술">
             <div *ngFor="let group of skills">
@@ -211,7 +239,7 @@
           <p>
             AI·CAD/CAM 개발자 채용이나 제조 소프트웨어 협업을 검토하신다면,
             <a routerLink="/portfolio">프로젝트별 담당 역할과 검증 결과</a>를 확인해 주세요.
-            Python 기반 AI 연구, CAD 형상 분석, CAM 공정 생성과 가구 제조 데이터 개발 경험을 소개합니다.
+            <a routerLink="/research">연구별 구현과 실험 결과</a>도 함께 소개합니다.
           </p>
           <a class="text-link" routerLink="/contact"
             >채용·제조 기술 협업 문의<app-icon name="arrow-right"></app-icon></a
