@@ -787,11 +787,11 @@
   "files": [
     {
       "name": "site-sans-core.woff2",
-      "bytes": 30148
+      "bytes": 30212
     },
     {
       "name": "site-sans-content.woff2",
-      "bytes": 115496
+      "bytes": 115540
     }
   ]
 }

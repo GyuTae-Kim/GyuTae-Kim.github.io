@@ -20,7 +20,7 @@ texts = [p.read_text() for p in (root / 'src').rglob('*')
 text = html.unescape(''.join(texts))
 characters = set(range(32, 127)) | {ord(c) for c in text if not c.isspace()}
 characters |= {int(h, 16) for h in re.findall(r'\\u([0-9a-fA-F]{4})', text)}
-font = TTFont(source)
+font = TTFont(source, recalcTimestamp=False)
 available = set(font.getBestCmap())
 critical_text = '김규태 Sean Kim AI · CAD/CAM 개발자 · 제조 소프트웨어 가구 설계부터 가공 데이터까지, 3D 형상을 다룹니다. 프로젝트 연구 오픈캐드 연락'
 critical = ({ord(c) for c in critical_text} | set(range(32, 127))) & available
@@ -39,7 +39,7 @@ css = []
 manifest = {'sourceSha256': hashlib.sha256(source.read_bytes()).hexdigest(),
             'covered': sorted(covered), 'fallback': sorted(characters - available), 'files': []}
 for name, points in [('site-sans-core', critical), ('site-sans-content', covered - critical)]:
-    font = TTFont(source)
+    font = TTFont(source, recalcTimestamp=False)
     options = subset.Options()
     options.flavor = 'woff2'
     sub = subset.Subsetter(options=options)
