@@ -303,7 +303,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     id: 'virtual-try-on',
     previewLabel: '가상 착용 재실행 예시',
     role: '공개 가상 착용 모델에 필요한 입력 전처리와 의류 마스크를 구성하고, Flask 업로드 API와 Kotlin·Retrofit Android 클라이언트를 연결했습니다.',
-    outcome: '인물·의류 사진 입력부터 전처리, 착용 이미지 생성, 앱으로 결과 반환까지 이어지는 통합 흐름을 만들었습니다. 생성 모델과 포즈·인체 파싱 모델은 재사용했으며, 직접 구현한 범위는 입력 구성·마스크 처리·서버와 앱의 연결입니다.',
+    outcome: '인물 사진과 선택한 의류를 받아 전처리, 착용 이미지 생성, 앱으로 결과 반환까지 이어지는 통합 흐름을 만들었습니다. 생성 모델과 포즈·인체 파싱 모델은 재사용했으며, 직접 구현한 범위는 입력 구성·마스크 처리·서버와 앱의 연결입니다.',
     fixes: [
       { problem: '가상 착용 모델은 인물 사진뿐 아니라 포즈·신체 부위·의류 영역을 정해진 형식으로 요구합니다.', fix: '공개 인체 파싱·포즈 추정 모델의 출력을 ACGPN 입력 형식으로 맞추고, GrabCut으로 의류 마스크를 만드는 전처리를 연결했습니다.' },
       { problem: '여러 모델의 파일 입출력을 사용자가 직접 다루기에는 과정이 복잡합니다.', fix: 'Flask 업로드 API가 전처리와 추론을 이어 실행하고 결과 이미지를 반환하도록 구성하고, Android 클라이언트를 Retrofit으로 연결했습니다.' },
@@ -327,9 +327,9 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     relatedProjectId: 'cad-feature-recognition',
     title: '인물 사진에 옷을 입혀 보는 가상 착용 앱',
     shortTitle: '가상 착용 앱',
-    summary: '인물 사진과 옷 사진을 올리면 옷을 갈아입힌 이미지를 돌려주는 서버와 Android 앱을 만들었습니다.',
+    summary: 'Android 앱에서 인물 사진과 입힐 옷을 선택하면, 서버가 가상 착용 이미지를 돌려주는 흐름을 만들었습니다.',
     flow: [
-      { label: '인물 사진과 옷 사진', text: 'Android 앱에서 업로드' },
+      { label: '인물 사진·입힐 옷 선택', text: 'Android 앱에서 인물 사진과 의류 ID 전송' },
       { label: '인체 파싱, 포즈, 옷 마스크', text: 'ACGPN 입력 형식으로 정리' },
       { label: '착용 이미지 생성', text: 'Flask 서버가 앱으로 반환' },
     ],
@@ -357,10 +357,10 @@ export const RESEARCH_WORKS: ResearchWork[] = [
       ],
       homeStat: { value: '3단계', label: '전처리 → 착용 이미지 생성 → 앱 반환' },
       summary:
-        '앱과 같은 업로드 요청으로 착용 이미지를 받아 보니, 옷 40벌 중 13벌은 GrabCut 사각형이 이미지 밖으로 나가 마스크가 배경까지 번졌습니다.',
+        '서버 업로드 API를 재실행해 착용 이미지를 받아 보니, 옷 40벌 중 13벌은 GrabCut 사각형이 이미지 밖으로 나가 마스크가 배경까지 번졌습니다.',
       scope: '공개 코드 재실행 · VITON-HD 테스트 이미지(CC BY-NC 4.0) · 얼굴 모자이크 · 아래 시간은 CPU 실험값',
       details: {
-        environment: 'Apple M1 Pro CPU · PyTorch · 공개 가중치 · 공개한 서버 코드 그대로',
+        environment: 'Apple M1 Pro CPU · PyTorch · 공개 가중치 · 서버 업로드 API 재실행',
         figures: [
           {
             src: 'assets/research/results/try-on/pose-showcase.webp',

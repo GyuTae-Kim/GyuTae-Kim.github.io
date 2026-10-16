@@ -42,7 +42,7 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 
 ## 검색 노출 관리 (구글 · 네이버)
 
-`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 15개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
+`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 18개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
 
 `angular.json`의 production 빌드는 핵심 CSS 인라인(`optimization.styles.inlineCritical`)을 끄고 전체 스타일시트를 렌더 차단 `<link>`로 불러옵니다. Angular는 핵심 CSS를 본문이 빈 `docs/index.html` 기준으로 계산하므로, 켜 두면 `html`·`body` 규칙만 인라인되고 서버 렌더링한 본문이 스타일 없이 먼저 보입니다.
 
