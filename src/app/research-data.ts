@@ -301,7 +301,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
   },
   {
     id: 'virtual-try-on',
-    previewLabel: '가상 착용 재실행 예시',
+    previewLabel: '포즈·인체 파싱 전처리 예시',
     role: '공개 가상 착용 모델에 필요한 입력 전처리와 의류 마스크를 구성하고, Flask 업로드 API와 Kotlin·Retrofit Android 클라이언트를 연결했습니다.',
     outcome: '인물 사진과 선택한 의류를 받아 전처리, 착용 이미지 생성, 앱으로 결과 반환까지 이어지는 통합 흐름을 만들었습니다. 생성 모델과 포즈·인체 파싱 모델은 재사용했으며, 직접 구현한 범위는 입력 구성·마스크 처리·서버와 앱의 연결입니다.',
     fixes: [

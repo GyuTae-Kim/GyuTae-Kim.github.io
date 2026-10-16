@@ -1,0 +1,50 @@
+[
+  {
+    "id": "fashion-classification",
+    "route": "/research/fashion-classification",
+    "sheet": "C-02",
+    "kicker": "연구 02 · 컴퓨터 비전 · 의류 분류",
+    "title": ["ResNet으로", "의류 사진을 분류하고", "오류를 분석합니다"],
+    "summary": "학습·평가 흐름 구현과 클래스별 오류 분석",
+    "role": "사전학습 모델을 활용한 학습·평가 구현",
+    "source": "src/assets/research/results/classification/prediction-gallery.webp",
+    "caption": "Fashion-MNIST · 공개 코드 재실행 예시",
+    "output": "src/assets/og/fashion-classification.jpg"
+  },
+  {
+    "id": "virtual-try-on",
+    "route": "/research/virtual-try-on",
+    "sheet": "C-03",
+    "kicker": "연구 03 · 컴퓨터 비전 · 가상 착용",
+    "title": ["인물 사진에", "옷을 입혀 보는", "가상 착용 앱"],
+    "summary": "입력 전처리부터 서버·앱 연결까지",
+    "role": "공개 모델 재사용 · 전처리·API·앱 연결 담당",
+    "source": "src/assets/research/results/try-on/tryon-before-after.webp",
+    "caption": "VITON-HD · 공개 코드 재실행 · 얼굴 모자이크",
+    "output": "src/assets/og/virtual-try-on.jpg"
+  },
+  {
+    "id": "service-monitoring",
+    "route": "/portfolio/service-monitoring",
+    "sheet": "B-04",
+    "kicker": "프로젝트 04 · 운영 자동화 · 서비스 안정성",
+    "title": ["서비스 감시와", "오류 추적"],
+    "summary": "서버·PC 앱 오류와 실제 업무 실패를 한곳에서 확인합니다.",
+    "role": "감시 기준·수집·알림·관리자 콘솔 직접 개발",
+    "source": "src/assets/cases/operations/dashboard-live-public-1100.webp",
+    "caption": "실제 관리자 상태 화면 · 내부 정보 가림",
+    "output": "src/assets/og/service-monitoring.jpg"
+  },
+  {
+    "id": "order-invoice-sync",
+    "route": "/portfolio/order-invoice-sync",
+    "sheet": "B-05",
+    "kicker": "프로젝트 05 · 웹 서비스 · 운영 문제 해결",
+    "title": ["송장 연동의", "전송·업로드 오류를", "고쳤습니다"],
+    "summary": "전송 충돌·중복 전송·엑셀 재업로드 개선",
+    "role": "기존 팀 기능의 전송·업로드 처리 개선",
+    "source": "src/assets/cases/operations/invoice-registration-public-1100.webp",
+    "caption": "개선한 로직이 연결되는 송장 등록 화면 · 내부 정보 가림",
+    "output": "src/assets/og/order-invoice-sync.jpg"
+  }
+]

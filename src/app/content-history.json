@@ -1,50 +1,50 @@
 {
   "/": {
-    "lastmod": "2026-10-16T05:50:59Z",
-    "fingerprint": "1aa2bd23cb5fb53cd92eb03b703989e4c47a2739423c5e0f4c27d5a61cdfea1e"
+    "lastmod": "2026-10-16T05:57:49Z",
+    "fingerprint": "32b48369b6a0503e0c63b6d4ba002d2ca962f9a2e13703d8db66067874148696"
   },
   "/portfolio": {
-    "lastmod": "2026-10-16T04:41:50Z",
-    "fingerprint": "66e181877335fd3548e46f89d69b40e86c7d0db121a37c0b415cb5cef45e2501"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "1b85a67e38b2a8f8e9388b432c0a3d513915764c0e4cd1ea994dc5ce1cbde41f"
   },
   "/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-15T18:01:14Z",
     "fingerprint": "cc5134662f1d8de9b8518fcdff58d0edae0410f2183e47582b96232ab327eeeb"
   },
   "/portfolio/panel-classification": {
-    "lastmod": "2026-10-16T04:57:46Z",
-    "fingerprint": "5697dcbb1659faf3e018c703b487767af4d97b3bd474dfbd7357eb4191f0b26a"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "c106d5cbfe60d7b525298c2c047df9c85ee018fbc8a3c141e940cd1fa861a757"
   },
   "/portfolio/wedraw-pro": {
     "lastmod": "2026-10-16T04:41:50Z",
     "fingerprint": "c5bc8c7eac5f5066d63a801d459d17c6b330623d062ba99894e1d29c203a123e"
   },
   "/portfolio/service-monitoring": {
-    "lastmod": "2026-10-16T04:41:50Z",
-    "fingerprint": "47a26ec55be27fccc52e3e2769275ba3cd1f5f863c36a6b3410c90aafaeb9d2c"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "0e1e2c23708e024e9507c8382d4dd5d18183d65a7690cc549026dcd2278f6a91"
   },
   "/portfolio/order-invoice-sync": {
-    "lastmod": "2026-10-16T04:44:41Z",
-    "fingerprint": "0266f5efa1ebd58597bcabfe07e2876a8d4a9a565174b0f003df1010e8be3fed"
+    "lastmod": "2026-10-16T05:41:34Z",
+    "fingerprint": "1c7fcf9887af08b5b9d531509718a757cfcfbb0ffabb2e0eb42bdb52608cd4ba"
   },
   "/research": {
-    "lastmod": "2026-10-16T05:02:27Z",
-    "fingerprint": "dc5027a43bcdf58f456bfd493032816a4699cdb3e1996ed2307fe57831bf53cf"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "a11ac87b0efe9d1818d0e251e78232dd4dcfcfe15d0444ecd2a050c522fef708"
   },
   "/research/graph-tsp": {
-    "lastmod": "2026-10-16T04:57:46Z",
-    "fingerprint": "1f6793ebb6e922ce816ef34db928f0addbf3e92722d2cfdbd2148655c3099315"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "610af03cb46593ffed44bac7dc5734c0d4e48cddc67257b9c2121f519bbd0cbb"
   },
   "/research/fashion-classification": {
-    "lastmod": "2026-10-16T04:57:46Z",
-    "fingerprint": "ee8526ca65184714ccc535d042b96082a3c820c58c2056fc2bfedfbb2fa68194"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "43bc88d9b37e13e8a26b7570acf63b7d437af5bd543eead7bce0653cda1e7be5"
   },
   "/research/virtual-try-on": {
-    "lastmod": "2026-10-16T05:02:27Z",
-    "fingerprint": "ffe15ce9e15d3cf3a386b3e538c169e7c235329e643d60ff74d35cd777de9e29"
+    "lastmod": "2026-10-16T05:40:49Z",
+    "fingerprint": "ca514dd999d4e2242c662c3857260c0c01dd0cce7b03d1c563958c1e04ceb063"
   },
   "/opencad": {
-    "lastmod": "2026-10-16T05:53:04Z",
+    "lastmod": "2026-10-16T05:57:49Z",
     "fingerprint": "88d25b36374400049b3c3bc4eef0a09dcce7b0dc264fbe1fde987407eae38ec8"
   },
   "/notes": {
@@ -68,19 +68,19 @@
     "fingerprint": "df4cd80b9f3d82242bcd61c70e5de63f9b9b968e922ca7ac4cb412760915ad73"
   },
   "/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-16T05:50:59Z",
+    "lastmod": "2026-10-16T05:57:49Z",
     "fingerprint": "44b7e37f42a9c0c053994d3bf9b34bb119e513ce9edf7b5791a41962128a005e"
   },
   "/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-16T05:53:04Z",
+    "lastmod": "2026-10-16T05:57:49Z",
     "fingerprint": "af30304f02dae445adb133505008f188c28f2a4188a363eb9fb99776fff2aaca"
   },
   "/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-16T05:50:59Z",
+    "lastmod": "2026-10-16T05:57:49Z",
     "fingerprint": "eb7c348369523a6a5edab34b63b9bdfcbcb96862750b7b98142d4e5a96113917"
   },
   "/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-16T05:50:59Z",
+    "lastmod": "2026-10-16T05:57:49Z",
     "fingerprint": "fdcc7fc3ba57d88480107d121ad384e0102a7c87ec0999f11de7b7fcf08c313e"
   },
   "/contact": {

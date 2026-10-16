@@ -22,3 +22,11 @@ jobs:
       - run: npm run test:content-dates
       - run: npm run build
       - run: npm run check:seo
+      - run: npm test -- --watch=false --browsers=ChromeHeadless
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-pages
+          path: docs
+          include-hidden-files: true
