@@ -118,6 +118,7 @@
               <app-icon [name]="stopped.has(step.image) ? 'play' : 'pause'"></app-icon
               >{{ stopped.has(step.image) ? "재생" : "정지" }}
             </button>
+            <p class="story-caption" *ngIf="step.imageCaption">{{ step.imageCaption }}</p>
           </div>
           <div class="story-meta"><b>{{ i + 1 }}</b></div>
           <h3>{{ step.title }}</h3>
@@ -219,7 +220,7 @@
           <p>{{ item.text }}</p>
         </article>
       </div>
-      <p class="showcase-note">위 내용은 기술 활용에 대한 기대 효과입니다. 현장 도입에 따른 시간·비용 절감량은 별도 실증이 필요합니다.</p>
+      <p class="showcase-note" *ngIf="selected!.id === 'cad-feature-recognition'">위 내용은 기술 활용에 대한 기대 효과입니다. 현장 도입에 따른 시간·비용 절감량은 별도 실증이 필요합니다.</p>
     </section>
     <section class="case-concept" *ngIf="selected!.concept as concept" aria-labelledby="case-concept-title">
       <h2 class="detail-title" id="case-concept-title"><span>3D</span>개념 모델로 보는 과정</h2>
@@ -339,6 +340,50 @@
           <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
         </li>
       </ul>
+      <div class="operation-evidence operation-hero" *ngIf="other!.evidence.length" aria-label="실제 운영 화면">
+        <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.evidence }"></ng-container>
+      </div>
+      <dl class="case-facts">
+        <div><dt>맡은 역할</dt><dd>{{ other!.role }}</dd></div>
+        <div><dt>만들어낸 결과</dt><dd>{{ other!.outcome.result }}</dd></div>
+      </dl>
+      <ol class="work-chips" *ngIf="!other!.comparison" aria-label="한 일">
+        <li *ngFor="let item of other!.work; let i = index">
+          <b>{{ i + 1 }}</b><strong>{{ item.title }}</strong><span>{{ item.text }}</span>
+        </li>
+      </ol>
+      <section class="behavior-comparison" *ngIf="other!.comparison as comparison" aria-labelledby="comparison-title">
+        <h2 class="detail-title" id="comparison-title">같은 입력에서 달라진 처리</h2>
+        <ol class="change-list">
+          <li *ngFor="let item of comparison">
+            <h3>{{ item.situation }}</h3>
+            <p><span>개선 전</span>{{ item.before }}</p>
+            <p class="change-after"><span>개선 후</span>{{ item.after }}</p>
+          </li>
+        </ol>
+      </section>
+      <section class="case-impact" aria-labelledby="other-impact-title">
+        <h2 class="detail-title" id="other-impact-title">이 기술로 기대하는 변화</h2>
+        <div class="impact-grid">
+          <article *ngFor="let item of other!.outcome.impact">
+            <h3>{{ item.title }}</h3><p>{{ item.text }}</p>
+          </article>
+        </div>
+      </section>
+      <section class="detail-block" aria-labelledby="other-fixes-title">
+        <h2 class="detail-title" id="other-fixes-title">문제와 해결</h2>
+        <ol class="fix-list">
+          <li *ngFor="let item of other!.fixes">
+            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+            <b><app-icon name="arrow-right"></app-icon></b>
+            <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
+          </li>
+        </ol>
+      </section>
+      <section class="detail-block" aria-labelledby="other-checks-title">
+        <h2 class="detail-title" id="other-checks-title">검증과 확인한 결과</h2>
+        <ul class="operation-checks"><li *ngFor="let item of other!.checked">{{ item }}</li></ul>
+      </section>
       <div class="watch-board" *ngIf="other!.watch as watch" role="group" aria-label="감시 범위">
         <div class="watch-head">
           <span class="watch-label">서버 감시</span>
@@ -398,29 +443,12 @@
           </li>
         </ol>
       </section>
-      <div class="operation-evidence" *ngIf="other!.evidence.length" aria-label="실제 운영 화면">
-        <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.evidence }"></ng-container>
-      </div>
-      <dl class="case-facts single"><div><dt>맡은 역할</dt><dd>{{ other!.role }}</dd></div></dl>
-      <ol class="work-chips" aria-label="한 일">
-        <li *ngFor="let item of other!.work; let i = index">
-          <b>{{ i + 1 }}</b><strong>{{ item.title }}</strong><span>{{ item.text }}</span>
-        </li>
-      </ol>
-      <details class="result-details">
-        <summary><app-icon name="chevron"></app-icon>자세히 · 문제와 해결<ng-container *ngIf="other!.moreEvidence.length">, 화면</ng-container></summary>
-        <ol class="fix-list">
-          <li *ngFor="let item of other!.fixes">
-            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
-            <b><app-icon name="arrow-right"></app-icon></b>
-            <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
-          </li>
-        </ol>
-        <div class="operation-evidence" *ngIf="other!.moreEvidence.length">
+      <section class="detail-block" *ngIf="other!.moreEvidence.length" aria-labelledby="other-screens-title">
+        <h2 class="detail-title" id="other-screens-title">운영에서 확인하는 화면</h2>
+        <div class="operation-evidence">
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.moreEvidence }"></ng-container>
         </div>
-      </details>
-      <p class="result-scope">{{ other!.scope }}</p>
+      </section>
     </article>
     <nav class="case-next" aria-label="다음 프로젝트">
       <a [routerLink]="['/portfolio', nextOther.id]"

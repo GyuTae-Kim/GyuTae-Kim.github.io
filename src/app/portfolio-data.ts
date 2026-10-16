@@ -1,4 +1,5 @@
 import { PANEL_TYPES, PanelType } from './panel-types-data';
+import { ProjectOutcome } from './project-outcome';
 
 export interface CaseStudy {
   id: string;
@@ -7,7 +8,7 @@ export interface CaseStudy {
   // Detailed sections may be shown directly or grouped behind 「자세히」.
   headline: string;
   keyDecision?: string;
-  outcome?: { result: string; impact: { title: string; text: string }[] };
+  outcome?: ProjectOutcome;
   scopeLine: string;
   expandedDetails?: boolean;
   panelTypes?: PanelType[];
@@ -85,6 +86,7 @@ export interface CaseStep {
   // still: shown instead of an animated image to readers who prefer reduced motion
   still?: string;
   imageAlt?: string;
+  imageCaption?: string;
 }
 
 export function thumbSrcset(base: string): string {
@@ -402,13 +404,20 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'wedraw-pro',
     number: '03',
     headline: '디자이너의 설계가 공장의 가공 데이터가 됩니다',
-    keyDecision:
-      '네스팅기와 스키퍼의 투입 방향, 공구 위치, 찬넬 가공 순서처럼 현장에서 쌓인 가공 노하우를 가공 파일 출력 규칙에 담았습니다. 판재를 돌리거나 뒤집어도 가공 위치, 엣지밴드, 결 방향이 함께 따라갑니다.',
-    scopeLine: '제품 화면은 데모·테스트 데이터 · 실제 고객 프로젝트 제외',
+    outcome: {
+      result: 'SketchUp 설계에서 BOM·라벨·가공 도면·가공 코드로 이어지는 제조 데이터 출력 흐름을 만들었습니다. 네스팅기와 스키퍼의 투입 방향·공구 위치·가공 순서를 각각 반영하고, 판재를 돌리거나 뒤집어도 가공 위치·엣지밴드·결 방향이 함께 따라가도록 했습니다.',
+      impact: [
+        { title: '설계 정보의 반복 입력 감소', text: '설계한 패널과 하드웨어 정보를 도면·발주·제조 데이터로 이어 사용해, 부서와 공장이 바뀔 때 치수와 가공 정보를 다시 입력하는 일을 줄일 수 있습니다.' },
+        { title: '현장 노하우의 축적', text: '기계별 투입 방향과 도어컵·찬넬 가공 순서를 소프트웨어 규칙에 담아, 숙련 작업자의 판단을 반복해서 활용할 수 있는 기반을 만듭니다.' },
+        { title: '생산 전 오류 발견', text: '원장 배치와 가공 경로를 웹에서 미리 살펴보고 라벨의 투입 방향을 함께 확인해, 잘못된 가공으로 인한 재작업과 자재 낭비를 줄이는 데 도움을 줄 수 있습니다.' },
+      ],
+    },
+    scopeLine: '',
+    expandedDetails: true,
     stats: [
-      { value: '166개', label: '데모 주방 한 채의 부품' },
-      { value: '22장', label: '네스팅한 원장 · 수율 76.5%' },
-      { value: '4종', label: 'BOM, 라벨, 가공 도면, 가공 코드를 한 번에' },
+      { value: '4종', label: 'BOM · 라벨 · 가공 도면 · 가공 코드 출력' },
+      { value: '2종', label: '네스팅기 · 스키퍼에 맞춘 가공 파일' },
+      { value: '웹 뷰어', label: '원장 배치 · NC 가공 · 2D 도면 확인' },
     ],
     role: '팀과 함께 개발하는 제품입니다. 제조 데이터 출력과 생산 투입을 리딩했고, 도면과 발주는 초기 개발을 리딩했습니다.',
     roleItems: [
@@ -444,8 +453,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       '출력 파일과 뒤집기 표시만으로 원래 가공 위치를 되살려 설계와 대조',
       '생성한 가공 파일을 다시 읽어 도어컵과 찬넬의 가공 면, 깊이, 순서 확인',
     ],
-    unchecked: ['외부 네스팅기가 도어 결맞춤 그룹을 실제로 한 장에 놓는지', '현장 기계 설정과 작업자 투입', '실제 CNC 가공'],
-    source: '기술 문서와 코드 변경 이력으로 정리했습니다. 개발 중인 제품이라 기능 범위는 계속 바뀝니다.',
+    unchecked: [],
+    source: '',
     category: '제품 · SketchUp · 가구 제조',
     title: 'Wedraw Pro, 가구 설계에서 생산까지',
     subtitle: '디자이너는 가구빌더로 설계하고, 제조 담당자는 커넥터로 생산 데이터를 받습니다',
@@ -459,6 +468,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         didNote: '디자이너가 SketchUp에서 쓰는 설계 도구입니다.',
         image: 'assets/cases/wedraw-pro/step1.webp',
         imageAlt: '가구빌더에서 구조, 내부, 도어, 조립 방식을 고르는 화면',
+        imageCaption: '가구빌더의 구조·내부·도어 설정입니다. 가구빌더는 팀이 함께 개발했습니다.',
       },
       {
         title: '도면과 발주',
@@ -466,6 +476,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         did: ['플로터로 평면, 입면, 내부 도면 생성', '커넥터 발주 모드 (견적, 발주 상담)'],
         image: 'assets/cases/wedraw-pro/step2.webp',
         imageAlt: '모델에서 바로 뽑은 세트 도면. 평면, 입면, 내부 도면과 자재 사양이 들어 있습니다.',
+        imageCaption: '같은 설계에서 평면·입면·내부 도면과 자재 사양을 뽑은 결과입니다.',
       },
       {
         title: '커넥터로 제조 데이터',
@@ -478,6 +489,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         ],
         image: 'assets/cases/wedraw-pro/step3.webp',
         imageAlt: '커넥터의 도어 결맞춤 그룹 설정. 원장보다 큰 그룹은 나눠서 배치합니다.',
+        imageCaption: '함께 잘라야 할 도어를 그룹으로 묶고, 원장보다 큰 그룹을 나누는 화면입니다.',
       },
       {
         title: '생산 투입',
@@ -485,6 +497,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         did: ['네스팅 웹 뷰어 (원장 배치, 도어 결맞춤 그룹)', 'NC 뷰어로 가공 코드 확인', '2D CAD 웹 뷰어'],
         image: 'assets/cases/wedraw-pro/step4.webp',
         imageAlt: '네스팅 뷰어의 도어 결맞춤 그룹 목록과 원장 위 부품 배치',
+        imageCaption: '원장 위 부품 배치와 도어 결맞춤 그룹을 생산 전에 확인하는 웹 뷰어입니다.',
       },
     ],
     diagramLabels: ['가구빌더 설계', '도면·발주', '커넥터 출력', '생산 투입'],
@@ -493,7 +506,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     figure: {
       src: 'assets/cases/wedraw-pro/hero.webp',
       alt: '가구빌더로 설계한 데모 주방(몸통 18개)을 SketchUp에서 본 화면',
-      caption: '가구빌더로 설계한 데모 주방. 이 모델에서 도면과 제조 데이터가 나옵니다.',
+      caption: '고객 데이터 대신 데모 주방으로 보여주는 설계 결과입니다. 이 모델에서 도면·BOM·라벨·가공 코드를 생성합니다.',
       kind: 'product',
     },
   },
