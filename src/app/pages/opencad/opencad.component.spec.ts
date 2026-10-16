@@ -17,11 +17,11 @@ describe('OpenCadComponent', () => {
     page = fixture.nativeElement as HTMLElement;
   });
 
-  it('opens the published 2D viewer and its source in a new tab', () => {
+  it('opens the published 2D CAD app and its source in a new tab', () => {
     const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('.tool-card:first-of-type .tool-actions a'));
     expect(links.map((link) => link.href)).toEqual([
-      'https://gyutae-kim.github.io/2dcad-viewer/',
-      'https://github.com/GyuTae-Kim/2dcad-viewer',
+      'https://gyutae-kim.github.io/opencad-dwgdxf/',
+      'https://github.com/GyuTae-Kim/opencad-dwgdxf',
     ]);
     expect(links.every((link) => link.target === '_blank' && link.rel.includes('noopener'))).toBeTrue();
   });
