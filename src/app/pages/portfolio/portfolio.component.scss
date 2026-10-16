@@ -2,6 +2,82 @@
   display: block;
 }
 
+.case-story .story-caption {
+  margin: 10px 0 0;
+  font-size: var(--fs-1);
+  line-height: 1.7;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.operation-checks {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--fs-2);
+  line-height: 1.9;
+  word-break: keep-all;
+}
+
+.behavior-comparison {
+  margin: 32px 0;
+}
+
+.change-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ink);
+}
+
+.change-list li {
+  display: grid;
+  grid-template-columns: .8fr 1fr 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-2);
+  line-height: 1.8;
+  word-break: keep-all;
+}
+
+.change-list h3,
+.change-list p {
+  margin: 0;
+  font-size: inherit;
+}
+
+.change-list p {
+  padding-left: 14px;
+  border-left: 2px solid var(--line);
+}
+
+.change-list span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: var(--fs-1);
+  font-weight: 600;
+}
+
+.change-list .change-after {
+  border-color: var(--blue);
+}
+
+.change-after span {
+  color: var(--blue);
+}
+
+@media (max-width: 600px) {
+  .change-list li {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .change-list h3 {
+    grid-column: 1 / -1;
+  }
+}
+
 .recognition-showcase,
 .evidence-section,
 .case-impact,
@@ -351,9 +427,8 @@
   font-size: var(--fs-5);
 }
 
-.other-project .case-facts.single {
-  grid-template-columns: minmax(0, 1fr);
-  max-width: 780px;
+.other-project .case-facts {
+  margin: 32px 0;
 }
 
 /* Four pieces of work, one short line each. */
@@ -736,6 +811,10 @@
 .operation-evidence figure:only-child {
   grid-column: 1 / -1;
   max-width: 760px;
+}
+
+.operation-hero figure:only-child {
+  max-width: 960px;
 }
 
 .other-project .result-details .fix-list {
