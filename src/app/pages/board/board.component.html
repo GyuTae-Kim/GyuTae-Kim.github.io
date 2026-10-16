@@ -1,22 +1,17 @@
 <div class="page-shell interior-page">
-  <div class="page-intro">
-    <h1>학부연구생 때의 연구<span class="accent">.</span></h1>
-    <p>
-      학부연구생 때는 강화학습과 컴퓨터 비전 연구를 많이 했습니다.<br />그중
-      코드를 공개한 세 프로젝트를 모았습니다.
+  <ng-container *ngIf="!selected; else researchDetail">
+    <p class="missing-note" *ngIf="missing" role="status">
+      찾는 연구가 없습니다. 아래 목록에서 골라 주세요.
     </p>
-  </div>
-  <aside class="end-note">현재의 AI·CAD/CAM·가구 제조 개발 경험은 <a routerLink="/notes">제조 소프트웨어 개발 노트</a>에서 이어서 읽을 수 있습니다.</aside>
-  <div class="archive-intro">
-    <span class="eyebrow">읽는 방법</span>
-    <p>
-      프로젝트마다 무엇을 만들었는지 먼저 소개하고, 실험 결과와 막힌 지점,
-      그 원인을 이어서 적었습니다. 직접 한 것과 가져다 쓴 것, 실행 조건과
-      한계는 「자세히」에 있습니다.
-    </p>
-  </div>
-  <nav class="research-list" aria-label="연구 목록">
-    <article class="project-row" *ngFor="let work of works; let i = index">
+    <div class="page-intro">
+      <h1>학부연구생 때의 연구<span class="accent">.</span></h1>
+      <p>
+        학부연구생 때는 강화학습과 컴퓨터 비전 연구를 많이 했습니다.<br />그중
+        코드를 공개한 세 프로젝트를 모았습니다.
+      </p>
+    </div>
+    <aside class="end-note">현재의 AI·CAD/CAM·가구 제조 개발 경험은 <a routerLink="/notes">제조 소프트웨어 개발 노트</a>에서 이어서 읽을 수 있습니다.</aside>
+    <article class="project-row" *ngFor="let work of works; let i = index" [id]="work.id">
       <div class="project-row-meta">
         <span class="large-index">0{{ i + 1 }}</span>
         <p class="eyebrow">{{ work.category }}</p>
@@ -24,8 +19,7 @@
         <a
           class="row-figure"
           *ngIf="work.result as result"
-          [routerLink]="[]"
-          [fragment]="work.id"
+          [routerLink]="['/research', work.id]"
           tabindex="-1"
           aria-hidden="true"
           ><img
@@ -37,10 +31,11 @@
             height="390"
             loading="lazy"
         /></a>
+        <p class="preview-note">{{ work.previewLabel }}</p>
       </div>
       <div class="project-row-content">
         <h2>
-          <a [routerLink]="[]" [fragment]="work.id"
+          <a [routerLink]="['/research', work.id]"
             >{{ work.title }}<app-icon name="arrow-right"></app-icon></a
           >
         </h2>
@@ -51,249 +46,241 @@
         <div class="project-summary">
           <div>
             <h3>직접 한 일</h3>
-            <p>{{ work.built.join(' · ') }}</p>
+            <p>{{ work.role }}</p>
           </div>
           <div *ngIf="work.result as result">
-            <h3>결과</h3>
-            <p class="row-headline">{{ result.headline }}</p>
+            <h3>만들어낸 결과</h3>
+            <p class="row-headline">{{ work.outcome }}</p>
             <ul class="mini-stats">
-              <li *ngFor="let stat of result.stats.slice(0, 2)">
-                <b>{{ stat.value }}</b> {{ stat.label }}
-              </li>
+              <li *ngIf="result.homeStat as stat"><b>{{ stat.value }}</b> {{ stat.label }}</li>
             </ul>
           </div>
         </div>
-        <a class="text-link" [routerLink]="[]" [fragment]="work.id"
+        <a class="text-link" [routerLink]="['/research', work.id]"
           >연구 보기<app-icon name="arrow-right"></app-icon></a
         >
       </div>
     </article>
-  </nav>
-  <article
-    class="research-entry"
-    *ngFor="let work of works; let i = index"
-    [id]="work.id"
-  >
-    <div class="research-entry-heading">
-      <div>
-        <p class="eyebrow">0{{ i + 1 }} / {{ work.category }}</p>
-        <h2>{{ work.title }}</h2>
-        <span class="period">{{ work.period }}</span>
-      </div>
-      <a
-        class="source-link"
-        [href]="work.source"
-        target="_blank"
-        rel="noopener noreferrer"
-        [attr.aria-label]="work.title + ' 공개 코드를 GitHub 새 창에서 열기'"
-        ><app-icon name="github"></app-icon>공개 코드<app-icon
-          class="link-mark"
-          name="external"
-        ></app-icon></a
+    <section class="archive-bridge">
+      <h2>이제는 형상과 제조를 다룹니다.</h2>
+      <p>
+        학부연구생 때 관심을 가졌던 표현 학습과 오류 분석을,<br />지금은 3D 형상
+        데이터와 가공 특징 인식, CAD/CAM 도구의 실행과 검증으로 넓혀 가고 있습니다.
+      </p>
+      <a class="button primary" routerLink="/portfolio"
+        >최근 연구개발 프로젝트<app-icon name="arrow-right"></app-icon></a
       >
-    </div>
-    <section
-      class="research-overview"
-      [attr.aria-label]="work.title + ' 프로젝트 소개'"
-    >
-      <p class="research-summary">{{ work.summary }}</p>
-      <ol class="research-flow">
-        <li *ngFor="let step of work.flow; let n = index">
-          <span>{{ n + 1 }}</span><b>{{ step.label }}</b>
-          <p>{{ step.text }}</p>
-        </li>
-      </ol>
-      <p class="research-credit">{{ work.credit }}</p>
-      <div class="tags">
-        <span *ngFor="let tag of work.tags">{{ tag }}</span>
-      </div>
     </section>
-    <section
-      class="result-card"
-      *ngIf="work.result as result"
-      [attr.aria-label]="work.title + ' 실험 결과'"
+  </ng-container>
+  <ng-template #researchDetail>
+    <a class="back-link" routerLink="/research"
+      ><app-icon name="arrow-left"></app-icon>연구 목록</a
     >
-      <p class="result-label">실험 결과와 시행착오</p>
-      <p class="result-headline">{{ result.headline }}</p>
-      <figure
-        class="result-figure"
-        *ngFor="let fig of result.figures"
-        [class.compact]="fig.compact"
-      >
+    <article
+      class="research-entry"
+      *ngIf="selected as work"
+      [id]="work.id"
+    >
+      <div class="research-entry-heading">
+        <div class="page-intro detail-intro">
+          <p class="eyebrow">연구 0{{ works.indexOf(work) + 1 }} · {{ work.category }}</p>
+          <h1>{{ work.title }}</h1>
+          <span class="period">{{ work.period }}</span>
+        </div>
         <a
-          [href]="fig.src"
+          class="source-link"
+          [href]="work.source"
           target="_blank"
           rel="noopener noreferrer"
-          [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
-          ><picture
-            ><source
-              *ngIf="fig.still"
-              [attr.srcset]="fig.still"
-              media="(prefers-reduced-motion: reduce)" /><img
-              [src]="fig.still && stopped.has(fig.src) ? fig.still : fig.src"
-              [alt]="fig.alt"
-              [width]="fig.width"
-              [height]="fig.height"
-              loading="lazy" /></picture
-        ></a>
-        <button
-          *ngIf="fig.still"
-          type="button"
-          class="motion-toggle"
-          [attr.aria-pressed]="stopped.has(fig.src)"
-          (click)="toggleMotion(fig.src)"
+          [attr.aria-label]="work.title + ' 공개 코드를 GitHub 새 창에서 열기'"
+          ><app-icon name="github"></app-icon>공개 코드<app-icon
+            class="link-mark"
+            name="external"
+          ></app-icon></a
         >
-          <app-icon [name]="stopped.has(fig.src) ? 'play' : 'pause'"></app-icon
-          >{{ stopped.has(fig.src) ? "다시 재생" : "정지" }}
-        </button>
-        <figcaption>{{ fig.caption }}</figcaption>
-      </figure>
-      <ul class="result-stats">
-        <li *ngFor="let stat of result.stats">
-          <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
-        </li>
-      </ul>
-      <p class="result-summary">{{ result.summary }}</p>
-      <ol class="result-story" *ngIf="result.story">
-        <li *ngFor="let step of result.story">
-          <span>{{ step.label }}</span>
-          <p>{{ step.text }}</p>
-        </li>
-      </ol>
-      <div class="result-retry" *ngIf="result.retry">
-        <span class="eyebrow">다시 한다면</span>
-        <ul>
-          <li *ngFor="let item of result.retry">{{ item }}</li>
-        </ul>
       </div>
-      <p class="result-scope">{{ result.scope }}</p>
-    </section>
-    <details class="result-details research-details">
-      <summary><app-icon name="chevron"></app-icon>자세히 · 직접 한 일, 실행 조건, 원인과 한계</summary>
-      <section class="detail-block">
-        <h3 class="detail-title"><span>01</span>직접 한 일</h3>
-        <div [class.research-layout]="!!work.image">
-          <div class="check-grid">
-            <div class="check-done">
-              <h4>직접 한 것</h4>
-              <ul>
-                <li *ngFor="let item of work.built">{{ item }}</li>
-              </ul>
-            </div>
-            <div class="check-out">
-              <h4>가져다 쓴 것</h4>
-              <ul>
-                <li *ngFor="let item of work.borrowed">{{ item }}</li>
-              </ul>
-            </div>
-          </div>
-          <figure *ngIf="work.image">
-            <img
-              [src]="work.image"
-              [alt]="work.imageAlt"
-              loading="lazy"
-              width="800"
-              height="600"
-            />
-            <figcaption>
-              {{ work.imageCaption }}<br /><a
-                [href]="work.image"
-                target="_blank"
-                rel="noopener noreferrer"
-                >원본 그림 크게 보기<app-icon name="external"></app-icon></a
-              >
-            </figcaption>
-          </figure>
-        </div>
-        <figure class="wide-chart" *ngIf="work.id === 'fashion-classification'">
-          <img
-            src="assets/research/k-fashion-class-count.png"
-            alt="공개 K-fashion 분류 실험의 클래스 0~3 이미지 개수 막대그래프. 학습·검증 데이터에서 클래스마다 표본 수가 다르다."
-            loading="lazy"
-            width="1400"
-            height="500"
-          />
-          <figcaption>
-            K-Fashion 클래스 분포 · 공개 저장소 그림
-          </figcaption>
-        </figure>
-      </section>
-      <section class="detail-block" *ngIf="work.result as result">
-        <h3 class="detail-title"><span>02</span>실행 조건과 결과</h3>
-        <ul class="env-chips" aria-label="실행 조건">
-          <li *ngFor="let item of result.details.environment.split(' · ')">
-            {{ item }}
-          </li>
-        </ul>
-        <div class="detail-figures">
-          <figure
-            *ngFor="let fig of result.details.figures"
-            [class.compact]="fig.compact"
-          >
-            <a
-              [href]="fig.src"
-              target="_blank"
-              rel="noopener noreferrer"
-              [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
-              ><img [src]="fig.src" [alt]="fig.alt" [width]="fig.width" [height]="fig.height" loading="lazy"
-            /></a>
-            <figcaption>{{ fig.caption }}</figcaption>
-          </figure>
-        </div>
-        <div class="detail-table" *ngIf="result.details.table as table">
-          <table>
-            <caption>
-              {{
-                table.caption
-              }}
-            </caption>
-            <thead>
-              <tr>
-                <th *ngFor="let col of table.columns" scope="col">{{ col }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row of table.rows">
-                <td *ngFor="let cell of row">{{ cell }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <section class="detail-block" *ngIf="work.result as result">
-        <h3 class="detail-title"><span>03</span>원인과 한계</h3>
-        <ol class="finding-grid">
-          <li *ngFor="let item of result.details.findings">
-            <b>{{ item.title }}</b>
-            <p>{{ item.text }}</p>
+      <section
+        class="research-overview"
+        [attr.aria-label]="work.title + ' 프로젝트 소개'"
+      >
+        <p class="research-summary">{{ work.summary }}</p>
+        <ol class="research-flow">
+          <li *ngFor="let step of work.flow; let n = index">
+            <span>{{ n + 1 }}</span><b>{{ step.label }}</b>
+            <p>{{ step.text }}</p>
           </li>
         </ol>
-        <div class="check-grid single">
-          <div class="check-out">
-            <h4>한계</h4>
-            <ul>
-              <li *ngFor="let item of work.limits">{{ item }}</li>
-            </ul>
-          </div>
+        <p class="research-credit">{{ work.credit }}</p>
+        <div class="tags">
+          <span *ngFor="let tag of work.tags">{{ tag }}</span>
         </div>
       </section>
-    </details>
-    <div class="research-connection">
-      <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
-      <p>{{ work.connection }}</p>
-      <a class="text-link" [routerLink]="['/portfolio', work.relatedProjectId]"
-        >{{ projectTitle(work.relatedProjectId) }}<app-icon name="arrow-right"></app-icon></a
+      <section class="research-contribution" aria-labelledby="contribution-title">
+        <h2 class="detail-title" id="contribution-title">직접 맡은 역할과 결과</h2>
+        <dl class="case-facts">
+          <div><dt>맡은 역할</dt><dd>{{ work.role }}</dd></div>
+          <div><dt>만들어낸 결과</dt><dd>{{ work.outcome }}</dd></div>
+        </dl>
+        <div class="research-work-grid">
+          <section><h3>직접 구현·분석한 것</h3><ul><li *ngFor="let item of work.built">{{ item }}</li></ul></section>
+          <section><h3>바탕이 된 연구·공개 모델</h3><ul><li *ngFor="let item of work.borrowed">{{ item }}</li></ul></section>
+        </div>
+      </section>
+      <section class="original-evidence" *ngIf="work.image" aria-labelledby="original-title">
+        <h2 class="detail-title" id="original-title">원래 연구에서 분석한 데이터</h2>
+        <div class="original-figures">
+          <figure>
+            <a [href]="work.image" target="_blank" rel="noopener noreferrer" aria-label="K-Fashion 혼동행렬 원본 크게 보기"><img [src]="work.image" [alt]="work.imageAlt" width="800" height="600" loading="lazy" /></a>
+            <figcaption>{{ work.imageCaption }}</figcaption>
+          </figure>
+          <figure *ngIf="work.id === 'fashion-classification'">
+            <a href="assets/research/k-fashion-class-count.png" target="_blank" rel="noopener noreferrer" aria-label="K-Fashion 클래스 분포 원본 크게 보기"><img src="assets/research/k-fashion-class-count.png" alt="K-Fashion 원연구의 클래스 0~3 학습·검증 이미지 수. 클래스별 표본 수의 차이를 보여주는 막대그래프" width="1400" height="500" loading="lazy" /></a>
+            <figcaption>원래 K-Fashion 데이터의 클래스 분포입니다. 학습·검증 각각에서 가장 적은 클래스에 맞춰 샘플링한 이유를 보여줍니다.</figcaption>
+          </figure>
+        </div>
+      </section>
+      <section
+        class="result-card"
+        *ngIf="work.result as result"
+        [attr.aria-label]="work.title + ' 실험 결과'"
       >
-    </div>
-  </article>
-  <section class="archive-bridge">
-    <h2>이제는 형상과 제조를 다룹니다.</h2>
-    <p>
-      학부연구생 때 관심을 가졌던 표현 학습과 오류 분석을,<br />지금은 3D 형상
-      데이터와 가공 특징 인식, CAD/CAM 도구의 실행과 검증으로 넓혀 가고 있습니다.
-    </p>
-    <a class="button primary" routerLink="/portfolio"
-      >최근 연구개발 프로젝트<app-icon name="arrow-right"></app-icon></a
-    >
-  </section>
+        <p class="result-label">공개 코드 재실행 · 분석과 검증</p>
+        <h2 class="result-headline">{{ result.headline }}</h2>
+        <p class="result-scope">{{ result.scope }}</p>
+        <p class="result-summary">{{ result.summary }}</p>
+        <ul class="env-chips" aria-label="재실행 조건">
+          <li *ngFor="let item of result.details.environment.split(' · ')">{{ item }}</li>
+        </ul>
+        <figure
+          class="result-figure"
+          *ngFor="let fig of result.figures"
+          [class.compact]="fig.compact"
+        >
+          <a
+            [href]="fig.src"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
+            ><picture
+              ><source
+                *ngIf="fig.still"
+                [attr.srcset]="fig.still"
+                media="(prefers-reduced-motion: reduce)" /><img
+                [src]="fig.still && stopped.has(fig.src) ? fig.still : fig.src"
+                [alt]="fig.alt"
+                [width]="fig.width"
+                [height]="fig.height"
+                loading="lazy" /></picture
+          ></a>
+          <button
+            *ngIf="fig.still"
+            type="button"
+            class="motion-toggle"
+            [attr.aria-pressed]="stopped.has(fig.src)"
+            (click)="toggleMotion(fig.src)"
+          >
+            <app-icon [name]="stopped.has(fig.src) ? 'play' : 'pause'"></app-icon
+            >{{ stopped.has(fig.src) ? "다시 재생" : "정지" }}
+          </button>
+          <figcaption>{{ fig.caption }}</figcaption>
+        </figure>
+        <ul class="result-stats">
+          <li *ngFor="let stat of result.stats">
+            <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+          </li>
+        </ul>
+        <ol class="result-story" *ngIf="result.story">
+          <li *ngFor="let step of result.story">
+            <span>{{ step.label }}</span>
+            <p>{{ step.text }}</p>
+          </li>
+        </ol>
+      </section>
+      <section class="research-fixes" aria-labelledby="fixes-title">
+        <h2 class="detail-title" id="fixes-title">문제와 해결</h2>
+        <ol class="fix-list">
+          <li *ngFor="let item of work.fixes">
+            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+            <b><app-icon name="arrow-right"></app-icon></b>
+            <p class="fix-answer"><span><app-icon name="check"></app-icon>{{ item.label ?? '해결' }}</span>{{ item.fix }}</p>
+          </li>
+        </ol>
+      </section>
+      <div class="research-details">
+        <section class="detail-block" *ngIf="work.result as result">
+          <h2 class="detail-title">실험 비교와 세부 결과</h2>
+          <div class="detail-figures">
+            <figure
+              *ngFor="let fig of result.details.figures"
+              [class.compact]="fig.compact"
+            >
+              <a
+                [href]="fig.src"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="'원본 크기로 보기: ' + fig.alt"
+                ><img [src]="fig.src" [alt]="fig.alt" [width]="fig.width" [height]="fig.height" loading="lazy"
+              /></a>
+              <figcaption>{{ fig.caption }}</figcaption>
+            </figure>
+          </div>
+          <div class="detail-table" *ngIf="result.details.table as table" tabindex="0" role="region" [attr.aria-label]="table.caption + ' · 가로 스크롤 가능'">
+            <table>
+              <caption>
+                {{
+                  table.caption
+                }}
+              </caption>
+              <thead>
+                <tr>
+                  <th *ngFor="let col of table.columns" scope="col">{{ col }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of table.rows">
+                  <td *ngFor="let cell of row">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="detail-block" *ngIf="work.result as result">
+          <h2 class="detail-title">관찰한 원인과 남은 과제</h2>
+          <ol class="finding-grid">
+            <li *ngFor="let item of result.details.findings">
+              <b>{{ item.title }}</b>
+              <p>{{ item.text }}</p>
+            </li>
+          </ol>
+          <div class="research-reading-note">
+            <div>
+              <h3>결과를 읽는 기준</h3>
+              <ul>
+                <li *ngFor="let item of work.limits">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="result-retry" *ngIf="result.retry">
+            <span class="eyebrow">다음 실험에서 보완할 점</span>
+            <ul>
+              <li *ngFor="let item of result.retry">{{ item }}</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <div class="research-connection">
+        <span class="eyebrow">최근 프로젝트와 이어지는 점</span>
+        <p>{{ work.connection }}</p>
+        <a class="text-link" [routerLink]="['/portfolio', work.relatedProjectId]"
+          >{{ projectTitle(work.relatedProjectId) }}<app-icon name="arrow-right"></app-icon></a
+        >
+      </div>
+    </article>
+    <nav class="case-next" aria-label="다음 연구">
+      <a [routerLink]="['/research', next.id]"
+        ><span class="eyebrow">다음 연구</span><strong>{{ next.title }}</strong
+        ><span class="row-arrow"><app-icon name="arrow-right"></app-icon></span
+      ></a>
+    </nav>
+  </ng-template>
 </div>

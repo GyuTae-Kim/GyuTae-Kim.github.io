@@ -1,7 +1,7 @@
 {
   "/": {
-    "lastmod": "2026-10-16T04:41:50Z",
-    "fingerprint": "e2bb3f2150e23a8aa66c48121fb8902f57e893b7b7ff41d8a64bf9bbc6151310"
+    "lastmod": "2026-10-16T04:58:51Z",
+    "fingerprint": "8f0e6719c9a73154abd0fb36fb57357a3166ae5c9a283a322bcc274758201f39"
   },
   "/portfolio": {
     "lastmod": "2026-10-16T04:41:50Z",
@@ -12,8 +12,8 @@
     "fingerprint": "cc5134662f1d8de9b8518fcdff58d0edae0410f2183e47582b96232ab327eeeb"
   },
   "/portfolio/panel-classification": {
-    "lastmod": "2026-10-16T04:41:50Z",
-    "fingerprint": "a597c6d60e4f9611e33d98996c2c6d509a052c700ef0c855b4b7db4a1495ecd1"
+    "lastmod": "2026-10-16T04:57:46Z",
+    "fingerprint": "5697dcbb1659faf3e018c703b487767af4d97b3bd474dfbd7357eb4191f0b26a"
   },
   "/portfolio/wedraw-pro": {
     "lastmod": "2026-10-16T04:41:50Z",
@@ -28,8 +28,20 @@
     "fingerprint": "0266f5efa1ebd58597bcabfe07e2876a8d4a9a565174b0f003df1010e8be3fed"
   },
   "/research": {
-    "lastmod": "2026-10-15T17:22:57Z",
-    "fingerprint": "250d286dec85ebc0e153243e2e471dfef59f5326f8e1f41d96e92d94cbf79a6d"
+    "lastmod": "2026-10-16T04:58:51Z",
+    "fingerprint": "67a4a09a9e04b7a1193c3d6eec57b05953d6e08f3f1d76510f2fa2c1729266b4"
+  },
+  "/research/graph-tsp": {
+    "lastmod": "2026-10-16T04:57:46Z",
+    "fingerprint": "1f6793ebb6e922ce816ef34db928f0addbf3e92722d2cfdbd2148655c3099315"
+  },
+  "/research/fashion-classification": {
+    "lastmod": "2026-10-16T04:57:46Z",
+    "fingerprint": "ee8526ca65184714ccc535d042b96082a3c820c58c2056fc2bfedfbb2fa68194"
+  },
+  "/research/virtual-try-on": {
+    "lastmod": "2026-10-16T04:57:46Z",
+    "fingerprint": "5247c7d5c21fcc3dcba4ac0b6f8a019241dab5781fb70c9fb47ff6ddddad51c3"
   },
   "/opencad": {
     "lastmod": "2026-10-16T03:42:13Z",

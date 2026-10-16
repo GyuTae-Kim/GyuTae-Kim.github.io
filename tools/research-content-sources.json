@@ -1,0 +1,68 @@
+{
+  "description": "Original public implementation sources for research contribution and problem/solution copy. Existing portfolio figures and rerun results are retained with their dataset and run conditions; no new model training was performed for this editorial change.",
+  "sources": [
+    {
+      "repository": "GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V",
+      "path": "agent.py",
+      "blob": "2de24cf662fa2c266f479b4e4cd94379bc8e6c10",
+      "url": "https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V/blob/f7a092ce9eacc709e3f0702ae178e6435807d907/agent.py",
+      "commit": "f7a092ce9eacc709e3f0702ae178e6435807d907"
+    },
+    {
+      "repository": "GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V",
+      "path": "graph/graph_instance.py",
+      "blob": "fdd2f7b614322225beea2737ced85f41563e5db2",
+      "url": "https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V/blob/f7a092ce9eacc709e3f0702ae178e6435807d907/graph/graph_instance.py",
+      "commit": "f7a092ce9eacc709e3f0702ae178e6435807d907"
+    },
+    {
+      "repository": "GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V",
+      "path": "models/s2v_dqn.py",
+      "blob": "4f0dd84c291c5dd04d979a0b4a882d471333ffbd",
+      "url": "https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V/blob/f7a092ce9eacc709e3f0702ae178e6435807d907/models/s2v_dqn.py",
+      "commit": "f7a092ce9eacc709e3f0702ae178e6435807d907"
+    },
+    {
+      "repository": "GyuTae-Kim/Classification_ResNet",
+      "path": "utils/dataset.py",
+      "blob": "9178951c6a693f8df8b26c797a7e12ecc899ca2e",
+      "url": "https://github.com/GyuTae-Kim/Classification_ResNet/blob/3848b7fb8d4c80f8712b84f398a30f8f4e7656d3/utils/dataset.py",
+      "commit": "3848b7fb8d4c80f8712b84f398a30f8f4e7656d3"
+    },
+    {
+      "repository": "GyuTae-Kim/Classification_ResNet",
+      "path": "models/resnet50v2.py",
+      "blob": "877dd13e96d0c376a638050bd4373b0dcdef2342",
+      "url": "https://github.com/GyuTae-Kim/Classification_ResNet/blob/3848b7fb8d4c80f8712b84f398a30f8f4e7656d3/models/resnet50v2.py",
+      "commit": "3848b7fb8d4c80f8712b84f398a30f8f4e7656d3"
+    },
+    {
+      "repository": "GyuTae-Kim/Classification_ResNet",
+      "path": "train.py",
+      "blob": "7229ca17b825711f10034364b8e0c925c1ab1d5e",
+      "url": "https://github.com/GyuTae-Kim/Classification_ResNet/blob/3848b7fb8d4c80f8712b84f398a30f8f4e7656d3/train.py",
+      "commit": "3848b7fb8d4c80f8712b84f398a30f8f4e7656d3"
+    },
+    {
+      "repository": "GyuTae-Kim/Deeplearning_Try_On",
+      "path": "server/main.py",
+      "blob": "af8a8f18cd55fceb59c93f851cc69aaeef721eee",
+      "url": "https://github.com/GyuTae-Kim/Deeplearning_Try_On/blob/c338e8d5b9891b5065f62f97dd8cfaa193c4ddd7/server/main.py",
+      "commit": "c338e8d5b9891b5065f62f97dd8cfaa193c4ddd7"
+    },
+    {
+      "repository": "GyuTae-Kim/Deeplearning_Try_On",
+      "path": "server/mask/handler.py",
+      "blob": "758dd3b0927a248590a06592c5ea95222c2fc873",
+      "url": "https://github.com/GyuTae-Kim/Deeplearning_Try_On/blob/c338e8d5b9891b5065f62f97dd8cfaa193c4ddd7/server/mask/handler.py",
+      "commit": "c338e8d5b9891b5065f62f97dd8cfaa193c4ddd7"
+    },
+    {
+      "repository": "GyuTae-Kim/Deeplearning_Try_On",
+      "path": "client/shoppingmall/app/src/main/java/kr/ac/kumoh/s20160001/shoppingmall/RetrofitService.kt",
+      "blob": "d33e6f8bc990a61268e6bc5f7bee95886222cd70",
+      "url": "https://github.com/GyuTae-Kim/Deeplearning_Try_On/blob/c338e8d5b9891b5065f62f97dd8cfaa193c4ddd7/client/shoppingmall/app/src/main/java/kr/ac/kumoh/s20160001/shoppingmall/RetrofitService.kt",
+      "commit": "c338e8d5b9891b5065f62f97dd8cfaa193c4ddd7"
+    }
+  ]
+}

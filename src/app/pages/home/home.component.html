@@ -136,8 +136,7 @@
         <li *ngFor="let work of research">
           <a
             class="index-row research-row"
-            routerLink="/research"
-            [fragment]="work.id"
+            [routerLink]="['/research', work.id]"
           >
             <span class="row-thumb"
               ><img
@@ -150,11 +149,11 @@
                 loading="lazy"
             /></span>
             <span class="row-body">
-              <span class="row-meta">{{ work.category }}</span>
+              <span class="row-meta">{{ work.category }} · {{ work.previewLabel }}</span>
               <strong class="row-title">{{ work.title }}</strong>
               <span class="row-result">{{ work.summary }}</span>
               <span class="row-note"
-                ><b>시행착오</b>{{ work.result!.headline }}</span
+                ><b>직접 한 일</b>{{ work.role }}</span
               >
             </span>
             <span class="row-stat" *ngIf="work.result!.homeStat ?? work.result!.stats[0] as stat"

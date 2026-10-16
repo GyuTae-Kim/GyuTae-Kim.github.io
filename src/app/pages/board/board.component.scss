@@ -2,6 +2,118 @@
   display: block;
 }
 
-.research-list {
-  margin-top: 28px;
+.missing-note {
+  margin: 0 0 20px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: var(--fs-2);
+}
+
+.project-row {
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+
+.preview-note {
+  margin: 8px 0 0;
+  font-size: var(--fs-1);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.research-entry {
+  padding-top: 0;
+}
+
+.research-entry-heading .page-intro {
+  margin-bottom: 0;
+}
+
+.research-entry-heading h1 {
+  margin: 8px 0;
+}
+
+.research-contribution,
+.original-evidence,
+.research-fixes,
+.research-details {
+  margin: 36px 0;
+}
+
+.research-contribution .case-facts {
+  margin: 0 0 22px;
+}
+
+.research-work-grid,
+.original-figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.research-work-grid section {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  background: var(--sheet);
+}
+
+.research-work-grid h3,
+.research-reading-note h3 {
+  margin: 0 0 10px;
+  font-size: var(--fs-2);
+}
+
+.research-work-grid ul,
+.research-reading-note ul {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: var(--fs-2);
+  line-height: 1.9;
+  word-break: keep-all;
+}
+
+.original-figures figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.original-figures img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
+
+.original-figures figcaption {
+  padding-top: 10px;
+  color: var(--muted);
+  font-size: var(--fs-1);
+  line-height: 1.8;
+  word-break: keep-all;
+}
+
+.research-reading-note {
+  margin-top: 24px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.result-scope {
+  margin: 12px 0 16px;
+  color: var(--blue);
+}
+
+.detail-table:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
+@media (max-width: 720px) {
+  .research-work-grid,
+  .original-figures {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

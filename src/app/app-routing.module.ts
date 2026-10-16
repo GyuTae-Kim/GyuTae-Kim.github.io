@@ -24,6 +24,7 @@ export const APP_ROUTES: Routes = [
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'portfolio/:id', component: PortfolioComponent },
   { path: 'research', component: BoardComponent },
+  { path: 'research/:id', component: BoardComponent },
   { path: 'opencad', component: OpenCadComponent },
   { path: 'blog', redirectTo: 'research', pathMatch: 'full' },
   { path: 'blog/:post', redirectTo: 'research' },

@@ -113,6 +113,13 @@ for (const page of SEARCH_PAGES) {
       assert.ok(root.textContent.includes(page.project.headline), `${file}: project content`);
       assert.ok(data['@graph'].some((node) => node['@type'] === 'CreativeWork'), file);
     }
+    if (page.research) {
+      assert.equal(root.querySelector('.research-entry')?.id, page.research.id, `${file}: research detail`);
+      assert.ok(root.textContent.includes(page.research.role), `${file}: research contribution`);
+      assert.ok(root.textContent.includes(page.research.outcome), `${file}: research outcome`);
+      assert.ok(!root.querySelector('details:not([open])'), `${file}: research content remains visible`);
+      assert.ok(data['@graph'].some((node) => node['@type'] === 'CreativeWork' && node['@id'] === `${SITE_URL + page.path}#research`), `${file}: research structured data`);
+    }
     if (page.article) {
       assert.ok(root.textContent.includes(page.article.lead), `${file}: article body`);
       assert.ok(data['@graph'].some((node) => node['@type'] === 'TechArticle' && node.headline === page.article.title && node.dateModified === contentModified(page.path)), `${file}: article structured data`);
