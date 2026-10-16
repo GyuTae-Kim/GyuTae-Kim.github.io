@@ -1,7 +1,7 @@
 .article-page { max-width: 960px; }
 .article-crumbs { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; font-size: var(--fs-2); color: var(--muted); }
 .article-page .page-intro h1 { font-size: clamp(30px, 4.2vw, 44px); }
-.article-actions { margin: -12px 0 32px; }
+.article-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: -12px 0 32px; }
 .article-figure { margin: 0 0 40px; }
 .article-figure img { display: block; width: 100%; border: 1px solid var(--line); }
 .article-figure figcaption { margin-top: 8px; font-size: var(--fs-2); color: var(--muted); }
