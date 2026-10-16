@@ -26,10 +26,19 @@ describe('OpenCadComponent', () => {
     expect(links.every((link) => link.target === '_blank' && link.rel.includes('noopener'))).toBeTrue();
   });
 
-  it('describes the published 3D capabilities and links the task guides', () => {
-    expect(page.querySelectorAll('.plan-card').length).toBe(0);
-    expect(page.querySelector('.tool-features')?.textContent).toContain('SketchUp 2021');
-    expect(page.querySelector('.tool-features')?.textContent).toContain('woodWOP MPR');
+  it('keeps the published viewer to 2D and lists the 3D viewers as planned, without links', () => {
+    expect(page.querySelector('.tool-card .tool-meta')?.textContent).toContain('2D 도면');
+    expect(page.querySelector('.tool-card')?.textContent).not.toMatch(/STEP|SKP|NC|3D/);
+    const plans = Array.from(page.querySelectorAll('.plan-card'));
+    expect(plans.map((card) => card.querySelector('h3')?.textContent?.trim())).toEqual([
+      'STEP 뷰어',
+      'SKP 뷰어',
+      'NC 뷰어',
+    ]);
+    expect(page.querySelectorAll('.plan-card a').length).toBe(0);
+  });
+
+  it('links the task guides', () => {
     const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('.guide-list a'));
     expect(guides.map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
