@@ -11,6 +11,10 @@ const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json
 const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
+// All routes are prerendered. Ship the small shared stylesheet in the HTML so
+// text can paint without a second render-blocking request, including without JS.
+base = base.replace(/<link\b[^>]*href="(styles\.[^"]+\.css)"[^>]*>/g, (_, file) =>
+  `<style data-site-styles>${readFileSync(join(outDir, file), 'utf8')}</style>`);
 const escape = (text) => text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 // Verification tokens are public. Keep real tokens here across future builds, rather

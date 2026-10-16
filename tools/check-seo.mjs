@@ -8,6 +8,11 @@ const require = createRequire(import.meta.url);
 const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified } = require('../dist/server/main.js');
 const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
+const fontCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/coverage.json'), 'utf8'));
+const fontCharacters = new Set([...fontCoverage.covered, ...fontCoverage.fallback]);
+for (const font of [...fontCoverage.files, { name: 'jetbrains-mono-latin.woff2' }]) {
+  assert.equal(readFileSync(join(outDir, 'assets/fonts', font.name)).toString('ascii', 0, 4), 'wOF2', font.name);
+}
 const { JSDOM } = require('jsdom');
 const titles = new Set();
 const descriptions = new Set();
@@ -45,6 +50,12 @@ for (const page of SEARCH_PAGES) {
     const raw = readFileSync(join(outDir, file));
     const dom = new JSDOM(raw.toString('utf8'), { url: SITE_URL + page.path });
     const document = dom.window.document;
+    assert.ok(document.querySelector('style[data-site-styles]'), `${file}: shared CSS available before scripts`);
+    assert.ok(!document.querySelector('link[rel="stylesheet"][href^="styles."]'), `${file}: no blocking shared CSS request`);
+    assert.ok(!document.querySelector('link[href*="fonts.googleapis.com"], link[href*="cdn.jsdelivr.net"]'), `${file}: no external font CSS`);
+    const unstyledText = document.querySelector('app-root').textContent;
+    const missingGlyphs = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !fontCharacters.has(c.codePointAt(0))))];
+    assert.deepEqual(missingGlyphs, [], `${file}: run tools/prepare-site-fonts.py for new characters`);
     assert.equal(document.documentElement.lang, 'ko', file);
     for (const [name, value] of Object.entries(verification)) {
       const tags = document.querySelectorAll(`meta[name="${name}"]`);
