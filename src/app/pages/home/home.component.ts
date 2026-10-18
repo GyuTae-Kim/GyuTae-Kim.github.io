@@ -2,7 +2,7 @@ import { AfterViewInit, Component, NgZone, OnDestroy } from '@angular/core';
 import { CASE_STUDIES, FIGURE_KIND_LABELS, thumbSrcset } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
 import { OTHER_PROJECTS } from '../../other-projects-data';
-import { OPENCAD_PROJECTS } from '../../opencad-data';
+import { OPENCAD_PROJECTS, OPENCAD_TOOLS } from '../../opencad-data';
 
 // Short introductions for the home page; detailed evidence stays on each case page.
 const PROJECT_INTROS: Record<string, { result: string; role: string }> = {
@@ -36,7 +36,10 @@ const RESEARCH_ROLES: Record<string, string> = {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
-  openCadProjects = OPENCAD_PROJECTS;
+  openCadProjects = [
+    ...OPENCAD_TOOLS.filter((tool) => tool.url),
+    ...OPENCAD_PROJECTS.filter((project) => !project.url),
+  ];
   cases = CASE_STUDIES.map((project) => ({ ...project, intro: PROJECT_INTROS[project.id] }));
   operations = OTHER_PROJECTS.map((project) => ({ ...project, intro: PROJECT_INTROS[project.id] }));
   kindLabels = FIGURE_KIND_LABELS;
