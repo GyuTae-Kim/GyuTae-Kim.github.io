@@ -2,17 +2,21 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { searchPage, SHARE_IMAGE, SITE_NAME, SITE_URL, structuredData } from './site-seo';
+import { LANGUAGES, languageFromUrl, languagePath, originalPath, translate } from './i18n/localization';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   constructor(@Inject(DOCUMENT) private document: Document, private meta: Meta, private title: Title) {}
 
   update(url: string): void {
+    const language = languageFromUrl(url);
+    this.document.documentElement.lang = language;
     const page = searchPage(url);
+    this.document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(tag => tag.remove());
     this.meta.updateTag({ name: 'robots', content: page ? 'index, follow, max-image-preview:large' : 'noindex, follow' });
     if (!page) {
-      this.title.setTitle('없는 페이지 — 김규태 · Sean Kim');
-      this.meta.updateTag({ name: 'description', content: '요청한 페이지를 찾을 수 없습니다. 김규태의 프로젝트·연구·OpenCAD 안내에서 다시 찾아 주세요.' });
+      this.title.setTitle(translate('없는 페이지 — 김규태 · Sean Kim', language));
+      this.meta.updateTag({ name: 'description', content: translate('요청한 페이지를 찾을 수 없습니다. 김규태의 프로젝트·연구·OpenCAD 안내에서 다시 찾아 주세요.', language) });
       this.document.querySelector('link[rel="canonical"]')?.remove();
       this.document.getElementById('site-structured-data')?.remove();
       this.document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"]').forEach((tag) => tag.remove());
@@ -23,7 +27,7 @@ export class SeoService {
     this.meta.updateTag({ name: 'description', content: page.description });
     const image = `${SITE_URL}/${page.image}`;
     for (const [key, value] of Object.entries({
-      type: page.article ? 'article' : 'website', site_name: SITE_NAME, locale: 'ko_KR',
+      type: page.article ? 'article' : 'website', site_name: SITE_NAME, locale: LANGUAGES.find(item => item.code === language)!.locale,
       title: page.title, description: page.description, url: SITE_URL + page.path,
       image, 'image:secure_url': image, 'image:type': SHARE_IMAGE.type,
       'image:width': String(SHARE_IMAGE.width), 'image:height': String(SHARE_IMAGE.height),
@@ -39,6 +43,13 @@ export class SeoService {
       this.document.head.appendChild(canonical);
     }
     canonical.href = SITE_URL + page.path;
+    for (const item of [...LANGUAGES, { code: 'ko' as const, label: 'x-default', locale: '' }]) {
+      const link = this.document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = item.label === 'x-default' ? 'x-default' : item.code;
+      link.href = SITE_URL + languagePath(originalPath(page.path), item.code);
+      this.document.head.appendChild(link);
+    }
     let data = this.document.getElementById('site-structured-data');
     if (!data) {
       data = this.document.createElement('script');

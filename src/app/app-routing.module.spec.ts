@@ -1,3 +1,4 @@
+import { I18nModule } from './i18n/i18n.module';
 import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -7,7 +8,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 describe('published HTML aliases', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [RouterTestingModule.withRoutes(APP_ROUTES)] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [I18nModule, RouterTestingModule.withRoutes(APP_ROUTES)] }).compileComponents();
   });
 
   it('redirects to real routes while retaining search attribution and section fragments', async () => {
@@ -34,4 +35,12 @@ describe('published HTML aliases', () => {
     expect(router.url).toBe('/unpublished-guide.html');
     expect(router.routerState.snapshot.root.firstChild?.component).toBe(NotFoundComponent);
   });
+  it('retains language, attribution and fragments for translated HTML aliases', async () => {
+    const router = TestBed.inject(Router);
+    for (const code of ['en','ja','zh-CN','de']) {
+      await TestBed.inject(NgZone).run(() => router.navigateByUrl(`/${code}/opencad/projects/skp-viewer.html?utm_source=test#project-start`));
+      expect(router.url).toBe(`/${code}/opencad/projects/skp-viewer?utm_source=test#project-start`);
+    }
+  });
+
 });

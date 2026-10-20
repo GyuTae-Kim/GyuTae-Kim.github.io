@@ -1,19 +1,17 @@
 <div class="page-shell interior-page">
   <ng-container *ngIf="!selected && !other; else selected ? caseDetail : otherDetail">
     <p class="missing-note" *ngIf="missing" role="status">
-      찾는 프로젝트가 없습니다. 아래 목록에서 골라 주세요.
+      {{ '찾는 프로젝트가 없습니다. 아래 목록에서 골라 주세요.' | t }}
     </p>
     <div class="page-intro">
-      <h1>AI·CAD/CAM 개발 프로젝트<span class="accent">.</span></h1>
+      <h1>{{ 'AI·CAD/CAM 개발 프로젝트' | t }}<span class="accent">.</span></h1>
       <p>
-        3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 인식 결과로
-        Fusion CAM 공정을 만들고 가구 크기 변경을 계산했습니다.<br />가구 설계에서 생산까지
-        잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.
+        {{ '3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 인식 결과로 Fusion CAM 공정을 만들고 가구 크기 변경을 계산했습니다.' | t }}<br />{{ '가구 설계에서 생산까지 잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.' | t }}
       </p>
     </div>
-    <nav class="archive-nav portfolio-jump" aria-label="프로젝트 목록 바로가기">
-      <a [routerLink]="[]" fragment="other-projects">기타 프로젝트<app-icon name="arrow-down"></app-icon></a>
-      <a [routerLink]="[]" fragment="achievements">특허·프로그램 성과<app-icon name="arrow-down"></app-icon></a>
+    <nav class="archive-nav portfolio-jump" [attr.aria-label]="'프로젝트 목록 바로가기' | t">
+      <a [routerLink]="([]) | localLink" fragment="other-projects">{{ '기타 프로젝트' | t }}<app-icon name="arrow-down"></app-icon></a>
+      <a [routerLink]="([]) | localLink" fragment="achievements">{{ '특허·프로그램 성과' | t }}<app-icon name="arrow-down"></app-icon></a>
     </nav>
     <ng-container *ngFor="let project of cases">
       <ng-container
@@ -22,8 +20,8 @@
     </ng-container>
     <section class="other-projects" id="other-projects" aria-labelledby="other-projects-title">
       <div class="archive-intro">
-        <h2 id="other-projects-title">기타 프로젝트</h2>
-        <p>제품을 운영하면서 서비스 감시와 오류 수집 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.</p>
+        <h2 id="other-projects-title">{{ '기타 프로젝트' | t }}</h2>
+        <p>{{ '제품을 운영하면서 서비스 감시와 오류 수집 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.' | t }}</p>
       </div>
       <ng-container *ngFor="let project of otherProjects">
         <ng-container *ngTemplateOutlet="row; context: { $implicit: project, role: project.role }"></ng-container>
@@ -31,26 +29,25 @@
     </section>
     <app-achievements></app-achievements>
     <aside class="end-note">
-      학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는
-      <a routerLink="/research">연구 페이지</a>에 있습니다.
+      {{ '학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는' | t }}
+      <a [routerLink]="'/research' | localLink">{{ '연구 페이지' | t }}</a>{{ '에 있습니다.' | t }}
     </aside>
   </ng-container>
   <ng-template #caseDetail>
-    <a class="back-link" routerLink="/portfolio"
-      ><app-icon name="arrow-left"></app-icon>프로젝트 목록</a
+    <a class="back-link" [routerLink]="'/portfolio' | localLink"
+      ><app-icon name="arrow-left"></app-icon>{{ '프로젝트 목록' | t }}</a
     >
     <div class="page-intro detail-intro">
       <p class="eyebrow">
-        프로젝트 {{ selected!.number }} · {{ selected!.category }}
-      </p>
-      <h1>{{ selected!.title }}</h1>
-      <p>{{ selected!.subtitle }}</p>
+        {{ '프로젝트 {0} · {1}' | t:[(selected!.number), (selected!.category)] }}</p>
+      <h1>{{ (selected!.title) | t }}</h1>
+      <p>{{ (selected!.subtitle) | t }}</p>
       <div class="tags">
-        <span *ngFor="let tag of selected!.tags">{{ tag }}</span>
+        <span *ngFor="let tag of selected!.tags">{{ (tag) | t }}</span>
       </div>
     </div>
     <section class="case-hero" aria-labelledby="case-headline">
-      <h2 class="result-headline" id="case-headline">{{ selected!.headline }}</h2>
+      <h2 class="result-headline" id="case-headline">{{ (selected!.headline) | t }}</h2>
       <figure class="case-figure">
         <picture
           ><source
@@ -58,7 +55,7 @@
             [attr.srcset]="selected!.figure.still"
             media="(prefers-reduced-motion: reduce)" /><img
             [src]="selected!.figure.still && stopped.has(selected!.figure.src) ? selected!.figure.still : selected!.figure.src"
-            [alt]="selected!.figure.alt"
+            [alt]="(selected!.figure.alt) | t"
             width="560"
             height="390"
             fetchpriority="high"
@@ -71,29 +68,27 @@
           (click)="toggleMotion(selected!.figure.src)"
         >
           <app-icon [name]="stopped.has(selected!.figure.src) ? 'play' : 'pause'"></app-icon
-          >{{ stopped.has(selected!.figure.src) ? "재생" : "정지" }}
-        </button>
+          >{{ (stopped.has(selected!.figure.src) ? "재생" : "정지") | t }}</button>
         <figcaption>
           <span
             class="figure-kind"
             [class.research]="selected!.figure.kind !== 'concept'"
-            >{{ kindLabels[selected!.figure.kind] }}</span
+            >{{ (kindLabels[selected!.figure.kind]) | t }}</span
           >
-          {{ selected!.figure.caption }}
-        </figcaption>
+          {{ (selected!.figure.caption) | t }}</figcaption>
       </figure>
       <ul class="result-stats case-stats">
         <li *ngFor="let stat of selected!.stats">
-          <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+          <b>{{ (stat.value) | t }}</b><span>{{ (stat.label) | t }}</span>
         </li>
       </ul>
-      <ol class="case-story" aria-label="프로젝트 흐름">
+      <ol class="case-story" [attr.aria-label]="'프로젝트 흐름' | t">
         <li *ngFor="let step of selected!.story; let i = index">
           <div class="story-figure" *ngIf="step.image">
             <button
               type="button"
               class="zoom-open"
-              [attr.aria-label]="step.title + ' 그림 크게 보기'"
+              [attr.aria-label]="'{0} 그림 크게 보기' | t:[(step.title) ]"
               (click)="openZoom(step.image, step.imageAlt ?? '', step.still)"
             >
               <picture
@@ -102,7 +97,7 @@
                   [attr.srcset]="step.still"
                   media="(prefers-reduced-motion: reduce)" /><img
                   [src]="step.still && stopped.has(step.image) ? step.still : step.image"
-                  [alt]="step.imageAlt"
+                  [alt]="(step.imageAlt) | t"
                   width="900"
                   height="675"
                   loading="lazy"
@@ -116,115 +111,114 @@
               (click)="toggleMotion(step.image)"
             >
               <app-icon [name]="stopped.has(step.image) ? 'play' : 'pause'"></app-icon
-              >{{ stopped.has(step.image) ? "재생" : "정지" }}
-            </button>
-            <p class="story-caption" *ngIf="step.imageCaption">{{ step.imageCaption }}</p>
+              >{{ (stopped.has(step.image) ? "재생" : "정지") | t }}</button>
+            <p class="story-caption" *ngIf="step.imageCaption">{{ (step.imageCaption) | t }}</p>
           </div>
-          <div class="story-meta"><b>{{ i + 1 }}</b></div>
-          <h3>{{ step.title }}</h3>
-          <p><app-partner-text [text]="step.text"></app-partner-text></p>
+          <div class="story-meta"><b>{{ (i + 1) | t }}</b></div>
+          <h3>{{ (step.title) | t }}</h3>
+          <p><app-partner-text [text]="(step.text) | t"></app-partner-text></p>
         </li>
       </ol>
       <dl class="case-facts">
         <div>
-          <dt>맡은 역할</dt>
+          <dt>{{ '맡은 역할' | t }}</dt>
           <dd>
-            <p>{{ selected!.role }}</p>
+            <p>{{ (selected!.role) | t }}</p>
             <ul class="role-list">
-              <li *ngFor="let item of selected!.roleItems"><app-partner-text [text]="item"></app-partner-text></li>
+              <li *ngFor="let item of selected!.roleItems"><app-partner-text [text]="(item) | t"></app-partner-text></li>
             </ul>
-            <p class="role-note" *ngIf="selected!.roleNote"><app-partner-text [text]="selected!.roleNote"></app-partner-text></p>
+            <p class="role-note" *ngIf="selected!.roleNote"><app-partner-text [text]="(selected!.roleNote) | t"></app-partner-text></p>
           </dd>
         </div>
         <div>
-          <dt>{{ selected!.outcome ? '만들어낸 결과' : '핵심 판단' }}</dt>
-          <dd><app-partner-text [text]="selected!.outcome?.result ?? selected!.keyDecision"></app-partner-text></dd>
+          <dt>{{ (selected!.outcome ? '만들어낸 결과' : '핵심 판단') | t }}</dt>
+          <dd><app-partner-text [text]="(selected!.outcome?.result ?? selected!.keyDecision) | t"></app-partner-text></dd>
         </div>
       </dl>
-      <p class="result-scope" *ngIf="selected!.scopeLine">{{ selected!.scopeLine }}</p>
+      <p class="result-scope" *ngIf="selected!.scopeLine">{{ (selected!.scopeLine) | t }}</p>
     </section>
     <section class="panel-recognition" *ngIf="selected!.panelTypes as types" aria-labelledby="panel-types-title">
-      <h2 class="detail-title" id="panel-types-title">AI가 인식하는 패널 {{ types.length }}종</h2>
+      <h2 class="detail-title" id="panel-types-title">{{ 'AI가 인식하는 패널 {0}종' | t:[(types.length)] }}</h2>
       <app-panel-catalog [types]="types"></app-panel-catalog>
     </section>
     <section class="design-parameters" *ngIf="selected!.designParameters as parameters" aria-labelledby="design-parameters-title">
-      <h2 class="detail-title" id="design-parameters-title">패널 인식으로 구성하는 가구 설계 파라미터</h2>
-      <p class="showcase-intro">{{ parameters.introduction }}</p>
+      <h2 class="detail-title" id="design-parameters-title">{{ '패널 인식으로 구성하는 가구 설계 파라미터' | t }}</h2>
+      <p class="showcase-intro">{{ (parameters.introduction) | t }}</p>
       <div class="parameter-groups">
         <section *ngFor="let group of parameters.groups">
-          <h3>{{ group.title }}</h3>
+          <h3>{{ (group.title) | t }}</h3>
           <ul>
-            <li *ngFor="let item of group.items">{{ item }}</li>
+            <li *ngFor="let item of group.items">{{ (item) | t }}</li>
           </ul>
         </section>
       </div>
-      <p class="showcase-note">{{ parameters.note }}</p>
+      <p class="showcase-note">{{ (parameters.note) | t }}</p>
     </section>
     <section class="recognition-showcase" *ngIf="selected!.recognition as recognition" aria-labelledby="recognition-title">
-      <h2 class="detail-title" id="recognition-title"><span>AI</span>식별하는 가공 피쳐 {{ recognition.features.length }}종</h2>
-      <ul class="feature-catalog" aria-label="지원 가공 피쳐">
+      <h2 class="detail-title" id="recognition-title"><span>AI</span>{{ '식별하는 가공 피쳐 {0}종' | t:[(recognition.features.length)] }}</h2>
+      <ul class="feature-catalog" [attr.aria-label]="'지원 가공 피쳐' | t">
         <li *ngFor="let feature of recognition.features">
           <i *ngIf="feature.color" [style.background]="feature.color" aria-hidden="true"></i>
-          <strong>{{ feature.name }}</strong><span>{{ feature.description }}</span>
+          <strong>{{ (feature.name) | t }}</strong><span>{{ (feature.description) | t }}</span>
         </li>
       </ul>
-      <p class="showcase-intro">{{ recognition.note }}</p>
+      <p class="showcase-intro">{{ (recognition.note) | t }}</p>
       <div class="training-examples">
         <figure *ngFor="let example of recognition.examples">
-          <button type="button" class="zoom-open" [attr.aria-label]="example.title + ' 학습 모델 크게 보기'" (click)="openZoom(example.src, example.alt)">
-            <img [src]="example.src" [alt]="example.alt" width="960" height="720" loading="lazy" />
+          <button type="button" class="zoom-open" [attr.aria-label]="'{0} 학습 모델 크게 보기' | t:[(example.title) ]" (click)="openZoom(example.src, example.alt)">
+            <img [src]="example.src" [alt]="(example.alt) | t" width="960" height="720" loading="lazy" />
           </button>
           <figcaption>
-            <h3>{{ example.title }}</h3>
-            <p class="example-count">{{ example.caption }}</p>
-            <p>{{ example.features }}</p>
+            <h3>{{ (example.title) | t }}</h3>
+            <p class="example-count">{{ (example.caption) | t }}</p>
+            <p>{{ (example.features) | t }}</p>
           </figcaption>
         </figure>
       </div>
-      <p class="showcase-note">색상은 위 목록의 기본 피쳐와 같습니다. 학습에 사용한 형상과 라벨을 보여주는 자료이며, 새로운 부품에 대한 예측 정확도를 나타내지는 않습니다.</p>
+      <p class="showcase-note">{{ '색상은 위 목록의 기본 피쳐와 같습니다. 학습에 사용한 형상과 라벨을 보여주는 자료이며, 새로운 부품에 대한 예측 정확도를 나타내지는 않습니다.' | t }}</p>
     </section>
     <section class="evidence-section" *ngFor="let evidence of selected!.evidence" [attr.aria-labelledby]="evidence.id">
-      <h2 class="detail-title" [id]="evidence.id">{{ evidence.title }}</h2>
-      <p class="showcase-intro"><app-partner-text [text]="evidence.introduction"></app-partner-text></p>
+      <h2 class="detail-title" [id]="evidence.id">{{ (evidence.title) | t }}</h2>
+      <p class="showcase-intro"><app-partner-text [text]="(evidence.introduction) | t"></app-partner-text></p>
       <div class="evidence-grid" [class.mdt-evidence]="evidence.id === 'mdt-visualization'" [class.strategy-evidence]="evidence.id === 'cam-strategy'">
         <figure *ngFor="let figure of evidence.figures" [class.setup-change]="figure.setupViews">
-          <h3>{{ figure.title }}</h3>
+          <h3>{{ (figure.title) | t }}</h3>
           <ng-container *ngIf="figure.setupViews as views; else evidenceImage">
-            <p class="setup-route" aria-label="가공 방향 전환 순서">
-              <strong>앞면 셋업 · +Z</strong><span aria-hidden="true">→</span><span class="setup-switch">부품 뒤집기 · 셋업 전환</span><span aria-hidden="true">→</span><strong>뒷면 셋업 · −Z</strong>
+            <p class="setup-route" [attr.aria-label]="'가공 방향 전환 순서' | t">
+              <strong>{{ '앞면 셋업 · +Z' | t }}</strong><span aria-hidden="true">→</span><span class="setup-switch">{{ '부품 뒤집기 · 셋업 전환' | t }}</span><span aria-hidden="true">→</span><strong>{{ '뒷면 셋업 · −Z' | t }}</strong>
             </p>
             <div class="setup-views">
               <div class="setup-view" *ngFor="let view of views">
-                <h4>{{ view.title }}</h4>
-                <button type="button" class="zoom-open" [attr.aria-label]="view.title + ' 그림 크게 보기'" (click)="openZoom(view.src, view.alt)">
-                  <img [src]="view.src" [alt]="view.alt" width="1200" height="1000" loading="lazy" />
+                <h4>{{ (view.title) | t }}</h4>
+                <button type="button" class="zoom-open" [attr.aria-label]="'{0} 그림 크게 보기' | t:[(view.title) ]" (click)="openZoom(view.src, view.alt)">
+                  <img [src]="view.src" [alt]="(view.alt) | t" width="1200" height="1000" loading="lazy" />
                 </button>
-                <p><span class="figure-kind">{{ kindLabels[view.kind] }}</span>{{ view.caption }}</p>
+                <p><span class="figure-kind">{{ (kindLabels[view.kind]) | t }}</span>{{ (view.caption) | t }}</p>
               </div>
             </div>
           </ng-container>
           <ng-template #evidenceImage>
-            <button type="button" class="zoom-open" [attr.aria-label]="figure.title + ' 화면 크게 보기'" (click)="openZoom(figure.src, figure.alt)">
-              <img [src]="figure.src" [alt]="figure.alt" width="1200" height="1000" loading="lazy" />
+            <button type="button" class="zoom-open" [attr.aria-label]="'{0} 화면 크게 보기' | t:[(figure.title) ]" (click)="openZoom(figure.src, figure.alt)">
+              <img [src]="figure.src" [alt]="(figure.alt) | t" width="1200" height="1000" loading="lazy" />
             </button>
           </ng-template>
-          <figcaption><span class="figure-kind" *ngIf="!figure.setupViews">{{ kindLabels[figure.kind] }}</span>{{ figure.caption }}</figcaption>
+          <figcaption><span class="figure-kind" *ngIf="!figure.setupViews">{{ (kindLabels[figure.kind]) | t }}</span>{{ (figure.caption) | t }}</figcaption>
         </figure>
       </div>
     </section>
     <section class="case-impact" *ngIf="selected!.outcome as outcome" aria-labelledby="impact-title">
-      <h2 class="detail-title" id="impact-title">이 기술로 기대하는 변화</h2>
+      <h2 class="detail-title" id="impact-title">{{ '이 기술로 기대하는 변화' | t }}</h2>
       <div class="impact-grid">
         <article *ngFor="let item of outcome.impact">
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.text }}</p>
+          <h3>{{ (item.title) | t }}</h3>
+          <p>{{ (item.text) | t }}</p>
         </article>
       </div>
-      <p class="showcase-note" *ngIf="selected!.id === 'cad-feature-recognition'">위 내용은 기술 활용에 대한 기대 효과입니다. 현장 도입에 따른 시간·비용 절감량은 별도 실증이 필요합니다.</p>
+      <p class="showcase-note" *ngIf="selected!.id === 'cad-feature-recognition'">{{ '위 내용은 기술 활용에 대한 기대 효과입니다. 현장 도입에 따른 시간·비용 절감량은 별도 실증이 필요합니다.' | t }}</p>
     </section>
     <section class="case-concept" *ngIf="selected!.concept as concept" aria-labelledby="case-concept-title">
-      <h2 class="detail-title" id="case-concept-title"><span>3D</span>개념 모델로 보는 과정</h2>
-      <p class="case-concept-note">{{ conceptNotes[concept] }}</p>
+      <h2 class="detail-title" id="case-concept-title"><span>3D</span>{{ '개념 모델로 보는 과정' | t }}</h2>
+      <p class="case-concept-note">{{ (conceptNotes[concept]) | t }}</p>
       <app-model-viewport [fixedModel]="concept"></app-model-viewport>
     </section>
     <div class="case-details" *ngIf="selected!.expandedDetails; else collapsedCaseDetails">
@@ -232,21 +226,21 @@
     </div>
     <ng-template #collapsedCaseDetails>
       <details class="result-details case-details">
-        <summary><app-icon name="chevron"></app-icon>자세히 · 단계마다 한 일, 문제와 해결, 검증</summary>
+        <summary><app-icon name="chevron"></app-icon>{{ '자세히 · 단계마다 한 일, 문제와 해결, 검증' | t }}</summary>
         <ng-container *ngTemplateOutlet="caseDetailsContent"></ng-container>
       </details>
     </ng-template>
     <ng-template #caseDetailsContent>
       <section class="detail-block" aria-labelledby="detail-work">
-        <h2 class="detail-title" id="detail-work"><span>01</span>단계마다 한 일</h2>
+        <h2 class="detail-title" id="detail-work"><span>01</span>{{ '단계마다 한 일' | t }}</h2>
         <ol class="step-work">
           <li *ngFor="let step of selected!.story; let i = index">
-            <div class="story-meta"><b>{{ i + 1 }}</b></div>
-            <h3>{{ step.title }}</h3>
+            <div class="story-meta"><b>{{ (i + 1) | t }}</b></div>
+            <h3>{{ (step.title) | t }}</h3>
             <ul *ngIf="step.did.length">
-              <li *ngFor="let item of step.did">{{ item }}</li>
+              <li *ngFor="let item of step.did">{{ (item) | t }}</li>
             </ul>
-            <p class="step-note" *ngIf="step.didNote"><app-partner-text [text]="step.didNote"></app-partner-text></p>
+            <p class="step-note" *ngIf="step.didNote"><app-partner-text [text]="(step.didNote) | t"></app-partner-text></p>
           </li>
         </ol>
       </section>
@@ -254,48 +248,47 @@
         <div class="pair-grid">
           <div class="pair" *ngFor="let pair of gallery.pairs">
             <div *ngFor="let item of pair">
-              <img [src]="item.src" [alt]="item.alt" width="690" height="510" loading="lazy" />
-              <span>{{ item.caption }}</span>
+              <img [src]="item.src" [alt]="(item.alt) | t" width="690" height="510" loading="lazy" />
+              <span>{{ (item.caption) | t }}</span>
             </div>
           </div>
         </div>
         <figcaption>
-          <span class="figure-kind research">연구 렌더</span>
-          {{ gallery.caption }}
-          <span class="color-legend">
+          <span class="figure-kind research">{{ '연구 렌더' | t }}</span>
+          {{ (gallery.caption) | t }}<span class="color-legend">
             <span *ngFor="let key of gallery.legend"
-              ><i [style.background]="key.color" aria-hidden="true"></i>{{ key.label }}</span
+              ><i [style.background]="key.color" aria-hidden="true"></i>{{ (key.label) | t }}</span
             >
           </span>
         </figcaption>
       </figure>
       <section class="detail-block" aria-labelledby="detail-fixes">
-        <h2 class="detail-title" id="detail-fixes"><span>02</span>문제와 해결</h2>
+        <h2 class="detail-title" id="detail-fixes"><span>02</span>{{ '문제와 해결' | t }}</h2>
         <ol class="fix-list">
           <li *ngFor="let item of selected!.fixes">
-            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+            <p class="fix-problem"><span><app-icon name="alert"></app-icon>{{ '문제' | t }}</span>{{ (item.problem) | t }}</p>
             <b><app-icon name="arrow-right"></app-icon></b>
-            <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
+            <p class="fix-answer"><span><app-icon name="check"></app-icon>{{ '해결' | t }}</span>{{ (item.fix) | t }}</p>
           </li>
         </ol>
       </section>
       <section class="detail-block" aria-labelledby="detail-checks">
-        <h2 class="detail-title" id="detail-checks"><span>03</span>검증</h2>
+        <h2 class="detail-title" id="detail-checks"><span>03</span>{{ '검증' | t }}</h2>
         <div class="check-grid" [class.single]="!selected!.unchecked.length">
           <div class="check-done">
-            <h3>검증한 것</h3>
+            <h3>{{ '검증한 것' | t }}</h3>
             <ul>
-              <li *ngFor="let item of selected!.checked">{{ item }}</li>
+              <li *ngFor="let item of selected!.checked">{{ (item) | t }}</li>
             </ul>
           </div>
           <div class="check-out" *ngIf="selected!.unchecked.length">
-            <h3>범위 밖</h3>
+            <h3>{{ '범위 밖' | t }}</h3>
             <ul>
-              <li *ngFor="let item of selected!.unchecked">{{ item }}</li>
+              <li *ngFor="let item of selected!.unchecked">{{ (item) | t }}</li>
             </ul>
           </div>
         </div>
-        <p class="case-source" *ngIf="selected!.source">{{ selected!.source }}</p>
+        <p class="case-source" *ngIf="selected!.source">{{ (selected!.source) | t }}</p>
       </section>
     </ng-template>
     <app-achievements
@@ -304,156 +297,156 @@
       [showProjectLinks]="false"
     ></app-achievements>
     <div class="related-research" *ngIf="selected!.relatedResearch as related">
-      <h3>이어지는 학부 연구</h3>
+      <h3>{{ '이어지는 학부 연구' | t }}</h3>
       <div class="related-work" *ngFor="let work of related">
-        <a class="text-link" [routerLink]="['/research', work.id]"
-          >{{ work.title }}<app-icon name="arrow-right"></app-icon></a
+        <a class="text-link" [routerLink]="(['/research', work.id]) | localLink"
+          >{{ (work.title) | t }}<app-icon name="arrow-right"></app-icon></a
         >
-        <p>{{ work.connection }}</p>
+        <p>{{ (work.connection) | t }}</p>
       </div>
     </div>
-    <nav class="case-next" aria-label="다음 프로젝트">
-      <a [routerLink]="['/portfolio', next.id]"
-        ><span class="eyebrow">다음 프로젝트 {{ next.number }}</span
-        ><strong>{{ next.title }}</strong
+    <nav class="case-next" [attr.aria-label]="'다음 프로젝트' | t">
+      <a [routerLink]="(['/portfolio', next.id]) | localLink"
+        ><span class="eyebrow">{{ '다음 프로젝트 {0}' | t:[(next.number)] }}</span
+        ><strong>{{ (next.title) | t }}</strong
         ><app-icon class="row-arrow" name="arrow-right"></app-icon></a
       >
     </nav>
   </ng-template>
   <ng-template #otherDetail>
-    <a class="back-link" routerLink="/portfolio" fragment="other-projects"
-      ><app-icon name="arrow-left"></app-icon>프로젝트 목록</a
+    <a class="back-link" [routerLink]="'/portfolio' | localLink" fragment="other-projects"
+      ><app-icon name="arrow-left"></app-icon>{{ '프로젝트 목록' | t }}</a
     >
     <div class="page-intro detail-intro">
-      <p class="eyebrow">기타 프로젝트 {{ other!.number }} · {{ other!.category }}</p>
-      <h1>{{ other!.title }}</h1>
-      <p>{{ other!.subtitle }}</p>
+      <p class="eyebrow">{{ '기타 프로젝트 {0} · {1}' | t:[(other!.number), (other!.category)] }}</p>
+      <h1>{{ (other!.title) | t }}</h1>
+      <p>{{ (other!.subtitle) | t }}</p>
       <div class="tags">
-        <span *ngFor="let tag of other!.tags">{{ tag }}</span>
+        <span *ngFor="let tag of other!.tags">{{ (tag) | t }}</span>
       </div>
     </div>
     <article class="other-project" aria-labelledby="other-headline">
-      <h2 class="result-headline" id="other-headline">{{ other!.headline }}</h2>
-      <p class="research-summary">{{ other!.summary }}</p>
+      <h2 class="result-headline" id="other-headline">{{ (other!.headline) | t }}</h2>
+      <p class="research-summary">{{ (other!.summary) | t }}</p>
       <ul class="result-stats">
         <li *ngFor="let stat of other!.stats">
-          <b>{{ stat.value }}</b><span>{{ stat.label }}</span>
+          <b>{{ (stat.value) | t }}</b><span>{{ (stat.label) | t }}</span>
         </li>
       </ul>
-      <div class="operation-evidence operation-hero" *ngIf="other!.evidence.length" aria-label="실제 운영 화면">
+      <div class="operation-evidence operation-hero" *ngIf="other!.evidence.length" [attr.aria-label]="'실제 운영 화면' | t">
         <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.evidence }"></ng-container>
       </div>
       <dl class="case-facts">
-        <div><dt>맡은 역할</dt><dd>{{ other!.role }}</dd></div>
-        <div><dt>만들어낸 결과</dt><dd>{{ other!.outcome.result }}</dd></div>
+        <div><dt>{{ '맡은 역할' | t }}</dt><dd>{{ (other!.role) | t }}</dd></div>
+        <div><dt>{{ '만들어낸 결과' | t }}</dt><dd>{{ (other!.outcome.result) | t }}</dd></div>
       </dl>
-      <ol class="work-chips" *ngIf="!other!.comparison" aria-label="한 일">
+      <ol class="work-chips" *ngIf="!other!.comparison" [attr.aria-label]="'한 일' | t">
         <li *ngFor="let item of other!.work; let i = index">
-          <b>{{ i + 1 }}</b><strong>{{ item.title }}</strong><span>{{ item.text }}</span>
+          <b>{{ (i + 1) | t }}</b><strong>{{ (item.title) | t }}</strong><span>{{ (item.text) | t }}</span>
         </li>
       </ol>
       <section class="behavior-comparison" *ngIf="other!.comparison as comparison" aria-labelledby="comparison-title">
-        <h2 class="detail-title" id="comparison-title">같은 입력에서 달라진 처리</h2>
+        <h2 class="detail-title" id="comparison-title">{{ '같은 입력에서 달라진 처리' | t }}</h2>
         <ol class="change-list">
           <li *ngFor="let item of comparison">
-            <h3>{{ item.situation }}</h3>
-            <p><span>개선 전</span>{{ item.before }}</p>
-            <p class="change-after"><span>개선 후</span>{{ item.after }}</p>
+            <h3>{{ (item.situation) | t }}</h3>
+            <p><span>{{ '개선 전' | t }}</span>{{ (item.before) | t }}</p>
+            <p class="change-after"><span>{{ '개선 후' | t }}</span>{{ (item.after) | t }}</p>
           </li>
         </ol>
       </section>
       <section class="case-impact" aria-labelledby="other-impact-title">
-        <h2 class="detail-title" id="other-impact-title">이 기술로 기대하는 변화</h2>
+        <h2 class="detail-title" id="other-impact-title">{{ '이 기술로 기대하는 변화' | t }}</h2>
         <div class="impact-grid">
           <article *ngFor="let item of other!.outcome.impact">
-            <h3>{{ item.title }}</h3><p>{{ item.text }}</p>
+            <h3>{{ (item.title) | t }}</h3><p>{{ (item.text) | t }}</p>
           </article>
         </div>
       </section>
       <section class="detail-block" aria-labelledby="other-fixes-title">
-        <h2 class="detail-title" id="other-fixes-title">문제와 해결</h2>
+        <h2 class="detail-title" id="other-fixes-title">{{ '문제와 해결' | t }}</h2>
         <ol class="fix-list">
           <li *ngFor="let item of other!.fixes">
-            <p class="fix-problem"><span><app-icon name="alert"></app-icon>문제</span>{{ item.problem }}</p>
+            <p class="fix-problem"><span><app-icon name="alert"></app-icon>{{ '문제' | t }}</span>{{ (item.problem) | t }}</p>
             <b><app-icon name="arrow-right"></app-icon></b>
-            <p class="fix-answer"><span><app-icon name="check"></app-icon>해결</span>{{ item.fix }}</p>
+            <p class="fix-answer"><span><app-icon name="check"></app-icon>{{ '해결' | t }}</span>{{ (item.fix) | t }}</p>
           </li>
         </ol>
       </section>
       <section class="detail-block" aria-labelledby="other-checks-title">
-        <h2 class="detail-title" id="other-checks-title">검증과 확인한 결과</h2>
-        <ul class="operation-checks"><li *ngFor="let item of other!.checked">{{ item }}</li></ul>
+        <h2 class="detail-title" id="other-checks-title">{{ '검증과 확인한 결과' | t }}</h2>
+        <ul class="operation-checks"><li *ngFor="let item of other!.checked">{{ (item) | t }}</li></ul>
       </section>
-      <div class="watch-board" *ngIf="other!.watch as watch" role="group" aria-label="감시 범위">
+      <div class="watch-board" *ngIf="other!.watch as watch" role="group" [attr.aria-label]="'감시 범위' | t">
         <div class="watch-head">
-          <span class="watch-label">서버 감시</span>
-          <p><b>{{ watchCount(watch) }}곳</b>을 1분마다 확인합니다</p>
-          <span class="watch-legend" aria-hidden="true"><i></i>운영<i class="dev"></i>개발</span>
+          <span class="watch-label">{{ '서버 감시' | t }}</span>
+          <p><b>{{ '{0}곳' | t:[(watchCount(watch))] }}</b>{{ '을 1분마다 확인합니다' | t }}</p>
+          <span class="watch-legend" aria-hidden="true"><i></i>{{ '운영' | t }}<i class="dev"></i>{{ '개발' | t }}</span>
         </div>
         <div class="watch-groups">
           <section class="watch-group" *ngFor="let group of watch.groups">
-            <h3><span>{{ group.name }}</span><b>{{ groupCount(group) }}곳</b></h3>
+            <h3><span>{{ (group.name) | t }}</span><b>{{ '{0}곳' | t:[(groupCount(group))] }}</b></h3>
             <ul>
               <li *ngFor="let target of group.targets">
                 <span class="watch-cells" aria-hidden="true"
                   ><i *ngFor="let env of target.envs" [class.dev]="env === '개발'"></i
                 ></span>
-                <strong>{{ target.name }}<span class="sr-only"> ({{ target.envs.join(', ') }})</span></strong>
-                <small>{{ target.check }}</small>
+                <strong>{{ (target.name) | t }}<span class="sr-only"> {{ '({0})' | t:[(target.envs.join(', '))] }}</span></strong>
+                <small>{{ (target.check) | t }}</small>
               </li>
             </ul>
           </section>
         </div>
         <div class="watch-ops">
-          <span>업무 결과도 확인</span>
-          <ul><li *ngFor="let item of watch.operations">{{ item }}</li></ul>
+          <span>{{ '업무 결과도 확인' | t }}</span>
+          <ul><li *ngFor="let item of watch.operations">{{ (item) | t }}</li></ul>
         </div>
         <div class="watch-head watch-collect-head">
-          <span class="watch-label">오류 수집</span>
-          <p>오류는 생길 때마다 모읍니다</p>
+          <span class="watch-label">{{ '오류 수집' | t }}</span>
+          <p>{{ '오류는 생길 때마다 모읍니다' | t }}</p>
         </div>
         <ol class="watch-collect">
           <li *ngFor="let lane of watch.collectors">
-            <p class="collect-source"><strong>{{ lane.source }}</strong><small>{{ lane.sourceNote }}</small></p>
+            <p class="collect-source"><strong>{{ (lane.source) | t }}</strong><small>{{ (lane.sourceNote) | t }}</small></p>
             <app-icon name="arrow-right"></app-icon>
-            <p class="collect-how">{{ lane.how }}</p>
+            <p class="collect-how">{{ (lane.how) | t }}</p>
             <app-icon name="arrow-right"></app-icon>
-            <p class="collect-view"><strong>{{ lane.view }}</strong><small>{{ lane.viewNote }}</small></p>
+            <p class="collect-view"><strong>{{ (lane.view) | t }}</strong><small>{{ (lane.viewNote) | t }}</small></p>
           </li>
         </ol>
       </div>
       <section class="caught" *ngIf="other!.caught?.length" aria-labelledby="caught-title">
-        <h3 class="caught-title" id="caught-title">감시가 찾아낸 실제 문제 <b>{{ other!.caught!.length }}건</b></h3>
+        <h3 class="caught-title" id="caught-title">{{ '감시가 찾아낸 실제 문제' | t }} <b>{{ '{0}건' | t:[(other!.caught!.length)] }}</b></h3>
         <div class="operation-evidence caught-shot" *ngIf="other!.caughtShot as shot">
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: [shot] }"></ng-container>
         </div>
         <ol class="caught-list">
           <li *ngFor="let item of other!.caught">
-            <time class="caught-date" [attr.datetime]="item.date">{{ item.date.slice(5).replace('-', '.') }}</time>
-            <p class="caught-found">{{ item.found }}</p>
+            <time class="caught-date" [attr.datetime]="item.date">{{ (item.date.slice(5).replace('-', '.')) | t }}</time>
+            <p class="caught-found">{{ (item.found) | t }}</p>
             <p class="caught-fixed">
-              <app-icon name="check"></app-icon><span>{{ item.fixed }}</span
+              <app-icon name="check"></app-icon><span>{{ (item.fixed) | t }}</span
               ><a
                 *ngIf="item.link"
-                [routerLink]="['/portfolio', item.link]"
-                [attr.aria-label]="titleOf(item.link) + ' 자세히 보기'"
-                >자세히<app-icon name="arrow-right"></app-icon></a
+                [routerLink]="(['/portfolio', item.link]) | localLink"
+                [attr.aria-label]="'{0} 자세히 보기' | t:[(titleOf(item.link)) ]"
+                >{{ '자세히' | t }}<app-icon name="arrow-right"></app-icon></a
               >
             </p>
           </li>
         </ol>
       </section>
       <section class="detail-block" *ngIf="other!.moreEvidence.length" aria-labelledby="other-screens-title">
-        <h2 class="detail-title" id="other-screens-title">운영에서 확인하는 화면</h2>
+        <h2 class="detail-title" id="other-screens-title">{{ '운영에서 확인하는 화면' | t }}</h2>
         <div class="operation-evidence">
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.moreEvidence }"></ng-container>
         </div>
       </section>
     </article>
-    <nav class="case-next" *ngIf="otherProjects.length > 1" aria-label="다음 프로젝트">
-      <a [routerLink]="['/portfolio', nextOther.id]"
-        ><span class="eyebrow">다음 기타 프로젝트 {{ nextOther.number }}</span
-        ><strong>{{ nextOther.title }}</strong
+    <nav class="case-next" *ngIf="otherProjects.length > 1" [attr.aria-label]="'다음 프로젝트' | t">
+      <a [routerLink]="(['/portfolio', nextOther.id]) | localLink"
+        ><span class="eyebrow">{{ '다음 기타 프로젝트 {0}' | t:[(nextOther.number)] }}</span
+        ><strong>{{ (nextOther.title) | t }}</strong
         ><app-icon class="row-arrow" name="arrow-right"></app-icon></a
       >
     </nav>
@@ -461,12 +454,12 @@
   <ng-template #row let-project let-role="role">
     <article class="project-row">
       <div class="project-row-meta">
-        <span class="large-index">{{ project.number }}</span>
-        <p class="eyebrow">{{ project.category }}</p>
-        <span class="row-period">{{ project.period }}</span>
+        <span class="large-index">{{ (project.number) | t }}</span>
+        <p class="eyebrow">{{ (project.category) | t }}</p>
+        <span class="row-period">{{ (project.period) | t }}</span>
         <a
           class="row-figure"
-          [routerLink]="['/portfolio', project.id]"
+          [routerLink]="(['/portfolio', project.id]) | localLink"
           tabindex="-1"
           aria-hidden="true"
           ><img
@@ -480,56 +473,55 @@
       </div>
       <div class="project-row-content">
         <h2>
-          <a [routerLink]="['/portfolio', project.id]"
-            >{{ project.title }}<app-icon name="arrow-right"></app-icon></a
+          <a [routerLink]="(['/portfolio', project.id]) | localLink"
+            >{{ (project.title) | t }}<app-icon name="arrow-right"></app-icon></a
           >
         </h2>
-        <p class="row-subtitle">{{ project.subtitle }}</p>
+        <p class="row-subtitle">{{ (project.subtitle) | t }}</p>
         <div class="tags">
-          <span *ngFor="let tag of project.tags">{{ tag }}</span>
+          <span *ngFor="let tag of project.tags">{{ (tag) | t }}</span>
         </div>
         <div class="project-summary">
           <div>
-            <h3>맡은 역할</h3>
-            <p><app-partner-text [text]="role"></app-partner-text></p>
+            <h3>{{ '맡은 역할' | t }}</h3>
+            <p><app-partner-text [text]="(role) | t"></app-partner-text></p>
           </div>
           <div>
-            <h3>결과</h3>
-            <p class="row-headline">{{ project.headline }}</p>
+            <h3>{{ '결과' | t }}</h3>
+            <p class="row-headline">{{ (project.headline) | t }}</p>
             <ul class="mini-stats">
               <li *ngFor="let stat of project.stats.slice(0, 2)">
-                <b>{{ stat.value }}</b> {{ stat.label }}
-              </li>
+                <b>{{ (stat.value) | t }}</b> {{ (stat.label) | t }}</li>
             </ul>
           </div>
         </div>
-        <a class="text-link" [routerLink]="['/portfolio', project.id]"
-          >프로젝트 보기<app-icon name="arrow-right"></app-icon></a
+        <a class="text-link" [routerLink]="(['/portfolio', project.id]) | localLink"
+          >{{ '프로젝트 보기' | t }}<app-icon name="arrow-right"></app-icon></a
         >
       </div>
     </article>
   </ng-template>
   <ng-template #shots let-list>
     <figure *ngFor="let shot of list">
-      <button type="button" class="zoom-open" [attr.aria-label]="shot.title + ' 크게 보기'" (click)="openZoom(shot.full, shot.alt)">
-        <img [src]="shot.src" [alt]="shot.alt" [width]="shot.width" [height]="shot.height" loading="lazy" />
+      <button type="button" class="zoom-open" [attr.aria-label]="'{0} 크게 보기' | t:[(shot.title) ]" (click)="openZoom(shot.full, shot.alt)">
+        <img [src]="shot.src" [alt]="(shot.alt) | t" [width]="shot.width" [height]="shot.height" loading="lazy" />
       </button>
-      <figcaption><strong>{{ shot.title }}</strong><p>{{ shot.caption }}</p></figcaption>
+      <figcaption><strong>{{ (shot.title) | t }}</strong><p>{{ (shot.caption) | t }}</p></figcaption>
     </figure>
   </ng-template>
   <dialog
     #zoomDialog
     class="zoom-dialog"
-    aria-label="그림 크게 보기"
+    [attr.aria-label]="'그림 크게 보기' | t"
     (click)="onZoomClick($event)"
     (close)="zoom = undefined"
   >
     <ng-container *ngIf="zoom">
-      <img [src]="zoom.src" [alt]="zoom.alt" />
-      <p>{{ zoom.alt }}</p>
+      <img [src]="zoom.src" [alt]="(zoom.alt) | t" />
+      <p>{{ (zoom.alt) | t }}</p>
     </ng-container>
     <button type="button" class="zoom-close" (click)="closeZoom()">
-      <app-icon name="close"></app-icon>닫기
+      <app-icon name="close"></app-icon>{{ '닫기' | t }}
     </button>
   </dialog>
 </div>

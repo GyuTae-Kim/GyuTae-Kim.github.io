@@ -1,3 +1,4 @@
+import { I18nModule } from '../../i18n/i18n.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
@@ -14,7 +15,7 @@ describe('PortfolioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [I18nModule, RouterTestingModule],
       declarations: [PortfolioComponent, PartnerTextComponent],
       providers: [{ provide: ActivatedRoute, useValue: { paramMap: params } }],
       schemas: [NO_ERRORS_SCHEMA],

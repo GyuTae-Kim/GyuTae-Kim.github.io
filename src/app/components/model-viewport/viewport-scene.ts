@@ -2663,6 +2663,7 @@ function buildFurniture(reducedMotion: boolean): ModelView {
 // ---------- viewport ----------
 
 export interface ViewportOptions {
+  translate?: (text: string) => string;
   reducedMotion: boolean;
   // Play the model's three layers one after another until the reader picks one.
   autoplay: boolean;
@@ -2963,7 +2964,8 @@ export class ViewportScene {
       this.dots[i].setAttribute('cy', a.y.toFixed(1));
     });
 
-    const caption = this.current.hud?.() ?? '';
+    const rawCaption = this.current.hud?.() ?? '';
+    const caption = this.options.translate?.(rawCaption) ?? rawCaption;
     this.hud.style.display = caption ? '' : 'none';
     if (this.hud.textContent !== caption) this.hud.textContent = caption;
 
@@ -2974,7 +2976,8 @@ export class ViewportScene {
       if (!l) return;
       const p = this.project(l.anchor, l.owner);
       span.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px) translate(-50%, -50%)`;
-      if (span.textContent !== l.text) span.textContent = l.text;
+      const text = this.options.translate?.(l.text) ?? l.text;
+      if (span.textContent !== text) span.textContent = text;
     });
   }
 }

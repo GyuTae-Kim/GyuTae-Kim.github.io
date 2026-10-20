@@ -1,38 +1,36 @@
 <div class="page-shell interior-page opencad-page">
   <div class="page-intro">
-    <p class="eyebrow">OpenCAD · 개인 프로젝트</p>
+    <p class="eyebrow">{{ 'OpenCAD · 개인 프로젝트' | t }}</p>
     <h1>
-      무료 캐드 뷰어로<br class="desktop-break" />
-      도면·3D 모델·공구 경로를 엽니다<span class="accent">.</span>
+      {{ '무료 캐드 뷰어로' | t }}<br class="desktop-break" />
+      {{ '도면·3D 모델·공구 경로를 엽니다' | t }}<span class="accent">.</span>
     </h1>
     <p>
-      OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 뷰어 프로젝트입니다.
-      DWG·DXF 2D 도면, STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로를
-      형식별 무료 뷰어에서 확인하세요. 설치나 회원가입 없이 파일을 브라우저에서 처리합니다.
+      {{ 'OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 뷰어 프로젝트입니다. DWG·DXF 2D 도면, STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로를 형식별 무료 뷰어에서 확인하세요. 설치나 회원가입 없이 파일을 브라우저에서 처리합니다.' | t }}
     </p>
   </div>
   <dl class="opencad-promise">
     <div>
-      <dt>설치</dt>
-      <dd>주소를 열면 바로 씁니다.</dd>
+      <dt>{{ '설치' | t }}</dt>
+      <dd>{{ '주소를 열면 바로 씁니다.' | t }}</dd>
     </div>
     <div>
-      <dt>파일</dt>
-      <dd>서버로 보내지 않고 브라우저 안에서 읽습니다.</dd>
+      <dt>{{ '파일' | t }}</dt>
+      <dd>{{ '서버로 보내지 않고 브라우저 안에서 읽습니다.' | t }}</dd>
     </div>
     <div>
-      <dt>비용</dt>
-      <dd>무료이고, 코드를 MIT 라이선스로 공개합니다.</dd>
+      <dt>{{ '비용' | t }}</dt>
+      <dd>{{ '무료이고, 코드를 MIT 라이선스로 공개합니다.' | t }}</dd>
     </div>
   </dl>
 
-  <nav class="opencad-jump-links" aria-label="파일 형식별 뷰어 선택">
-    <a *ngFor="let tool of liveTools; let i = index" [routerLink]="[]" [fragment]="tool.id">{{ tool.kind }}</a>
+  <nav class="opencad-jump-links" [attr.aria-label]="'파일 형식별 뷰어 선택' | t">
+    <a *ngFor="let tool of liveTools; let i = index" [routerLink]="([]) | localLink" [fragment]="tool.id">{{ (tool.kind) | t }}</a>
   </nav>
 
   <section class="opencad-section" aria-labelledby="opencad-live-title">
     <div class="section-title">
-      <h2 id="opencad-live-title">지금 쓸 수 있는 뷰어</h2>
+      <h2 id="opencad-live-title">{{ '지금 쓸 수 있는 뷰어' | t }}</h2>
     </div>
     <article class="tool-card" *ngFor="let tool of liveTools; let i = index" [class.tool-card-text]="!tool.figure" [attr.aria-labelledby]="tool.id">
       <figure class="tool-shot" *ngIf="tool.figure">
@@ -40,41 +38,40 @@
           [src]="tool.figure.base + '-1440.webp'"
           [attr.srcset]="srcset(tool.figure.base)"
           sizes="(max-width: 1000px) 100vw, 640px"
-          [alt]="tool.figure.alt"
+          [alt]="(tool.figure.alt) | t"
           width="1440"
           height="900"
           [attr.loading]="i === 0 ? null : 'lazy'"
           [attr.fetchpriority]="i === 0 ? 'high' : null"
         />
         <figcaption>
-          <span class="figure-kind">실제 화면</span>{{ tool.figure.caption }}
-        </figcaption>
+          <span class="figure-kind">{{ '실제 화면' | t }}</span>{{ (tool.figure.caption) | t }}</figcaption>
       </figure>
       <div class="tool-body">
-        <p class="tool-meta"><span class="tool-status live">공개</span>{{ tool.kind }}</p>
-        <h3 [id]="tool.id">{{ tool.name }}</h3>
+        <p class="tool-meta"><span class="tool-status live">{{ '공개' | t }}</span>{{ (tool.kind) | t }}</p>
+        <h3 [id]="tool.id">{{ (tool.name) | t }}</h3>
         <p class="tool-ext">
-          <code *ngFor="let ext of tool.extensions">{{ ext }}</code>
+          <code *ngFor="let ext of tool.extensions">{{ (ext) | t }}</code>
         </p>
-        <p class="tool-summary">{{ tool.summary }}</p>
+        <p class="tool-summary">{{ (tool.summary) | t }}</p>
         <dl class="tool-features">
           <div *ngFor="let feature of tool.features">
-            <dt>{{ feature.label }}</dt>
-            <dd>{{ feature.text }}</dd>
+            <dt>{{ (feature.label) | t }}</dt>
+            <dd>{{ (feature.text) | t }}</dd>
           </div>
         </dl>
         <div class="tool-actions">
-          <a class="button primary" [href]="tool.url" target="_blank" rel="noopener noreferrer"
-            >{{ tool.name }} 열기<app-icon name="external"></app-icon></a
+          <a class="button primary" [href]="(tool.url) | localLink" target="_blank" rel="noopener noreferrer"
+            >{{ '{0} 열기' | t:[(tool.name)] }}<app-icon name="external"></app-icon></a
           >
-          <a *ngIf="tool.path" class="button outline" [routerLink]="tool.path">사용법·지원 범위<app-icon name="arrow-right"></app-icon></a>
+          <a *ngIf="tool.path" class="button outline" [routerLink]="(tool.path) | localLink">{{ '사용법·지원 범위' | t }}<app-icon name="arrow-right"></app-icon></a>
           <a
             *ngIf="tool.source"
             class="button outline"
-            [href]="tool.source"
+            [href]="(tool.source) | localLink"
             target="_blank"
             rel="noopener noreferrer"
-            ><app-icon name="github"></app-icon>소스 코드</a
+            ><app-icon name="github"></app-icon>{{ '소스 코드' | t }}</a
           >
         </div>
       </div>
@@ -82,37 +79,37 @@
   </section>
 
   <section class="opencad-section" aria-labelledby="opencad-core-title">
-    <div class="section-title"><h2 id="opencad-core-title">뷰어를 연결하는 오픈소스 코어</h2></div>
-    <ul class="guide-list"><li *ngFor="let project of libraries"><h3><a [routerLink]="project.path">{{ project.name }}</a></h3><p>{{ project.summary }}</p></li></ul>
+    <div class="section-title"><h2 id="opencad-core-title">{{ '뷰어를 연결하는 오픈소스 코어' | t }}</h2></div>
+    <ul class="guide-list"><li *ngFor="let project of libraries"><h3><a [routerLink]="(project.path) | localLink">{{ (project.name) | t }}</a></h3><p>{{ (project.summary) | t }}</p></li></ul>
   </section>
 
   <section class="opencad-section" aria-labelledby="opencad-guides-title">
-    <div class="section-title"><h2 id="opencad-guides-title">캐드 뷰어 사용 안내</h2></div>
-    <ul class="guide-list"><li *ngFor="let guide of guides"><h3><a [routerLink]="guide.path">{{ guide.title }}</a></h3><p>{{ guide.description }}</p></li></ul>
+    <div class="section-title"><h2 id="opencad-guides-title">{{ '캐드 뷰어 사용 안내' | t }}</h2></div>
+    <ul class="guide-list"><li *ngFor="let guide of guides"><h3><a [routerLink]="(guide.path) | localLink">{{ (guide.title) | t }}</a></h3><p>{{ (guide.description) | t }}</p></li></ul>
   </section>
   <section *ngIf="plannedTools.length" class="opencad-section" aria-labelledby="opencad-planned-title">
     <div class="section-title">
-      <h2 id="opencad-planned-title">준비 중인 뷰어</h2>
+      <h2 id="opencad-planned-title">{{ '준비 중인 뷰어' | t }}</h2>
     </div>
     <p class="section-lead">
-      다른 형식도 같은 방식으로, 서버 없이 브라우저 안에서 여는 뷰어를 차례로 만들 계획입니다.
+      {{ '다른 형식도 같은 방식으로, 서버 없이 브라우저 안에서 여는 뷰어를 차례로 만들 계획입니다.' | t }}
     </p>
     <ul class="tool-plans">
       <li class="plan-card" *ngFor="let tool of plannedTools">
-        <p class="tool-meta"><span class="tool-status">준비 중</span>{{ tool.kind }}</p>
-        <h3>{{ tool.name }}</h3>
+        <p class="tool-meta"><span class="tool-status">{{ '준비 중' | t }}</span>{{ (tool.kind) | t }}</p>
+        <h3>{{ (tool.name) | t }}</h3>
         <p class="tool-ext">
-          <code *ngFor="let ext of tool.extensions">{{ ext }}</code>
+          <code *ngFor="let ext of tool.extensions">{{ (ext) | t }}</code>
         </p>
-        <p class="plan-summary">{{ tool.summary }}</p>
+        <p class="plan-summary">{{ (tool.summary) | t }}</p>
       </li>
     </ul>
   </section>
 
   <aside class="end-note">
-    열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면
-    <a href="https://github.com/GyuTae-Kim/2dcad-viewer/issues" target="_blank" rel="noopener noreferrer"
-      >GitHub 이슈</a
-    >나 <a routerLink="/contact">메일</a>로 알려 주세요.
+    {{ '열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면' | t }}
+    <a [href]="'https://github.com/GyuTae-Kim/2dcad-viewer/issues' | localLink" target="_blank" rel="noopener noreferrer"
+      >{{ 'GitHub 이슈' | t }}</a
+    >{{ '나' | t }} <a [routerLink]="'/contact' | localLink">{{ '메일' | t }}</a>{{ '로 알려 주세요.' | t }}
   </aside>
 </div>

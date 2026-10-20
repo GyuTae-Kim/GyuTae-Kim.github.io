@@ -1,59 +1,64 @@
-<a class="skip-link" [routerLink]="[]" fragment="main">본문으로 건너뛰기</a>
+<a class="skip-link" [routerLink]="([]) | localLink" fragment="main">{{ '본문으로 건너뛰기' | t }}</a>
 <header class="site-header-bar">
   <div class="site-header">
-    <a class="brand" routerLink="/" aria-label="김규태 Sean Kim 홈"
+    <a class="brand" [routerLink]="'/' | localLink" [attr.aria-label]="'김규태 Sean Kim 홈' | t"
       ><span class="brand-mark" aria-hidden="true">S<span>.</span></span
-      ><span class="brand-name">김규태<span>Sean Kim</span></span></a
+      ><span class="brand-name">{{ '김규태' | t }}<span>Sean Kim</span></span></a
     >
-    <nav aria-label="주요 메뉴">
+    <nav [attr.aria-label]="'주요 메뉴' | t">
       <a
-        routerLink="/portfolio"
+        [routerLink]="'/portfolio' | localLink"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        >프로젝트</a
+        >{{ '프로젝트' | t }}</a
       >
       <a
-        routerLink="/research"
+        [routerLink]="'/research' | localLink"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        >연구</a
+        >{{ '연구' | t }}</a
       >
       <a
-        routerLink="/opencad"
+        [routerLink]="'/opencad' | localLink"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        >오픈캐드</a
+        >{{ '오픈캐드' | t }}</a
       >
       <a
-        routerLink="/contact"
+        [routerLink]="'/contact' | localLink"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
-        >연락</a
+        >{{ '연락' | t }}</a
       >
     </nav>
   </div>
+  <nav class="language-menu" aria-label="Language">
+    <a *ngFor="let language of i18n.languages" [routerLink]="i18n.switchLanguage(language.code)" queryParamsHandling="preserve" [preserveFragment]="true"
+       [attr.lang]="language.code" [attr.hreflang]="language.code"
+       [attr.aria-current]="i18n.language === language.code ? 'true' : null">{{ language.label }}</a>
+  </nav>
 </header>
 <main id="main" tabindex="-1"><router-outlet></router-outlet></main>
 <footer class="site-footer">
   <dl>
     <div>
-      <dt>작성</dt>
-      <dd><a routerLink="/">김규태 Sean Kim</a></dd>
+      <dt>{{ '작성' | t }}</dt>
+      <dd><a [routerLink]="'/' | localLink">{{ '김규태 Sean Kim' | t }}</a></dd>
     </div>
     <div>
-      <dt>연락</dt>
+      <dt>{{ '연락' | t }}</dt>
       <dd>
-        <a class="footer-link" href="mailto:GyuTae.K1020@gmail.com"
+        <a class="footer-link" [href]="'mailto:GyuTae.K1020@gmail.com' | localLink"
           ><app-icon name="mail"></app-icon>GyuTae.K1020&#64;gmail.com</a
         >
       </dd>
     </div>
     <div>
-      <dt>코드</dt>
+      <dt>{{ '코드' | t }}</dt>
       <dd>
         <a
           class="footer-link"
-          href="https://github.com/GyuTae-Kim"
+          [href]="'https://github.com/GyuTae-Kim' | localLink"
           target="_blank"
           rel="noopener noreferrer"
           ><app-icon name="github"></app-icon>github.com/GyuTae-Kim</a
@@ -61,9 +66,9 @@
       </dd>
     </div>
     <div>
-      <dt>갱신</dt>
-      <dd>{{ updated }}</dd>
+      <dt>{{ '갱신' | t }}</dt>
+      <dd>{{ (updated) | t }}</dd>
     </div>
   </dl>
-  <p class="footer-notes"><a routerLink="/notes">제조 소프트웨어 개발 노트</a></p>
+  <p class="footer-notes"><a [routerLink]="'/notes' | localLink">{{ '제조 소프트웨어 개발 노트' | t }}</a></p>
 </footer>

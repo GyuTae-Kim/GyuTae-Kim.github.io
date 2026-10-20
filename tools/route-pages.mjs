@@ -7,7 +7,7 @@ import Beasties from 'beasties';
 import { assertContentDate, contentFingerprint, validateDate } from './content-dates.mjs';
 
 const require = createRequire(import.meta.url);
-const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage, contentModified } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage, contentModified, LANGUAGES, languagePath, localizedHref, originalPath } = require('../dist/server/main.js');
 const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json', import.meta.url), 'utf8'));
 const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
@@ -58,8 +58,8 @@ for (const page of SEARCH_PAGES) {
   if (!html.includes('<h1') || !html.includes('id="site-structured-data"')) {
     throw new Error(`Incomplete render: ${page.path}`);
   }
-  const files = page.path === '/' ? ['index.html']
-    : [`${page.path.slice(1)}.html`, `${page.path.slice(1)}/index.html`];
+  const stem = page.path.replace(/^\/|\/$/g, '');
+  const files = !stem ? ['index.html'] : [`${stem}.html`, `${stem}/index.html`];
   for (const file of files) writePage(file, html);
   console.log(`${page.path} → ${files.join(', ')}`);
 }
@@ -79,15 +79,18 @@ for (const [from, to] of Object.entries(redirects)) {
 
 // Include published applications under this verified host; planned tools have no URL.
 const sitemapUrls = [...new Set([...SEARCH_PAGES.map(({ path }) => SITE_URL + path),
-  ...OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? [url] : [])])];
+  ...OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? LANGUAGES.map(({code}) => localizedHref(url,code)) : [])])];
 const urls = sitemapUrls.map((url) => {
   const path = new URL(url).pathname;
   const lastmod = contentModified(path) || linkedDates[url]?.lastmod;
   // Separate apps may not publish a trustworthy content date yet. The optional
   // lastmod is omitted until they do; deployment time is not a content date.
   const modified = lastmod ? `<lastmod>${validateDate(lastmod)}</lastmod>` : '';
-  return `  <url><loc>${escape(url)}</loc>${modified}</url>`;
+  const page = SEARCH_PAGES.find(page => SITE_URL + page.path === url);
+  const alternates = page ? [...LANGUAGES.map(({ code }) => `<xhtml:link rel="alternate" hreflang="${code}" href="${escape(SITE_URL + languagePath(originalPath(page.path), code))}"/>`),
+    `<xhtml:link rel="alternate" hreflang="x-default" href="${escape(SITE_URL + originalPath(page.path))}"/>`].join('') : '';
+  return `  <url><loc>${escape(url)}</loc>${modified}${alternates}</url>`;
 }).join('\n');
-writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
+writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`);
 writePage('.nojekyll', '');
 console.log(`sitemap.xml → ${sitemapUrls.length} URLs`);

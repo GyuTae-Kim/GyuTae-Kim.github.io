@@ -5,7 +5,7 @@ import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { validateDate } from './content-dates.mjs';
 const require = createRequire(import.meta.url);
-const { SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified, LANGUAGES, languagePath, localizedHref, originalPath } = require('../dist/server/main.js');
 const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 const fontCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/coverage.json'), 'utf8'));
@@ -16,9 +16,9 @@ for (const font of [...fontCoverage.files, { name: 'jetbrains-mono-latin.woff2' 
 const { JSDOM } = require('jsdom');
 const titles = new Set();
 const descriptions = new Set();
-const paths = new Set(SEARCH_PAGES.map((page) => page.path));
+const paths = new Set(SEARCH_PAGES.flatMap((page) => [page.path, page.path.replace(/\/+$/, '') || '/']));
 // These linked applications belong to separate repositories on the same Pages host.
-const hostedApps = new Set(OPENCAD_TOOLS.filter((tool) => tool.url).map((tool) => tool.url));
+const hostedApps = new Set(OPENCAD_TOOLS.filter((tool) => tool.url).flatMap((tool) => LANGUAGES.map(({code}) => localizedHref(tool.url,code))));
 const verification = JSON.parse(readFileSync(new URL('./search-verification.json', import.meta.url), 'utf8'));
 const checkedImages = new Set();
 // Detail covers must stay tied to their subject instead of falling back to a collection cover.
@@ -45,7 +45,8 @@ let commonHeadShape;
 for (const page of SEARCH_PAGES) {
   const detailCover = detailCovers.find((cover) => cover.route === page.path);
   if (detailCover) assert.equal(page.image, detailCover.output.replace(/^src\//, ''), `${page.path}: subject-specific sharing image`);
-  const files = page.path === '/' ? ['index.html'] : [`${page.path.slice(1)}.html`, `${page.path.slice(1)}/index.html`];
+  const stem = page.path.replace(/^\/|\/$/g, '');
+  const files = !stem ? ['index.html'] : [`${stem}.html`, `${stem}/index.html`];
   for (const file of files) {
     const raw = readFileSync(join(outDir, file));
     const dom = new JSDOM(raw.toString('utf8'), { url: SITE_URL + page.path });
@@ -53,10 +54,14 @@ for (const page of SEARCH_PAGES) {
     assert.ok(document.querySelector('style[data-site-styles]'), `${file}: shared CSS available before scripts`);
     assert.ok(!document.querySelector('head > link[rel="stylesheet"][href^="styles."]'), `${file}: no blocking shared CSS request`);
     assert.ok(!document.querySelector('link[href*="fonts.googleapis.com"], link[href*="cdn.jsdelivr.net"]'), `${file}: no external font CSS`);
-    const unstyledText = document.querySelector('app-root').textContent;
+    const fontRoot = document.querySelector('app-root').cloneNode(true);
+    fontRoot.querySelectorAll('.language-menu').forEach(el => el.remove());
+    const unstyledText = fontRoot.textContent;
     const missingGlyphs = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !fontCharacters.has(c.codePointAt(0))))];
-    assert.deepEqual(missingGlyphs, [], `${file}: run tools/prepare-site-fonts.py for new characters`);
-    assert.equal(document.documentElement.lang, 'ko', file);
+    if (page.language === 'ko') assert.deepEqual(missingGlyphs, [], `${file}: run tools/prepare-site-fonts.py for new characters`);
+    assert.equal(document.documentElement.lang, page.language, file);
+    for (const { code } of LANGUAGES) assert.equal(document.querySelector(`link[rel="alternate"][hreflang="${code}"]`)?.href, SITE_URL + languagePath(originalPath(page.path), code), `${file}: reciprocal ${code} alternate`);
+    assert.equal(document.querySelectorAll('link[rel="alternate"][hreflang]').length, 6, file);
     for (const [name, value] of Object.entries(verification)) {
       const tags = document.querySelectorAll(`meta[name="${name}"]`);
       assert.equal(tags.length, value ? 1 : 0, `${file}: verification tag count ${name}`);
@@ -159,7 +164,7 @@ for (const page of SEARCH_PAGES) {
     for (const anchor of root.querySelectorAll('a[href]')) {
       const link = new URL(anchor.href);
       if (link.origin !== SITE_URL) continue;
-      assert.ok(paths.has(link.pathname) || hostedApps.has(link.origin + link.pathname) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
+      assert.ok(paths.has(link.pathname) || paths.has(link.pathname.replace(/\/$/, '')) || hostedApps.has(link.origin + link.pathname) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
       if (link.pathname === page.path && link.hash) {
         assert.ok(document.getElementById(decodeURIComponent(link.hash.slice(1))), `${file}: broken fragment ${link.hash}`);
       }
@@ -172,10 +177,10 @@ for (const page of SEARCH_PAGES) {
     }
     dom.window.close();
   }
-  assert.ok(!titles.has(page.title), 'duplicate title');
-  assert.ok(!descriptions.has(page.description), 'duplicate description');
-  titles.add(page.title);
-  descriptions.add(page.description);
+  assert.ok(!titles.has(`${page.language}:${page.title}`), 'duplicate title in language');
+  assert.ok(!descriptions.has(`${page.language}:${page.description}`), 'duplicate description in language');
+  titles.add(`${page.language}:${page.title}`);
+  descriptions.add(`${page.language}:${page.description}`);
 }
 const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { contentType: 'text/xml' });
 const sitemapUrls = [...sitemap.window.document.querySelectorAll('loc')].map((loc) => loc.textContent);
@@ -191,7 +196,7 @@ sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
-for (const app of hostedApps) {
+for (const app of OPENCAD_TOOLS.filter(tool => tool.url).map(tool => tool.url)) {
   if (new URL(app).origin === SITE_URL) assert.ok(robots.includes(`Sitemap: ${app}sitemap.xml`), `Missing application sitemap discovery: ${app}`);
 }
 const notFound = new JSDOM(readFileSync(join(outDir, '404.html'), 'utf8'));

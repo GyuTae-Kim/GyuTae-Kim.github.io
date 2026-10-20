@@ -1,40 +1,40 @@
 <div class="page-shell interior-page opencad-project-page">
-  <nav class="article-crumbs" aria-label="현재 위치">
-    <a routerLink="/">홈</a><span aria-hidden="true">/</span><a routerLink="/opencad">OpenCAD</a>
+  <nav class="article-crumbs" [attr.aria-label]="'현재 위치' | t">
+    <a [routerLink]="'/' | localLink">{{ '홈' | t }}</a><span aria-hidden="true">/</span><a [routerLink]="'/opencad' | localLink">OpenCAD</a>
   </nav>
   <article>
     <header class="page-intro">
-      <p class="eyebrow">OpenCAD · {{ project.kind }}</p>
-      <h1>{{ project.name }}</h1>
-      <p>{{ project.summary }}</p>
-      <p class="tool-ext" *ngIf="project.extensions.length"><code *ngFor="let ext of project.extensions">{{ ext }}</code></p>
+      <p class="eyebrow">{{ 'OpenCAD · {0}' | t:[(project.kind)] }}</p>
+      <h1>{{ (project.name) | t }}</h1>
+      <p>{{ (project.summary) | t }}</p>
+      <p class="tool-ext" *ngIf="project.extensions.length"><code *ngFor="let ext of project.extensions">{{ (ext) | t }}</code></p>
       <div class="tool-actions">
-        <a *ngIf="project.url" class="button primary" [href]="project.url">{{ project.name }} 열기<app-icon name="arrow-right"></app-icon></a>
-        <a class="button outline" [href]="project.source" target="_blank" rel="noopener noreferrer">GitHub 소스 코드<app-icon name="external"></app-icon></a>
+        <a *ngIf="project.url" class="button primary" [href]="(project.url) | localLink">{{ '{0} 열기' | t:[(project.name)] }}<app-icon name="arrow-right"></app-icon></a>
+        <a class="button outline" [href]="(project.source) | localLink" target="_blank" rel="noopener noreferrer">{{ 'GitHub 소스 코드' | t }}<app-icon name="external"></app-icon></a>
       </div>
     </header>
     <section class="project-section" aria-labelledby="project-purpose">
-      <h2 id="project-purpose">어떤 도구인가요?</h2><p>{{ project.introduction }}</p>
-      <dl class="tool-features"><div *ngFor="let feature of project.features"><dt>{{ feature.label }}</dt><dd>{{ feature.text }}</dd></div></dl>
+      <h2 id="project-purpose">{{ '어떤 도구인가요?' | t }}</h2><p>{{ (project.introduction) | t }}</p>
+      <dl class="tool-features"><div *ngFor="let feature of project.features"><dt>{{ (feature.label) | t }}</dt><dd>{{ (feature.text) | t }}</dd></div></dl>
     </section>
     <section class="project-section" aria-labelledby="project-start">
-      <h2 id="project-start">{{ project.url ? '처음 사용하는 순서' : '개발에 연결하는 방법' }}</h2>
-      <ol><li *ngFor="let step of project.steps">{{ step }}</li></ol>
-      <p *ngIf="project.url">설치·회원가입 없이 무료로 사용할 수 있습니다. 파일 해석과 3D 표시는 이 기기의 브라우저 안에서 처리하며, 선택한 도면·모델 파일을 서버에 업로드하지 않습니다.</p>
+      <h2 id="project-start">{{ (project.url ? '처음 사용하는 순서' : '개발에 연결하는 방법') | t }}</h2>
+      <ol><li *ngFor="let step of project.steps">{{ (step) | t }}</li></ol>
+      <p *ngIf="project.url">{{ '설치·회원가입 없이 무료로 사용할 수 있습니다. 파일 해석과 3D 표시는 이 기기의 브라우저 안에서 처리하며, 선택한 도면·모델 파일을 서버에 업로드하지 않습니다.' | t }}</p>
     </section>
     <section class="project-section" aria-labelledby="project-support">
-      <h2 id="project-support">지원 범위와 확인할 점</h2><ul><li *ngFor="let limitation of project.limitations">{{ limitation }}</li></ul>
-      <p>WebGL2와 JavaScript를 지원하는 브라우저를 사용하세요. OpenCAD는 김규태가 개발하는 MIT 라이선스 오픈소스 프로젝트입니다.</p>
+      <h2 id="project-support">{{ '지원 범위와 확인할 점' | t }}</h2><ul><li *ngFor="let limitation of project.limitations">{{ (limitation) | t }}</li></ul>
+      <p>{{ 'WebGL2와 JavaScript를 지원하는 브라우저를 사용하세요. OpenCAD는 김규태가 개발하는 MIT 라이선스 오픈소스 프로젝트입니다.' | t }}</p>
     </section>
     <section *ngIf="guides.length" class="project-section" aria-labelledby="project-guides">
-      <h2 id="project-guides">파일 열기와 표시 문제 점검</h2>
-      <ul><li *ngFor="let guide of guides"><a [routerLink]="guide.path">{{ guide.title }}</a></li></ul>
+      <h2 id="project-guides">{{ '파일 열기와 표시 문제 점검' | t }}</h2>
+      <ul><li *ngFor="let guide of guides"><a [routerLink]="(guide.path) | localLink">{{ (guide.title) | t }}</a></li></ul>
     </section>
     <aside class="project-section" aria-labelledby="project-related">
-      <h2 id="project-related">함께 쓰는 OpenCAD 프로젝트</h2>
-      <ul><li *ngFor="let item of related"><a [routerLink]="item.path">{{ item.name }}</a> — {{ item.kind }}</li></ul>
-      <p><a href="https://gyutae-kim.github.io/2dcad-viewer/">무료 DWG·DXF 2D 캐드 뷰어</a> · <a routerLink="/opencad">모든 도구와 사용 안내</a></p>
-      <p>개발: <a routerLink="/">김규태 Sean Kim</a> · <a routerLink="/contact">AI·CAD/CAM 개발·제조 기술 협업 문의</a></p>
+      <h2 id="project-related">{{ '함께 쓰는 OpenCAD 프로젝트' | t }}</h2>
+      <ul><li *ngFor="let item of related"><a [routerLink]="(item.path) | localLink">{{ (item.name) | t }}</a> {{ '— {0}' | t:[(item.kind)] }}</li></ul>
+      <p><a [href]="'https://gyutae-kim.github.io/2dcad-viewer/' | localLink">{{ '무료 DWG·DXF 2D 캐드 뷰어' | t }}</a> · <a [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}</a></p>
+      <p>{{ '개발:' | t }} <a [routerLink]="'/' | localLink">{{ '김규태 Sean Kim' | t }}</a> · <a [routerLink]="'/contact' | localLink">{{ 'AI·CAD/CAM 개발·제조 기술 협업 문의' | t }}</a></p>
     </aside>
   </article>
 </div>

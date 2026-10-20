@@ -4,6 +4,7 @@ import { OPENCAD_TOOLS, OPENCAD_PROJECTS, OpenCadProject } from './opencad-data'
 import { SITE_ARTICLES, SiteArticle } from './articles-data';
 import contentHistory from './content-history.json';
 import { RESEARCH_WORKS, ResearchWork } from './research-data';
+import { LANGUAGES, Language, languageFromUrl, languagePath, localizedHref, originalPath, translateData } from './i18n/localization';
 
 export const SITE_URL = 'https://gyutae-kim.github.io';
 export const SITE_NAME = '김규태 · Sean Kim';
@@ -13,6 +14,7 @@ export function contentModified(path: string): string {
   return (contentHistory as Record<string, { lastmod: string }>)[path]?.lastmod ?? '';
 }
 export interface SearchPage {
+  language?: Language;
   path: string;
   title: string;
   description: string;
@@ -117,13 +119,25 @@ export const SEARCH_ALIASES = SEARCH_PAGES.flatMap(({ path }) => path === '/'
   ? [{ from: '/index.html', to: '/' }]
   : [{ from: `${path}.html`, to: path }, { from: `${path}/index.html`, to: path }]);
 
+export const LOCALIZED_SEARCH_PAGES: SearchPage[] = LANGUAGES.flatMap(({ code }) => SEARCH_PAGES.map(page => {
+  const localized = translateData(page, code);
+  if (localized.tool?.url) localized.tool.url = localizedHref(localized.tool.url, code);
+  if (localized.article?.viewer) {
+    localized.article.viewer.url = localizedHref(localized.article.viewer.url, code);
+    if (localized.article.viewer.sampleUrl) localized.article.viewer.sampleUrl = localizedHref(localized.article.viewer.sampleUrl, code);
+  }
+  return { ...localized, path: languagePath(page.path, code), language: code };
+}));
+
 export function searchPage(url: string): SearchPage | undefined {
   const path = url.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
-  return SEARCH_PAGES.find((page) => page.path === path);
+  return LOCALIZED_SEARCH_PAGES.find((page) => page.path.replace(/\/+$/, '') === path.replace(/\/+$/, ''));
 }
 
 // The browser and the static build use the same graph and page descriptions.
 export function structuredData(page: SearchPage): object {
+  const language = page.language ?? languageFromUrl(page.path);
+  const path = originalPath(page.path);
   const personId = `${SITE_URL}/#person`;
   const websiteId = `${SITE_URL}/#website`;
   const url = SITE_URL + page.path;
@@ -144,20 +158,20 @@ export function structuredData(page: SearchPage): object {
       description: page.description, inLanguage: 'ko', isPartOf: { '@id': websiteId },
       dateModified: contentModified(page.path),
       about: { '@id': personId },
-      ...(page.path === '/' ? { mainEntity: { '@id': personId } } : {}),
-      ...(page.path !== '/' ? { breadcrumb: { '@id': `${url}#breadcrumb` } } : {}),
+      ...(path === '/' ? { mainEntity: { '@id': personId } } : {}),
+      ...(path !== '/' ? { breadcrumb: { '@id': `${url}#breadcrumb` } } : {}),
       ...(page.project ? { mainEntity: { '@id': `${url}#project` } } : {}),
       ...(page.research ? { mainEntity: { '@id': `${url}#research` } } : {}),
       ...(page.article ? { mainEntity: { '@id': `${url}#article` } } : {}),
       ...(page.tool ? { mainEntity: { '@id': `${url}#software` } } : {}),
     },
   ];
-  if (page.path !== '/') {
+  if (path !== '/') {
     const crumbs = [{ name: '홈', item: `${SITE_URL}/` }];
     if (page.project) crumbs.push({ name: '프로젝트', item: `${SITE_URL}/portfolio` });
     if (page.research) crumbs.push({ name: '연구', item: `${SITE_URL}/research` });
     if (page.tool) crumbs.push({ name: 'OpenCAD', item: `${SITE_URL}/opencad` });
-    if (page.article) crumbs.push(page.article.category === 'OpenCAD 사용 안내'
+    if (page.article) crumbs.push(page.article.path.startsWith('/opencad/')
       ? { name: 'OpenCAD', item: `${SITE_URL}/opencad` } : { name: '개발 노트', item: `${SITE_URL}/notes` });
     crumbs.push({ name: page.project?.title ?? page.research?.title ?? page.article?.title ?? page.tool?.name ?? page.title.split(' — ')[0], item: url });
     graph.push({
@@ -182,24 +196,24 @@ export function structuredData(page: SearchPage): object {
     articleSection: page.article.category,
     dateModified: contentModified(page.path),
   });
-  if (page.path === '/notes') graph.push({
+  if (path === '/notes') graph.push({
     '@type': 'ItemList', '@id': `${url}#notes`, name: '제조 소프트웨어 개발 노트',
     itemListElement: SITE_ARTICLES.filter((article) => article.category === '제조 소프트웨어 개발 노트')
       .map((article, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE_URL + article.path, name: article.title })),
   });
-  if (page.path === '/portfolio') graph.push({
+  if (path === '/portfolio') graph.push({
     '@type': 'ItemList', '@id': `${url}#projects`, name: '개발 프로젝트',
     itemListElement: SEARCH_PAGES.filter((item) => item.project).map((item, i) => ({
       '@type': 'ListItem', position: i + 1, url: SITE_URL + item.path, name: item.project!.title,
     })),
   });
-  if (page.path === '/research') graph.push({
+  if (path === '/research') graph.push({
     '@type': 'ItemList', '@id': `${url}#research`, name: '학부연구생 때의 연구',
     itemListElement: RESEARCH_WORKS.map((work, i) => ({
       '@type': 'ListItem', position: i + 1, url: `${SITE_URL}/research/${work.id}`, name: work.title,
     })),
   });
-  if (page.path === '/opencad') graph.push({
+  if (path === '/opencad') graph.push({
     '@type': 'ItemList', '@id': `${url}#tools`, name: '공개된 무료 캐드 뷰어',
     itemListElement: OPENCAD_TOOLS.filter((tool) => tool.url).map((tool, i) => ({
       '@type': 'ListItem', position: i + 1, name: tool.name, url: tool.url,
@@ -216,5 +230,17 @@ export function structuredData(page: SearchPage): object {
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'KRW' },
     } : { codeRepository: page.tool.source, programmingLanguage: 'TypeScript' }),
   });
-  return { '@context': 'https://schema.org', '@graph': graph };
+  const localized = translateData(graph, language) as Record<string, unknown>[];
+  for (const node of localized) if ('inLanguage' in node) node['inLanguage'] = language;
+  for (const node of localized) {
+    if (node['@type'] === 'BreadcrumbList' || node['@type'] === 'ItemList') {
+      for (const item of node['itemListElement'] as Record<string, string>[]) for (const key of ['item', 'url']) {
+        const link = item[key];
+        if (link?.startsWith(SITE_URL) && !/^\/(?:2dcad-viewer|opencad-(?:dwgdxf|step|skp|nc))\//.test(new URL(link).pathname)) {
+          item[key] = SITE_URL + languagePath(link.slice(SITE_URL.length), language);
+        }
+      }
+    }
+  }
+  return { '@context': 'https://schema.org', '@graph': localized };
 }

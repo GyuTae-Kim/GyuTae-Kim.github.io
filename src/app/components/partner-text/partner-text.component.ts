@@ -15,10 +15,13 @@ export class PartnerTextComponent {
   top = 0;
   private anchor?: HTMLElement;
 
+  // The parent translates the complete sentence before splitting the mention,
+  // so each language keeps its grammar and spacing around the inline card.
   @Input() set text(value: string | undefined) {
     this.hide();
-    this.parts = (value ?? '').split(/(협력\s?기관)/g).filter(Boolean).map(text => ({
-      text, partner: /^협력\s?기관$/.test(text),
+    const mention = '협력\\s?기관|partner organi[sz]ations?|partner institutions?|協力機関|合作(?:伙伴)?(?:机构|组织)|Partnerorganisation(?:en)?|Partnerinstitution(?:en)?';
+    this.parts = (value ?? '').split(new RegExp('(' + mention + ')','gi')).filter(Boolean).map(text => ({
+      text, partner: new RegExp('^(?:' + mention + ')$','i').test(text),
     }));
   }
 

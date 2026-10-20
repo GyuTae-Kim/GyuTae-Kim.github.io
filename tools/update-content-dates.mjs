@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { contentFingerprint, updatedHistory, validateDate } from './content-dates.mjs';
 const require = createRequire(import.meta.url);
-const { SEARCH_PAGES, SITE_URL, renderPage } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, renderPage } = require('../dist/server/main.js');
 const file = new URL('../src/app/content-history.json', import.meta.url);
 const history = JSON.parse(readFileSync(file, 'utf8'));
 const at = process.argv[process.argv.indexOf('--at') + 1];

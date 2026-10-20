@@ -16,6 +16,7 @@ import { ModelViewportComponent } from './components/model-viewport/model-viewpo
 import { IconComponent } from './components/icon/icon.component';
 import { PartnerTextComponent } from './components/partner-text/partner-text.component';
 import { PanelCatalogComponent } from './components/panel-catalog/panel-catalog.component';
+import { I18nModule } from './i18n/i18n.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { PanelCatalogComponent } from './components/panel-catalog/panel-catalog.
     PartnerTextComponent,
     PanelCatalogComponent,
   ],
-  imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule],
+  imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule, I18nModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,3 +1,26 @@
 :host {
   display: block;
 }
+.site-header { height: 64px; }
+@media (max-width: 767px) {
+  .site-header { height: auto; min-height: 56px; flex-wrap: wrap; gap: 6px 20px; padding-top: 8px; padding-bottom: 8px; }
+  .site-header nav { flex-wrap: wrap; gap: 8px 14px; }
+  .language-menu { justify-content: center; }
+}
+
+.language-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px 14px;
+  padding: 5px max(20px, calc((100vw - 1280px) / 2)) 8px;
+  border-top: 1px solid var(--line);
+  background: var(--sheet);
+  font-size: 13px;
+  a { padding: 3px 0; color: var(--muted); }
+  a[aria-current] { color: var(--blue); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+}
+
+.language-menu a[lang="ja"] { font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; }
+.language-menu a[lang="zh-CN"] { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
