@@ -169,7 +169,8 @@ function initialize(id: string, tool: AnalyticsTool): void {
     if (!link) return;
     try {
       const url = new URL(link.href);
-      const tool = (Object.keys(PATHS) as AnalyticsTool[]).find((key) => key !== 'portfolio' && url.pathname.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
+      const appPath = url.pathname.replace(/\/(?:en|ja|zh-CN|de)\/?$/, '/');
+      const tool = (Object.keys(PATHS) as AnalyticsTool[]).find((key) => key !== 'portfolio' && appPath.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
       if (url.hostname === HOST && tool) send('viewer_open', { target_tool: tool });
       else if (url.hostname === 'github.com' && /^\/GyuTae-Kim\/(?:opencad-(?:dwgdxf|nc|step|skp|viewer3d)|GyuTae-Kim.github.io)\/?$/i.test(url.pathname)) {
         const repo = url.pathname.split('/')[2]!.toLowerCase();
