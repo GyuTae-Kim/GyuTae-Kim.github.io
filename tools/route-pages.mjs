@@ -77,6 +77,16 @@ for (const [from, to] of Object.entries(redirects)) {
   for (const file of [`${from.slice(1)}.html`, `${from.slice(1)}/index.html`]) writePage(file, html);
 }
 
+// A project site loses its Pages path when its repository is renamed, and GitHub does
+// not forward it. This user site then answers the old path: forward the query and
+// fragment (?sample, ?open=…) by script, and refresh without them only when scripts
+// are off, so a refresh cannot cancel the scripted move.
+const movedApps = JSON.parse(readFileSync(new URL('./moved-apps.json', import.meta.url), 'utf8'));
+for (const [from, { name, url }] of Object.entries(movedApps)) {
+  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, follow"><title>${escape(name)} 주소 이동 — 김규태 · Sean Kim</title><link rel="canonical" href="${escape(url)}"><script>location.replace(${JSON.stringify(url)} + location.search + location.hash)</script><noscript><meta http-equiv="refresh" content="0;url=${escape(url)}"></noscript></head><body><p>${escape(name)}의 주소가 바뀌었습니다. <a href="${escape(url)}">새 주소로 이동</a></p></body></html>`;
+  writePage(`${from.slice(1)}index.html`, html);
+}
+
 // Include published applications under this verified host; planned tools have no URL.
 const sitemapUrls = [...new Set([...SEARCH_PAGES.map(({ path }) => SITE_URL + path),
   ...OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? LANGUAGES.map(({code}) => localizedHref(url,code)) : [])])];

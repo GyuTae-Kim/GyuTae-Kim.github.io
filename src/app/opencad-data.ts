@@ -120,22 +120,22 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
 export const OPENCAD_TOOLS: OpenCadTool[] = [
   {
     id: '2d-viewer',
-    name: 'OpenCAD 무료 캐드 뷰어',
+    name: 'OpenCAD DWG·DXF',
     kind: '2D 도면',
     extensions: ['.dwg', '.dxf'],
     summary:
-      'DWG·DXF 도면을 열고 거리·각도·면적을 측정하는 무료 캐드 뷰어입니다. 도면 편집·저장과 PDF·PNG·SVG 출력도 지원합니다.',
-    url: 'https://gyutae-kim.github.io/2dcad-viewer/',
-    source: 'https://github.com/GyuTae-Kim/2dcad-viewer',
+      'DWG·DXF 도면을 열어 보고, 새로 그리거나 고친 뒤 다시 저장하는 무료 2D 캐드입니다. 거리·각도·면적을 재고 PDF·PNG·SVG로 출력할 수도 있습니다.',
+    url: 'https://gyutae-kim.github.io/opencad-dwgdxf/',
+    source: 'https://github.com/GyuTae-Kim/opencad-dwgdxf',
     features: [
-      { label: '열기', text: 'DWG R13~R2018, DXF R12~R2018' },
+      { label: '열기', text: 'DWG R13~R2018, DXF R12~R2018 파일과 빈 새 도면' },
       { label: '확인', text: '거리, 각도, 면적 측정과 도면층, 치수 목록, 문자 찾기' },
       { label: '편집', text: '그리기와 수정 명령, 치수, 해치, 블록' },
       { label: '저장', text: 'DWG, DXF로 저장하고 PDF, PNG, SVG로 출력' },
     ],
     figure: {
       base: 'assets/opencad/viewer-2d',
-      alt: 'OpenCAD 2D 뷰어로 예제 도면을 연 화면. 위쪽에 리본 메뉴가 있고, 가운데에 치수가 붙은 브래킷 판의 정면도와 단면도, 주기, 체결 부품이 보입니다.',
+      alt: 'OpenCAD DWG·DXF로 예제 도면을 연 화면. 위쪽에 리본 메뉴가 있고, 가운데에 치수가 붙은 브래킷 판의 정면도와 단면도, 주기, 체결 부품이 보입니다.',
       caption: '예제 도면을 연 화면',
     },
   },

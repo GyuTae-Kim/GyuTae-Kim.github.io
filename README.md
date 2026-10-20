@@ -5,7 +5,7 @@ AI, 3D 형상, CAD/CAM 연구개발 포트폴리오 사이트의 소스입니다
 - `/`: 소개, 3D 개념 모델 뷰어, 주요 프로젝트, 학부연구생 때의 연구, 특허와 프로그램
 - `/portfolio`, `/portfolio/:id`: 프로젝트 세 개(가공 특징 인식과 CAM 자동화, 가구 패널 인식, Wedraw Pro)와 기타 프로젝트
 - `/research`, `/research/:id`: 학부연구생 때 공개한 연구 세 개의 카드 목록과 개별 실험 결과
-- `/opencad`: 개인 프로젝트 OpenCAD의 뷰어 목록. 공개한 2D 도면 뷰어(별도 저장소 [2dcad-viewer](https://github.com/GyuTae-Kim/2dcad-viewer))와 STEP, SKP, NC 뷰어([opencad-step](https://github.com/GyuTae-Kim/opencad-step), [opencad-skp](https://github.com/GyuTae-Kim/opencad-skp), [opencad-nc](https://github.com/GyuTae-Kim/opencad-nc))로 가는 입구
+- `/opencad`: 개인 프로젝트 OpenCAD의 도구 목록. 공개한 DWG·DXF 2D 캐드(보기·그리기·편집·저장, 별도 저장소 [opencad-dwgdxf](https://github.com/GyuTae-Kim/opencad-dwgdxf))와 STEP, SKP, NC 뷰어([opencad-step](https://github.com/GyuTae-Kim/opencad-step), [opencad-skp](https://github.com/GyuTae-Kim/opencad-skp), [opencad-nc](https://github.com/GyuTae-Kim/opencad-nc))로 가는 입구
 - `/contact`: 이메일과 GitHub
 
 ## 기술
@@ -49,6 +49,7 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 - `src/app/site-seo.ts`: 제목·설명·대표 주소·공유 이미지와 Person, WebSite, 페이지, 프로젝트, 탐색 경로 구조화 데이터의 공통 원본입니다. 새 프로젝트는 기존 프로젝트 데이터에서 자동으로 가져옵니다.
 - `src/app/seo.service.ts`: 초기 HTML과 브라우저 이동에 공통으로 쓰는 메타데이터 생성 코드입니다. 제목·설명·작성자·canonical·Open Graph·Twitter·구조화 데이터를 생성합니다. 필드 구성은 같고 페이지별 값과 구조화 데이터 종류만 달라집니다. `src/index.html`에 이 정보를 중복 작성하지 않습니다. 없는 페이지에는 `noindex`를 적용합니다.
 - `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, `sitemap.xml`, `.nojekyll`을 만듭니다. 사이트맵의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
+- `tools/moved-apps.json`: 저장소 이름을 바꾼 앱의 예전 Pages 경로를 새 주소로 넘깁니다. 2D 캐드는 2026-10-16에 `2dcad-viewer`에서 `opencad-dwgdxf`로 이름을 바꿨고, GitHub는 저장소 주소와 달리 Pages 경로를 넘겨 주지 않으므로 이 사이트가 `/2dcad-viewer/`를 맡습니다. 빌드가 만드는 이동 페이지는 쿼리와 해시(`?sample`, `?open=…`)를 그대로 넘기고 `noindex`로 검색에서 빠집니다. 그 아래 경로는 `src/404.html`이 넘깁니다.
 - `tools/search-verification.json`: Search Console과 서치어드바이저가 제공한 HTML 태그의 `content` 값을 넣습니다. 빈 값은 태그를 생성하지 않습니다. 생성된 `docs/index.html`을 직접 수정하면 다음 빌드 때 사라집니다.
 - `npm run check:seo`: 빌드 후 전체 본문·메타데이터·구조화 데이터·내부 링크·이미지·사이트맵·robots.txt·404를 검사합니다.
 
@@ -67,7 +68,7 @@ npm run check:seo
 
 PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 검사를 실행합니다.
 
-통합 사이트맵에 포함한 별도 저장소 뷰어의 날짜는 `tools/linked-content-dates.json`에서 관리합니다. 2D 뷰어는 `npm run sync:viewer-date`, 새 앱은 `npm run sync:viewer-date -- --url https://gyutae-kim.github.io/opencad-step/`처럼 앱을 먼저 배포한 뒤 공개된 앱 사이트맵 날짜를 가져오고 다시 빌드합니다. 함께 준비할 때는 `--file /절대경로/앱/dist/sitemap.xml`로 검증된 산출물을 읽을 수 있습니다. 일반 빌드에는 네트워크나 다른 체크아웃이 필요하지 않습니다. 앱 배포가 끝나기 전에 새 날짜를 담은 통합 사이트맵을 배포하지 마세요.
+통합 사이트맵에 포함한 별도 저장소 뷰어의 날짜는 `tools/linked-content-dates.json`에서 관리합니다. 2D 캐드(OpenCAD DWG·DXF)는 `npm run sync:viewer-date`, 새 앱은 `npm run sync:viewer-date -- --url https://gyutae-kim.github.io/opencad-step/`처럼 앱을 먼저 배포한 뒤 공개된 앱 사이트맵 날짜를 가져오고 다시 빌드합니다. 함께 준비할 때는 `--file /절대경로/앱/dist/sitemap.xml`로 검증된 산출물을 읽을 수 있습니다. 일반 빌드에는 네트워크나 다른 체크아웃이 필요하지 않습니다. 앱 배포가 끝나기 전에 새 날짜를 담은 통합 사이트맵을 배포하지 마세요.
 
 ### 배포 후 등록
 
@@ -94,14 +95,14 @@ PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 
 - 슬랙은 [공식 로봇 안내](https://api.slack.com/robots)에 따르면 링크 메타정보를 약 30분 캐시합니다. 변경 직후에는 캐시 갱신 이후의 새 공유로 확인합니다.
 - 실제 카카오톡·슬랙에서 카드가 표시되는지 확인하는 작업은 로컬 HTML 검사와 구분합니다. 대화방에 테스트 메시지를 보내려면 대상 대화방과 발송 승인을 먼저 확인합니다.
 
-검색 문구는 실제 화면과 프로젝트 근거에 맞춥니다. 개인 사이트는 AI·CAD/CAM 개발자 채용과 제조 소프트웨어 협업을 중심으로 담당 역할·검증 범위를 설명하고, OpenCAD 목록은 무료 DWG·DXF, STEP, SKP, NC 뷰어의 실제 지원 기능과 공개 주소를 안내하고, 아직 읽지 못하는 버전(예: SketchUp 2020 이하)은 지원한다고 쓰지 않습니다. 검색어 반복이나 확인되지 않은 경력·수치·호환성·인증을 넣지 않습니다. 페이지별 제목·설명은 `src/app/site-seo.ts`에서 관리하며 Open Graph·Twitter 및 구조화 데이터에도 같은 설명을 적용합니다.
+검색 문구는 실제 화면과 프로젝트 근거에 맞춥니다. 개인 사이트는 AI·CAD/CAM 개발자 채용과 제조 소프트웨어 협업을 중심으로 담당 역할·검증 범위를 설명하고, OpenCAD 목록은 무료 DWG·DXF 2D 캐드와 STEP, SKP, NC 뷰어의 실제 지원 기능과 공개 주소를 안내하고, 아직 읽지 못하는 버전(예: SketchUp 2020 이하)은 지원한다고 쓰지 않습니다. 검색어 반복이나 확인되지 않은 경력·수치·호환성·인증을 넣지 않습니다. 페이지별 제목·설명은 `src/app/site-seo.ts`에서 관리하며 Open Graph·Twitter 및 구조화 데이터에도 같은 설명을 적용합니다.
 
 
 ### 사용 안내와 개발 노트
 
 OpenCAD 프로젝트 목록은 `src/app/opencad-data.ts`에서 관리합니다. NC·STEP·SKP 앱과 공통 3D 코어는 `/opencad/projects/…`의 소개 페이지를 가지며, 홈·OpenCAD 목록·관련 프로젝트에서 연결합니다. `SEARCH_PAGES`의 공통 메타데이터·정적 HTML 생성 경로를 사용하므로 제목·설명·OG·canonical·구조화 데이터의 형태를 유지합니다. 새 앱을 `OPENCAD_TOOLS`에 공개 주소와 함께 등록하면 같은 호스트의 통합 사이트맵에도 포함됩니다. 독립 실행 사이트가 없는 라이브러리는 소개 페이지만 포함하며 존재하지 않는 앱 주소를 만들지 않습니다.
 
-별도 앱이 신뢰할 수 있는 콘텐츠 수정일을 제공하지 않으면 해당 앱 URL의 선택 항목인 `lastmod`는 생략합니다. 소개 페이지에는 기존 콘텐츠 변경 기록을 적용하고, 이미 관리 중인 2D 뷰어 날짜도 그대로 유지합니다. HTTP `Last-Modified`나 배포 시각을 콘텐츠 수정일로 대체하지 않습니다.
+별도 앱이 신뢰할 수 있는 콘텐츠 수정일을 제공하지 않으면 해당 앱 URL의 선택 항목인 `lastmod`는 생략합니다. 소개 페이지에는 기존 콘텐츠 변경 기록을 적용하고, 이미 관리 중인 2D 캐드 날짜도 그대로 유지합니다. HTTP `Last-Modified`나 배포 시각을 콘텐츠 수정일로 대체하지 않습니다.
 
 `src/app/articles-data.ts`에서 OpenCAD 사용 안내 2편과 제조 소프트웨어 개발 노트 2편을 관리합니다. 글마다 고유 URL·제목·설명·공유 이미지·TechArticle·목차를 제공하고 정적 HTML과 사이트맵에 포함합니다. 지원 기능은 뷰어의 공개 구현과 대조하고, 개발 노트의 역할·수치·검증 범위는 연결된 포트폴리오 사례에 근거해야 합니다. 배포 날짜로 가짜 수정일을 만들지 않습니다.
 

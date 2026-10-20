@@ -230,7 +230,8 @@ main:focus {
   height: 15px;
 }
 .footer-notes { margin-top: 16px; font-size: var(--fs-2); color: var(--blue); }
-.footer-notes a { text-decoration: underline; text-underline-offset: 4px; }
+.footer-notes button { border: 0; padding: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.footer-notes a, .footer-notes button { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ---------- shared pieces ---------- */
 .page-shell {

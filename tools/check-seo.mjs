@@ -199,6 +199,18 @@ assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
 for (const app of OPENCAD_TOOLS.filter(tool => tool.url).map(tool => tool.url)) {
   if (new URL(app).origin === SITE_URL) assert.ok(robots.includes(`Sitemap: ${app}sitemap.xml`), `Missing application sitemap discovery: ${app}`);
 }
+// Old paths of renamed app repositories forward to a published app and stay out of search.
+const movedApps = JSON.parse(readFileSync(new URL('./moved-apps.json', import.meta.url), 'utf8'));
+for (const [from, { url }] of Object.entries(movedApps)) {
+  assert.ok(hostedApps.has(url), `${from}: forwards to a published app`);
+  assert.ok(!sitemapUrls.includes(SITE_URL + from), `${from}: old app path stays out of the sitemap`);
+  const raw = readFileSync(join(outDir, from.slice(1), 'index.html'), 'utf8');
+  const moved = new JSDOM(raw).window.document;
+  assert.match(moved.querySelector('meta[name="robots"]').content, /^noindex/, `${from}: noindex`);
+  assert.equal(moved.querySelector('link[rel="canonical"]').href, url, `${from}: canonical`);
+  assert.ok(raw.includes(`location.replace(${JSON.stringify(url)} + location.search + location.hash)`), `${from}: keeps query and fragment`);
+  assert.ok(raw.includes(`<noscript><meta http-equiv="refresh" content="0;url=${url}"></noscript>`), `${from}: refresh without scripts`);
+}
 const notFound = new JSDOM(readFileSync(join(outDir, '404.html'), 'utf8'));
 assert.match(notFound.window.document.querySelector('meta[name="robots"]').content, /noindex/);
 assert.ok(!notFound.window.document.querySelector('meta[http-equiv="refresh"]'));

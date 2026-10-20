@@ -33,7 +33,7 @@
     <aside class="project-section" aria-labelledby="project-related">
       <h2 id="project-related">{{ '함께 쓰는 OpenCAD 프로젝트' | t }}</h2>
       <ul><li *ngFor="let item of related"><a [routerLink]="(item.path) | localLink">{{ (item.name) | t }}</a> {{ '— {0}' | t:[(item.kind)] }}</li></ul>
-      <p><a [href]="'https://gyutae-kim.github.io/2dcad-viewer/' | localLink">{{ '무료 DWG·DXF 2D 캐드 뷰어' | t }}</a> · <a [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}</a></p>
+      <p><a [href]="'https://gyutae-kim.github.io/opencad-dwgdxf/' | localLink">{{ '무료 DWG·DXF 2D 캐드' | t }}</a> · <a [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}</a></p>
       <p>{{ '개발:' | t }} <a [routerLink]="'/' | localLink">{{ '김규태 Sean Kim' | t }}</a> · <a [routerLink]="'/contact' | localLink">{{ 'AI·CAD/CAM 개발·제조 기술 협업 문의' | t }}</a></p>
     </aside>
   </article>

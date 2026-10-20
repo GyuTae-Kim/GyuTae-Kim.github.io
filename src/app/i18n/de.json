@@ -1507,5 +1507,19 @@
   "확장자와 압축 형식을 먼저 확인합니다": "Prüfen Sie zuerst die Dateierweiterung und das Komprimierungsformat.",
   "회전·이동·확대, 터치 조작, 뷰 큐브와 표준 뷰": "Drehen, Schwenken, Zoomen, Touch-Steuerung, Ansichtswürfel und Standardansicht",
   "회전·확대, 표준 뷰, 두 점 측정과 PNG 저장": "Drehen, Zoomen, Standardansicht, Zwei-Punkt-Messung und PNG-Speichern",
-  "회전축 하우징": "Drehachsengehäuse"
+  "회전축 하우징": "Drehachsengehäuse",
+  "방문 통계 설정": "Statistikeinstellungen",
+  "허용": "Zulassen",
+  "거절 (기본 방문만)": "Ablehnen (nur grundlegende Besuche)",
+  "수집 안 함": "Keine Erfassung",
+  "허용하면 쿠키로 유입·기능 통계를 수집합니다. 거절하면 쿠키 없이 기본 방문 신호만 Google Analytics로 전송합니다. 파일명·내용·입력 주소는 보내지 않습니다. 푸터나 앱 메뉴에서 변경할 수 있습니다.": "Bei Zustimmung werden Cookies für Zugriffs- und Nutzungsstatistiken verwendet. Bei Ablehnung werden nur grundlegende Besuchssignale ohne Cookies an Google Analytics gesendet. Dateinamen, Inhalte und eingegebene URLs werden nie gesendet. Die Einstellung lässt sich im Seitenfuß oder App-Menü ändern.",
+  "무료 DWG·DXF 2D 캐드": "Kostenloses DWG/DXF-2D-CAD",
+  "무료 DWG·DXF 캐드 열기": "Kostenloses DWG/DXF-CAD öffnen",
+  "OpenCAD 무료 DWG·DXF 2D 캐드 사용 안내.": "Anleitung für das kostenlose DWG/DXF-2D-CAD von OpenCAD.",
+  "DWG R13~R2018, DXF R12~R2018 파일과 빈 새 도면": "DWG-R13–R2018- und DXF-R12–R2018-Dateien sowie neue leere Zeichnungen",
+  "DWG·DXF 도면을 열어 보고, 새로 그리거나 고친 뒤 다시 저장하는 무료 2D 캐드입니다. 거리·각도·면적을 재고 PDF·PNG·SVG로 출력할 수도 있습니다.": "Kostenloses 2D-CAD zum Öffnen, Erstellen, Bearbeiten und Speichern von DWG/DXF-Zeichnungen. Auch Abstände, Winkel und Flächen lassen sich messen und als PDF, PNG oder SVG ausgeben.",
+  "OpenCAD DWG·DXF로 예제 도면을 연 화면. 위쪽에 리본 메뉴가 있고, 가운데에 치수가 붙은 브래킷 판의 정면도와 단면도, 주기, 체결 부품이 보입니다.": "Beispielzeichnung in OpenCAD DWG/DXF: oben das Menüband, in der Mitte bemaßte Vorder- und Schnittansichten einer Halterungsplatte, Hinweise und Befestigungsteile.",
+  "아래의 「무료 DWG·DXF 캐드 열기」를 누릅니다. 파일이 없으면 시작 화면의 「예제 도면 열기」로 먼저 둘러봅니다.": "Klicken Sie unten auf „Kostenloses DWG/DXF-CAD öffnen“. Ohne eigene Datei können Sie zunächst auf der Startseite „Beispielzeichnung öffnen“ ausprobieren.",
+  "DWG·DXF 도면을 열고 편집·저장하는 2D 캐드와 STEP·SketchUp 모델, NC 공구 경로를 확인하는 무료 도구를 만들고 있습니다. 설치 없이 쓰는 개인 오픈소스 프로젝트이며, 공통 3D 코어의 개발 내용도 소개합니다.": "Ich entwickle kostenlose Werkzeuge zum Öffnen, Bearbeiten und Speichern von DWG/DXF-Zeichnungen im 2D-CAD sowie zum Anzeigen von STEP-/SketchUp-Modellen und NC-Werkzeugwegen. Die persönlichen Open-Source-Projekte laufen ohne Installation; auch die Entwicklung des gemeinsamen 3D-Kerns wird vorgestellt.",
+  "OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 프로젝트입니다. DWG·DXF 2D 도면은 무료 2D 캐드에서 열어 보고, 새로 그리거나 고친 뒤 저장할 수 있습니다. STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로는 형식별 무료 뷰어에서 확인하세요. 설치나 회원가입 없이 파일을 브라우저에서 처리합니다.": "OpenCAD ist ein Open-Source-CAD-Projekt des KI- und CAD/CAM-Entwicklers Sean Kim. Im kostenlosen 2D-CAD können Sie DWG/DXF-Zeichnungen öffnen, erstellen, bearbeiten und speichern. Für STEP-/STP-Modelle, SketchUp-SKP-Dateien und NC-/G-Code-/MPR-Werkzeugwege stehen eigene kostenlose Viewer bereit. Die Dateien werden ohne Installation oder Anmeldung im Browser verarbeitet."
 }

@@ -70,5 +70,5 @@
       <dd>{{ (updated) | t }}</dd>
     </div>
   </dl>
-  <p class="footer-notes"><a [routerLink]="'/notes' | localLink">{{ '제조 소프트웨어 개발 노트' | t }}</a></p>
+  <p class="footer-notes"><a [routerLink]="'/notes' | localLink">{{ '제조 소프트웨어 개발 노트' | t }}</a> · <button type="button" (click)="showAnalyticsSettings()">{{ '방문 통계 설정' | t }}</button></p>
 </footer>

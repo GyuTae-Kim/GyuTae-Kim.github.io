@@ -9,6 +9,9 @@
     // Older research links keep working; genuinely unknown paths retain HTTP 404.
     var oldBlog = location.pathname.match(/^\/(?:(en|ja|zh-CN|de)\/)?blog\/.+/);
     if (oldBlog) location.replace((oldBlog[1] ? '/' + oldBlog[1] : '') + '/research' + location.search + location.hash);
+    else if (/^\/2dcad-viewer\/.+/.test(location.pathname)) {
+      location.replace(location.pathname.replace(/^\/2dcad-viewer\//, '/opencad-dwgdxf/') + location.search + location.hash);
+    }
   </script>
 </head>
 <body style="font-family: sans-serif; background: #f4f3ec; color: #1e2522; padding: 40px 24px;">
