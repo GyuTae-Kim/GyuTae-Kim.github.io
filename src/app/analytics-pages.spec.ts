@@ -19,6 +19,12 @@ describe('GA public page identities', () => {
     expect(analyticsPage('/opencad/guides/open-skp').title).toBe('OpenCAD 가이드 | SKP 열기');
   });
 
+  it('keeps localized routes in their stable public categories', () => {
+    for (const lang of ['en', 'ja', 'zh-CN', 'de']) {
+      expect(analyticsPage(`/${lang}/opencad?open=private.dwg#secret`)).toEqual(analyticsPage('/opencad'));
+    }
+  });
+
   it('normalizes published aliases and never labels unknown URLs with user input', () => {
     for (const url of ['/opencad/', '/opencad.html', '/opencad/index.html?open=private.skp#secret']) {
       expect(analyticsPage(url)).toEqual(analyticsPage('/opencad'));

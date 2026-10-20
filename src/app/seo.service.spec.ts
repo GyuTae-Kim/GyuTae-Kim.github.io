@@ -60,4 +60,19 @@ describe('SeoService', () => {
     seo.update('/research/unknown');
     expect(document.querySelector<HTMLMetaElement>('meta[name="robots"]')?.content).toBe('noindex, follow');
   });
+  it('uses self canonicals and reciprocal language alternatives, then clears them on 404', () => {
+    for (const language of ['en','ja','zh-CN','de']) {
+      seo.update(`/${language}/opencad?utm_source=test#main`);
+      expect(document.documentElement.lang).toBe(language);
+      expect(document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href).toBe(`${SITE_URL}/${language}/opencad`);
+      expect(document.querySelectorAll('link[rel="alternate"][hreflang]').length).toBe(6);
+      expect(document.querySelector<HTMLLinkElement>('link[hreflang="ko"]')?.href).toBe(`${SITE_URL}/opencad`);
+      const graph = JSON.parse(document.getElementById('site-structured-data')!.textContent!)['@graph'];
+      expect(graph.find((node: Record<string,string>) => node['@type'] === 'CollectionPage').inLanguage).toBe(language);
+    }
+    seo.update('/de/does-not-exist');
+    expect(document.querySelectorAll('link[rel="alternate"][hreflang]').length).toBe(0);
+    expect(document.querySelector('link[rel="canonical"]')).toBeNull();
+  });
+
 });

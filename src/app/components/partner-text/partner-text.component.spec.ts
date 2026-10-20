@@ -1,3 +1,5 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { I18nModule } from '../../i18n/i18n.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PartnerTextComponent } from './partner-text.component';
 
@@ -6,7 +8,7 @@ describe('PartnerTextComponent', () => {
   let page: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ declarations: [PartnerTextComponent] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [I18nModule, RouterTestingModule], declarations: [PartnerTextComponent] }).compileComponents();
     fixture = TestBed.createComponent(PartnerTextComponent);
     fixture.componentRef.setInput('text', '시뮬레이션은 협력 기관이, 시각화는 본인이 담당했습니다.');
     fixture.detectChanges();
@@ -50,6 +52,15 @@ describe('PartnerTextComponent', () => {
     document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
     fixture.detectChanges();
     expect(page.querySelector('[role="tooltip"]')!.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('keeps translated sentence order and spaces around institution mentions', () => {
+    for (const text of ['Simulation by a partner organization. I visualized the results.', '協力機関が実施したシミュレーションです。', '仿真由合作机构负责。', 'Eine Partnerorganisation führte die Simulation durch.']) {
+      fixture.componentRef.setInput('text', text);
+      fixture.detectChanges();
+      expect(fixture.componentInstance.parts.map(part => part.text).join('')).toBe(text);
+      expect(page.querySelector('button')).not.toBeNull();
+    }
   });
 
   it('leaves text without a partner mention as plain text', () => {

@@ -3,7 +3,8 @@ import { enableProdMode, NgModule } from '@angular/core';
 import { renderModule, ServerModule } from '@angular/platform-server';
 import { AppModule } from './app/app.module';
 import { AppComponent } from './app/app.component';
-export { SEARCH_PAGES, SITE_URL, contentModified } from './app/site-seo';
+export { SEARCH_PAGES, LOCALIZED_SEARCH_PAGES, SITE_URL, contentModified } from './app/site-seo';
+export { LANGUAGES, languagePath, localizedHref, languageFromUrl, originalPath, translate } from './app/i18n/localization';
 export { OPENCAD_TOOLS } from './app/opencad-data';
 
 enableProdMode();

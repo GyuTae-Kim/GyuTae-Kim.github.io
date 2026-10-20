@@ -2,11 +2,11 @@
   <div class="viewer-bar">
     <div class="viewer-models" *ngIf="fixedModel; else modelTabs">
       <span class="viewer-model-name"
-        ><span class="sheet-no">{{ info.sheet }}</span>{{ info.label }}</span
+        ><span class="sheet-no">{{ (info.sheet) | t }}</span>{{ (info.label) | t }}</span
       >
     </div>
     <ng-template #modelTabs>
-    <div class="viewer-models" role="group" aria-label="모델 선택">
+    <div class="viewer-models" role="group" [attr.aria-label]="'모델 선택' | t">
       <button
         *ngFor="let m of models"
         type="button"
@@ -14,18 +14,17 @@
         [class.selected]="model === m.id"
         [attr.aria-pressed]="model === m.id"
       >
-        <span class="sheet-no">{{ m.sheet }}</span>{{ m.label }}
-      </button>
+        <span class="sheet-no">{{ (m.sheet) | t }}</span>{{ (m.label) | t }}</button>
     </div>
     </ng-template>
-    <span class="viewer-tag">개념 모델</span>
+    <span class="viewer-tag">{{ '개념 모델' | t }}</span>
   </div>
   <div class="viewer-frame">
     <div
       class="viewer-stage"
       #stage
       role="img"
-      [attr.aria-label]="stageLabel"
+      [attr.aria-label]="(stageLabel) | t"
       [class.live]="state === 'live'"
     >
       <img
@@ -38,7 +37,7 @@
       />
     </div>
     <span class="viewer-hint" *ngIf="state === 'live'" aria-hidden="true"
-      ><app-icon name="orbit"></app-icon>드래그해서 돌려 보기</span
+      ><app-icon name="orbit"></app-icon>{{ '드래그해서 돌려 보기' | t }}</span
     >
     <button
       class="viewer-reset"
@@ -46,7 +45,7 @@
       *ngIf="state === 'live'"
       (click)="resetView()"
     >
-      <app-icon name="reset"></app-icon>처음 시점
+      <app-icon name="reset"></app-icon>{{ '처음 시점' | t }}
     </button>
     <button
       class="viewer-pause"
@@ -56,10 +55,9 @@
       (click)="togglePause()"
     >
       <app-icon [name]="paused ? 'play' : 'pause'"></app-icon
-      >{{ paused ? "재생" : "정지" }}
-    </button>
+      >{{ (paused ? "재생" : "정지") | t }}</button>
   </div>
-  <div class="viewer-layers" role="group" aria-label="단계 선택">
+  <div class="viewer-layers" role="group" [attr.aria-label]="'단계 선택' | t">
     <button
       *ngFor="let l of info.layers; let i = index"
       type="button"
@@ -67,18 +65,17 @@
       [class.selected]="layer === i"
       [attr.aria-pressed]="layer === i"
     >
-      <b>0{{ i + 1 }}</b>{{ l.label }}
-    </button>
+      <b>{{ '0{0}' | t:[(i + 1)] }}</b>{{ (l.label) | t }}</button>
   </div>
   <div class="viewer-body">
     <div
       class="viewer-text"
       [attr.aria-live]="autoplay && !paused ? 'off' : 'polite'"
     >
-      <strong>{{ view.title }}</strong>
-      <p>{{ view.text }}</p>
-      <a class="text-link" *ngIf="!fixedModel" [routerLink]="['/portfolio', info.caseId]"
-        >이 흐름의 실제 프로젝트<app-icon name="arrow-right"></app-icon></a
+      <strong>{{ (view.title) | t }}</strong>
+      <p>{{ (view.text) | t }}</p>
+      <a class="text-link" *ngIf="!fixedModel" [routerLink]="(['/portfolio', info.caseId]) | localLink"
+        >{{ '이 흐름의 실제 프로젝트' | t }}<app-icon name="arrow-right"></app-icon></a
       >
     </div>
     <div class="viewer-side">
@@ -91,46 +88,42 @@
           <b
             class="legend-no"
             *ngIf="(view.balloons || view.steps) && !$any(item).dashed"
-            >{{
-            i + 1
-          }}</b
+            >{{ (i + 1) | t }}</b
           ><i
             class="legend-swatch"
             [class.dashed]="$any(item).dashed"
             [style.--swatch]="item.swatch"
           ></i
-          ><span class="legend-label">{{ item.label }}</span
-          ><span class="legend-detail" *ngIf="item.detail">{{
-            item.detail
-          }}</span>
+          ><span class="legend-label">{{ (item.label) | t }}</span
+          ><span class="legend-detail" *ngIf="item.detail">{{ (item.detail) | t }}</span>
         </li>
       </ol>
     </div>
   </div>
   <dl class="title-block">
     <div>
-      <dt>도면</dt>
-      <dd>{{ info.sheet }}</dd>
+      <dt>{{ '도면' | t }}</dt>
+      <dd>{{ (info.sheet) | t }}</dd>
     </div>
     <div>
-      <dt>이름</dt>
-      <dd>{{ info.name }}</dd>
+      <dt>{{ '이름' | t }}</dt>
+      <dd>{{ (info.name) | t }}</dd>
     </div>
     <div>
-      <dt>단계</dt>
-      <dd>0{{ layer + 1 }} {{ view.label }}</dd>
+      <dt>{{ '단계' | t }}</dt>
+      <dd>{{ '0{0} {1}' | t:[(layer + 1), (view.label)] }}</dd>
     </div>
     <div>
-      <dt>단위</dt>
+      <dt>{{ '단위' | t }}</dt>
       <dd>mm</dd>
     </div>
     <div>
-      <dt>작성</dt>
-      <dd>김규태</dd>
+      <dt>{{ '작성' | t }}</dt>
+      <dd>{{ '김규태' | t }}</dd>
     </div>
     <div>
-      <dt>갱신</dt>
-      <dd>{{ updated }}</dd>
+      <dt>{{ '갱신' | t }}</dt>
+      <dd>{{ (updated) | t }}</dd>
     </div>
   </dl>
 </figure>

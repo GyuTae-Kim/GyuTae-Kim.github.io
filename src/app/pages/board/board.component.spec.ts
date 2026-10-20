@@ -1,3 +1,4 @@
+import { I18nModule } from '../../i18n/i18n.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -14,7 +15,7 @@ describe('BoardComponent', () => {
   beforeEach(async () => {
     params = new BehaviorSubject(convertToParamMap({}));
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [I18nModule, RouterTestingModule],
       declarations: [BoardComponent, IconComponent],
       providers: [{ provide: ActivatedRoute, useValue: { paramMap: params } }],
     }).compileComponents();

@@ -1,3 +1,4 @@
+import { I18nModule } from '../../i18n/i18n.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconComponent } from '../../components/icon/icon.component';
@@ -8,7 +9,7 @@ describe('ContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [I18nModule, RouterTestingModule],
       declarations: [ContactComponent, IconComponent],
     }).compileComponents();
     fixture = TestBed.createComponent(ContactComponent);

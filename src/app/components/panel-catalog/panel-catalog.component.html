@@ -1,12 +1,12 @@
-<ul class="panel-catalog" aria-label="AI가 인식하는 패널 종류">
+<ul class="panel-catalog" [attr.aria-label]="'AI가 인식하는 패널 종류' | t">
   <li class="panel-type-item" *ngFor="let type of types" (mouseenter)="enter(type, $event)" (mouseleave)="leave()" (focusin)="show(type, $event)" (focusout)="scheduleClose()">
-    <button type="button" class="panel-trigger" [attr.aria-label]="type.name + ' 위치와 설명'" [attr.aria-describedby]="'panel-tip-' + type.id" [attr.aria-expanded]="active === type.id" (click)="show(type, $event)">{{ type.name }}</button>
+    <button type="button" class="panel-trigger" [attr.aria-label]="'{0} 위치와 설명' | t:[(type.name) ]" [attr.aria-describedby]="'panel-tip-' + type.id" [attr.aria-expanded]="active === type.id" (click)="show(type, $event)">{{ (type.name) | t }}</button>
     <div class="panel-tooltip" role="tooltip" [id]="'panel-tip-' + type.id" [class.open]="active === type.id" [attr.aria-hidden]="active !== type.id" [style.left.px]="left" [style.top.px]="top">
       <div class="panel-card">
-        <img [src]="type.image" [alt]="type.imageAlt" width="420" height="300" loading="lazy" />
-        <strong>{{ type.name }}</strong>
-        <p>{{ type.description }}</p>
-        <small><i aria-hidden="true"></i>파란색이 해당 패널입니다 · 위치 안내용 개념도</small>
+        <img [src]="type.image" [alt]="(type.imageAlt) | t" width="420" height="300" loading="lazy" />
+        <strong>{{ (type.name) | t }}</strong>
+        <p>{{ (type.description) | t }}</p>
+        <small><i aria-hidden="true"></i>{{ '파란색이 해당 패널입니다 · 위치 안내용 개념도' | t }}</small>
       </div>
     </div>
   </li>

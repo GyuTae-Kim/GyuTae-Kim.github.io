@@ -1,3 +1,5 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { I18nModule } from '../../i18n/i18n.module';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { PANEL_TYPES } from '../../panel-types-data';
 import { PanelCatalogComponent } from './panel-catalog.component';
@@ -7,7 +9,7 @@ describe('PanelCatalogComponent', () => {
   let page: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ declarations: [PanelCatalogComponent] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [I18nModule, RouterTestingModule], declarations: [PanelCatalogComponent] }).compileComponents();
     fixture = TestBed.createComponent(PanelCatalogComponent);
     fixture.componentRef.setInput('types', PANEL_TYPES);
     fixture.detectChanges();

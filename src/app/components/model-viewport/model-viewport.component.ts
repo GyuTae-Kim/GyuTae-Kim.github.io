@@ -13,6 +13,7 @@ import {
 import type { ViewportScene } from './viewport-scene';
 import { ModelId, VIEW_MODELS } from './viewport-data';
 import { siteUpdated } from '../../site-updated';
+import { I18nService } from '../../i18n/i18n.service';
 
 // Home viewport: a drawing sheet with a live three.js model. The 3D code is a lazy
 // chunk; until it loads (or without WebGL) the sheet shows a rendered still.
@@ -47,6 +48,7 @@ export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy 
   constructor(
     private readonly zone: NgZone,
     private readonly changes: ChangeDetectorRef,
+    private readonly i18n: I18nService,
   ) {}
 
   ngOnInit() {
@@ -95,6 +97,7 @@ export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy 
         .then(({ ViewportScene }) => {
           if (this.destroyed) return;
           this.scene = new ViewportScene(this.stage.nativeElement, {
+            translate: (text) => this.i18n.text(text),
             reducedMotion: this.reducedMotion,
             autoplay: this.autoplay,
             onLayer: (layer) => this.refresh(() => (this.layer = layer)),

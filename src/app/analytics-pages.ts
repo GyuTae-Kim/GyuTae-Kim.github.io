@@ -1,3 +1,4 @@
+import { originalPath } from './i18n/localization';
 import type { ContentGroup } from './analytics';
 import { SEARCH_ALIASES, SEARCH_PAGES, searchPage } from './site-seo';
 
@@ -38,7 +39,7 @@ export const ANALYTICS_PAGES: readonly AnalyticsPage[] = SEARCH_PAGES.map(page =
 });
 
 export function analyticsPage(url: string): AnalyticsPage {
-  const path = url.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
+  const path = originalPath(url).split(/[?#]/)[0].replace(/\/+$/, '') || '/';
   const page = searchPage(SEARCH_ALIASES.find(alias => alias.from === path)?.to ?? path);
   return ANALYTICS_PAGES.find(item => item.path === page?.path)
     ?? { path: '/404', title: '포트폴리오 | 없는 페이지', group: '오류' };

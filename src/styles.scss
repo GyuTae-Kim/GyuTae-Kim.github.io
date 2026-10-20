@@ -2798,3 +2798,10 @@ app-icon.row-arrow {
     overflow-wrap: anywhere;
   }
 }
+
+/* Use installed script-appropriate fonts; Korean subsets cannot cover CJK text. */
+html:lang(ja) { --sans: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; }
+html:lang(zh-CN) { --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+html:not(:lang(ko)) { word-break: normal; overflow-wrap: anywhere; }
+:root { --header-h: 108px; }
+@media (max-width: 767px) { :root { --header-h: 156px; } }

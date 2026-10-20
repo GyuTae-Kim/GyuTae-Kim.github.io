@@ -1,3 +1,4 @@
+import { I18nModule } from './i18n/i18n.module';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconComponent } from './components/icon/icon.component';
@@ -6,7 +7,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [I18nModule, RouterTestingModule],
       declarations: [AppComponent, IconComponent],
     }).compileComponents();
   });

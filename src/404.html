@@ -7,8 +7,8 @@
   <title>없는 페이지 — 김규태 · Sean Kim</title>
   <script>
     // Older research links keep working; genuinely unknown paths retain HTTP 404.
-    if (/^\/blog\/.+/.test(location.pathname)) location.replace('/research');
-    // The 2D CAD app moved with its repository rename (tools/moved-apps.json covers its root).
+    var oldBlog = location.pathname.match(/^\/(?:(en|ja|zh-CN|de)\/)?blog\/.+/);
+    if (oldBlog) location.replace((oldBlog[1] ? '/' + oldBlog[1] : '') + '/research' + location.search + location.hash);
     else if (/^\/2dcad-viewer\/.+/.test(location.pathname)) {
       location.replace(location.pathname.replace(/^\/2dcad-viewer\//, '/opencad-dwgdxf/') + location.search + location.hash);
     }
@@ -21,5 +21,25 @@
     <a href="/">홈</a> · <a href="/portfolio">프로젝트</a> ·
     <a href="/research">연구</a> · <a href="/contact">연락</a>
   </nav>
+  <script>
+    (function () {
+      var code = location.pathname.split('/')[1];
+      var text = {
+        en: ['Page not found', 'The address may have changed or been entered incorrectly. Try one of the pages below.', 'Main navigation', 'Home', 'Projects', 'Research', 'Contact'],
+        ja: ['ページが見つかりません', 'アドレスが変更されたか、正しく入力されていない可能性があります。以下のページからお探しください。', 'メインメニュー', 'ホーム', 'プロジェクト', '研究', 'お問い合わせ'],
+        'zh-CN': ['未找到页面', '地址可能已更改或输入有误。请通过下方链接查找。', '主导航', '首页', '项目', '研究', '联系'],
+        de: ['Seite nicht gefunden', 'Die Adresse wurde möglicherweise geändert oder falsch eingegeben. Versuchen Sie eine der folgenden Seiten.', 'Hauptnavigation', 'Startseite', 'Projekte', 'Forschung', 'Kontakt']
+      }[code];
+      if (!text) return;
+      document.documentElement.lang = code;
+      document.title = text[0] + ' — Sean Kim';
+      document.querySelector('h1').textContent = text[0];
+      document.querySelector('p').textContent = text[1];
+      document.querySelector('nav').setAttribute('aria-label', text[2]);
+      document.querySelectorAll('nav a').forEach(function (link, index) {
+        link.textContent = text[index + 3]; link.href = '/' + code + link.getAttribute('href');
+      });
+    })();
+  </script>
 </body>
 </html>

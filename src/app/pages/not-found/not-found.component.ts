@@ -6,14 +6,14 @@ import { Component } from '@angular/core';
   template: `
     <div class="page-shell interior-page">
       <div class="page-intro">
-        <h1>없는 페이지입니다<span class="accent">.</span></h1>
-        <p>주소가 바뀌었거나 잘못 입력된 것 같습니다. 아래에서 찾아 주세요.</p>
+        <h1>{{ '없는 페이지입니다' | t }}<span class="accent">.</span></h1>
+        <p>{{ '주소가 바뀌었거나 잘못 입력된 것 같습니다. 아래에서 찾아 주세요.' | t }}</p>
       </div>
-      <nav class="archive-nav" aria-label="사이트 주요 페이지">
-        <a routerLink="/">홈</a>
-        <a routerLink="/portfolio">프로젝트</a>
-        <a routerLink="/research">연구</a>
-        <a routerLink="/contact">연락</a>
+      <nav class="archive-nav" [attr.aria-label]="'사이트 주요 페이지' | t">
+        <a [routerLink]="'/' | localLink">{{ '홈' | t }}</a>
+        <a [routerLink]="'/portfolio' | localLink">{{ '프로젝트' | t }}</a>
+        <a [routerLink]="'/research' | localLink">{{ '연구' | t }}</a>
+        <a [routerLink]="'/contact' | localLink">{{ '연락' | t }}</a>
       </nav>
     </div>
   `,

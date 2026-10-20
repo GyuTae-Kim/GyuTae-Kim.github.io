@@ -1,40 +1,38 @@
 <div class="index-layout">
   <aside class="index-profile" aria-labelledby="intro-title">
     <p class="profile-name">
-      <strong>김규태</strong> Sean Kim
-      <span class="profile-role">AI · CAD/CAM 개발자 · 제조 소프트웨어</span>
+      <strong>{{ '김규태' | t }}</strong> Sean Kim
+      <span class="profile-role">{{ 'AI · CAD/CAM 개발자 · 제조 소프트웨어' | t }}</span>
     </p>
     <h1 id="intro-title">
-      가구 설계부터 <br />가공 데이터까지, <br />3D 형상을 다룹니다<span
+      {{ '가구 설계부터' | t }} <br />{{ '가공 데이터까지,' | t }} <br />{{ '3D 형상을 다룹니다' | t }}<span
         class="accent"
         >.</span
       >
     </h1>
     <p class="profile-text">
-      3D 형상을 읽는 AI를 설계 변경과 가공 공정으로 연결합니다.
-      Fusion CAM 자동화를 연구개발하고, 팀에서는 Wedraw Pro의 제조 데이터
-      출력과 생산 투입을 리딩했습니다. 서비스 운영에서 드러난 오류도 추적해 고칩니다.
+      {{ '3D 형상을 읽는 AI를 설계 변경과 가공 공정으로 연결합니다. Fusion CAM 자동화를 연구개발하고, 팀에서는 Wedraw Pro의 제조 데이터 출력과 생산 투입을 리딩했습니다. 서비스 운영에서 드러난 오류도 추적해 고칩니다.' | t }}
     </p>
-    <nav class="index-nav" aria-label="이 페이지의 구성">
+    <nav class="index-nav" [attr.aria-label]="'이 페이지의 구성' | t">
       <a
         *ngFor="let item of sections; let i = index"
-        [routerLink]="[]"
+        [routerLink]="([]) | localLink"
         [fragment]="item.id"
         [class.active]="active === item.id"
         [attr.aria-current]="active === item.id ? 'location' : null"
-        ><b>0{{ i + 1 }}</b><span class="index-line" aria-hidden="true"></span
-        >{{ item.label }}</a
+        ><b>{{ '0{0}' | t:[(i + 1)] }}</b><span class="index-line" aria-hidden="true"></span
+        >{{ (item.label) | t }}</a
       >
     </nav>
     <ul class="profile-links">
       <li>
-        <a href="mailto:GyuTae.K1020@gmail.com"
-          ><app-icon name="mail"></app-icon>이메일</a
+        <a [href]="'mailto:GyuTae.K1020@gmail.com' | localLink"
+          ><app-icon name="mail"></app-icon>{{ '이메일' | t }}</a
         >
       </li>
       <li>
         <a
-          href="https://github.com/GyuTae-Kim"
+          [href]="'https://github.com/GyuTae-Kim' | localLink"
           target="_blank"
           rel="noopener noreferrer"
           ><app-icon name="github"></app-icon>GitHub</a
@@ -44,12 +42,12 @@
   </aside>
 
   <div class="index-main">
-    <section class="index-section viewer-section" aria-label="3D 개념 모델">
+    <section class="index-section viewer-section" [attr.aria-label]="'3D 개념 모델' | t">
       <app-model-viewport></app-model-viewport>
       <a
         class="product-card"
-        [routerLink]="['/portfolio', furniture.id]"
-        [attr.aria-label]="furniture.title + ' 프로젝트 보기'"
+        [routerLink]="(['/portfolio', furniture.id]) | localLink"
+        [attr.aria-label]="'{0} 프로젝트 보기' | t:[(furniture.title) ]"
       >
         <!-- A real product screen, so the card does not repeat project 03's thumbnail below. -->
         <img
@@ -61,11 +59,11 @@
           height="390"
         />
         <div>
-          <span class="product-kicker">지금 팀과 만드는 제품 · 진행 중</span>
+          <span class="product-kicker">{{ '지금 팀과 만드는 제품 · 진행 중' | t }}</span>
           <strong>Wedraw Pro</strong>
-          <p class="product-line">설계가 BOM·도면·가공 파일로 이어지는 팀 제품</p>
+          <p class="product-line">{{ '설계가 BOM·도면·가공 파일로 이어지는 팀 제품' | t }}</p>
           <ol class="flow-chips">
-            <li *ngFor="let label of furniture.diagramLabels">{{ label }}</li>
+            <li *ngFor="let label of furniture.diagramLabels">{{ (label) | t }}</li>
           </ol>
         </div>
         <app-icon class="row-arrow" name="arrow-right"></app-icon>
@@ -75,18 +73,17 @@
     <section class="index-section" id="work" aria-labelledby="work-title">
       <div class="section-title">
         <span class="section-no">01</span>
-        <h2 id="work-title">AI에서 제조로 잇는 개발</h2>
-        <a class="text-link" routerLink="/portfolio"
-          >개발 프로젝트 전체 보기<app-icon name="arrow-right"></app-icon></a
+        <h2 id="work-title">{{ 'AI에서 제조로 잇는 개발' | t }}</h2>
+        <a class="text-link" [routerLink]="'/portfolio' | localLink"
+          >{{ '개발 프로젝트 전체 보기' | t }}<app-icon name="arrow-right"></app-icon></a
         >
       </div>
       <p class="section-lead">
-        형상을 인식하고, 바꾸고, 공장이 쓸 데이터로 만드는 세 프로젝트입니다.
-        각 사례에 직접 맡은 역할과 문제·해결, 구현 결과를 정리했습니다.
+        {{ '형상을 인식하고, 바꾸고, 공장이 쓸 데이터로 만드는 세 프로젝트입니다. 각 사례에 직접 맡은 역할과 문제·해결, 구현 결과를 정리했습니다.' | t }}
       </p>
       <ol class="index-rows">
         <li *ngFor="let project of cases">
-          <a class="index-row case-row" [routerLink]="['/portfolio', project.id]">
+          <a class="index-row case-row" [routerLink]="(['/portfolio', project.id]) | localLink">
             <span class="row-thumb"
               ><img
                 [src]="project.thumb + '-336.webp'"
@@ -96,19 +93,17 @@
                 width="560"
                 height="390"
                 loading="lazy"
-              /><span class="figure-kind">{{
-                kindLabels[project.figure.kind]
-              }}</span></span
+              /><span class="figure-kind">{{ (kindLabels[project.figure.kind]) | t }}</span></span
             >
             <span class="row-body">
               <span class="row-meta"
-                >{{ project.number }} · {{ project.category }}</span
+                >{{ '{0} · {1}' | t:[(project.number), (project.category)] }}</span
               >
-              <strong class="row-title">{{ project.title }}</strong>
-              <span class="row-result">{{ project.intro.result }}</span>
-              <span class="row-note"><b>담당</b>{{ project.intro.role }}</span>
+              <strong class="row-title">{{ (project.title) | t }}</strong>
+              <span class="row-result">{{ (project.intro.result) | t }}</span>
+              <span class="row-note"><b>{{ '담당' | t }}</b>{{ (project.intro.role) | t }}</span>
               <span class="home-fact"
-                ><b>{{ project.stats[0].value }}</b>{{ project.stats[0].label }}</span
+                ><b>{{ (project.stats[0].value) | t }}</b>{{ (project.stats[0].label) | t }}</span
               >
             </span>
             <app-icon class="row-arrow" name="arrow-right"></app-icon>
@@ -116,12 +111,12 @@
         </li>
       </ol>
       <div class="operations-heading">
-        <h3>운영에서 발견한 문제까지</h3>
-        <p>실제 업무의 실패를 감지하고, 원인을 고친 사례입니다.</p>
+        <h3>{{ '운영에서 발견한 문제까지' | t }}</h3>
+        <p>{{ '실제 업무의 실패를 감지하고, 원인을 고친 사례입니다.' | t }}</p>
       </div>
       <ul class="operations-list">
         <li *ngFor="let project of operations">
-          <a class="operation-card" [routerLink]="['/portfolio', project.id]">
+          <a class="operation-card" [routerLink]="(['/portfolio', project.id]) | localLink">
             <img
               [src]="project.thumb + '-336.webp'"
               [attr.srcset]="srcset(project.thumb)"
@@ -132,21 +127,21 @@
               loading="lazy"
             />
             <span class="operation-title">
-              <span class="row-meta">{{ project.number }} · {{ project.category }}</span>
-              <strong>서비스 감시와 오류 추적</strong>
+              <span class="row-meta">{{ '{0} · {1}' | t:[(project.number), (project.category)] }}</span>
+              <strong>{{ '서비스 감시와 오류 추적' | t }}</strong>
             </span>
-            <span class="row-result">{{ project.intro.result }}</span>
-            <span class="row-note"><b>담당</b>{{ project.intro.role }}</span>
-            <span class="operation-link">사례 보기<app-icon name="arrow-right"></app-icon></span>
+            <span class="row-result">{{ (project.intro.result) | t }}</span>
+            <span class="row-note"><b>{{ '담당' | t }}</b>{{ (project.intro.role) | t }}</span>
+            <span class="operation-link">{{ '사례 보기' | t }}<app-icon name="arrow-right"></app-icon></span>
           </a>
         </li>
       </ul>
     </section>
 
     <section class="index-section" aria-labelledby="home-opencad-title">
-      <div class="section-title"><h2 id="home-opencad-title">파일 형식별 무료 OpenCAD 도구</h2><a class="text-link" routerLink="/opencad">모든 도구와 사용 안내<app-icon name="arrow-right"></app-icon></a></div>
-      <p class="section-lead">DWG·DXF 도면을 열고 편집·저장하는 2D 캐드와 STEP·SketchUp 모델, NC 공구 경로를 확인하는 무료 도구를 만들고 있습니다. 설치 없이 쓰는 개인 오픈소스 프로젝트이며, 공통 3D 코어의 개발 내용도 소개합니다.</p>
-      <ul class="guide-list"><li *ngFor="let tool of openCadProjects"><h3><a [routerLink]="tool.path || '/opencad'" [fragment]="tool.path ? undefined : tool.id">{{ tool.name }}</a></h3><p>{{ tool.summary }}</p></li></ul>
+      <div class="section-title"><h2 id="home-opencad-title">{{ '파일 형식별 무료 OpenCAD 도구' | t }}</h2><a class="text-link" [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></div>
+      <p class="section-lead">{{ 'DWG·DXF 도면을 열고 편집·저장하는 2D 캐드와 STEP·SketchUp 모델, NC 공구 경로를 확인하는 무료 도구를 만들고 있습니다. 설치 없이 쓰는 개인 오픈소스 프로젝트이며, 공통 3D 코어의 개발 내용도 소개합니다.' | t }}</p>
+      <ul class="guide-list"><li *ngFor="let tool of openCadProjects"><h3><a [routerLink]="(tool.path || '/opencad') | localLink" [fragment]="tool.path ? undefined : tool.id">{{ (tool.name) | t }}</a></h3><p>{{ (tool.summary) | t }}</p></li></ul>
     </section>
 
     <section
@@ -156,21 +151,19 @@
     >
       <div class="section-title">
         <span class="section-no">02</span>
-        <h2 id="research-title">직접 구현하며 배운 AI 연구</h2>
-        <a class="text-link" routerLink="/research"
-          >연구 기록 전체 보기<app-icon name="arrow-right"></app-icon></a
+        <h2 id="research-title">{{ '직접 구현하며 배운 AI 연구' | t }}</h2>
+        <a class="text-link" [routerLink]="'/research' | localLink"
+          >{{ '연구 기록 전체 보기' | t }}<app-icon name="arrow-right"></app-icon></a
         >
       </div>
       <p class="section-lead">
-        학부연구생 때 강화학습·의류 분류·가상 착용을 연구했습니다.
-        논문과 공개 모델을 바탕으로 직접 구현한 부분, 실험에서 부딪힌 문제와 결과를 소개합니다.
-        아래 이미지는 공개 코드를 재실행한 예시입니다.
+        {{ '학부연구생 때 강화학습·의류 분류·가상 착용을 연구했습니다. 논문과 공개 모델을 바탕으로 직접 구현한 부분, 실험에서 부딪힌 문제와 결과를 소개합니다. 아래 이미지는 공개 코드를 재실행한 예시입니다.' | t }}
       </p>
       <ol class="index-rows">
         <li *ngFor="let work of research">
           <a
             class="index-row research-row"
-            [routerLink]="['/research', work.id]"
+            [routerLink]="(['/research', work.id]) | localLink"
           >
             <span class="row-thumb"
               ><img
@@ -183,15 +176,15 @@
                 loading="lazy"
             /></span>
             <span class="row-body">
-              <span class="row-meta">{{ work.category }} · {{ work.previewLabel }}</span>
-              <strong class="row-title">{{ work.title }}</strong>
-              <span class="row-result">{{ work.summary }}</span>
+              <span class="row-meta">{{ '{0} · {1}' | t:[(work.category), (work.previewLabel)] }}</span>
+              <strong class="row-title">{{ (work.title) | t }}</strong>
+              <span class="row-result">{{ (work.summary) | t }}</span>
               <span class="row-note"
-                ><b>담당</b>{{ work.homeRole }}</span
+                ><b>{{ '담당' | t }}</b>{{ (work.homeRole) | t }}</span
               >
             </span>
             <span class="row-stat" *ngIf="work.result!.homeStat ?? work.result!.stats[0] as stat"
-              ><b>{{ stat.value }}</b><span>{{ stat.label }}</span></span
+              ><b>{{ (stat.value) | t }}</b><span>{{ (stat.label) | t }}</span></span
             >
           </a>
         </li>
@@ -205,7 +198,7 @@
     >
       <div class="section-title">
         <span class="section-no">03</span>
-        <h2 id="achievements-title">특허와 프로그램</h2>
+        <h2 id="achievements-title">{{ '특허와 프로그램' | t }}</h2>
       </div>
       <app-achievements [compact]="true"></app-achievements>
     </section>
@@ -213,42 +206,38 @@
     <section class="index-section" id="about" aria-labelledby="about-title">
       <div class="section-title">
         <span class="section-no">04</span>
-        <h2 id="about-title">소개</h2>
+        <h2 id="about-title">{{ '소개' | t }}</h2>
       </div>
       <div class="about-block">
         <img
           src="assets/sean-kim.webp"
-          alt="김규태(Sean Kim) 프로필 사진"
+          [attr.alt]="'김규태(Sean Kim) 프로필 사진' | t"
           width="100"
           height="100"
           loading="lazy"
         />
         <div>
           <p class="about-statement">
-            반복하던 판단과 입력을 줄여, 사람이 중요한 일에 집중하도록 돕고 싶습니다.
+            {{ '반복하던 판단과 입력을 줄여, 사람이 중요한 일에 집중하도록 돕고 싶습니다.' | t }}
           </p>
           <p>
-            연구에서는 형상을 해석하고 규칙을 학습하는 방법을 구현했습니다.
-            제품에서는 이를 설계 수정, 제조 데이터 출력, 생산 전 확인으로 연결했습니다.
-            운영에서는 처리 결과와 오류를 모아 놓친 문제를 찾고 원인을 고쳤습니다.
-            이런 도구가 설계 정보를 다시 입력하는 수고와 가공 전 시행착오를 줄이고,
-            작은 제조 현장에서도 축적된 기술을 활용하는 데 도움이 되길 기대합니다.
+            {{ '연구에서는 형상을 해석하고 규칙을 학습하는 방법을 구현했습니다. 제품에서는 이를 설계 수정, 제조 데이터 출력, 생산 전 확인으로 연결했습니다. 운영에서는 처리 결과와 오류를 모아 놓친 문제를 찾고 원인을 고쳤습니다. 이런 도구가 설계 정보를 다시 입력하는 수고와 가공 전 시행착오를 줄이고, 작은 제조 현장에서도 축적된 기술을 활용하는 데 도움이 되길 기대합니다.' | t }}
           </p>
-          <dl class="skill-list" aria-label="다뤄 본 기술">
+          <dl class="skill-list" [attr.aria-label]="'다뤄 본 기술' | t">
             <div *ngFor="let group of skills">
-              <dt>{{ group.area }}</dt>
+              <dt>{{ (group.area) | t }}</dt>
               <dd>
-                <span *ngFor="let item of group.items">{{ item }}</span>
+                <span *ngFor="let item of group.items">{{ (item) | t }}</span>
               </dd>
             </div>
           </dl>
           <p>
-            AI·CAD/CAM 개발자 채용이나 제조 소프트웨어 협업을 검토하신다면,
-            <a routerLink="/portfolio">프로젝트별 담당 역할과 검증 결과</a>를 확인해 주세요.
-            <a routerLink="/research">연구별 구현과 실험 결과</a>도 함께 소개합니다.
+            {{ 'AI·CAD/CAM 개발자 채용이나 제조 소프트웨어 협업을 검토하신다면,' | t }}
+            <a [routerLink]="'/portfolio' | localLink">{{ '프로젝트별 담당 역할과 검증 결과' | t }}</a>{{ '를 확인해 주세요.' | t }}
+            <a [routerLink]="'/research' | localLink">{{ '연구별 구현과 실험 결과' | t }}</a>{{ '도 함께 소개합니다.' | t }}
           </p>
-          <a class="text-link" routerLink="/contact"
-            >채용·제조 기술 협업 문의<app-icon name="arrow-right"></app-icon></a
+          <a class="text-link" [routerLink]="'/contact' | localLink"
+            >{{ '채용·제조 기술 협업 문의' | t }}<app-icon name="arrow-right"></app-icon></a
           >
         </div>
       </div>

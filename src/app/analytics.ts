@@ -11,6 +11,7 @@ const PATHS: Record<AnalyticsTool, string> = { portfolio: '/', dwgdxf: '/opencad
 const TITLES: Record<AnalyticsTool, string> = { portfolio: '포트폴리오 | 홈', dwgdxf: 'OpenCAD | DWG/DXF 캐드', nc: 'OpenCAD | NC 뷰어', step: 'OpenCAD | STEP 뷰어', skp: 'OpenCAD | SKP 뷰어' };
 const FORMATS = new Set(['skp', 'step', 'stp', 'p21', 'stpz', 'stpx', 'zip', 'gz', 'dxf', 'dwg', 'nc', 'gcode', 'ngc', 'h', 'mpr']);
 type AnalyticsWindow = Window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
+let localize = (value: string): string => value;
 let active: { id: string; tool: AnalyticsTool } | undefined;
 let started = false;
 // Legacy "denied" keeps its original meaning: no Google requests at all.
@@ -119,20 +120,24 @@ function controls(expanded: boolean): void {
   if (!expanded) return;
   const box = document.createElement('aside');
   box.id = 'opencad-analytics-choice';
-  box.setAttribute('aria-label', '방문 통계 설정');
+  box.setAttribute('aria-label', localize('방문 통계 설정'));
   box.style.cssText = 'position:fixed;bottom:12px;right:12px;z-index:10000;box-sizing:border-box;width:340px;max-width:calc(100vw - 24px);padding:10px;border:1px solid #888;border-radius:6px;background:Canvas;color:CanvasText;font:13px/1.5 system-ui;box-shadow:0 2px 8px #0002';
   const button = (label: string, run: () => void): HTMLButtonElement => {
     const b = document.createElement('button');
-    b.type = 'button'; b.textContent = label;
+    b.type = 'button'; b.textContent = localize(label);
     b.style.cssText = 'margin:4px;padding:6px 10px;font:inherit;cursor:pointer';
     b.addEventListener('click', run);
     return b;
   };
   const text = document.createElement('p');
   text.style.margin = '0 0 6px';
-  text.textContent = '허용하면 쿠키로 유입·기능 통계를 수집합니다. 거절하면 쿠키 없이 기본 방문 신호만 Google Analytics로 전송합니다. 파일명·내용·입력 주소는 보내지 않습니다. 푸터나 앱 메뉴에서 변경할 수 있습니다.';
+  text.textContent = localize('허용하면 쿠키로 유입·기능 통계를 수집합니다. 거절하면 쿠키 없이 기본 방문 신호만 Google Analytics로 전송합니다. 파일명·내용·입력 주소는 보내지 않습니다. 푸터나 앱 메뉴에서 변경할 수 있습니다.');
   box.append(text, button('허용', () => choose('granted')), button('거절 (기본 방문만)', () => choose('limited')), button('수집 안 함', () => choose('denied')));
   document.body.append(box);
+}
+
+export function refreshAnalyticsSettings(): void {
+  if (typeof document !== 'undefined' && document.getElementById('opencad-analytics-choice')) controls(true);
 }
 
 /** Reopen from a normal footer/menu, without a persistent floating button. */
@@ -141,7 +146,8 @@ export function showAnalyticsSettings(): void {
 }
 
 /** Published pages only; no Google request until the visitor makes a choice. */
-export function initAnalytics(id: string, tool: AnalyticsTool): void {
+export function initAnalytics(id: string, tool: AnalyticsTool, translate: (value: string) => string = value => value): void {
+  localize = translate;
   try { initialize(id, tool); } catch { /* Tracking failures never prevent opening the app. */ }
 }
 
@@ -163,7 +169,8 @@ function initialize(id: string, tool: AnalyticsTool): void {
     if (!link) return;
     try {
       const url = new URL(link.href);
-      const tool = (Object.keys(PATHS) as AnalyticsTool[]).find((key) => key !== 'portfolio' && url.pathname.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
+      const appPath = url.pathname.replace(/\/(?:en|ja|zh-CN|de)\/?$/, '/');
+      const tool = (Object.keys(PATHS) as AnalyticsTool[]).find((key) => key !== 'portfolio' && appPath.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
       if (url.hostname === HOST && tool) send('viewer_open', { target_tool: tool });
       else if (url.hostname === 'github.com' && /^\/GyuTae-Kim\/(?:opencad-(?:dwgdxf|nc|step|skp|viewer3d)|GyuTae-Kim.github.io)\/?$/i.test(url.pathname)) {
         const repo = url.pathname.split('/')[2]!.toLowerCase();

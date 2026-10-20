@@ -22,6 +22,7 @@ jobs:
       - run: npm run test:content-dates
       - run: npm run build
       - run: npm run check:seo
+      - run: npm run check:i18n
       - run: npm test -- --watch=false --browsers=ChromeHeadless
         env:
           CHROME_BIN: /usr/bin/google-chrome
