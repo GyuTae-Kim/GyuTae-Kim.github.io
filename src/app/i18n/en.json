@@ -1526,5 +1526,6 @@
   "보기·측정 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 거리와 면 치수를 확인": "A single row of view and measure buttons, plus a measure bar and press-and-hold precise aiming to check distances and face dimensions",
   "보기·측정 단추만 한 줄에 두고, 측정 막대와 줄자·각도기 길게 눌러 정밀 조준": "A single row of view and measure buttons, plus a measure bar and press-and-hold precise aiming for the tape measure and protractor",
   "편집 리본 대신 보기 모드: 거리·반지름·각도·면적 재기와 누른 객체의 치수 정보": "A view mode instead of the editing ribbon: measure distance, radius, angle and area, and see dimensions of the object you tap",
-  "제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.": "Select or hide parts in the product tree; rotate, move, or zoom with the mouse or your fingers."
+  "제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.": "Select or hide parts in the product tree; rotate, move, or zoom with the mouse or your fingers.",
+  "보기·측정·재생 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 공구 경로 위 두 점 거리를 확인": "A single row of view, measure and playback buttons, plus a measure bar and press-and-hold precise aiming to check the distance between two points on the toolpath"
 }

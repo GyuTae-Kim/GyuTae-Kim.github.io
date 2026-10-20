@@ -1526,5 +1526,6 @@
   "보기·측정 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 거리와 면 치수를 확인": "Nur Ansichts- und Messknöpfe in einer Zeile, dazu Messleiste und genaues Zielen per Gedrückthalten für Abstände und Flächenmaße",
   "보기·측정 단추만 한 줄에 두고, 측정 막대와 줄자·각도기 길게 눌러 정밀 조준": "Nur Ansichts- und Messknöpfe in einer Zeile, dazu Messleiste und genaues Zielen per Gedrückthalten für Maßband und Winkelmesser",
   "편집 리본 대신 보기 모드: 거리·반지름·각도·면적 재기와 누른 객체의 치수 정보": "Ansichtsmodus statt Bearbeitungsmenüband: Abstand, Radius, Winkel und Fläche messen und Maße des angetippten Objekts sehen",
-  "제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.": "Teile im Produktbaum auswählen oder ausblenden sowie mit der Maus oder den Fingern drehen, verschieben und zoomen."
+  "제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.": "Teile im Produktbaum auswählen oder ausblenden sowie mit der Maus oder den Fingern drehen, verschieben und zoomen.",
+  "보기·측정·재생 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 공구 경로 위 두 점 거리를 확인": "Nur Ansichts-, Mess- und Wiedergabeknöpfe in einer Zeile, dazu Messleiste und genaues Zielen per Gedrückthalten für den Abstand zweier Punkte auf der Werkzeugbahn"
 }
