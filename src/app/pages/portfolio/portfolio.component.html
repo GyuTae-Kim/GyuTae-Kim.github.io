@@ -10,7 +10,7 @@
       </p>
     </div>
     <nav class="archive-nav portfolio-jump" [attr.aria-label]="'프로젝트 목록 바로가기' | t">
-      <a [routerLink]="([]) | localLink" fragment="other-projects">{{ '기타 프로젝트' | t }}<app-icon name="arrow-down"></app-icon></a>
+      <a [routerLink]="([]) | localLink" fragment="other-projects">{{ '프로젝트 기록' | t }}<app-icon name="arrow-down"></app-icon></a>
       <a [routerLink]="([]) | localLink" fragment="achievements">{{ '특허·프로그램 성과' | t }}<app-icon name="arrow-down"></app-icon></a>
     </nav>
     <ng-container *ngFor="let project of cases">
@@ -20,8 +20,8 @@
     </ng-container>
     <section class="other-projects" id="other-projects" aria-labelledby="other-projects-title">
       <div class="archive-intro">
-        <h2 id="other-projects-title">{{ '기타 프로젝트' | t }}</h2>
-        <p>{{ '제품을 운영하면서 서비스 감시와 오류 수집 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.' | t }}</p>
+        <h2 id="other-projects-title">{{ '프로젝트 기록' | t }}</h2>
+        <p>{{ '주요 프로젝트 외에 맡아 개발한 일을 모았습니다.' | t }}</p>
       </div>
       <ng-container *ngFor="let project of otherProjects">
         <ng-container *ngTemplateOutlet="row; context: { $implicit: project, role: project.role }"></ng-container>
@@ -318,7 +318,7 @@
       ><app-icon name="arrow-left"></app-icon>{{ '프로젝트 목록' | t }}</a
     >
     <div class="page-intro detail-intro">
-      <p class="eyebrow">{{ '기타 프로젝트 {0} · {1}' | t:[(other!.number), (other!.category)] }}</p>
+      <p class="eyebrow">{{ '프로젝트 기록 {0} · {1}' | t:[(other!.number), (other!.category)] }}</p>
       <h1>{{ (other!.title) | t }}</h1>
       <p>{{ (other!.subtitle) | t }}</p>
       <div class="tags">
@@ -445,7 +445,7 @@
     </article>
     <nav class="case-next" *ngIf="otherProjects.length > 1" [attr.aria-label]="'다음 프로젝트' | t">
       <a [routerLink]="(['/portfolio', nextOther.id]) | localLink"
-        ><span class="eyebrow">{{ '다음 기타 프로젝트 {0}' | t:[(nextOther.number)] }}</span
+        ><span class="eyebrow">{{ '다음 프로젝트 {0}' | t:[(nextOther.number)] }}</span
         ><strong>{{ (nextOther.title) | t }}</strong
         ><app-icon class="row-arrow" name="arrow-right"></app-icon></a
       >

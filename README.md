@@ -3,7 +3,7 @@
 AI, 3D 형상, CAD/CAM 연구개발 포트폴리오 사이트의 소스입니다. https://gyutae-kim.github.io
 
 - `/`: 소개, 3D 개념 모델 뷰어, 주요 프로젝트, 학부연구생 때의 연구, 특허와 프로그램
-- `/portfolio`, `/portfolio/:id`: 프로젝트 세 개(가공 특징 인식과 CAM 자동화, 가구 패널 인식, Wedraw Pro)와 기타 프로젝트
+- `/portfolio`, `/portfolio/:id`: 프로젝트 세 개(가공 특징 인식과 CAM 자동화, 가구 패널 인식, Wedraw Pro)와 프로젝트 기록
 - `/research`, `/research/:id`: 학부연구생 때 공개한 연구 세 개의 카드 목록과 개별 실험 결과
 - `/opencad`: 개인 프로젝트 OpenCAD의 도구 목록. 공개한 DWG·DXF 2D 캐드(보기·그리기·편집·저장, 별도 저장소 [opencad-dwgdxf](https://github.com/GyuTae-Kim/opencad-dwgdxf))와 STEP, SKP, NC 뷰어([opencad-step](https://github.com/GyuTae-Kim/opencad-step), [opencad-skp](https://github.com/GyuTae-Kim/opencad-skp), [opencad-nc](https://github.com/GyuTae-Kim/opencad-nc))로 가는 입구
 - `/contact`: 이메일과 GitHub
@@ -84,7 +84,7 @@ PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 
 
 ### 카카오톡 · 슬랙 링크 미리보기
 
-홈·프로젝트·연구·연락 페이지의 초기 HTML `<head>`에 Open Graph와 Twitter Card 메타정보를 넣습니다. `og:image`는 로그인 없이 접근 가능한 절대 HTTPS 주소이며, JPEG 형식·1200×630 크기·이미지 설명을 함께 제공합니다. 홈·연락은 홈 표지, 프로젝트 목록과 기타 프로젝트는 프로젝트 표지, 주요 프로젝트 3개·연구·오픈캐드는 해당 표지를 사용합니다. 별도의 카카오 또는 슬랙 앱 등록 없이 일반 링크 미리보기에 필요한 정보를 제공합니다.
+홈·프로젝트·연구·연락 페이지의 초기 HTML `<head>`에 Open Graph와 Twitter Card 메타정보를 넣습니다. `og:image`는 로그인 없이 접근 가능한 절대 HTTPS 주소이며, JPEG 형식·1200×630 크기·이미지 설명을 함께 제공합니다. 홈·연락은 홈 표지, 프로젝트 목록과 프로젝트 기록은 프로젝트 표지, 주요 프로젝트 3개·연구·오픈캐드는 해당 표지를 사용합니다. 별도의 카카오 또는 슬랙 앱 등록 없이 일반 링크 미리보기에 필요한 정보를 제공합니다.
 
 `npm run check:seo`는 전체 공개 페이지와 HTML 별칭에서 공유 태그의 유일성·올바른 이미지 주소를 확인합니다. 슬랙의 부분 요청을 고려해 공유 메타정보가 HTML의 첫 8 KiB 안에 있는지도 검사합니다. 실제 JPEG 파일의 크기(1200×630)와 자체 용량 예산(512 KiB 이하)도 검증합니다.
 
@@ -100,7 +100,7 @@ PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 
 
 ### 사용 안내와 개발 노트
 
-OpenCAD 프로젝트 목록은 `src/app/opencad-data.ts`에서 관리합니다. NC·STEP·SKP 앱과 공통 3D 코어는 `/opencad/projects/…`의 소개 페이지를 가지며, 홈·OpenCAD 목록·관련 프로젝트에서 연결합니다. `SEARCH_PAGES`의 공통 메타데이터·정적 HTML 생성 경로를 사용하므로 제목·설명·OG·canonical·구조화 데이터의 형태를 유지합니다. 새 앱을 `OPENCAD_TOOLS`에 공개 주소와 함께 등록하면 같은 호스트의 통합 사이트맵에도 포함됩니다. 독립 실행 사이트가 없는 라이브러리는 소개 페이지만 포함하며 존재하지 않는 앱 주소를 만들지 않습니다.
+OpenCAD 프로젝트 목록은 `src/app/opencad-data.ts`에서 관리합니다. DWG·DXF 2D 캐드, NC·STEP·SKP 앱과 공통 3D 코어는 `/opencad/projects/…`의 소개 페이지를 가지며, 홈·OpenCAD 목록·관련 프로젝트에서 연결합니다. `SEARCH_PAGES`의 공통 메타데이터·정적 HTML 생성 경로를 사용하므로 제목·설명·OG·canonical·구조화 데이터의 형태를 유지합니다. 새 앱을 `OPENCAD_TOOLS`에 공개 주소와 함께 등록하면 같은 호스트의 통합 사이트맵에도 포함됩니다. 독립 실행 사이트가 없는 라이브러리는 소개 페이지만 포함하며 존재하지 않는 앱 주소를 만들지 않습니다.
 
 별도 앱이 신뢰할 수 있는 콘텐츠 수정일을 제공하지 않으면 해당 앱 URL의 선택 항목인 `lastmod`는 생략합니다. 소개 페이지에는 기존 콘텐츠 변경 기록을 적용하고, 이미 관리 중인 2D 캐드 날짜도 그대로 유지합니다. HTTP `Last-Modified`나 배포 시각을 콘텐츠 수정일로 대체하지 않습니다.
 

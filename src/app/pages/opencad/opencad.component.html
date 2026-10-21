@@ -84,12 +84,26 @@
 
   <section class="opencad-section" aria-labelledby="opencad-core-title">
     <div class="section-title"><h2 id="opencad-core-title">{{ '뷰어를 연결하는 오픈소스 코어' | t }}</h2></div>
-    <ul class="guide-list"><li *ngFor="let project of libraries"><h3><a [routerLink]="(project.path) | localLink">{{ (project.name) | t }}</a></h3><p>{{ (project.summary) | t }}</p></li></ul>
+    <ul class="guide-list">
+      <li *ngFor="let project of libraries">
+        <p class="guide-meta">{{ (project.kind) | t }}</p>
+        <h3><a [routerLink]="(project.path) | localLink">{{ (project.name) | t }}</a></h3>
+        <p>{{ (project.summary) | t }}</p>
+        <app-icon class="row-arrow" name="arrow-right"></app-icon>
+      </li>
+    </ul>
   </section>
 
   <section class="opencad-section" aria-labelledby="opencad-guides-title">
     <div class="section-title"><h2 id="opencad-guides-title">{{ '캐드 뷰어 사용 안내' | t }}</h2></div>
-    <ul class="guide-list"><li *ngFor="let guide of guides"><h3><a [routerLink]="(guide.path) | localLink">{{ (guide.title) | t }}</a></h3><p>{{ (guide.description) | t }}</p></li></ul>
+    <ul class="guide-list">
+      <li *ngFor="let guide of guides">
+        <p class="tool-ext" *ngIf="guide.tool"><code *ngFor="let ext of guide.tool.extensions">{{ (ext) | t }}</code></p>
+        <h3><a [routerLink]="(guide.path) | localLink">{{ (guide.title) | t }}</a></h3>
+        <p>{{ (guide.description) | t }}</p>
+        <app-icon class="row-arrow" name="arrow-right"></app-icon>
+      </li>
+    </ul>
   </section>
   <section *ngIf="plannedTools.length" class="opencad-section" aria-labelledby="opencad-planned-title">
     <div class="section-title">

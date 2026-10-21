@@ -17,6 +17,7 @@ const NAMES: Record<string, [ContentGroup, string]> = {
   '/research/fashion-classification': ['연구', '연구 | 의류 분류'],
   '/research/virtual-try-on': ['연구', '연구 | 가상 착용'],
   '/opencad': ['OpenCAD 소개', 'OpenCAD | 도구 모음'],
+  '/opencad/projects/dwg-dxf': ['OpenCAD 소개', 'OpenCAD 소개 | DWG/DXF 캐드'],
   '/opencad/projects/step-viewer': ['OpenCAD 소개', 'OpenCAD 소개 | STEP 뷰어'],
   '/opencad/projects/skp-viewer': ['OpenCAD 소개', 'OpenCAD 소개 | SKP 뷰어'],
   '/opencad/projects/nc-viewer': ['OpenCAD 소개', 'OpenCAD 소개 | NC 뷰어'],
