@@ -11,7 +11,11 @@ export class OpenCadComponent {
   liveTools = OPENCAD_TOOLS.filter((tool) => tool.url);
   plannedTools = OPENCAD_TOOLS.filter((tool) => !tool.url);
   libraries = OPENCAD_PROJECTS.filter((project) => !project.url);
-  guides = SITE_ARTICLES.filter((article) => article.category === 'OpenCAD 사용 안내');
+  // Each guide shows the file extensions of the viewer it explains.
+  guides = SITE_ARTICLES.filter((article) => article.category === 'OpenCAD 사용 안내').map((article) => ({
+    ...article,
+    tool: OPENCAD_TOOLS.find((tool) => tool.url === article.viewer?.url),
+  }));
 
   srcset(base: string): string {
     return `${base}-720.webp 720w, ${base}-1440.webp 1440w`;

@@ -34,6 +34,15 @@ describe('HomeComponent', () => {
     expect(rows[0].querySelector('.row-note')!.textContent).toContain('디지털 트윈은 결과 시각화만');
   });
 
+  it('lists the smaller projects in their own numbered section', () => {
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('#work .operation-card')).toBeNull();
+    expect(root.querySelector('#other-projects .section-no')!.textContent).toBe('02');
+    const cards = root.querySelectorAll('#other-projects .operation-card');
+    expect(cards.length).toBe(OTHER_PROJECTS.length);
+    expect(cards[0].querySelector('strong')!.textContent).toBe('서비스 감시와 오류 추적');
+  });
+
   it('keeps research image context and individual case links', () => {
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelector('#research .section-lead')!.textContent).toContain('공개 코드를 재실행');
