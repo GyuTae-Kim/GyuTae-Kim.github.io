@@ -48,7 +48,7 @@ const FACE = 0xfbfaf6;
 const ACCENT = 0xa75534;
 
 type P2 = [number, number];
-type PartTag = 'stock' | 'pocket' | 'counterbore' | 'hole' | 'step' | 'fillet';
+type PartTag = 'stock' | 'pocket' | 'counterbore' | 'hole' | 'step' | 'outline' | 'chamfer';
 type PanelRole = 'side' | 'board' | 'shelf' | 'back' | 'door' | 'kick';
 
 interface Note {
@@ -189,6 +189,28 @@ function wall(run: P2[], z0: number, z1: number, inward: boolean, closed = false
   return makeGeometry(positions, normals);
 }
 
+// 45° chamfer around a convex vertical corner: radius r at z0 narrowing to r - (z1 - z0) at z1.
+function coneBand(cx: number, cy: number, r: number, a0: number, a1: number, z0: number, z1: number): BufferGeometry {
+  const lower = arc(cx, cy, r, a0, a1, 10);
+  const upper = arc(cx, cy, r - (z1 - z0), a0, a1, 10);
+  const positions: number[] = [];
+  const normals: number[] = [];
+  for (let i = 0; i < lower.length - 1; i++) {
+    const at = (p: P2, z: number, k: number) => {
+      const a = ((a0 + ((a1 - a0) * k) / (lower.length - 1)) * Math.PI) / 180;
+      positions.push(p[0], p[1], z);
+      normals.push(Math.cos(a) * Math.SQRT1_2, Math.sin(a) * Math.SQRT1_2, Math.SQRT1_2);
+    };
+    at(lower[i], z0, i);
+    at(lower[i + 1], z0, i + 1);
+    at(upper[i + 1], z1, i + 1);
+    at(lower[i], z0, i);
+    at(upper[i + 1], z1, i + 1);
+    at(upper[i], z1, i);
+  }
+  return makeGeometry(positions, normals);
+}
+
 function runMidpoint(run: P2[], z: number): Vector3 {
   const p = run[Math.floor(run.length / 2)];
   const q = run[Math.max(Math.floor(run.length / 2) - 1, 0)];
@@ -312,6 +334,8 @@ interface PartFeatures {
   step: boolean;
   pocket: boolean;
   holes: boolean;
+  // Only cut last, on the stepped part.
+  chamfer: boolean;
 }
 
 // One animated stage of the part model (modelling, recognition, machining).
@@ -331,7 +355,10 @@ const AY = new Vector3(0, 1, 0);
 const AZ = new Vector3(0, 0, 1);
 
 // 140 × 100 × 30 with R12 corners; the right end is stepped down to 18, the top has a
-// 60 × 48 R8 pocket and two Ø18 counterbores, the step two Ø10 holes.
+// 60 × 48 R8 pocket and two Ø18 counterbores, the step two Ø10 holes. A C2 chamfer runs
+// round the top face's edge, along the step wall too. The rounded corners are walls of the
+// outline, not fillets: the engine files a blend along the tool axis between two walls as
+// stock (wall_blend).
 const CB: P2[] = [[-50, -28], [-50, 28]];
 const DRILL: P2[] = [[57, -30], [57, 30]];
 const POCKET_RUNS = roundedRectRuns(-30, -24, 30, 24, 8);
@@ -342,6 +369,34 @@ const BR = arc(58, 38, 12, 0, 90, 10);
 const BL = arc(-58, 38, 12, 90, 180, 10);
 const OUTLINE = joinRuns(roundedRectRuns(-70, -50, 70, 50, 12));
 const STEP_OUTLINE = joinRuns([[[45, -50]], FR, BR, [[45, 50]]]);
+const CHAMFER = 2;
+const RIM = 30 - CHAMFER;
+const TOP_LOOP = joinRuns([[[-58, -50], [45, -50], [45, 50], [-58, 50]], BL, FL]);
+const TOP_INSET = joinRuns([
+  [[-58, -50 + CHAMFER], [45 - CHAMFER, -50 + CHAMFER], [45 - CHAMFER, 50 - CHAMFER], [-58, 50 - CHAMFER]],
+  arc(-58, 38, 12 - CHAMFER, 90, 180, 10),
+  arc(-58, -38, 12 - CHAMFER, 180, 270, 10),
+]);
+const SLOPE_UP = (x: number, y: number) => new Vector3(x, y, 1).normalize();
+
+// The six chamfer faces with their lower edge at z = lo; flat ones are mitred at the step.
+function chamferFaces(lo: number): { id: string; geometry: BufferGeometry; node: Vector3 }[] {
+  const w = CHAMFER * Math.SQRT2;
+  const hi = lo + CHAMFER;
+  const mid = lo + CHAMFER / 2;
+  return [
+    { id: 'chamferFront', geometry: planar([[-58, 0], [45, 0], [43, w], [-58, w]], [], new Vector3(0, -50, lo), AX, SLOPE_UP(0, 1)),
+      node: new Vector3(-10, -49, mid) },
+    { id: 'chamferStep', geometry: planar([[-50, 0], [50, 0], [48, w], [-48, w]], [], new Vector3(45, 0, lo), AY, SLOPE_UP(-1, 0)),
+      node: new Vector3(44, -20, mid) },
+    { id: 'chamferBack', geometry: planar([[-45, 0], [58, 0], [58, w], [-43, w]], [], new Vector3(0, 50, lo), AX.clone().negate(), SLOPE_UP(0, -1)),
+      node: new Vector3(-30, 49, mid) },
+    { id: 'chamferBL', geometry: coneBand(-58, 38, 12, 90, 180, lo, hi), node: runMidpoint(arc(-58, 38, 11, 90, 180, 10), mid) },
+    { id: 'chamferLeft', geometry: planar([[-38, 0], [38, 0], [38, w], [-38, w]], [], new Vector3(-70, 0, lo), AY.clone().negate(), SLOPE_UP(1, 0)),
+      node: new Vector3(-69, 0, mid) },
+    { id: 'chamferFL', geometry: coneBand(-58, -38, 12, 180, 270, lo, hi), node: runMidpoint(arc(-58, -38, 11, 180, 270, 10), mid) },
+  ];
+}
 
 const clamp01 = (v: number) => Math.min(Math.max(v, 0), 1);
 const ease = (v: number) => {
@@ -357,15 +412,18 @@ function partFaces(f: PartFeatures): PartFace[] {
   const add = (id: string, tag: PartTag, geometry: BufferGeometry, node: Vector3) =>
     faces.push({ id, tag, geometry, node });
   const right = f.step ? 18 : 30;
+  // Height of the outer walls under the top face's edge.
+  const rim = f.chamfer ? RIM : 30;
   const topHoles = [...(f.pocket ? [POCKET] : []), ...(f.holes ? CB.map(([x, y]) => circle(x, y, 9)) : [])];
-  const top = f.step ? joinRuns([[[-58, -50], [45, -50], [45, 50], [-58, 50]], BL, FL]) : OUTLINE;
+  const top = f.chamfer ? TOP_INSET : f.step ? TOP_LOOP : OUTLINE;
   add('top', 'stock', planar(top, topHoles, new Vector3(0, 0, 30), AX, AY), new Vector3(0, -37, 30));
+  if (f.chamfer) chamferFaces(RIM).forEach((c) => add(c.id, 'chamfer', c.geometry, c.node));
   if (f.step) {
     add('stepFloor', 'step',
       planar(STEP_OUTLINE, f.holes ? DRILL.map(([x, y]) => circle(x, y, 5)) : [], new Vector3(0, 0, 18), AX, AY),
       new Vector3(64, 0, 18));
-    add('stepWall', 'step', planar([[-50, 18], [50, 18], [50, 30], [-50, 30]], [], new Vector3(45, 0, 0), AY, AZ),
-      new Vector3(45, 0, 24));
+    add('stepWall', 'step', planar([[-50, 18], [50, 18], [50, rim], [-50, rim]], [], new Vector3(45, 0, 0), AY, AZ),
+      new Vector3(45, 0, 23));
   }
   if (f.pocket) {
     add('pocketFloor', 'pocket', planar(POCKET, [], new Vector3(0, 0, 18), AX, AY), new Vector3(0, 0, 18));
@@ -382,21 +440,26 @@ function partFaces(f: PartFeatures): PartFace[] {
       add(`hole${i}`, 'hole', wall(circle(x, y, 5), 0, 18, true, true), new Vector3(x, y - 5, 9)));
   }
   const front: P2[] = f.step
-    ? [[-58, 0], [58, 0], [58, 18], [45, 18], [45, 30], [-58, 30]]
-    : [[-58, 0], [58, 0], [58, 30], [-58, 30]];
+    ? [[-58, 0], [58, 0], [58, 18], [45, 18], [45, rim], [-58, rim]]
+    : [[-58, 0], [58, 0], [58, rim], [-58, rim]];
   const back: P2[] = f.step
-    ? [[-58, 0], [58, 0], [58, 30], [-45, 30], [-45, 18], [-58, 18]]
-    : [[-58, 0], [58, 0], [58, 30], [-58, 30]];
-  add('front', 'stock', planar(front, [], new Vector3(0, -50, 0), AX, AZ), new Vector3(0, -50, 13));
-  add('back', 'stock', planar(back, [], new Vector3(0, 50, 0), AX.clone().negate(), AZ), new Vector3(0, 50, 13));
-  add('left', 'stock', planar([[-38, 0], [38, 0], [38, 30], [-38, 30]], [], new Vector3(-70, 0, 0), AY.clone().negate(), AZ),
+    ? [[-58, 0], [58, 0], [58, rim], [-45, rim], [-45, 18], [-58, 18]]
+    : [[-58, 0], [58, 0], [58, rim], [-58, rim]];
+  add('front', 'outline', planar(front, [], new Vector3(0, -50, 0), AX, AZ), new Vector3(0, -50, 13));
+  add('back', 'outline', planar(back, [], new Vector3(0, 50, 0), AX.clone().negate(), AZ), new Vector3(0, 50, 13));
+  add('left', 'outline', planar([[-38, 0], [38, 0], [38, rim], [-38, rim]], [], new Vector3(-70, 0, 0), AY.clone().negate(), AZ),
     new Vector3(-70, 0, 15));
-  add('right', 'stock', planar([[-38, 0], [38, 0], [38, right], [-38, right]], [], new Vector3(70, 0, 0), AY, AZ),
+  add('right', 'outline', planar([[-38, 0], [38, 0], [38, right], [-38, right]], [], new Vector3(70, 0, 0), AY, AZ),
     new Vector3(70, 0, right / 2));
-  add('filletFL', 'fillet', wall(FL, 0, 30, false), runMidpoint(FL, 15));
-  add('filletFR', 'fillet', wall(FR, 0, right, false), runMidpoint(FR, right / 2));
-  add('filletBR', 'fillet', wall(BR, 0, right, false), runMidpoint(BR, right / 2));
-  add('filletBL', 'fillet', wall(BL, 0, 30, false), runMidpoint(BL, 15));
+  add('cornerFL', 'outline', wall(FL, 0, rim, false), runMidpoint(FL, 15));
+  add('cornerFR', 'outline', wall(FR, 0, right, false), runMidpoint(FR, right / 2));
+  add('cornerBR', 'outline', wall(BR, 0, right, false), runMidpoint(BR, right / 2));
+  add('cornerBL', 'outline', wall(BL, 0, rim, false), runMidpoint(BL, 15));
+  // Bottom, seen from below: the y axis flips so the face points down.
+  const flip = (pts: P2[]): P2[] => pts.map(([x, y]) => [x, -y]);
+  const throughHoles = f.holes ? [...CB, ...DRILL].map(([x, y]) => flip(circle(x, y, 5))) : [];
+  add('bottom', 'stock', planar(flip(OUTLINE), throughHoles, new Vector3(0, 0, 0), AX, AY.clone().negate()),
+    new Vector3(20, 0, 0));
   return faces;
 }
 
@@ -406,16 +469,27 @@ function faceLinks(faces: PartFace[]): [number, number][] {
   const links: [number, number][] = [];
   const link = (a: string, ...others: string[]) => others.forEach((b) => links.push([index.get(a)!, index.get(b)!]));
   const pocketWalls = POCKET_RUNS.map((_, i) => `pocketWall${i}`);
-  link('top', 'front', 'back', 'left', 'filletFL', 'filletBL', 'stepWall', 'cbWall0', 'cbWall1', ...pocketWalls);
-  link('stepFloor', 'stepWall', 'front', 'back', 'right', 'filletFR', 'filletBR', 'hole2', 'hole3');
+  link('top', 'chamferFront', 'chamferStep', 'chamferBack', 'chamferBL', 'chamferLeft', 'chamferFL', 'cbWall0', 'cbWall1',
+    ...pocketWalls);
+  // The chamfer ring, each face over its own wall.
+  link('chamferFront', 'front', 'chamferStep', 'chamferFL');
+  link('chamferStep', 'stepWall', 'chamferBack');
+  link('chamferBack', 'back', 'chamferBL');
+  link('chamferBL', 'cornerBL', 'chamferLeft');
+  link('chamferLeft', 'left', 'chamferFL');
+  link('chamferFL', 'cornerFL');
+  link('stepWall', 'stepFloor', 'front', 'back');
+  link('stepFloor', 'front', 'back', 'right', 'cornerFR', 'cornerBR', 'hole2', 'hole3');
   link('pocketFloor', ...pocketWalls);
   pocketWalls.forEach((w, i) => link(w, pocketWalls[(i + 1) % pocketWalls.length]));
   link('cbFloor0', 'cbWall0', 'hole0');
   link('cbFloor1', 'cbWall1', 'hole1');
-  link('left', 'filletFL', 'filletBL');
-  link('right', 'filletFR', 'filletBR');
-  link('front', 'filletFL', 'filletFR', 'stepWall');
-  link('back', 'filletBL', 'filletBR', 'stepWall');
+  link('front', 'cornerFL', 'cornerFR');
+  link('right', 'cornerFR', 'cornerBR');
+  link('back', 'cornerBR', 'cornerBL');
+  link('left', 'cornerBL', 'cornerFL');
+  link('bottom', 'front', 'right', 'back', 'left', 'cornerFL', 'cornerFR', 'cornerBR', 'cornerBL',
+    'hole0', 'hole1', 'hole2', 'hole3');
   return links;
 }
 
@@ -465,6 +539,28 @@ function cutBody(outline: P2[], depth: number, top: number, fill: Material, line
   return g;
 }
 
+// The wedge the chamfer takes off the top face's edge, hung like cutBody.
+function chamferBody(fill: Material, line: LineBasicMaterial): Group {
+  const g = new Group();
+  g.position.z = 30;
+  const geos = [
+    planar(TOP_LOOP, [TOP_INSET], new Vector3(0, 0, 0), AX, AY),
+    wall(TOP_LOOP, -CHAMFER, 0, false, true),
+    ...chamferFaces(-CHAMFER).map((c) => c.geometry),
+  ];
+  for (const geo of geos) {
+    const m = new Mesh(geo, fill);
+    m.renderOrder = 5;
+    g.add(m);
+  }
+  for (const [loop, z] of [[TOP_LOOP, 0], [TOP_INSET, 0], [TOP_LOOP, -CHAMFER]] as [P2[], number][]) {
+    const l = sketchLoop(loop, z, line);
+    l.renderOrder = 6;
+    g.add(l);
+  }
+  return g;
+}
+
 // Nodes pop in during the first half, links draw during the second.
 function revealGraph(g: Group, p: number) {
   for (const c of g.children) {
@@ -483,7 +579,8 @@ const MODEL_STEPS = [
   '단차 컷 · 깊이 12',
   '포켓 컷 · 60 × 48, 깊이 12',
   '구멍 · Ø10, 카운터보어 2곳',
-  '면 분석 · 면 29개, 53쌍',
+  '챔퍼 · C2, 윗면 테두리',
+  '면 분석 · 면 35개, 78쌍',
 ];
 
 // Layer 0: the part is modelled feature by feature, then its faces are read as a graph.
@@ -491,11 +588,12 @@ function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: b
   const group = new Group();
   body.add(group);
   const mat = faceMaterial();
-  const finalFaces = partFaces({ step: true, pocket: true, holes: true });
+  const finalFaces = partFaces({ step: true, pocket: true, holes: true, chamfer: true });
   const states = [
-    solidOf(partFaces({ step: false, pocket: false, holes: false }), mat, edgeMat),
-    solidOf(partFaces({ step: true, pocket: false, holes: false }), mat, edgeMat),
-    solidOf(partFaces({ step: true, pocket: true, holes: false }), mat, edgeMat),
+    solidOf(partFaces({ step: false, pocket: false, holes: false, chamfer: false }), mat, edgeMat),
+    solidOf(partFaces({ step: true, pocket: false, holes: false, chamfer: false }), mat, edgeMat),
+    solidOf(partFaces({ step: true, pocket: true, holes: false, chamfer: false }), mat, edgeMat),
+    solidOf(partFaces({ step: true, pocket: true, holes: true, chamfer: false }), mat, edgeMat),
     solidOf(finalFaces, mat, edgeMat),
   ];
   states.forEach((s) => group.add(s));
@@ -505,6 +603,8 @@ function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: b
     color: ACCENT, transparent: true, opacity: 0.3, depthTest: false, depthWrite: false, side: DoubleSide,
   });
   const cutLine = new LineBasicMaterial({ color: ACCENT, transparent: true, depthTest: false });
+  // Edges picked for the chamfer.
+  const pickMat = new LineBasicMaterial({ color: ACCENT });
   const sketches: Line[][] = [
     [sketchLoop(OUTLINE, 0, sketchMat)],
     [sketchLoop(STEP_OUTLINE, 30, sketchMat)],
@@ -513,6 +613,7 @@ function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: b
       ...CB.flatMap(([x, y]) => [sketchLoop(circle(x, y, 9), 30, sketchMat), sketchLoop(circle(x, y, 5), 30, sketchMat)]),
       ...DRILL.map(([x, y]) => sketchLoop(circle(x, y, 5), 18, sketchMat)),
     ],
+    [sketchLoop(TOP_LOOP, 30, pickMat)],
   ];
   sketches.flat().forEach((l) => group.add(l));
   const cuts: Group[][] = [
@@ -525,17 +626,19 @@ function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: b
       ]),
       ...DRILL.map(([x, y]) => cutBody(circle(x, y, 5), 18, 18, cutFill, cutLine)),
     ],
+    [chamferBody(cutFill, cutLine)],
   ];
   cuts.flat().forEach((c) => group.add(c));
   const graph = graphOverlay(finalFaces.map((f) => f.node), faceLinks(finalFaces), 1.6);
   group.add(graph);
 
-  // Seconds: sketch, extrude, three cuts as [sketch, preview, commit], face graph.
+  // Seconds: sketch, extrude, three cuts and the chamfer as [sketch or edge pick, preview,
+  // commit], face graph.
   const sketchAt: [number, number] = [0.2, 1.3];
   const extrudeAt: [number, number] = [1.4, 2.4];
-  const cutAt: [number, number, number][] = [[2.7, 3.3, 3.9], [4.2, 4.8, 5.4], [5.7, 6.3, 6.9]];
-  const graphAt: [number, number] = [7.3, 8.8];
-  const end = 11;
+  const cutAt: [number, number, number][] = [[2.7, 3.3, 3.9], [4.2, 4.8, 5.4], [5.7, 6.3, 6.9], [7.2, 7.8, 8.4]];
+  const graphAt: [number, number] = [8.8, 10.3];
+  const end = 12.5;
 
   let t = 0;
   const apply = () => {
@@ -562,7 +665,7 @@ function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: b
     revealGraph(graph, span(t, ...graphAt));
   };
   const step = () =>
-    t < extrudeAt[0] ? 0 : t < cutAt[0][0] ? 1 : t < cutAt[1][0] ? 2 : t < cutAt[2][0] ? 3 : t < graphAt[0] ? 4 : 5;
+    t < extrudeAt[0] ? 0 : t >= graphAt[0] ? cutAt.length + 2 : 1 + cutAt.filter(([from]) => t >= from).length;
 
   return {
     fitRadius: 84,
@@ -586,14 +689,17 @@ function buildModeling(body: Group, edgeMat: LineBasicMaterial, reducedMotion: b
   };
 }
 
-const FEATURE_ORDER: Exclude<PartTag, 'stock'>[] = ['pocket', 'counterbore', 'hole', 'step', 'fillet'];
-const FEATURE_STEPS = ['포켓 · 면 9개', '카운터보어 · 2곳', '관통 구멍 · 4곳', '단차 · 면 2개', '필렛 · R12, 4곳'];
+const FEATURE_ORDER: Exclude<PartTag, 'stock'>[] = ['pocket', 'counterbore', 'hole', 'step', 'outline', 'chamfer'];
+const FEATURE_STEPS = [
+  '포켓 · 면 9개', '카운터보어 · 2곳', '관통 구멍 · 4곳', '단차 · 면 2개', '외경 형상 · 측면 8개', '챔퍼 · C2, 면 6개',
+];
 
-// Layer 1: the recognised feature classes light up one after another.
+// Layer 1: the recognised feature classes light up one after another; the top and bottom
+// stay as stock.
 function buildRecognition(body: Group, edgeMat: LineBasicMaterial, reducedMotion: boolean): Stage {
   const group = new Group();
   body.add(group);
-  const faces = partFaces({ step: true, pocket: true, holes: true });
+  const faces = partFaces({ step: true, pocket: true, holes: true, chamfer: true });
   const mats = new Map<PartTag, MeshLambertMaterial>();
   for (const f of faces) {
     if (!mats.has(f.tag)) mats.set(f.tag, faceMaterial());
@@ -605,7 +711,8 @@ function buildRecognition(body: Group, edgeMat: LineBasicMaterial, reducedMotion
     new Vector3(-50, 19, 30),
     new Vector3(57, -25, 18),
     new Vector3(64, 8, 18),
-    runMidpoint(FL, 15),
+    new Vector3(12, -50, 9),
+    new Vector3(-36, -49, 29),
   ].map((anchor) => ({ anchor, owner: body }));
   const start = 0.5;
   const slot = 0.8;
@@ -656,8 +763,8 @@ const DRILL_TIP = Math.tan((31 * Math.PI) / 180);
 const RAW = new Color(0xb5bab1);
 
 // Operation groups in the engine's order; legend rows and balloons follow them.
-const OPS = ['윗면 페이싱', '외곽', '단차', '포켓', '카운터보어', '드릴링'];
-const OP_COLORS = [TINTS.face, TINTS.fillet, TINTS.step, TINTS.pocket, TINTS.counterbore, TINTS.hole].map(
+const OPS = ['윗면 페이싱', '외곽', '단차', '포켓', '카운터보어', '드릴링', '챔퍼'];
+const OP_COLORS = [TINTS.face, TINTS.outline, TINTS.step, TINTS.pocket, TINTS.counterbore, TINTS.hole, TINTS.chamfer].map(
   (hex) => new Color(tint(hex, 0.9)),
 );
 
@@ -769,8 +876,12 @@ function buildStock() {
     // Lowers the field under a cutter whose tip moves straight from (x0, y0, z0) to
     // (x1, y1, z1): each cell the cutter passes over drops to the lowest tip height that
     // reaches it, so neighbouring passes meet without ridges. A drill only moves along its
-    // axis and its cone rises with the distance from it. Returns the removed volume.
-    sweep(x0: number, y0: number, z0: number, x1: number, y1: number, z1: number, r: number, drill: boolean, color: Color): number {
+    // axis and its cone rises with the distance from it; a 90° chamfer mill's cone rises
+    // 1 mm per mm beyond its flat tip. Returns the removed volume.
+    sweep(x0: number, y0: number, z0: number, x1: number, y1: number, z1: number, cutter: Cutter, color: Color): number {
+      const { r } = cutter;
+      const drill = cutter.kind === 'drill';
+      const tip = cutter.kind === 'chamfer' ? cutter.tip ?? 0 : -1;
       const reach = r + 0.02;
       const ix0 = Math.max(0, Math.ceil((Math.min(x0, x1) - reach + STOCK.x) / CELL));
       const ix1 = Math.min(NX - 1, Math.floor((Math.max(x0, x1) + reach + STOCK.x) / CELL));
@@ -805,6 +916,7 @@ function buildStock() {
             const hi = clamp01(along + half);
             z = Math.min(z0 + (z1 - z0) * lo, z0 + (z1 - z0) * hi);
           }
+          if (tip >= 0) z += Math.max(Math.sqrt(d2) - tip, 0);
           const i = iy * NX + ix;
           if (heights[i] <= z + 1e-4) continue;
           removed += heights[i] - z;
@@ -836,7 +948,9 @@ interface Cutter {
   // Number and diameter for the caption.
   short: string;
   r: number;
-  kind: 'face' | 'flat' | 'drill';
+  kind: 'face' | 'flat' | 'drill' | 'chamfer';
+  // Radius of a chamfer mill's flat tip.
+  tip?: number;
   model: Group;
   spin: Object3D;
 }
@@ -877,6 +991,36 @@ function fluteGeometry(r: number, length: number, flutes: number, drill: boolean
     const c = positions.length / 3;
     positions.push(0, 0, 0);
     for (let i = 0; i < seg; i++) index.push(c, i, i + 1);
+  }
+  const g = new BufferGeometry();
+  g.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  g.setIndex(index);
+  g.computeVertexNormals();
+  return g;
+}
+
+// Two-flute 90° chamfer mill along +y: a flat tip of radius `tip` widening to `r`.
+function chamferGeometry(r: number, tip: number): BufferGeometry {
+  const seg = 40;
+  const rows = 8;
+  const height = r - tip;
+  const positions: number[] = [0, 0, 0];
+  for (let j = 0; j <= rows; j++) {
+    const y = (j / rows) * height;
+    for (let i = 0; i <= seg; i++) {
+      const a = (i / seg) * Math.PI * 2;
+      const rad = (tip + y) * (0.82 + 0.18 * Math.cos(2 * a));
+      positions.push(rad * Math.cos(a), y, rad * Math.sin(a));
+    }
+  }
+  const index: number[] = [];
+  for (let i = 0; i < seg; i++) index.push(0, i + 1, i + 2);
+  for (let j = 0; j < rows; j++) {
+    for (let i = 0; i < seg; i++) {
+      const a = 1 + j * (seg + 1) + i;
+      const b = a + seg + 1;
+      index.push(a, b, a + 1, a + 1, b, b + 1);
+    }
   }
   const g = new BufferGeometry();
   g.setAttribute('position', new Float32BufferAttribute(positions, 3));
@@ -944,12 +1088,21 @@ function makeCutters(edge: LineBasicMaterial): Cutter[] {
   arbor.position.y = 22;
   arbor.add(edgesOf(arborGeo, edge));
   faceModel.add(face, arbor, toolHolder(30, 22, edge));
+  // Ø10 90° chamfer mill with a Ø2.5 flat tip on a plain Ø10 body.
+  const chamferModel = new Group();
+  const cone = new Mesh(chamferGeometry(5, 1.25), carbide);
+  const bodyGeo = new CylinderGeometry(5, 5, 32 - 3.75, 24);
+  const chamferShank = new Mesh(bodyGeo, shankMat);
+  chamferShank.position.y = 3.75 + (32 - 3.75) / 2;
+  chamferShank.add(edgesOf(bodyGeo, edge));
+  chamferModel.add(cone, chamferShank, toolHolder(32, 11, edge));
   // The packaged aluminium library the engine picks from (Tool(AL).json).
   return [
     { name: 'T1 Ø80 페이스밀', short: 'T1 Ø80', r: 40, kind: 'face', model: faceModel, spin: face },
     endMill('T4 Ø12 황삭 엔드밀', 'T4 Ø12', 6, 34, 44, false, true),
     endMill('T8 Ø5 평엔드밀', 'T8 Ø5', 2.5, 15, 30, false),
     endMill('T22 Ø10 드릴', 'T22 Ø10', 5, 42, 54, true),
+    { name: 'T23 Ø10 챔퍼밀', short: 'T23 Ø10', r: 5, kind: 'chamfer', tip: 1.25, model: chamferModel, spin: cone },
   ];
 }
 
@@ -1007,11 +1160,37 @@ function insetRing(d: number): P2[] {
   return [...ring.slice(s), ...ring.slice(0, s)];
 }
 
+// Climb milling (Fusion's default; the engine leaves it on) takes an outside loop clockwise.
+function clockwiseFromLeft(ccw: P2[], left: number): P2[] {
+  const loop = [...ccw].reverse();
+  const s = loop.findIndex(([x, y]) => x <= left + 1e-6 && y < 0);
+  return [...loop.slice(s), ...loop.slice(0, s)];
+}
+
 // Tool-centre loop around the part outline at `offset`, starting on the left side.
 function outsideLoop(offset: number): P2[] {
-  const loop = joinRuns(roundedRectRuns(-70 - offset, -50 - offset, 70 + offset, 50 + offset, 12 + offset));
-  const s = loop.findIndex(([x, y]) => x <= -70 - offset + 1e-6 && y > 0);
-  return [...loop.slice(s), ...loop.slice(0, s)];
+  return clockwiseFromLeft(
+    joinRuns(roundedRectRuns(-70 - offset, -50 - offset, 70 + offset, 50 + offset, 12 + offset)),
+    -70 - offset,
+  );
+}
+
+// Tool-centre loop around the top face's edge at `offset`, round the step corners too.
+function topEdgeLoop(offset: number): P2[] {
+  const o = offset;
+  return clockwiseFromLeft(
+    joinRuns([
+      [[-58, -50 - o], [45, -50 - o]],
+      arc(45, -50, o, 270, 360, 4),
+      [[45 + o, -50], [45 + o, 50]],
+      arc(45, 50, o, 0, 90, 4),
+      [[45, 50 + o], [-58, 50 + o]],
+      arc(-58, 38, 12 + o, 90, 180, 10),
+      [[-70 - o, 38], [-70 - o, -38]],
+      arc(-58, -38, 12 + o, 180, 270, 10),
+    ]),
+    -70 - o,
+  );
 }
 
 // Depths from `from` down to `to` in `step` mm.
@@ -1023,9 +1202,9 @@ function levels(from: number, to: number, step: number): number[] {
 
 // Setup 1 as prisme-engine plans this part for a flat-jaw vise (one hold, the outside cut
 // through to the part bottom): facing, exterior stock and outer contour, then the Z18
-// features rough → finish (step, pocket, counterbore), drilling last. Stepdowns, stock and
-// entries follow the engine's defaults; the feeds are animation pace, slow on the first
-// depth of each operation and fast after it.
+// features rough → finish (step, pocket, counterbore), drilling, and the chamfer after every
+// stock-removing cut. Stepdowns, stock and entries follow the engine's defaults; the feeds
+// are animation pace, slow on the first depth of each operation and fast after it.
 function planMoves(): Move[] {
   const moves: Move[] = [];
   const retract = STOCK.top + 5;
@@ -1181,6 +1360,16 @@ function planMoves(): Move[] {
     }
     push(new Vector3(x, y, 20), rapidSpeed, false);
   }
+
+  // 7. [정삭] 모따기: the Ø10 90° chamfer mill once round the top face's edge. A recognised
+  // chamfer keeps width 0 and tip offset 0, so the Ø2.5 tip runs at the chamfer's lower
+  // edge (Z28) and the cone cuts the 45° face.
+  begin(6, 4, '[정삭] 모따기');
+  const chain = topEdgeLoop(1.25);
+  const [cx, cy] = [chain[0][0] - 8, chain[0][1]];
+  rapid(cx, cy, RIM);
+  for (const [x, y] of [...chain, chain[0]]) feed(x, y, RIM, 260);
+  feed(cx, cy, RIM, 260);
   push(new Vector3(at.x, at.y, home), rapidSpeed, false);
   push(new Vector3(30, -60, home), rapidSpeed, false);
   return moves;
@@ -1222,17 +1411,17 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
 
   // When the last cut is done the exact part, coloured by the operation that cut each face,
   // takes over from the height field and its 0.5 mm stair steps.
-  const opOfTag: Record<PartTag, number> = { stock: 0, fillet: 1, step: 2, pocket: 3, counterbore: 4, hole: 5 };
-  const sideFaces = new Set(['front', 'back', 'left', 'right']);
+  const opOfTag: Record<PartTag, number> = { stock: 0, outline: 1, step: 2, pocket: 3, counterbore: 4, hole: 5, chamfer: 6 };
   const opMats = OP_COLORS.map((c) => {
     const m = faceMaterial();
     m.color.copy(c);
     return m;
   });
   const finished = new Group();
-  for (const f of partFaces({ step: true, pocket: true, holes: true })) {
-    const op = sideFaces.has(f.id) ? 1 : opOfTag[f.tag];
-    finished.add(new Mesh(f.geometry, opMats[op]));
+  for (const f of partFaces({ step: true, pocket: true, holes: true, chamfer: true })) {
+    // The bottom is still joined to the stock in the jaws.
+    if (f.id === 'bottom') continue;
+    finished.add(new Mesh(f.geometry, opMats[opOfTag[f.tag]]));
     finished.add(edgesOf(f.geometry, edgeMat));
   }
   // Stock left under the part in the jaws; its top is the profile floor.
@@ -1256,6 +1445,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
     new Vector3(0, -6, 18),
     new Vector3(-50, -19, 30),
     new Vector3(57, -30, 12),
+    new Vector3(-36, -49, 29),
   ].map((anchor) => ({ anchor, owner: group }));
 
   let t = 0;
@@ -1289,7 +1479,7 @@ function buildMachining(edgeMat: LineBasicMaterial, reducedMotion: boolean): Sta
       const dur = m.end - m.start;
       p.copy(m.from).lerp(m.to, clamp01((t0 - m.start) / dur));
       q.copy(m.from).lerp(m.to, clamp01((t1 - m.start) / dur));
-      removed += stock.sweep(p.x, p.y, p.z, q.x, q.y, q.z, cutter.r, cutter.kind === 'drill', OP_COLORS[m.op]);
+      removed += stock.sweep(p.x, p.y, p.z, q.x, q.y, q.z, cutter, OP_COLORS[m.op]);
     }
     return removed;
   };
@@ -2718,7 +2908,8 @@ export class ViewportScene {
     this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     this.overlay.appendChild(this.svg);
     stage.appendChild(this.overlay);
-    for (let i = 0; i < 6; i++) {
+    // One per legend row of the longest layer (machining, seven operations).
+    for (let i = 0; i < 7; i++) {
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       dot.setAttribute('r', '2.5');
