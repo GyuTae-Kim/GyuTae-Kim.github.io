@@ -87,15 +87,15 @@ export const SITE_ARTICLES: SiteArticle[] = [
   {
     path: '/opencad/guides/check-nc-toolpath', category: 'OpenCAD 사용 안내',
     title: 'NC·G-code 공구 경로 보기와 단위·해석 경고 점검',
-    description: '무료 OpenCAD NC 뷰어에서 G-code·Heidenhain·MPR 공구 경로를 확인하는 방법입니다. 예제 재생, 코드 줄 연결, 방언·단위와 해석 경고를 점검합니다.',
+    description: '무료 OpenCAD NC 뷰어에서 G-code와 Heidenhain, 판재 가공 파일(MPR, PGI, XML)의 공구 경로를 확인하는 방법입니다. 예제 재생, 코드 줄 연결, 방언·단위와 해석 경고를 점검합니다.',
     lead: 'NC 파일을 열었다면 화면의 경로뿐 아니라 방언, 단위와 해석 경고를 함께 확인하세요. OpenCAD의 합성 예제를 먼저 재생하면 코드 줄과 공구 이동을 연결해 살펴보는 방법을 익힐 수 있습니다.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD NC·G-code 뷰어의 공구 경로와 해석 결과 점검 안내.',
     viewer: { url: 'https://gyutae-kim.github.io/opencad-nc/', label: '무료 NC·G-code 뷰어 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-nc/?sample' },
     figure: { src: 'assets/opencad/viewer-nc-1440.webp', srcset: 'assets/opencad/viewer-nc-720.webp 720w, assets/opencad/viewer-nc-1440.webp 1440w', alt: 'OpenCAD NC 뷰어에서 합성 G-code의 윤곽·포켓·드릴 경로와 코드 줄, 재생 막대를 보는 화면.', caption: '공개 합성 G-code를 연 실제 화면입니다. 실제 장비에서 검증한 가공 프로그램이 아닙니다.', width: 1440, height: 900 },
     sections: [
-      { id: 'formats', title: '파일 형식과 방언을 확인합니다', paragraphs: ['G-code, Heidenhain 평문(.h), woodWOP MPR(.mpr)을 읽어 경로를 표시합니다. G-code는 ISO·Fanuc·LinuxCNC·GRBL·Mach3 계열을 대상으로 하지만 장비별 명령·매크로를 모두 같은 의미로 해석하는 것은 아닙니다.', '확장자만으로 원본 장비와 방언이 확정되지는 않습니다. 파일을 연 뒤 정보 패널의 방언과 단위, 해석 경고를 원본 프로그램의 설정과 비교하세요.'] },
+      { id: 'formats', title: '파일 형식과 방언을 확인합니다', paragraphs: ['G-code, Heidenhain 평문(.h), woodWOP MPR(.mpr), WangShi PGI(.pgi), KDT XML(.xml)을 읽어 경로를 표시합니다. G-code는 ISO·Fanuc·LinuxCNC·GRBL·Mach3 계열을 대상으로 하지만 장비별 명령·매크로를 모두 같은 의미로 해석하는 것은 아닙니다.', 'PGI와 XML은 KDT 같은 판재 가공 장비의 프로그램입니다. MPR과 같은 방식으로 판 크기와 변수, 모든 면의 구멍, 톱 홈, 포켓, 라우팅 경로를 판 위에 그립니다. .xml 파일은 KDT 판재 가공 형식일 때만 엽니다. 다른 XML은 열지 않고 알려 주며, woodWOP MPRX는 MPR로 저장해 열도록 안내합니다.', '확장자만으로 원본 장비와 방언이 확정되지는 않습니다. 파일을 연 뒤 정보 패널의 방언과 단위, 해석 경고를 원본 프로그램의 설정과 비교하세요.'] },
       { id: 'open', title: '예제로 재생과 코드 줄 연결을 익힙니다', paragraphs: ['「예제로 먼저 보기」는 이 브라우저에서 만든 합성 G-code를 엽니다. 개인 NC 파일을 고르지 않고 화면 조작을 확인할 수 있습니다.'], steps: ['예제에서 「전체 보기」 또는 F를 눌러 경로를 화면에 맞춥니다.', '코드 줄이나 3D 경로를 선택해 서로 연결되는 이동을 확인합니다.', '재생 막대에서 재생·멈춤과 속도를 바꾸고 공구별 경로를 살펴봅니다.', '내 파일을 열고 정보 패널의 단위·방언·경고와 이송·급속 이동 길이를 확인합니다.'] },
-      { id: 'unexpected', title: '경로 크기나 모양이 예상과 다를 때', paragraphs: ['먼저 단위와 방언이 원본 설정과 맞는지 확인합니다. 전체 보기와 공구별 표시 상태를 확인하고, 문제의 코드 줄을 선택해 해당 이동을 짚으세요.', '반경 보정 경로·선반 모드·회전축 감기는 선택 기능입니다. 해당 프로그램의 의도에 맞게 설정했는지 확인하고, 모든 이동에 일괄 적용한 결과로 원본과 같다고 판단하지 마세요.', 'MPR에서 빠진 작업이 있다면 꺼진 가공인지, 지원하지 않는 매크로인지 정보·가공 패널에서 확인합니다. 지원하지 않는 매크로는 위치만 점으로 표시할 수 있습니다.'] },
+      { id: 'unexpected', title: '경로 크기나 모양이 예상과 다를 때', paragraphs: ['먼저 단위와 방언이 원본 설정과 맞는지 확인합니다. 전체 보기와 공구별 표시 상태를 확인하고, 문제의 코드 줄을 선택해 해당 이동을 짚으세요.', '반경 보정 경로·선반 모드·회전축 감기는 선택 기능입니다. 해당 프로그램의 의도에 맞게 설정했는지 확인하고, 모든 이동에 일괄 적용한 결과로 원본과 같다고 판단하지 마세요.', '판재 가공 파일에서 빠진 작업이 있다면 꺼진 가공인지, 지원하지 않는 매크로나 요소인지 정보·가공 패널에서 확인합니다. 지원하지 않는 매크로나 요소는 위치만 점으로 표시할 수 있습니다. PGI와 XML에서 값을 읽지 못한 작업은 가공 목록에 「해석 실패」로 남습니다.'] },
       { id: 'limits', title: '해석 결과와 실제 장비 검증을 구분합니다', paragraphs: ['공구 경로 화면과 예상 시간은 실제 장비의 충돌 검사, 제어기 동작, 가공 품질이나 운전 승인 결과가 아닙니다. 장비 투입은 원본 CAM·제어기와 현장 조건을 기준으로 별도 검증해야 합니다.', '오류를 제보할 때는 방언·단위·문제 줄과 기대한 이동을 정리하고, 기밀 NC 대신 직접 만든 최소 예제를 사용하세요. 파일은 이 브라우저에서 처리하며 공개 이슈에 자동 업로드되지 않습니다.'] },
     ],
     related: [{ path: '/opencad/projects/nc-viewer', label: 'NC 뷰어 기능과 지원 범위' }, { path: '/opencad/guides/open-step-stp', label: 'STEP 모델을 별도 뷰어에서 확인하기' }, { path: '/notes/cad-cam-feature-recognition', label: 'CAD 형상 인식과 CAM 공정 생성의 개발 경험' }],

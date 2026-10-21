@@ -33,8 +33,9 @@ export interface OpenCadProject extends OpenCadTool {
 }
 
 // Support ranges follow the public apps and repository documentation, checked
-// 2026-10-16 (the 2D CAD on 2026-10-21, opencad-dwgdxf 7131c1b). A demo is not a
-// claim that every file or machine is supported.
+// 2026-10-16 (the 2D CAD on 2026-10-21, opencad-dwgdxf 7131c1b; the NC viewer's
+// PGI and XML on 2026-10-22, opencad-nc f2ae99f). A demo is not a claim that every
+// file or machine is supported.
 export const OPENCAD_PROJECTS: OpenCadProject[] = [
   {
     // The id stays the /opencad card anchor (#2d-viewer) that older links point to.
@@ -120,11 +121,11 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
   },
   {
     id: 'nc-viewer', path: '/opencad/projects/nc-viewer',
-    name: 'OpenCAD NC 뷰어', kind: 'G-code·Heidenhain·woodWOP MPR',
+    name: 'OpenCAD NC 뷰어', kind: 'G-code·Heidenhain·MPR·PGI·XML',
     searchTitle: '무료 NC·G-code 뷰어 | MPR 공구 경로 확인 · OpenCAD',
-    extensions: ['.nc', '.gcode', '.ngc', '.h', '.mpr'],
-    summary: 'G-code·Heidenhain 평문·woodWOP MPR 파일의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생할 수 있습니다.',
-    introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain·MPR 데이터를 해석하고, 코드·공구·정보 패널을 3D 경로와 연결합니다.',
+    extensions: ['.nc', '.gcode', '.ngc', '.h', '.mpr', '.pgi', '.xml'],
+    summary: 'G-code와 Heidenhain 평문, 판재 가공 파일(woodWOP MPR, WangShi PGI, KDT XML)의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생할 수 있습니다.',
+    introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain 평문을 해석하고, 코드·공구·정보 패널을 3D 경로와 연결합니다. 판재 가공 파일(MPR, PGI, XML)은 구멍과 홈, 포켓, 윤곽 가공을 판 위에 그리고, 가공 목록과 변수를 함께 보여 줍니다.',
     url: 'https://gyutae-kim.github.io/opencad-nc/', source: 'https://github.com/GyuTae-Kim/opencad-nc', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-nc',
@@ -132,13 +133,13 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
       caption: '예제 G-code를 연 화면',
     },
     features: [
-      { label: '형식', text: 'ISO·Fanuc·LinuxCNC·GRBL·Mach3 계열 G-code, Heidenhain 평문, woodWOP MPR' },
+      { label: '형식', text: 'ISO·Fanuc·LinuxCNC·GRBL·Mach3 계열 G-code, Heidenhain 평문, woodWOP MPR, WangShi PGI, KDT XML' },
       { label: '경로', text: '3D 공구 경로와 코드 줄 연결, 공구별 표시, 가공 순서 재생' },
-      { label: '정보', text: '이송·급속 이동 길이, 예상 시간, 해석 경고와 MPR 작업·변수' },
+      { label: '정보', text: '이송·급속 이동 길이, 예상 시간, 해석 경고와 판재 가공 파일의 작업·변수' },
       { label: '보기', text: '회전·확대, 표준 뷰, 두 점 측정과 PNG 저장' },
       { label: '모바일', text: '보기·측정·재생 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 공구 경로 위 두 점 거리를 확인' },
     ],
-    steps: ['NC 뷰어를 열고 「예제 열기」로 합성 G-code를 확인합니다.', 'G-code·Heidenhain 평문·MPR 파일을 열거나 창 안으로 끌어다 놓습니다.', '코드 줄이나 3D 경로를 선택해 해당 이동을 함께 확인합니다.', '공구별 표시와 재생 막대로 가공 순서를 살펴보고 정보 패널의 경고를 확인합니다.'],
+    steps: ['NC 뷰어를 열고 「예제 열기」로 합성 G-code를 확인합니다.', 'NC 파일(G-code, Heidenhain 평문, MPR, PGI, XML)을 열거나 창 안으로 끌어다 놓습니다.', '코드 줄이나 3D 경로를 선택해 해당 이동을 함께 확인합니다.', '공구별 표시와 재생 막대로 가공 순서를 살펴보고 정보 패널의 경고를 확인합니다.'],
     limitations: ['장비별 매크로·사이클·좌표계는 다르게 해석될 수 있습니다. 지원 방언이어도 모든 명령을 동일하게 재현하는 것은 아닙니다.', '공구 경로 시각화와 예상 시간은 실제 장비의 충돌 검사·가공 품질·운전 승인 결과가 아닙니다. 장비 투입 전 원본 CAM과 장비 조건을 별도로 검증하세요.'],
   },
   {
