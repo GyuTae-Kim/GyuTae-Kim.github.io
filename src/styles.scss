@@ -2067,7 +2067,7 @@ app-icon.row-arrow {
 /* ---------- opencad ---------- */
 .opencad-promise {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0 0 56px;
   border: 1px solid var(--ink);
   background: var(--sheet);
@@ -2295,6 +2295,15 @@ app-icon.row-arrow {
   .tool-card {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+  .opencad-promise {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .opencad-promise div:nth-child(odd) {
+    border-left: 0;
+  }
+  .opencad-promise div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
   }
 }
 @media (max-width: 767px) {

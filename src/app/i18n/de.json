@@ -1220,7 +1220,6 @@
   "제품 · SketchUp · 가구 제조": "Produkt · SketchUp · Möbelherstellung",
   "제품 개발": "Produktentwicklung",
   "제품 나무에서 부품 선택·숨기기, 선택한 부품으로 화면 맞추기": "Teile im Produktbaum auswählen/ausblenden, Bildschirm mit ausgewählten Teilen anzeigen Ausrichtung",
-  "제품 나무에서 부품을 고르거나 숨기고, 마우스로 회전·이동·확대합니다.": "Teile im Produktbaum auswählen oder ausblenden sowie mit der Maus drehen, verschieben und zoomen.",
   "제품 수준 성능이나 상용 운영 여부는 보여 주지 않음": "Produktleistung oder Betriebsstatus werden nicht angezeigt.",
   "제품 화면": "Produktbildschirm",
   "제품을 운영하면서 서비스 감시와 오류 수집 체계를 만들고, 그 감시가 찾아낸 연동 오류도 고쳤습니다.": "Während des Produktbetriebs wurde ein System zur Serviceüberwachung und Fehlererfassung eingerichtet. Die dabei gefundenen Integrationsfehler wurden behoben.",
@@ -1521,5 +1520,12 @@
   "OpenCAD DWG·DXF로 예제 도면을 연 화면. 위쪽에 리본 메뉴가 있고, 가운데에 치수가 붙은 브래킷 판의 정면도와 단면도, 주기, 체결 부품이 보입니다.": "Beispielzeichnung in OpenCAD DWG/DXF: oben das Menüband, in der Mitte bemaßte Vorder- und Schnittansichten einer Halterungsplatte, Hinweise und Befestigungsteile.",
   "아래의 「무료 DWG·DXF 캐드 열기」를 누릅니다. 파일이 없으면 시작 화면의 「예제 도면 열기」로 먼저 둘러봅니다.": "Klicken Sie unten auf „Kostenloses DWG/DXF-CAD öffnen“. Ohne eigene Datei können Sie zunächst auf der Startseite „Beispielzeichnung öffnen“ ausprobieren.",
   "DWG·DXF 도면을 열고 편집·저장하는 2D 캐드와 STEP·SketchUp 모델, NC 공구 경로를 확인하는 무료 도구를 만들고 있습니다. 설치 없이 쓰는 개인 오픈소스 프로젝트이며, 공통 3D 코어의 개발 내용도 소개합니다.": "Ich entwickle kostenlose Werkzeuge zum Öffnen, Bearbeiten und Speichern von DWG/DXF-Zeichnungen im 2D-CAD sowie zum Anzeigen von STEP-/SketchUp-Modellen und NC-Werkzeugwegen. Die persönlichen Open-Source-Projekte laufen ohne Installation; auch die Entwicklung des gemeinsamen 3D-Kerns wird vorgestellt.",
-  "OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 프로젝트입니다. DWG·DXF 2D 도면은 무료 2D 캐드에서 열어 보고, 새로 그리거나 고친 뒤 저장할 수 있습니다. STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로는 형식별 무료 뷰어에서 확인하세요. 설치나 회원가입 없이 파일을 브라우저에서 처리합니다.": "OpenCAD ist ein Open-Source-CAD-Projekt des KI- und CAD/CAM-Entwicklers Sean Kim. Im kostenlosen 2D-CAD können Sie DWG/DXF-Zeichnungen öffnen, erstellen, bearbeiten und speichern. Für STEP-/STP-Modelle, SketchUp-SKP-Dateien und NC-/G-Code-/MPR-Werkzeugwege stehen eigene kostenlose Viewer bereit. Die Dateien werden ohne Installation oder Anmeldung im Browser verarbeitet."
+  "OpenCAD는 AI·CAD/CAM 개발자 김규태가 만드는 오픈소스 캐드 프로젝트입니다. DWG·DXF 2D 도면은 무료 2D 캐드에서 열어 보고, 새로 그리거나 고친 뒤 저장할 수 있습니다. STEP·STP 3D 모델, SketchUp SKP 파일과 NC·G-code·MPR 공구 경로는 형식별 무료 뷰어에서 확인하세요. 설치나 회원가입 없이 파일을 브라우저에서 처리합니다.": "OpenCAD ist ein Open-Source-CAD-Projekt des KI- und CAD/CAM-Entwicklers Sean Kim. Im kostenlosen 2D-CAD können Sie DWG/DXF-Zeichnungen öffnen, erstellen, bearbeiten und speichern. Für STEP-/STP-Modelle, SketchUp-SKP-Dateien und NC-/G-Code-/MPR-Werkzeugwege stehen eigene kostenlose Viewer bereit. Die Dateien werden ohne Installation oder Anmeldung im Browser verarbeitet.",
+  "모바일": "Mobil",
+  "보기와 치수 확인에 맞춘 화면으로 엽니다. 편집은 컴퓨터에서 하세요.": "Öffnet sich in einer Ansicht zum Betrachten und Prüfen von Maßen. Bearbeiten Sie am Computer.",
+  "보기·측정 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 거리와 면 치수를 확인": "Nur Ansichts- und Messknöpfe in einer Zeile, dazu Messleiste und genaues Zielen per Gedrückthalten für Abstände und Flächenmaße",
+  "보기·측정 단추만 한 줄에 두고, 측정 막대와 줄자·각도기 길게 눌러 정밀 조준": "Nur Ansichts- und Messknöpfe in einer Zeile, dazu Messleiste und genaues Zielen per Gedrückthalten für Maßband und Winkelmesser",
+  "편집 리본 대신 보기 모드: 거리·반지름·각도·면적 재기와 누른 객체의 치수 정보": "Ansichtsmodus statt Bearbeitungsmenüband: Abstand, Radius, Winkel und Fläche messen und Maße des angetippten Objekts sehen",
+  "제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.": "Teile im Produktbaum auswählen oder ausblenden sowie mit der Maus oder den Fingern drehen, verschieben und zoomen.",
+  "보기·측정·재생 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 공구 경로 위 두 점 거리를 확인": "Nur Ansichts-, Mess- und Wiedergabeknöpfe in einer Zeile, dazu Messleiste und genaues Zielen per Gedrückthalten für den Abstand zweier Punkte auf der Werkzeugbahn"
 }
