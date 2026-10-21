@@ -22,19 +22,59 @@
   }
 }
 
-.operations-heading {
-  margin: 30px 0 14px;
+// OpenCAD apps: the real viewer screenshot, cropped to the row thumbnail.
+.opencad-thumb {
+  border-color: var(--ink);
+  // the viewers' own background, so the frame does not flash white while loading
+  background: #232833;
 
-  h3 {
-    font-size: var(--fs-3);
-    line-height: 1.5;
+  img {
+    aspect-ratio: 1440 / 900;
+    object-fit: cover;
+  }
+}
+
+.opencad-row .row-title,
+.opencad-core .row-title {
+  font-size: var(--fs-3);
+}
+
+.opencad-row .tool-ext {
+  margin-top: 6px;
+}
+
+// The shared 3D core is a library, not an app: a slim card on a drawing-sheet grid.
+.opencad-core {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 22px;
+  align-items: center;
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 24px 100%,
+    var(--sheet);
+  transition: border-color 0.2s;
+
+  .row-body {
+    justify-self: start;
+    padding: 4px 12px 6px;
+    background: var(--sheet);
   }
 
-  p {
-    margin-top: 4px;
-    font-size: var(--fs-2);
-    line-height: 1.7;
-    color: var(--muted);
+  &:hover {
+    border-color: var(--ink);
+  }
+
+  &:hover .row-title,
+  &:hover .row-arrow {
+    color: var(--blue);
+  }
+
+  &:hover .row-arrow {
+    transform: translateX(4px);
   }
 }
 

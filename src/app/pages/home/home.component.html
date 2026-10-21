@@ -110,10 +110,14 @@
           </a>
         </li>
       </ol>
-      <div class="operations-heading">
-        <h3>{{ '운영에서 발견한 문제까지' | t }}</h3>
-        <p>{{ '실제 업무의 실패를 감지하고, 원인을 고친 사례입니다.' | t }}</p>
+    </section>
+
+    <section class="index-section" id="other-projects" aria-labelledby="other-projects-title">
+      <div class="section-title">
+        <span class="section-no">02</span>
+        <h2 id="other-projects-title">{{ '프로젝트 기록' | t }}</h2>
       </div>
+      <p class="section-lead">{{ '주요 프로젝트 외에 맡아 개발한 일을 모았습니다.' | t }}</p>
       <ul class="operations-list">
         <li *ngFor="let project of operations">
           <a class="operation-card" [routerLink]="(['/portfolio', project.id]) | localLink">
@@ -128,7 +132,7 @@
             />
             <span class="operation-title">
               <span class="row-meta">{{ '{0} · {1}' | t:[(project.number), (project.category)] }}</span>
-              <strong>{{ '서비스 감시와 오류 추적' | t }}</strong>
+              <strong>{{ (project.intro.title ?? project.title) | t }}</strong>
             </span>
             <span class="row-result">{{ (project.intro.result) | t }}</span>
             <span class="row-note"><b>{{ '담당' | t }}</b>{{ (project.intro.role) | t }}</span>
@@ -141,7 +145,39 @@
     <section class="index-section" aria-labelledby="home-opencad-title">
       <div class="section-title"><h2 id="home-opencad-title">{{ '파일 형식별 무료 OpenCAD 도구' | t }}</h2><a class="text-link" [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></div>
       <p class="section-lead">{{ 'DWG·DXF 도면을 열고 편집·저장하는 2D 캐드와 STEP·SketchUp 모델, NC 공구 경로를 확인하는 무료 도구를 만들고 있습니다. 설치 없이 쓰는 개인 오픈소스 프로젝트이며, 공통 3D 코어의 개발 내용도 소개합니다.' | t }}</p>
-      <ul class="guide-list"><li *ngFor="let tool of openCadProjects"><h3><a [routerLink]="(tool.path || '/opencad') | localLink" [fragment]="tool.path ? undefined : tool.id">{{ (tool.name) | t }}</a></h3><p>{{ (tool.summary) | t }}</p></li></ul>
+      <ol class="index-rows">
+        <li *ngFor="let tool of openCadApps">
+          <a
+            class="index-row opencad-row"
+            [routerLink]="(tool.path || '/opencad') | localLink"
+            [fragment]="tool.path ? undefined : tool.id"
+          >
+            <span class="row-thumb opencad-thumb"
+              ><img
+                [src]="tool.figure!.base + '-720.webp'"
+                alt=""
+                width="1440"
+                height="900"
+                loading="lazy"
+            /></span>
+            <span class="row-body">
+              <span class="row-meta">{{ (tool.kind) | t }}</span>
+              <strong class="row-title">{{ (tool.name) | t }}</strong>
+              <span class="row-result">{{ (tool.summary) | t }}</span>
+              <span class="tool-ext"><code *ngFor="let ext of tool.extensions">{{ (ext) | t }}</code></span>
+            </span>
+            <app-icon class="row-arrow" name="arrow-right"></app-icon>
+          </a>
+        </li>
+      </ol>
+      <a class="opencad-core" *ngFor="let core of openCadCore" [routerLink]="(core.path) | localLink">
+        <span class="row-body">
+          <span class="row-meta">{{ (core.kind) | t }}</span>
+          <strong class="row-title">{{ (core.name) | t }}</strong>
+          <span class="row-result">{{ (core.summary) | t }}</span>
+        </span>
+        <app-icon class="row-arrow" name="arrow-right"></app-icon>
+      </a>
     </section>
 
     <section
@@ -150,7 +186,7 @@
       aria-labelledby="research-title"
     >
       <div class="section-title">
-        <span class="section-no">02</span>
+        <span class="section-no">03</span>
         <h2 id="research-title">{{ '직접 구현하며 배운 AI 연구' | t }}</h2>
         <a class="text-link" [routerLink]="'/research' | localLink"
           >{{ '연구 기록 전체 보기' | t }}<app-icon name="arrow-right"></app-icon></a
@@ -197,7 +233,7 @@
       aria-labelledby="achievements-title"
     >
       <div class="section-title">
-        <span class="section-no">03</span>
+        <span class="section-no">04</span>
         <h2 id="achievements-title">{{ '특허와 프로그램' | t }}</h2>
       </div>
       <app-achievements [compact]="true"></app-achievements>
@@ -205,7 +241,7 @@
 
     <section class="index-section" id="about" aria-labelledby="about-title">
       <div class="section-title">
-        <span class="section-no">04</span>
+        <span class="section-no">05</span>
         <h2 id="about-title">{{ '소개' | t }}</h2>
       </div>
       <div class="about-block">

@@ -14,6 +14,8 @@ export interface OpenCadTool {
   source?: string;
   path?: string;
   features?: { label: string; text: string }[];
+  // Drawn with the shared OpenCAD 3D core (opencad-viewer3d).
+  sharedCore?: boolean;
   figure?: {
     // Base path of <base>-720.webp and <base>-1440.webp (16:10 screenshots).
     base: string;
@@ -31,8 +33,45 @@ export interface OpenCadProject extends OpenCadTool {
 }
 
 // Support ranges follow the public apps and repository documentation, checked
-// 2026-10-16. A demo is not a claim that every file or machine is supported.
+// 2026-10-16 (the 2D CAD on 2026-10-21, opencad-dwgdxf 7131c1b). A demo is not a
+// claim that every file or machine is supported.
 export const OPENCAD_PROJECTS: OpenCadProject[] = [
+  {
+    // The id stays the /opencad card anchor (#2d-viewer) that older links point to.
+    id: '2d-viewer', path: '/opencad/projects/dwg-dxf',
+    name: 'OpenCAD DWG·DXF', kind: '2D 도면',
+    searchTitle: '무료 DWG·DXF 캐드 | 설치 없이 도면 열기·편집·저장 · OpenCAD',
+    extensions: ['.dwg', '.dxf'],
+    summary:
+      'DWG·DXF 도면을 열어 보고, 새로 그리거나 고친 뒤 다시 저장하는 무료 2D 캐드입니다. 거리·각도·면적을 재고 PDF·PNG·SVG로 출력할 수도 있습니다.',
+    introduction: '전달받은 DWG·DXF 도면을 CAD 프로그램 없이 브라우저에서 열고, 필요하면 고쳐서 다시 저장하는 2D 캐드입니다. 화면 배치와 명령 이름, 단축키는 AutoCAD와 같게 만들었습니다. 파일 해석과 장면 준비는 웹 워커에서, 화면 표시는 WebGL2로 처리합니다.',
+    url: 'https://gyutae-kim.github.io/opencad-dwgdxf/',
+    source: 'https://github.com/GyuTae-Kim/opencad-dwgdxf',
+    features: [
+      { label: '열기', text: 'DWG R13~R2018, DXF R12~R2018 파일과 빈 새 도면' },
+      { label: '확인', text: '거리, 각도, 면적 측정과 도면층, 치수 목록, 문자 찾기' },
+      { label: '편집', text: '그리기와 수정 명령, 치수, 해치, 블록' },
+      { label: '저장', text: 'DWG, DXF로 저장하고 PDF, PNG, SVG로 출력' },
+      { label: '모바일', text: '편집 리본 대신 보기 모드: 거리·반지름·각도·면적 재기와 누른 객체의 치수 정보' },
+    ],
+    figure: {
+      base: 'assets/opencad/viewer-2d',
+      alt: 'OpenCAD DWG·DXF로 예제 도면을 연 화면. 위쪽에 리본 메뉴가 있고, 가운데에 치수가 붙은 브래킷 판의 정면도와 단면도, 주기, 체결 부품이 보입니다.',
+      caption: '예제 도면을 연 화면',
+    },
+    steps: [
+      'DWG·DXF 캐드를 열고 시작 화면의 「예제 도면 열기」로 화면 조작을 먼저 익힙니다.',
+      '「파일 열기」(Ctrl+O)로 .dwg·.dxf 파일을 고르거나 창에 끌어다 놓습니다. 빈 도면에서 시작하려면 「새 도면」(Ctrl+N)을 누릅니다.',
+      '휠로 확대·축소하고 가운데 버튼으로 이동합니다. DI(거리), MEA(측정), LA(도면층)처럼 AutoCAD와 같은 명령을 명령행에 입력할 수 있습니다.',
+      '고친 도면은 DWG나 DXF로 저장하고, 필요하면 PDF·PNG·SVG로 출력합니다.',
+    ],
+    limitations: [
+      'DWG는 R13~R2018을 열고 R2000~R2018로 저장합니다. R2007 도면은 R2004 형식으로 저장됩니다.',
+      '외부 참조, 이미지, PDF 언더레이와 SHX 글꼴은 해당 파일을 따로 골라야 원래대로 보입니다. SHX 큰 글꼴 자리의 한글은 Noto Sans KR로 대신 그려 원본과 다르게 보일 수 있습니다.',
+      '모바일 기기에서는 보기와 치수 확인 화면으로 엽니다. 그리기와 저장은 연필 단추로 편집 화면에 들어가거나 컴퓨터에서 하세요.',
+      'Autodesk와 관계없는 개인 오픈소스 프로젝트입니다. 납품이나 가공에 쓸 도면은 원본 프로그램과 작업 기준으로 다시 확인하세요.',
+    ],
+  },
   {
     id: 'step-viewer', path: '/opencad/projects/step-viewer',
     name: 'OpenCAD STEP 뷰어', kind: '3D CAD 부품·조립 모델',
@@ -40,7 +79,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     extensions: ['.step', '.stp', '.p21'],
     summary: 'STEP·STP 3D CAD 파일을 설치 없이 브라우저에서 여는 무료 뷰어입니다. 조립 구조와 부품 색을 확인하고, 두 점 사이 거리를 재거나 PNG로 저장할 수 있습니다.',
     introduction: '협력사에서 받은 STEP 모델을 확인할 때 CAD 프로그램을 설치하지 않고 부품과 조립 구조를 살펴볼 수 있습니다. STEP 해석은 웹 워커에서, 3D 표시는 공통 OpenCAD 뷰어 코어에서 처리합니다.',
-    url: 'https://gyutae-kim.github.io/opencad-step/', source: 'https://github.com/GyuTae-Kim/opencad-step',
+    url: 'https://gyutae-kim.github.io/opencad-step/', source: 'https://github.com/GyuTae-Kim/opencad-step', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-step',
       alt: 'OpenCAD STEP 뷰어로 예제 조립 모형을 연 화면. 가운데에 받침판 위의 블록 두 개와 핀, 고리가 3D로 보이고, 오른쪽 패널에 제품 나무와 부품별 보이기 목록이 있습니다.',
@@ -63,7 +102,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     extensions: ['.skp'],
     summary: 'SketchUp 2021~2026에서 저장한 SKP 파일을 브라우저에서 여는 무료 뷰어입니다. 태그·재질과 그룹·컴포넌트를 살펴보고 거리를 측정할 수 있습니다.',
     introduction: '가구·인테리어 설계의 SketchUp 모델을 전달받았을 때 브라우저에서 형태와 구성을 확인하는 도구입니다. 로컬 파일을 웹 워커에서 읽고 OpenCAD 3D 코어로 표시합니다.',
-    url: 'https://gyutae-kim.github.io/opencad-skp/', source: 'https://github.com/GyuTae-Kim/opencad-skp',
+    url: 'https://gyutae-kim.github.io/opencad-skp/', source: 'https://github.com/GyuTae-Kim/opencad-skp', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-skp',
       alt: 'OpenCAD SketchUp 뷰어로 예제 집 모형을 연 화면. 가운데에 빨간 지붕의 집과 나무, 잔디 바닥이 3D로 보이고, 오른쪽 패널에 태그 5개와 재질 11개 목록이 있습니다.',
@@ -86,7 +125,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     extensions: ['.nc', '.gcode', '.ngc', '.h', '.mpr'],
     summary: 'G-code·Heidenhain 평문·woodWOP MPR 파일의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생할 수 있습니다.',
     introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain·MPR 데이터를 해석하고, 코드·공구·정보 패널을 3D 경로와 연결합니다.',
-    url: 'https://gyutae-kim.github.io/opencad-nc/', source: 'https://github.com/GyuTae-Kim/opencad-nc',
+    url: 'https://gyutae-kim.github.io/opencad-nc/', source: 'https://github.com/GyuTae-Kim/opencad-nc', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-nc',
       alt: 'OpenCAD NC 뷰어로 예제 G-code를 연 화면. 가운데에 바깥 윤곽, 원형 포켓, 드릴 구멍의 공구 경로가 공구마다 다른 색으로 보이고, 오른쪽 패널에 재생 막대와 G-code 줄 목록이 있습니다.',
@@ -120,28 +159,5 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
   },
 ];
 
-export const OPENCAD_TOOLS: OpenCadTool[] = [
-  {
-    id: '2d-viewer',
-    name: 'OpenCAD DWG·DXF',
-    kind: '2D 도면',
-    extensions: ['.dwg', '.dxf'],
-    summary:
-      'DWG·DXF 도면을 열어 보고, 새로 그리거나 고친 뒤 다시 저장하는 무료 2D 캐드입니다. 거리·각도·면적을 재고 PDF·PNG·SVG로 출력할 수도 있습니다.',
-    url: 'https://gyutae-kim.github.io/opencad-dwgdxf/',
-    source: 'https://github.com/GyuTae-Kim/opencad-dwgdxf',
-    features: [
-      { label: '열기', text: 'DWG R13~R2018, DXF R12~R2018 파일과 빈 새 도면' },
-      { label: '확인', text: '거리, 각도, 면적 측정과 도면층, 치수 목록, 문자 찾기' },
-      { label: '편집', text: '그리기와 수정 명령, 치수, 해치, 블록' },
-      { label: '저장', text: 'DWG, DXF로 저장하고 PDF, PNG, SVG로 출력' },
-      { label: '모바일', text: '편집 리본 대신 보기 모드: 거리·반지름·각도·면적 재기와 누른 객체의 치수 정보' },
-    ],
-    figure: {
-      base: 'assets/opencad/viewer-2d',
-      alt: 'OpenCAD DWG·DXF로 예제 도면을 연 화면. 위쪽에 리본 메뉴가 있고, 가운데에 치수가 붙은 브래킷 판의 정면도와 단면도, 주기, 체결 부품이 보입니다.',
-      caption: '예제 도면을 연 화면',
-    },
-  },
-  ...OPENCAD_PROJECTS.filter((project) => project.url),
-];
+// Every published app; the 2D CAD comes first, as the first OpenCAD tool.
+export const OPENCAD_TOOLS: OpenCadTool[] = OPENCAD_PROJECTS.filter((project) => project.url);

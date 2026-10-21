@@ -14,7 +14,7 @@ export class PortfolioComponent implements OnDestroy {
   watchCount = watchCount;
   groupCount = groupCount;
   selected: CaseStudy | undefined;
-  // An 「기타 프로젝트」 entry opened at /portfolio/<id>.
+  // A 「프로젝트 기록」 entry opened at /portfolio/<id>.
   other: OtherProject | undefined;
   // An id in the address that matches no project.
   missing = false;

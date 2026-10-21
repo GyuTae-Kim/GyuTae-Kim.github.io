@@ -5,7 +5,8 @@ import { OTHER_PROJECTS } from '../../other-projects-data';
 import { OPENCAD_PROJECTS, OPENCAD_TOOLS } from '../../opencad-data';
 
 // Short introductions for the home page; detailed evidence stays on each case page.
-const PROJECT_INTROS: Record<string, { result: string; role: string }> = {
+// title: a shorter card title when the page title is too long for the home card.
+const PROJECT_INTROS: Record<string, { title?: string; result: string; role: string }> = {
   'cad-feature-recognition': {
     result: '가공 피쳐 인식부터 Fusion CAM 공정 생성과 결과 확인까지 연결했습니다.',
     role: '형상 분석·가공 전략·Fusion 연동을 개발했습니다. 디지털 트윈은 결과 시각화만 맡았습니다.',
@@ -19,6 +20,7 @@ const PROJECT_INTROS: Record<string, { result: string; role: string }> = {
     role: '팀에서 제조 데이터 출력·생산 투입과 도면·발주 초기 개발을 리딩했습니다.',
   },
   'service-monitoring': {
+    title: '서비스 감시와 오류 추적',
     result: '서버 상태뿐 아니라 송장·알림톡의 처리 실패까지 감지하고, 운영 문제 6건의 원인을 고쳤습니다.',
     role: '감시 기준부터 오류 수집·알림·관리자 콘솔까지 직접 개발했습니다.',
   },
@@ -36,10 +38,9 @@ const RESEARCH_ROLES: Record<string, string> = {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
-  openCadProjects = [
-    ...OPENCAD_TOOLS.filter((tool) => tool.url),
-    ...OPENCAD_PROJECTS.filter((project) => !project.url),
-  ];
+  // Published apps are rows with their screenshot; the shared 3D core follows as a slim card.
+  openCadApps = OPENCAD_TOOLS.filter((tool) => tool.url && tool.figure);
+  openCadCore = OPENCAD_PROJECTS.filter((project) => !project.url);
   cases = CASE_STUDIES.map((project) => ({ ...project, intro: PROJECT_INTROS[project.id] }));
   operations = OTHER_PROJECTS.map((project) => ({ ...project, intro: PROJECT_INTROS[project.id] }));
   kindLabels = FIGURE_KIND_LABELS;
@@ -58,6 +59,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   ];
   sections = [
     { id: 'work', label: '프로젝트' },
+    { id: 'other-projects', label: '프로젝트 기록' },
     { id: 'research', label: '연구' },
     { id: 'achievements', label: '성과' },
     { id: 'about', label: '소개' },
