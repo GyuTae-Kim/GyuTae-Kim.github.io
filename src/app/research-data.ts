@@ -5,8 +5,12 @@ export interface ResearchWork {
   shortTitle: string;
   summary: string;
   flow: { label: string; text: string }[];
+  // How the problem was framed for learning (e.g. state, action, reward), shown under the flow.
+  design?: { title: string; items: { label: string; text: string }[] };
   category: string;
   previewLabel: string;
+  // The research goal, shown before the role.
+  goal?: string;
   role: string;
   outcome: string;
   fixes: { problem: string; fix: string; label?: string }[];
@@ -71,10 +75,11 @@ export const RESEARCH_WORKS: ResearchWork[] = [
   {
     id: 'graph-tsp',
     previewLabel: '경로 탐색 재실행 예시',
+    goal: '도시가 늘수록 경우의 수가 급격히 커지는 TSP에서, 기존 알고리즘보다 빠르게 짧은 경로를 찾는 것이 목표였습니다. 지도교수님과 함께 강화학습으로 접근했습니다.',
     role: '참고 논문의 그래프 표현과 Q-learning 아이디어를 바탕으로, TSP 환경·모델·학습 루프·삽입 규칙을 연결하는 실험 코드를 구현했습니다.',
     outcome: '도시의 위치·거리·방문 상태를 그래프로 입력하고, 모델이 고른 도시를 삽입 휴리스틱으로 경로에 추가하는 탐색 프로그램을 만들었습니다. 공개 코드 재실행에서는 기준선과 비교해 학습이 제대로 작동하지 않는 원인도 추적했습니다.',
     fixes: [
-      { problem: '도시 수와 방문 상태가 달라져도 같은 모델로 다음 후보를 평가해야 합니다.', fix: '도시와 거리를 그래프로 표현하고 Structure2Vec으로 관계를 임베딩해, 방문하지 않은 도시의 Q값을 평가하도록 구성했습니다.' },
+      { problem: '도시 수마다 행렬 크기가 달라, 크기가 고정된 신경망에 바로 넣을 수 없었습니다.', fix: 'Structure2Vec으로 도시마다 임베딩을 만들고, 평가 네트워크가 방문하지 않은 도시마다 Q값을 매기게 했습니다.' },
       { problem: '다음 도시를 고르는 것만으로는 경로의 어느 위치에 넣을지 정해지지 않습니다.', fix: '도시 선택은 학습 모델이, 삽입 위치는 경로 길이가 가장 덜 늘어나는 자리를 찾는 휴리스틱이 맡도록 결합했습니다.' },
       { problem: '짧은 경로가 나와도 학습 효과인지 삽입 규칙의 효과인지 구분하기 어렵습니다.', fix: '무작위 도시 순서에도 같은 삽입 규칙을 적용해 비교하고 Q값과 TD 목표 계산을 추적했습니다. 단축 학습에서는 학습 정책의 개선을 확인하지 못했습니다.', label: '분석·검증' },
     ],
@@ -92,7 +97,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     ],
     credit: 'NeurIPS 2017 그래프 조합 최적화 연구를 참고한 구현',
     connection:
-      '그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 가구 패널과 면을 인식하는 지금의 연구로 이어졌습니다.',
+      '처음으로 신경망을 직접 코드로 구현해 본 연구였습니다. 그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 가구 패널과 면을 인식하는 지금의 연구로 이어졌습니다.',
     relatedProjectId: 'panel-classification',
     title: '강화학습으로 TSP 경로를 만드는 그래프 모델',
     shortTitle: 'TSP 경로 탐색',
@@ -102,10 +107,18 @@ export const RESEARCH_WORKS: ResearchWork[] = [
       { label: 'Structure2Vec + Q-learning', text: '도시마다 Q값 계산' },
       { label: '도시 선택과 경로 삽입', text: '모델이 고른 도시를 휴리스틱으로 삽입' },
     ],
+    design: {
+      title: '강화학습 설계',
+      items: [
+        { label: '상태', text: '도시 연결(인접 행렬)과 거리, 이미 경로에 들어간 도시' },
+        { label: '행동', text: '다음에 경로에 넣을 도시 고르기' },
+        { label: '보상', text: '도시를 넣어 늘어난 경로 길이를 그대로 감점' },
+      ],
+    },
     category: '강화학습 · 그래프 신경망',
-    tags: ['Reinforcement learning', 'Structure2Vec', 'Q-learning', 'Graph neural network', 'TensorFlow'],
+    tags: ['Reinforcement learning', 'Structure2Vec', 'Deep Q-learning', 'Graph neural network', 'TensorFlow', 'NumPy'],
     source: 'https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V',
-    period: '2021 · 학부연구생',
+    period: '2018.09–2021.06 · 학부연구생',
     result: {
       headline: '단축 학습에서는 무작위 삽입 대비 개선을 확인하지 못했습니다',
       thumb: 'assets/research/results/tsp/thumb',
@@ -130,6 +143,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
         '원래 설정으로 학습해 보니, 정책이 모든 도시에 같은 Q값을 내며 번호 순서대로 도시를 골랐습니다.',
       story: [
         { label: '기대', text: '학습한 Q값이 경로를 짧게 만드는 도시를 고른다' },
+        { label: '당시 판단', text: '학습할수록 경로 비용은 줄었지만 최적해에는 못 미쳤고, 도시가 많아 충분히 탐색하지 못했다고 봤다' },
         { label: '실제', text: '모든 도시의 Q값이 같아져 번호 순서대로 골랐다' },
         { label: '원인', text: '정규화 없는 이웃 합으로 값이 폭증했고, TD 목표가 시작 도시만 봤다' },
       ],

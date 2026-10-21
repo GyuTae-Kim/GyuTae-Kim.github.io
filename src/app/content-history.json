@@ -24,12 +24,12 @@
     "fingerprint": "0281a371490619766ae10b0b45213d76d1b98611e4a65801f0f98a4eac93911e"
   },
   "/research": {
-    "lastmod": "2026-10-20T00:57:15Z",
-    "fingerprint": "78b2e35b4526b52bb055d9dd52ddf12f207df64af95203927d469a1936f36423"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "dabc15a202eab0fbda91b9365fe41e68988a4759f15625784b4cc3194da59565"
   },
   "/research/graph-tsp": {
-    "lastmod": "2026-10-21T14:43:01Z",
-    "fingerprint": "4acbb651eac670ebe7155044e76dfa193f1adeb802796ef9c772657b77b4787b"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "3fa1fe9988dc177f1cabbf29a471d3bf8db7166e01b93718eb0f6d998a2158bc"
   },
   "/research/fashion-classification": {
     "lastmod": "2026-10-20T00:57:15Z",
@@ -120,12 +120,12 @@
     "fingerprint": "bd30da7ef17b84a0540dc76e4481b13445e10509fb22454d1b29812415eac8a6"
   },
   "/en/research": {
-    "lastmod": "2026-10-20T00:57:15Z",
-    "fingerprint": "cefb28c3c389737562575ca5c85557d578911a532d7e087db198ed97cdafc5f6"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "6444f965cb00c1e28bc6a242aa8539ea240a3344534d895703d7287309a139a8"
   },
   "/en/research/graph-tsp": {
-    "lastmod": "2026-10-21T14:43:01Z",
-    "fingerprint": "e89f09e6440c74c02574dfba555cad00284684645dfb8c013221ce7f691928c8"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "38b6f7b86eee25bd3f63fd1a9e2f1951d6a05052c75df7b3e00258c435a2b33e"
   },
   "/en/research/fashion-classification": {
     "lastmod": "2026-10-20T00:57:15Z",
@@ -216,12 +216,12 @@
     "fingerprint": "847cebf994ea53830c2305144186bd4918cd49fd373a71c439c9797d9ba21ba9"
   },
   "/ja/research": {
-    "lastmod": "2026-10-20T00:57:15Z",
-    "fingerprint": "29bdf5b80192689cf151acce615a27a103dde3092f6e32a34f4ea872bac0b636"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "bc958fca1c932ec6583eb3ddb875056e1e1962fa27f26c7d5d4493bf680fd339"
   },
   "/ja/research/graph-tsp": {
-    "lastmod": "2026-10-21T14:43:01Z",
-    "fingerprint": "44c8496b48b73c85a1e6378cd2917fd0ba9ed9edf3ca0db2de46f4c2a94db8c0"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "28dce6d7a28ff233295249fa7dab57f772fd35801ddc09bb3104ba755badac19"
   },
   "/ja/research/fashion-classification": {
     "lastmod": "2026-10-20T00:57:15Z",
@@ -312,12 +312,12 @@
     "fingerprint": "100a8f1aac7835f87a0e0fa37cfbba158f4cf41bde044e38156f01c0bf827459"
   },
   "/zh-CN/research": {
-    "lastmod": "2026-10-20T00:57:15Z",
-    "fingerprint": "6366eaac73cb5ea49f8339d9e549467b06fa45b6882a0efc46377d66317ea06c"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "96d90a3e48e7a500e0890ad5dc29179af9226e2c9da1ffb7b31c7c6d383eb375"
   },
   "/zh-CN/research/graph-tsp": {
-    "lastmod": "2026-10-21T14:43:01Z",
-    "fingerprint": "dc8873bfbb33ce478216a17fa73a5c6b0a740e7332a5497e7ddd6d9a7fd4800a"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "a0f05e04f35c3067240fee78e6c1a7f209d096fa9113be7f170c0199ef063786"
   },
   "/zh-CN/research/fashion-classification": {
     "lastmod": "2026-10-20T00:57:15Z",
@@ -408,12 +408,12 @@
     "fingerprint": "92c15e32a4e7112e195e51d0c210f52b305b7e21cb3967b7dc9b82b5194f2d90"
   },
   "/de/research": {
-    "lastmod": "2026-10-20T00:57:15Z",
-    "fingerprint": "935002dba6619dfaaa61f373b2a171840bd3ade6bcfa670994c2595625a60939"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "a40004ef3af857e0db25bf2dec7afba3ff27549526ea24e6829ded3a80ce5e8c"
   },
   "/de/research/graph-tsp": {
-    "lastmod": "2026-10-21T14:43:01Z",
-    "fingerprint": "2737616a440ea1b3eae6ff237fe8f98e759ade843f32030022748ec8a2d07120"
+    "lastmod": "2026-10-21T14:58:35Z",
+    "fingerprint": "699ce408c7ebac4f4f50b766699649a6e646d35869f381239ee1c98774bd93c8"
   },
   "/de/research/fashion-classification": {
     "lastmod": "2026-10-20T00:57:15Z",

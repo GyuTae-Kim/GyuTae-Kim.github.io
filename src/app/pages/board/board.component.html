@@ -108,6 +108,15 @@
             <p>{{ (step.text) | t }}</p>
           </li>
         </ol>
+        <div class="research-design" *ngIf="work.design as design">
+          <p class="research-design-title">{{ (design.title) | t }}</p>
+          <dl>
+            <div *ngFor="let item of design.items">
+              <dt>{{ (item.label) | t }}</dt>
+              <dd>{{ (item.text) | t }}</dd>
+            </div>
+          </dl>
+        </div>
         <p class="research-credit">{{ (work.credit) | t }}</p>
         <div class="tags">
           <span *ngFor="let tag of work.tags">{{ (tag) | t }}</span>
@@ -116,6 +125,7 @@
       <section class="research-contribution" aria-labelledby="contribution-title">
         <h2 class="detail-title" id="contribution-title">{{ '직접 맡은 역할과 결과' | t }}</h2>
         <dl class="case-facts">
+          <div class="fact-wide" *ngIf="work.goal"><dt>{{ '연구 목표' | t }}</dt><dd>{{ (work.goal) | t }}</dd></div>
           <div><dt>{{ '맡은 역할' | t }}</dt><dd>{{ (work.role) | t }}</dd></div>
           <div><dt>{{ '만들어낸 결과' | t }}</dt><dd>{{ (work.outcome) | t }}</dd></div>
         </dl>
