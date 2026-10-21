@@ -34,6 +34,11 @@ const PROJECT_INTROS: Record<string, { title?: string; result: string; role: str
     result: '방문과 구매 기록으로 고객별 추천 상품을 골라 쇼핑몰 화면에 보여 주는 서비스를 설계했습니다.',
     role: '데이터 흐름, API, DB, 추천 구조를 설계하고 통계 추천을 개발했습니다.',
   },
+  'scene-change-player': {
+    title: '장면 전환 플레이어',
+    result: '장면 전환 지점을 재생 막대에 표시하고 미리보기와 장면 이동, 구간 저장까지 한 화면에서 하게 했습니다.',
+    role: '장면 검출을 뺀 플레이어 기능을 모두 개발했습니다.',
+  },
 };
 
 const RESEARCH_ROLES: Record<string, string> = {

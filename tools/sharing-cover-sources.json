@@ -58,5 +58,17 @@
     "source": "src/assets/cases/vory-q/recommendation-1100.webp",
     "caption": "실제 쇼핑몰 메인 페이지의 추천 영역",
     "output": "src/assets/og/vory-q-curation.jpg"
+  },
+  {
+    "id": "scene-change-player",
+    "route": "/portfolio/scene-change-player",
+    "sheet": "B-07",
+    "kicker": "프로젝트 기록 07 · 데스크톱 앱 · 영상 처리",
+    "title": ["장면 전환", "동영상 플레이어"],
+    "summary": "장면 전환 지점을 재생 막대에서 보고 바로 이동하게 했습니다.",
+    "role": "장면 검출을 뺀 플레이어 기능 개발",
+    "source": "src/assets/cases/scene-player/player-1100.webp",
+    "caption": "플레이어 재생 화면",
+    "output": "src/assets/og/scene-change-player.jpg"
   }
 ]

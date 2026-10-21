@@ -35,6 +35,7 @@ const PROJECT_SEARCH_COPY: Record<string, { title: string; description: string }
   'service-monitoring': { title: '제조 소프트웨어 운영·서비스 장애 감시 | 김규태', description: '제조 소프트웨어의 서버와 PC 앱 오류를 모아 서비스 장애를 감시한 개발 사례입니다. 감시가 찾아낸 DB 응답 지연과 외부 연동 오류, 실제 수정 과정과 김규태의 역할을 소개합니다.' },
   'voda-architecture': { title: '웹 행동 분석 서비스 VODA 아키텍처 재설계 | 김규태', description: '웹사이트 방문자의 클릭, 스크롤, 페이지뷰를 모으는 분석 서비스 VODA의 아키텍처 재설계 사례입니다. SQS 메시지 처리, 분석 화면의 시간 초과를 해결한 집계 정제기, 풀 페이지 캡처 크롤러 등 김규태가 맡은 개발을 소개합니다.' },
   'vory-q-curation': { title: '쇼핑몰 개인화 추천 서비스 VORY-Q 설계 | 김규태', description: '쇼핑몰 방문자의 페이지뷰와 구매 이력으로 상품을 추천하는 SaaS VORY-Q의 설계 사례입니다. 헤더 스크립트 연동, REST API와 RDB, 고객 세그먼트, 통계 기반 추천 알고리즘까지 김규태가 맡은 설계와 개발을 소개합니다.' },
+  'scene-change-player': { title: '장면 전환을 표시하는 동영상 플레이어 개발 | 김규태', description: '영상의 장면 전환 지점을 찾아 재생 막대에 표시하는 C# WPF 동영상 플레이어입니다. 분할 지점 미리보기와 타임라인 확대, 장면 이동, 분할 지점 편집, ffmpeg 구간 저장 등 김규태가 개발한 플레이어 기능을 소개합니다.' },
 };
 
 export const SEARCH_PAGES: SearchPage[] = [

@@ -91,6 +91,7 @@ export interface OperationShot {
 const SHOTS = 'assets/cases/operations/';
 const VODA = 'assets/cases/voda/';
 const VORY_Q = 'assets/cases/vory-q/';
+const SCENE_PLAYER = 'assets/cases/scene-player/';
 
 // From the user's 2024 portfolio PDF; every fix here is GyuTae's own part of the TFT.
 const VODA_FIXES: { problem: string; fix: string }[] = [
@@ -452,5 +453,79 @@ export const OTHER_PROJECTS: OtherProject[] = [
       },
     ],
     moreEvidence: [],
+  },
+  {
+    id: 'scene-change-player',
+    number: '07',
+    title: '장면 전환 지점을 표시하는 동영상 플레이어',
+    subtitle: '영상 열기 → 장면 분할 실행 → 재생 막대에 분할 지점 표시 → 미리보기와 장면 이동 → 구간 저장',
+    headline: '장면 전환 지점을 재생 막대에서 보고 바로 이동하게 했습니다',
+    thumb: SCENE_PLAYER + 'thumb-scene-player',
+    category: '데스크톱 앱 · 영상 처리',
+    period: '2020.11–2020.12',
+    summary:
+      '영상에서 장면이 바뀌는 지점을 찾아 재생 막대에 표시하는 Windows 동영상 플레이어입니다. 장면 전환은 OpenCV 프레임 차이와 VGG16 특징 거리 두 방식으로 찾고, 저는 장면 검출을 뺀 플레이어 기능을 모두 개발했습니다.',
+    stats: [
+      { value: '8가지', label: '상세 패널에서 다루는 기능' },
+      { value: '2가지', label: '플레이어에 연결한 장면 검출 방식' },
+      { value: '10%', label: 'Ctrl+휠 한 번에 좁히는 타임라인 범위' },
+    ],
+    role: '장면 전환 검출 알고리즘을 뺀 플레이어 기능을 모두 개발했습니다. 재생 막대의 분할 지점 표시와 미리보기, 타임라인 확대, 장면 이동, 분할 지점 편집과 저장, ffmpeg 구간 저장, 미디어 정보 창을 만들었습니다.',
+    outcome: {
+      result: '파이썬 검출 결과를 플레이어로 받아, 장면 전환 지점을 재생 막대에 표시하고 미리보기와 이동, 수정, 구간 저장까지 한 화면에서 하게 했습니다.',
+      impact: [
+        { title: '긴 영상도 장면 단위로 탐색', text: '이전 장면, 다음 장면 버튼과 막대 위 표식으로 원하는 장면을 바로 찾아갑니다.' },
+        { title: '촘촘한 지점도 확대해서 고르기', text: 'Ctrl+휠로 마우스 위치를 중심으로 타임라인을 넓혀, 가까이 붙은 분할 지점도 구분해 고를 수 있습니다.' },
+        { title: '자동 검출 결과를 사람이 다듬기', text: '잘못 잡힌 지점은 지우고 빠진 지점은 더해 저장하므로, 자동 검출 뒤 손으로 고치는 작업이 한 화면에서 이어집니다.' },
+      ],
+    },
+    // The repository records no tests or checks for the player.
+    checked: [],
+    tags: ['C#', 'WPF', 'OpenCvSharp', 'FFME', 'ffmpeg'],
+    work: [
+      { title: '분할 지점 표시', text: '검출된 프레임을 재생 막대 위 표식으로 표시' },
+      { title: '미리보기와 이동', text: '표식에 마우스를 올리면 그 프레임을 미리 보여 주고, 누르면 이동' },
+      { title: '타임라인 확대', text: 'Ctrl+휠로 마우스 위치를 중심으로 확대와 축소' },
+      { title: '편집과 저장', text: '분할 지점 추가와 삭제, 메타정보 저장, ffmpeg 구간 저장' },
+    ],
+    // From the player code and its comments; the detection scripts were a teammate's part.
+    fixes: [
+      {
+        problem: '타임라인을 확대한 채 다음 장면으로 넘어가면 지점이 보이는 범위 밖으로 나갔습니다.',
+        fix: '이동할 지점이 범위를 벗어나면 그보다 5초 넓게 범위를 늘려 함께 보여 주게 했습니다.',
+      },
+      {
+        problem: 'OpenCV로 구간을 저장하면 소리가 빠졌습니다.',
+        fix: 'ffmpeg로 구간을 잘라 소리까지 저장했습니다.',
+      },
+      {
+        problem: '플레이어는 파이썬 검출이 언제 끝나는지 알 수 없었습니다.',
+        fix: '결과 파일이 생기면 지점을 그리고 버튼을 켜며, 검출이 도는 동안에는 새 검출을 막았습니다.',
+      },
+    ],
+    // Placeholders until the user captures the Windows app; replace the files and keep the captions.
+    evidence: [
+      {
+        src: SCENE_PLAYER + 'player-1100.webp',
+        full: SCENE_PLAYER + 'player.webp',
+        title: '재생 화면',
+        alt: '장면 전환 플레이어의 재생 화면. 재생 막대 위에 분할 지점 표식이 있고, 표식 하나에 프레임 미리보기가 떠 있습니다.',
+        caption: '재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다.',
+        width: 1100,
+        height: 688,
+      },
+    ],
+    moreEvidenceTitle: '플레이어 화면',
+    moreEvidence: [
+      {
+        src: SCENE_PLAYER + 'detail-1100.webp',
+        full: SCENE_PLAYER + 'detail.webp',
+        title: '상세 패널',
+        alt: '플레이어 옆에 붙는 상세 패널. 프레임 이동, 두 가지 장면 분할, 이전과 다음 장면, 분할 지점 추가, 저장 버튼과 미디어 정보가 있습니다.',
+        caption: '장면 분할 실행과 장면 이동, 분할 지점 편집, 구간 저장을 이 패널에서 합니다. 영상의 코덱과 해상도 같은 정보도 함께 보여 줍니다.',
+        width: 1100,
+        height: 688,
+      },
+    ],
   },
 ];
