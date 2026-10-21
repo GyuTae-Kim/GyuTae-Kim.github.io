@@ -1,11 +1,11 @@
 {
   "/": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "915d853162e5af1ad9dbcfa3f897ff35cb0c4129269359b7a3902df8bfa8d0e2"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "b68cb24817587b4707ac8c8fc33a61bd0eeff96881bcb6851764e713bb9ed9cb"
   },
   "/portfolio": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "c7754999e55830a859ca4c1d52c22d3b341c1b82939350b071bcd8ee6a1e0545"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "a2af05dea7fd5cc3f930cd1c52e3c2fd1406fac68019babc9eb42c09aab7d2b9"
   },
   "/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-21T16:11:18Z",
@@ -20,8 +20,16 @@
     "fingerprint": "86e0f4e6b19ac57619a2f08c5c0221901da59340503cc3ef80662571b8a39ddd"
   },
   "/portfolio/service-monitoring": {
-    "lastmod": "2026-10-21T14:28:44Z",
-    "fingerprint": "f6f73e6e3af6fd279e799966a5731f18f83af1b37a164c7ade74c42379b92d5a"
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "70b147332af7d67a6f300a9e04e75c4165d6f2d052affcf6d462748f666486af"
+  },
+  "/portfolio/voda-architecture": {
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "f5d28929b8be971d7c5f0b76d4a2a0c8b2c53366947eb573e511d228a45eb101"
+  },
+  "/portfolio/vory-q-curation": {
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "0648ee22c3de9972742179b0fe11c96eb78ecfabefd37495c845a85760a5b312"
   },
   "/research": {
     "lastmod": "2026-10-21T15:18:20Z",
@@ -100,12 +108,12 @@
     "fingerprint": "5e375485d97904ece2c20c126ac9fe28f996c98bde7c88525c5a667e1bce54bc"
   },
   "/en/": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "333f56230c3f5147d038fc4748e36326d76cd914a1c2c150bcc0f0d277f781a1"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "170f53b2b2ebf15fdfd372387d7ea0abca3a7af4cc731665e5ded75db208c4e3"
   },
   "/en/portfolio": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "0eb6e8f9a7c6eaf8e515bf13121e189179941cb997fcd9fd38eb1cf5314953d3"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "24232ef45c56b0457e4ade16f1ff20f9718d31a33ca0f3321e01a33f05087b4a"
   },
   "/en/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-21T16:11:18Z",
@@ -120,8 +128,16 @@
     "fingerprint": "46ae27b7ad37b18eff18d6a148509e562f940a65104a21270299e4a3d38a8a77"
   },
   "/en/portfolio/service-monitoring": {
-    "lastmod": "2026-10-21T14:28:44Z",
-    "fingerprint": "c973bfa51b2765f3c9db011d568b857e9e950158821b29239cbf8d3ff09f64a5"
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "cb96adad838c07c9a909ef3fbe30eedaf74eb214219a4f14f66c668f0d35f34b"
+  },
+  "/en/portfolio/voda-architecture": {
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "c259d26104e4aafb84aed68463b893e247fba8d36d2ad4379e2c766b70f7da4b"
+  },
+  "/en/portfolio/vory-q-curation": {
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "95f4a27641fdb2e86012236ca458dc979664b6978fcec2f51f1df24f7e4c9e7a"
   },
   "/en/research": {
     "lastmod": "2026-10-21T15:18:20Z",
@@ -200,12 +216,12 @@
     "fingerprint": "f0faf3471cc4fd9bc2a3243c08c2163ae9d0382a0446aab482287afd786589eb"
   },
   "/ja/": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "761ac6328d29a2a3cee6ee93989ca950055a81604134f77af8061b6b7fa01b86"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "e0a55f4a9d09f0e57733d080bb6b58009f657f083402f8b828da528cdbea201b"
   },
   "/ja/portfolio": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "5e0aecfb00b5e5063c3bb897d22247bfbfba3081ae6d251b79209ca69ed10386"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "c12dbd96a3f745f77ef109c7fd06235a236f7dc5d2f3688a8b072b590c937bc9"
   },
   "/ja/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-21T16:11:18Z",
@@ -220,8 +236,16 @@
     "fingerprint": "69fd4dd1943f440a6cdc034e67ab80c21e680b80b4f2525608398de7bf209ef0"
   },
   "/ja/portfolio/service-monitoring": {
-    "lastmod": "2026-10-21T14:28:44Z",
-    "fingerprint": "4e7f5a62975c17124de1aa63af1c6eaa493a6b01319bbb4fe127d48462e63622"
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "ada5bde59bc30ed412a1395425aca8e35c7d7f5046eec952dbf4a5ea0c945635"
+  },
+  "/ja/portfolio/voda-architecture": {
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "44b7a195f12e583e356c098b5370e07163629e7d11e3dc48898267333052de4a"
+  },
+  "/ja/portfolio/vory-q-curation": {
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "c1372ea9539a31c0ee157cec1996ee64494c2086ac9cc974546bf2be1afc840d"
   },
   "/ja/research": {
     "lastmod": "2026-10-21T15:18:20Z",
@@ -300,12 +324,12 @@
     "fingerprint": "681b2ce212309d40709253a6a68d73828b39de6a4d83f86946a02662a1d9cd18"
   },
   "/zh-CN/": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "5042dc2db392fb3403c9a4b439f798c512360bd4ccf8011d5de05d6f17cd2b5b"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "d88fa33697a6617fc0ebe65cb8d5fb55c3f77f4dc3b628f49165d8cd7ac834b0"
   },
   "/zh-CN/portfolio": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "4fe8e445412a1b8d980cd76125fb190592645b10cffefcd63ead0ad85df1bec8"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "c7fa614ed5fed3379768ba094021181224f6d83dbaf3aeb9ecea6d2f53ff10fc"
   },
   "/zh-CN/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-21T16:11:18Z",
@@ -320,8 +344,16 @@
     "fingerprint": "8c79ab767e8346ae0325f933e8d9b3aaf5e9d10564268dee989814530f07009e"
   },
   "/zh-CN/portfolio/service-monitoring": {
-    "lastmod": "2026-10-21T14:28:44Z",
-    "fingerprint": "4484b971235de044e26d68bab92f081af91c9d203e0aed7c0e22c2fa06d57adb"
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "8e61eb0db538640487b018f118d136d5cad60e7205b8d13c552003e2711980a6"
+  },
+  "/zh-CN/portfolio/voda-architecture": {
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "8982274d2e47012aa83dc54a001805eed1499b4d4a46406dc3198c877c3e3ef6"
+  },
+  "/zh-CN/portfolio/vory-q-curation": {
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "6e28ebb3cfa74b9b45fa26c7de93023a4ac41428224830f987532ed2a2184a4d"
   },
   "/zh-CN/research": {
     "lastmod": "2026-10-21T15:18:20Z",
@@ -400,12 +432,12 @@
     "fingerprint": "587342020e20122f743c64c297d09c08bea44f354de6a42fe2b0a016c06c744f"
   },
   "/de/": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "9bfe8552b865a0b489a1702899e21cfad2a580afafb5ff292f2269a5df5c2a94"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "86b0e694140c35c68af261880bef7997ac152b1d3f8c2709d9f99ec2e00456e5"
   },
   "/de/portfolio": {
-    "lastmod": "2026-10-21T16:11:18Z",
-    "fingerprint": "39841ec8176c8bfc00a567f170c89c9d338833bfc1987c9b429ddbd8bf2023b0"
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "c24b1e1755c77eb50ed2e28b9bca2aa761ea2bde902ddb47b772837b881ae89e"
   },
   "/de/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-21T16:11:18Z",
@@ -420,8 +452,16 @@
     "fingerprint": "21daed9b38aed077ce4907a1ced339397289586ef5dacb6de5c823f31d2b91ed"
   },
   "/de/portfolio/service-monitoring": {
-    "lastmod": "2026-10-21T14:28:44Z",
-    "fingerprint": "c486384299f2cd7b15b3d74c4e9a700d45559688eceec81a1907549d84db8de3"
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "516c6d22e8fa00b97655a7e6804f1fedb1503ae01186f758ba5f6e6c6746d2fb"
+  },
+  "/de/portfolio/voda-architecture": {
+    "lastmod": "2026-10-21T18:20:02Z",
+    "fingerprint": "90a4ba3f490ea771ec06fa2163135745ea60fc8a45ad9446042f2b4990681f12"
+  },
+  "/de/portfolio/vory-q-curation": {
+    "lastmod": "2026-10-21T18:02:25Z",
+    "fingerprint": "9cc961e60395c20f40bf40adadc33db87898d526e1d0b5a53e9ffabe3e58380c"
   },
   "/de/research": {
     "lastmod": "2026-10-21T15:18:20Z",

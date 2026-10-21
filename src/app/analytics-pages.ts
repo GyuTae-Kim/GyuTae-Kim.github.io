@@ -12,6 +12,8 @@ const NAMES: Record<string, [ContentGroup, string]> = {
   '/portfolio/panel-classification': ['프로젝트', '프로젝트 | 가구 패널 인식'],
   '/portfolio/wedraw-pro': ['프로젝트', '프로젝트 | Wedraw Pro'],
   '/portfolio/service-monitoring': ['프로젝트', '프로젝트 | 서비스 모니터링'],
+  '/portfolio/voda-architecture': ['프로젝트', '프로젝트 | VODA 아키텍처'],
+  '/portfolio/vory-q-curation': ['프로젝트', '프로젝트 | VORY-Q 추천'],
   '/research': ['연구', '연구 | 목록'],
   '/research/graph-tsp': ['연구', '연구 | TSP 강화학습'],
   '/research/fashion-classification': ['연구', '연구 | 의류 분류'],

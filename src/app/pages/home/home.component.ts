@@ -24,6 +24,16 @@ const PROJECT_INTROS: Record<string, { title?: string; result: string; role: str
     result: '서버 상태뿐 아니라 송장·알림톡의 처리 실패까지 감지하고, 운영 문제 6건의 원인을 고쳤습니다.',
     role: '감시 기준부터 오류 수집·알림·관리자 콘솔까지 직접 개발했습니다.',
   },
+  'voda-architecture': {
+    title: 'VODA 아키텍처 재설계',
+    result: '이벤트 수집부터 집계, 페이지 캡처까지 새 구조에 맞춰 다시 만들고 분석 화면의 시간 초과를 해결했습니다.',
+    role: '좌표 수집, 메시지 처리, 정제기, 크롤러를 개발했습니다.',
+  },
+  'vory-q-curation': {
+    title: 'VORY-Q 개인화 추천',
+    result: '방문과 구매 기록으로 고객별 추천 상품을 골라 쇼핑몰 화면에 보여 주는 서비스를 설계했습니다.',
+    role: '데이터 흐름, API, DB, 추천 구조를 설계하고 통계 추천을 개발했습니다.',
+  },
 };
 
 const RESEARCH_ROLES: Record<string, string> = {

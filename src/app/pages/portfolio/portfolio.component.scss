@@ -693,6 +693,151 @@
   color: var(--muted);
 }
 
+/* A redesign: the old system as one chain, then the new one in stages with GyuTae's parts outlined. */
+.arch-board {
+  margin: 34px 0 0;
+}
+
+.arch-before,
+.arch-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+.arch-before {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.arch-before ol {
+  flex: 1 1 0;
+  min-width: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.arch-before li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.arch-before p {
+  margin: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.arch-before app-icon {
+  color: var(--line-strong);
+}
+
+.arch-head {
+  margin-top: 14px;
+  padding: 12px 16px 10px;
+  border: 1px solid var(--ink);
+  border-bottom: 0;
+  background: var(--sheet);
+}
+
+.arch-legend {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-1);
+  color: var(--muted);
+}
+
+.arch-legend i {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--ink);
+  border-left: 3px solid var(--blue);
+  background: var(--white);
+}
+
+.arch-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  border: 1px solid var(--ink);
+  background: var(--sheet);
+}
+
+.arch-stages > li {
+  padding: 12px 14px 16px;
+  border-left: 1px solid var(--line);
+}
+
+.arch-stages > li:first-child {
+  border-left: 0;
+}
+
+.arch-stages h3 {
+  margin: 0 0 10px;
+  font-size: var(--fs-2);
+  line-height: 1.4;
+}
+
+.arch-stages ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.arch-stages ul li {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px 9px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.arch-stages ul li.mine {
+  border-color: var(--ink);
+  border-left: 3px solid var(--blue);
+  background: var(--white);
+}
+
+.arch-board strong {
+  font-size: var(--fs-1);
+  font-weight: 650;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.arch-board small {
+  font-size: var(--fs-1);
+  line-height: 1.5;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+.arch-stages em {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: var(--fs-1);
+  font-style: normal;
+  font-weight: 650;
+  color: var(--blue);
+}
+
 /* Problems the monitoring caught in production: date, what it found, what was fixed. */
 .caught {
   margin: 30px 0 0;
@@ -843,8 +988,34 @@
     border-top: 0;
   }
 
-  .watch-legend {
+  .watch-legend,
+  .arch-legend {
     margin-left: 0;
+  }
+
+  /* The old chain stacks, so its arrows point down. */
+  .arch-before,
+  .arch-before ol,
+  .arch-before li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .arch-before app-icon {
+    transform: rotate(90deg);
+  }
+
+  .arch-stages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .arch-stages > li {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .arch-stages > li:first-child {
+    border-top: 0;
   }
 
   .caught-list li {

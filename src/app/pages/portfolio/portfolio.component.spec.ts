@@ -42,7 +42,20 @@ describe('PortfolioComponent', () => {
     const page = open(OTHER_PROJECTS[0].id);
     expect(page.querySelector('.missing-note')).toBeNull();
     expect(page.querySelector('h1')!.textContent).toContain(OTHER_PROJECTS[0].title);
-    expect(page.querySelector('.case-next')).toBeNull();
+    expect(page.querySelector('.case-next a')!.getAttribute('href')).toBe('/portfolio/' + OTHER_PROJECTS[1].id);
+  });
+
+  it('draws the redesign board and hides sections the source does not record', () => {
+    const voda = open('voda-architecture');
+    expect(voda.querySelectorAll('.arch-stages > li').length).toBe(4);
+    expect(voda.querySelectorAll('.arch-stages li.mine').length).toBeGreaterThan(0);
+    expect(voda.querySelector('#other-fixes-title')).not.toBeNull();
+    expect(voda.querySelector('#other-checks-title')).toBeNull();
+    fixture.destroy();
+    const voryQ = open('vory-q-curation');
+    expect(voryQ.querySelector('.arch-board')).toBeNull();
+    expect(voryQ.querySelector('#other-fixes-title')).toBeNull();
+    expect(voryQ.querySelector('#other-checks-title')).toBeNull();
   });
 
   it('lists the problems the monitoring caught without linking to removed projects', () => {
