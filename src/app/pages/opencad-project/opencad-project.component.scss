@@ -376,6 +376,11 @@
       align-items: center;
       padding: 10px;
     }
+
+    // Korean keeps an unspaced kind such as G-code·Heidenhain·woodWOP whole; let it wrap.
+    .row-meta {
+      overflow-wrap: anywhere;
+    }
   }
 
   .related-shot {
