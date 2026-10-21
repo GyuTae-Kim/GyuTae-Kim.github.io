@@ -355,6 +355,33 @@
           </li>
         </ol>
       </section>
+      <section class="arch-board" *ngIf="other!.architecture as arch" aria-labelledby="arch-title">
+        <h2 class="detail-title" id="arch-title">{{ '기존 구조와 새 구조' | t }}</h2>
+        <div class="arch-before">
+          <span class="watch-label">{{ '기존' | t }}</span>
+          <ol>
+            <li *ngFor="let node of arch.before; let last = last">
+              <p><strong>{{ (node.name) | t }}</strong><small>{{ (node.note) | t }}</small></p>
+              <app-icon *ngIf="!last" name="arrow-right"></app-icon>
+            </li>
+          </ol>
+        </div>
+        <div class="arch-head">
+          <span class="watch-label">{{ '새 구조' | t }}</span>
+          <span class="arch-legend"><i aria-hidden="true"></i>{{ '직접 개발한 부분' | t }}</span>
+        </div>
+        <ol class="arch-stages">
+          <li *ngFor="let stage of arch.stages">
+            <h3>{{ (stage.name) | t }}</h3>
+            <ul>
+              <li *ngFor="let node of stage.nodes" [class.mine]="node.mine">
+                <strong>{{ (node.name) | t }}</strong><small>{{ (node.note) | t }}</small>
+                <em *ngIf="node.mine"><app-icon name="check"></app-icon>{{ (node.mine) | t }}</em>
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </section>
       <section class="case-impact" aria-labelledby="other-impact-title">
         <h2 class="detail-title" id="other-impact-title">{{ '이 기술로 기대하는 변화' | t }}</h2>
         <div class="impact-grid">
@@ -363,7 +390,7 @@
           </article>
         </div>
       </section>
-      <section class="detail-block" aria-labelledby="other-fixes-title">
+      <section class="detail-block" *ngIf="other!.fixes.length" aria-labelledby="other-fixes-title">
         <h2 class="detail-title" id="other-fixes-title">{{ '문제와 해결' | t }}</h2>
         <ol class="fix-list">
           <li *ngFor="let item of other!.fixes">
@@ -373,7 +400,7 @@
           </li>
         </ol>
       </section>
-      <section class="detail-block" aria-labelledby="other-checks-title">
+      <section class="detail-block" *ngIf="other!.checked.length" aria-labelledby="other-checks-title">
         <h2 class="detail-title" id="other-checks-title">{{ '검증과 확인한 결과' | t }}</h2>
         <ul class="operation-checks"><li *ngFor="let item of other!.checked">{{ (item) | t }}</li></ul>
       </section>
@@ -437,7 +464,7 @@
         </ol>
       </section>
       <section class="detail-block" *ngIf="other!.moreEvidence.length" aria-labelledby="other-screens-title">
-        <h2 class="detail-title" id="other-screens-title">{{ '운영에서 확인하는 화면' | t }}</h2>
+        <h2 class="detail-title" id="other-screens-title">{{ (other!.moreEvidenceTitle ?? '운영에서 확인하는 화면') | t }}</h2>
         <div class="operation-evidence">
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: other!.moreEvidence }"></ng-container>
         </div>
