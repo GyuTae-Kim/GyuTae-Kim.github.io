@@ -206,11 +206,11 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     id: 'fashion-classification',
     previewLabel: 'Fashion-MNIST 예측 예시',
     role: '사전학습 ResNet50V2를 이용한 의류 분류 학습 코드와 클래스별 샘플링·평가 흐름을 구현하고, 혼동행렬로 오분류를 분석했습니다.',
-    outcome: 'K-Fashion 사진을 드레스·아우터·바지·상의로 분류하는 학습·분석 파이프라인을 만들었습니다. 이후 공개 코드의 설정을 대체 데이터에서 하나씩 바꿔, 데이터 증강과 숏컷 연결이 예측에 미치는 영향을 분리해 확인했습니다.',
+    outcome: 'K-Fashion 사진을 드레스·아우터·바지·상의로 분류하는 학습·분석 파이프라인을 만들었습니다. 이후 공개 데이터 Fashion-MNIST에서 설정을 하나씩 바꿔, 데이터 증강과 숏컷 연결이 예측에 미치는 영향을 분리해 확인했습니다.',
     fixes: [
       { problem: '의류 종류별 사진 수가 달라 학습 표본이 일부 클래스에 치우칩니다.', fix: '학습·검증 데이터에서 각각 가장 적은 클래스의 표본 수에 맞춰 다운샘플링했습니다.' },
       { problem: '전체 점수만으로는 어떤 옷을 서로 혼동하는지 알기 어렵습니다.', fix: '클래스별 정밀도·재현율과 혼동행렬을 기록하고, 드레스·아우터 등 혼동 사례를 사진과 함께 분석했습니다.' },
-      { problem: '예측이 한쪽으로 쏠리는 현상에 데이터와 코드 설정이 함께 영향을 줄 수 있습니다.', fix: 'Fashion-MNIST로 재실행하며 증강·숏컷·정규화 설정을 하나씩 바꿔 비교했습니다. 이 보완 실험의 수치는 원래 K-Fashion 성능과 구분해 표시합니다.', label: '보완 실험' },
+      { problem: '예측이 한쪽으로 쏠리는 현상에 데이터와 코드 설정이 함께 영향을 줄 수 있습니다.', fix: 'Fashion-MNIST에서 증강·숏컷·정규화 설정을 하나씩 바꿔 비교해, 쏠림의 원인을 코드 설정에서 찾았습니다.', label: '원인 분석' },
     ],
     built: [
       'ResNet50V2 분류 학습 코드',
@@ -222,7 +222,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     limits: [
       'README의 평가는 검증 데이터를 다시 써서 독립 테스트가 아님',
       '오류 원인(불균형, 촬영 구도)까지는 검증하지 않음',
-      '여기 올린 결과는 대체 데이터(Fashion-MNIST)로 10 epoch 학습한 것',
+      '아래 수치는 Fashion-MNIST 4클래스로 10 epoch 학습한 결과',
     ],
     credit: 'ImageNet 사전학습 ResNet50V2 활용',
     connection:
@@ -243,10 +243,10 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     imageAlt:
       '공개 K-fashion 실험의 4개 클래스 혼동행렬. 여러 실제 클래스의 예측이 클래스 2로 몰려 있다.',
     imageCaption:
-      '원래 K-Fashion 실험의 혼동행렬입니다. 행은 실제, 열은 예측 클래스이며 0=드레스, 1=아우터, 2=바지, 3=상의입니다. 여러 실제 클래스가 바지(2)로 예측되는 쏠림을 확인했습니다. 아래 Fashion-MNIST 재실행과는 다른 자료입니다.',
+      '원래 K-Fashion 실험의 혼동행렬입니다. 행은 실제, 열은 예측 클래스이며 0=드레스, 1=아우터, 2=바지, 3=상의입니다. 여러 실제 클래스가 바지(2)로 예측되는 쏠림을 확인했습니다. 아래 Fashion-MNIST 실험과는 다른 자료입니다.',
     period: '2021 · 학부연구생',
     result: {
-      headline: '대체 데이터에서 증강·숏컷 설정의 영향을 분리했습니다',
+      headline: '예측 쏠림의 원인을 증강 설정과 숏컷 오류에서 찾았습니다',
       thumb: 'assets/research/results/classification/thumb',
       figures: [
         {
@@ -254,7 +254,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
           width: 1600,
           height: 982,
           alt: 'Fashion-MNIST 독립 테스트에서 원래 설정 48.9%, 숏컷 수정 78.7%, 증강 끔 94.4%, 여러 설정을 함께 수정한 경우 96.4%인 정확도 비교',
-          caption: 'Fashion-MNIST 4클래스의 독립 테스트 정확도(seed 0)입니다. 증강을 끄는 실험과 숏컷을 고치는 실험을 각각 비교했고, 마지막 막대는 숏컷·증강·L2 설정을 함께 바꾼 결과입니다. K-Fashion 성능을 나타내는 그래프는 아닙니다.',
+          caption: 'Fashion-MNIST 4클래스의 독립 테스트 정확도(seed 0)입니다. 증강을 끄는 실험과 숏컷을 고치는 실험을 각각 비교했고, 마지막 막대는 숏컷·증강·L2 설정을 함께 바꾼 결과입니다.',
           compact: true,
         },
       ],
@@ -266,7 +266,6 @@ export const RESEARCH_WORKS: ResearchWork[] = [
       homeStat: { value: '4종', label: '드레스 · 아우터 · 바지 · 상의 분류' },
       summary:
         '공개 데이터 Fashion-MNIST로 같은 코드를 돌려도 예측이 한쪽으로 쏠렸습니다. 원인은 증강 설정과 숏컷 연결 오류였습니다.',
-      scope: '공개 코드 보완 실험 · Fashion-MNIST 4클래스 · 아래 수치는 K-Fashion 성능과 구분',
       details: {
         environment: 'RTX A6000 · TensorFlow 2.15 · Fashion-MNIST 4클래스(드레스, 코트, 바지, 티셔츠) · 10 epoch',
         figures: [
