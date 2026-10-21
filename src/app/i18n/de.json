@@ -522,7 +522,6 @@
   "공개 코드 보완 실험 · Fashion-MNIST 4클래스 · 아래 수치는 K-Fashion 성능과 구분": "Experiment zur Verbesserung des öffentlichen Codes · Fashion-MNIST 4 Klassen · Die folgenden Abbildungen unterscheiden sich von der Leistung von K-Fashion",
   "공개 코드 재실행 · VITON-HD 테스트 이미지(CC BY-NC 4.0) · 얼굴 모자이크 · 아래 시간은 CPU 실험값": "Erneuter Lauf des öffentlichen Codes · VITON-HD-Testbild (CC BY-NC 4.0) · Gesichtsmosaik · Die folgenden Zeiten sind experimentelle CPU-Werte",
   "공개 코드 재실행 · 분석과 검증": "Erneuter Lauf des öffentlichen Codes · Analyse und Verifizierung",
-  "공개 코드 재실행 · 원래 10,000회 설정 중 100회 학습 · 완전 학습 성능과 구분": "Erneuter Lauf des öffentlichen Codes · 100 von ursprünglich 10.000 Iterationen trainiert · Unterschied zur Leistung nach vollständigem Training",
   "공개 코드 재실행에서 GrabCut 초기 사각형이 이미지 경계를 넘는 문제를 찾고, 사각형을 이미지 안으로 제한한 비교 실험으로 마스크 IoU 변화를 확인했습니다.": "Im Rahmen des erneuten Laufs des öffentlichen Codes wurde das Problem identifiziert, bei dem das anfängliche GrabCut-Rechteck über die Bildgrenzen hinausragte, und die Änderungen in der Maske wurden verifiziert. IoU durch ein Vergleichsexperiment, bei dem das Rechteck innerhalb des Bildes eingeschränkt war.",
   "공개 코드를 GitHub 새 창에서 열기": "Öffentlichen Code in einem neuen GitHub-Fenster öffnen",
   "공개 플롯·PDF 출력 구현": "Implementierung der öffentlichen Plot- und PDF-Ausgabe",

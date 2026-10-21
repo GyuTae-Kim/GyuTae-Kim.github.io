@@ -144,7 +144,7 @@
       >
         <p class="result-label">{{ '공개 코드 재실행 · 분석과 검증' | t }}</p>
         <h2 class="result-headline">{{ (result.headline) | t }}</h2>
-        <p class="result-scope">{{ (result.scope) | t }}</p>
+        <p class="result-scope" *ngIf="result.scope">{{ (result.scope) | t }}</p>
         <p class="result-summary">{{ (result.summary) | t }}</p>
         <ul class="env-chips" [attr.aria-label]="'재실행 조건' | t">
           <li *ngFor="let item of result.details.environment.split(' · ')">{{ (item) | t }}</li>

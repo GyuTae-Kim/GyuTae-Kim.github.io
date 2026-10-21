@@ -53,7 +53,7 @@ export interface ResearchResult {
   // The one number on the home row when stats[0] would read wrong out of context.
   homeStat?: { value: string; label: string };
   summary: string;
-  scope: string;
+  scope?: string;
   story?: { label: string; text: string }[];
   retry?: string[];
   details: {
@@ -134,7 +134,6 @@ export const RESEARCH_WORKS: ResearchWork[] = [
         { label: '원인', text: '정규화 없는 이웃 합으로 값이 폭증했고, TD 목표가 시작 도시만 봤다' },
       ],
       retry: ['작은 문제에서 정답과 먼저 맞춰 보기', '이웃 합 정규화와 목표값 수정', '무작위 순서 기준선을 처음부터 두기'],
-      scope: '공개 코드 재실행 · 원래 10,000회 설정 중 100회 학습 · 완전 학습 성능과 구분',
       details: {
         environment: 'TensorFlow 2.15 · seed 3개 · 에피소드 10,000 → 100',
         figures: [
