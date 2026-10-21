@@ -304,10 +304,6 @@ export const RESEARCH_WORKS: ResearchWork[] = [
             title: '평가 방식',
             text: 'README의 recall은 0.5 임계값 기준이었고 평가에 검증 데이터를 다시 썼습니다. 여기 올린 정확도는 겹치지 않는 테스트 세트로 잰 값입니다.',
           },
-          {
-            title: '대체 데이터',
-            text: 'K-Fashion은 AI Hub 이용 신청이 필요해, 여기 올린 결과는 공개 데이터 Fashion-MNIST로 돌린 것입니다.',
-          },
         ],
       },
     },
