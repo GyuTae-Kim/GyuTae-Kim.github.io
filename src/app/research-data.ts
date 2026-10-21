@@ -5,8 +5,12 @@ export interface ResearchWork {
   shortTitle: string;
   summary: string;
   flow: { label: string; text: string }[];
+  // How the problem was framed for learning (e.g. state, action, reward), shown under the flow.
+  design?: { title: string; items: { label: string; text: string }[] };
   category: string;
   previewLabel: string;
+  // The research goal, shown before the role.
+  goal?: string;
   role: string;
   outcome: string;
   fixes: { problem: string; fix: string; label?: string }[];
@@ -53,7 +57,7 @@ export interface ResearchResult {
   // The one number on the home row when stats[0] would read wrong out of context.
   homeStat?: { value: string; label: string };
   summary: string;
-  scope: string;
+  scope?: string;
   story?: { label: string; text: string }[];
   retry?: string[];
   details: {
@@ -71,10 +75,11 @@ export const RESEARCH_WORKS: ResearchWork[] = [
   {
     id: 'graph-tsp',
     previewLabel: '경로 탐색 재실행 예시',
+    goal: '도시가 늘수록 경우의 수가 급격히 커지는 TSP에서, 기존 알고리즘보다 빠르게 짧은 경로를 찾는 것이 목표였습니다. 지도교수님과 함께 강화학습으로 접근했습니다.',
     role: '참고 논문의 그래프 표현과 Q-learning 아이디어를 바탕으로, TSP 환경·모델·학습 루프·삽입 규칙을 연결하는 실험 코드를 구현했습니다.',
     outcome: '도시의 위치·거리·방문 상태를 그래프로 입력하고, 모델이 고른 도시를 삽입 휴리스틱으로 경로에 추가하는 탐색 프로그램을 만들었습니다. 공개 코드 재실행에서는 기준선과 비교해 학습이 제대로 작동하지 않는 원인도 추적했습니다.',
     fixes: [
-      { problem: '도시 수와 방문 상태가 달라져도 같은 모델로 다음 후보를 평가해야 합니다.', fix: '도시와 거리를 그래프로 표현하고 Structure2Vec으로 관계를 임베딩해, 방문하지 않은 도시의 Q값을 평가하도록 구성했습니다.' },
+      { problem: '도시 수마다 행렬 크기가 달라, 크기가 고정된 신경망에 바로 넣을 수 없었습니다.', fix: 'Structure2Vec으로 도시마다 임베딩을 만들고, 평가 네트워크가 방문하지 않은 도시마다 Q값을 매기게 했습니다.' },
       { problem: '다음 도시를 고르는 것만으로는 경로의 어느 위치에 넣을지 정해지지 않습니다.', fix: '도시 선택은 학습 모델이, 삽입 위치는 경로 길이가 가장 덜 늘어나는 자리를 찾는 휴리스틱이 맡도록 결합했습니다.' },
       { problem: '짧은 경로가 나와도 학습 효과인지 삽입 규칙의 효과인지 구분하기 어렵습니다.', fix: '무작위 도시 순서에도 같은 삽입 규칙을 적용해 비교하고 Q값과 TD 목표 계산을 추적했습니다. 단축 학습에서는 학습 정책의 개선을 확인하지 못했습니다.', label: '분석·검증' },
     ],
@@ -92,7 +97,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     ],
     credit: 'NeurIPS 2017 그래프 조합 최적화 연구를 참고한 구현',
     connection:
-      '그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 가구 패널과 면을 인식하는 지금의 연구로 이어졌습니다.',
+      '처음으로 신경망을 직접 코드로 구현해 본 연구였습니다. 그래프의 요소와 관계를 학습 입력으로 표현해 본 경험이, 가구 패널과 면을 인식하는 지금의 연구로 이어졌습니다.',
     relatedProjectId: 'panel-classification',
     title: '강화학습으로 TSP 경로를 만드는 그래프 모델',
     shortTitle: 'TSP 경로 탐색',
@@ -102,10 +107,18 @@ export const RESEARCH_WORKS: ResearchWork[] = [
       { label: 'Structure2Vec + Q-learning', text: '도시마다 Q값 계산' },
       { label: '도시 선택과 경로 삽입', text: '모델이 고른 도시를 휴리스틱으로 삽입' },
     ],
+    design: {
+      title: '강화학습 설계',
+      items: [
+        { label: '상태', text: '도시 연결(인접 행렬)과 거리, 이미 경로에 들어간 도시' },
+        { label: '행동', text: '다음에 경로에 넣을 도시 고르기' },
+        { label: '보상', text: '도시를 넣어 늘어난 경로 길이를 그대로 감점' },
+      ],
+    },
     category: '강화학습 · 그래프 신경망',
-    tags: ['Reinforcement learning', 'Structure2Vec', 'Q-learning', 'Graph neural network', 'TensorFlow'],
+    tags: ['Reinforcement learning', 'Structure2Vec', 'Deep Q-learning', 'Graph neural network', 'TensorFlow', 'NumPy'],
     source: 'https://github.com/GyuTae-Kim/TSP-GraphCombinatorialProblem_S2V',
-    period: '2021 · 학부연구생',
+    period: '2018.09–2021.06 · 학부연구생',
     result: {
       headline: '단축 학습에서는 무작위 삽입 대비 개선을 확인하지 못했습니다',
       thumb: 'assets/research/results/tsp/thumb',
@@ -130,11 +143,11 @@ export const RESEARCH_WORKS: ResearchWork[] = [
         '원래 설정으로 학습해 보니, 정책이 모든 도시에 같은 Q값을 내며 번호 순서대로 도시를 골랐습니다.',
       story: [
         { label: '기대', text: '학습한 Q값이 경로를 짧게 만드는 도시를 고른다' },
+        { label: '당시 판단', text: '학습할수록 경로 비용은 줄었지만 최적해에는 못 미쳤고, 도시가 많아 충분히 탐색하지 못했다고 봤다' },
         { label: '실제', text: '모든 도시의 Q값이 같아져 번호 순서대로 골랐다' },
         { label: '원인', text: '정규화 없는 이웃 합으로 값이 폭증했고, TD 목표가 시작 도시만 봤다' },
       ],
       retry: ['작은 문제에서 정답과 먼저 맞춰 보기', '이웃 합 정규화와 목표값 수정', '무작위 순서 기준선을 처음부터 두기'],
-      scope: '공개 코드 재실행 · 원래 10,000회 설정 중 100회 학습 · 완전 학습 성능과 구분',
       details: {
         environment: 'TensorFlow 2.15 · seed 3개 · 에피소드 10,000 → 100',
         figures: [
@@ -193,11 +206,11 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     id: 'fashion-classification',
     previewLabel: 'Fashion-MNIST 예측 예시',
     role: '사전학습 ResNet50V2를 이용한 의류 분류 학습 코드와 클래스별 샘플링·평가 흐름을 구현하고, 혼동행렬로 오분류를 분석했습니다.',
-    outcome: 'K-Fashion 사진을 드레스·아우터·바지·상의로 분류하는 학습·분석 파이프라인을 만들었습니다. 이후 공개 코드의 설정을 대체 데이터에서 하나씩 바꿔, 데이터 증강과 숏컷 연결이 예측에 미치는 영향을 분리해 확인했습니다.',
+    outcome: 'K-Fashion 사진을 드레스·아우터·바지·상의로 분류하는 학습·분석 파이프라인을 만들었습니다. 이후 공개 데이터 Fashion-MNIST에서 설정을 하나씩 바꿔, 데이터 증강과 숏컷 연결이 예측에 미치는 영향을 분리해 확인했습니다.',
     fixes: [
       { problem: '의류 종류별 사진 수가 달라 학습 표본이 일부 클래스에 치우칩니다.', fix: '학습·검증 데이터에서 각각 가장 적은 클래스의 표본 수에 맞춰 다운샘플링했습니다.' },
       { problem: '전체 점수만으로는 어떤 옷을 서로 혼동하는지 알기 어렵습니다.', fix: '클래스별 정밀도·재현율과 혼동행렬을 기록하고, 드레스·아우터 등 혼동 사례를 사진과 함께 분석했습니다.' },
-      { problem: '예측이 한쪽으로 쏠리는 현상에 데이터와 코드 설정이 함께 영향을 줄 수 있습니다.', fix: 'Fashion-MNIST로 재실행하며 증강·숏컷·정규화 설정을 하나씩 바꿔 비교했습니다. 이 보완 실험의 수치는 원래 K-Fashion 성능과 구분해 표시합니다.', label: '보완 실험' },
+      { problem: '예측이 한쪽으로 쏠리는 현상에 데이터와 코드 설정이 함께 영향을 줄 수 있습니다.', fix: 'Fashion-MNIST에서 증강·숏컷·정규화 설정을 하나씩 바꿔 비교해, 쏠림의 원인을 코드 설정에서 찾았습니다.', label: '원인 분석' },
     ],
     built: [
       'ResNet50V2 분류 학습 코드',
@@ -209,7 +222,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     limits: [
       'README의 평가는 검증 데이터를 다시 써서 독립 테스트가 아님',
       '오류 원인(불균형, 촬영 구도)까지는 검증하지 않음',
-      '여기 올린 결과는 대체 데이터(Fashion-MNIST)로 10 epoch 학습한 것',
+      '아래 수치는 Fashion-MNIST 4클래스로 10 epoch 학습한 결과',
     ],
     credit: 'ImageNet 사전학습 ResNet50V2 활용',
     connection:
@@ -230,10 +243,10 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     imageAlt:
       '공개 K-fashion 실험의 4개 클래스 혼동행렬. 여러 실제 클래스의 예측이 클래스 2로 몰려 있다.',
     imageCaption:
-      '원래 K-Fashion 실험의 혼동행렬입니다. 행은 실제, 열은 예측 클래스이며 0=드레스, 1=아우터, 2=바지, 3=상의입니다. 여러 실제 클래스가 바지(2)로 예측되는 쏠림을 확인했습니다. 아래 Fashion-MNIST 재실행과는 다른 자료입니다.',
+      '원래 K-Fashion 실험의 혼동행렬입니다. 행은 실제, 열은 예측 클래스이며 0=드레스, 1=아우터, 2=바지, 3=상의입니다. 여러 실제 클래스가 바지(2)로 예측되는 쏠림을 확인했습니다. 아래 Fashion-MNIST 실험과는 다른 자료입니다.',
     period: '2021 · 학부연구생',
     result: {
-      headline: '대체 데이터에서 증강·숏컷 설정의 영향을 분리했습니다',
+      headline: '예측 쏠림의 원인을 증강 설정과 숏컷 오류에서 찾았습니다',
       thumb: 'assets/research/results/classification/thumb',
       figures: [
         {
@@ -241,7 +254,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
           width: 1600,
           height: 982,
           alt: 'Fashion-MNIST 독립 테스트에서 원래 설정 48.9%, 숏컷 수정 78.7%, 증강 끔 94.4%, 여러 설정을 함께 수정한 경우 96.4%인 정확도 비교',
-          caption: 'Fashion-MNIST 4클래스의 독립 테스트 정확도(seed 0)입니다. 증강을 끄는 실험과 숏컷을 고치는 실험을 각각 비교했고, 마지막 막대는 숏컷·증강·L2 설정을 함께 바꾼 결과입니다. K-Fashion 성능을 나타내는 그래프는 아닙니다.',
+          caption: 'Fashion-MNIST 4클래스의 독립 테스트 정확도(seed 0)입니다. 증강을 끄는 실험과 숏컷을 고치는 실험을 각각 비교했고, 마지막 막대는 숏컷·증강·L2 설정을 함께 바꾼 결과입니다.',
           compact: true,
         },
       ],
@@ -253,7 +266,6 @@ export const RESEARCH_WORKS: ResearchWork[] = [
       homeStat: { value: '4종', label: '드레스 · 아우터 · 바지 · 상의 분류' },
       summary:
         '공개 데이터 Fashion-MNIST로 같은 코드를 돌려도 예측이 한쪽으로 쏠렸습니다. 원인은 증강 설정과 숏컷 연결 오류였습니다.',
-      scope: '공개 코드 보완 실험 · Fashion-MNIST 4클래스 · 아래 수치는 K-Fashion 성능과 구분',
       details: {
         environment: 'RTX A6000 · TensorFlow 2.15 · Fashion-MNIST 4클래스(드레스, 코트, 바지, 티셔츠) · 10 epoch',
         figures: [
@@ -290,10 +302,6 @@ export const RESEARCH_WORKS: ResearchWork[] = [
           {
             title: '평가 방식',
             text: 'README의 recall은 0.5 임계값 기준이었고 평가에 검증 데이터를 다시 썼습니다. 여기 올린 정확도는 겹치지 않는 테스트 세트로 잰 값입니다.',
-          },
-          {
-            title: '대체 데이터',
-            text: 'K-Fashion은 AI Hub 이용 신청이 필요해, 여기 올린 결과는 공개 데이터 Fashion-MNIST로 돌린 것입니다.',
           },
         ],
       },
