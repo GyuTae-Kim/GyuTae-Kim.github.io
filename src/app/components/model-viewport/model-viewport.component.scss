@@ -363,9 +363,16 @@
     gap: 2px;
   }
   .viewer-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
     padding: 16px;
+  }
+  /* Long translated labels and details share the row instead of overflowing. */
+  .viewer-legend li {
+    grid-template-columns: 24px 14px auto auto;
+  }
+  .legend-detail {
+    white-space: normal;
   }
   .title-block {
     grid-template-columns: repeat(3, minmax(0, 1fr));

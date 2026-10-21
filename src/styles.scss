@@ -2758,17 +2758,21 @@ app-icon.row-arrow {
     grid-template-columns: 1fr;
     gap: 12px;
   }
+  /* A long translated value takes its own line instead of squeezing the label. */
   .result-stats li {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
-    gap: 12px;
+    gap: 6px 12px;
     padding-top: 10px;
   }
   .result-stats b {
     font-size: var(--fs-5);
     flex-shrink: 0;
+    max-width: 100%;
   }
   .result-stats span {
+    flex: 1 1 30%;
     margin-top: 0;
   }
   .result-summary {
