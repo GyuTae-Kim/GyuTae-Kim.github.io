@@ -49,7 +49,7 @@ describe('OpenCadComponent', () => {
     expect(shots.map((img) => img.getAttribute('fetchpriority'))).toEqual(['high', null, null, null]);
     expect(shots.slice(1).every((img) => img.getAttribute('loading') === 'lazy')).toBeTrue();
     const skp = page.querySelector('#skp-viewer')!.closest('.tool-card')!;
-    expect(skp.textContent).toContain('SketchUp 2021~2026');
+    expect(skp.textContent).toContain('SketchUp 6~2026');
   });
 
   it('links the task guides', () => {

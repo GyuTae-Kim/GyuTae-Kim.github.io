@@ -26,14 +26,14 @@ describe('OpenCadProjectComponent', () => {
     expect(shot.getAttribute('src')).toBe('assets/opencad/viewer-step-1440.webp');
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-step/"]')).not.toBeNull();
     expect(page.querySelectorAll('.step-strip li').length).toBe(4);
-    expect(page.querySelectorAll('.feature-grid > div').length).toBe(5);
+    expect(page.querySelectorAll('.feature-grid > div').length).toBe(6);
   });
 
   it('introduces the 2D CAD with its own guides and no 3D core picture', async () => {
     const page = await render('2d-viewer');
     expect(page.querySelector('.project-hero .tool-shot img')!.getAttribute('src')).toBe('assets/opencad/viewer-2d-1440.webp');
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-dwgdxf/"]')).not.toBeNull();
-    expect(page.querySelectorAll('.check-list li').length).toBe(4);
+    expect(page.querySelectorAll('.check-list li').length).toBe(5);
     expect(Array.from(page.querySelectorAll('.guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
     ]);
