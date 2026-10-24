@@ -6,6 +6,8 @@ on:
     paths:
       - 'src/index.html'
       - 'src/styles.scss'
+      - 'src/main.ts'
+      - 'src/app/i18n/**'
       - 'src/assets/fonts/**'
       - 'tools/route-pages.mjs'
       - 'tools/prepare-site-fonts.py'

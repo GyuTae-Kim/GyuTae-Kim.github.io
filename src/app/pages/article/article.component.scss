@@ -4,6 +4,11 @@
 .article-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: -12px 0 32px; }
 .article-figure { margin: 0 0 40px; }
 .article-figure img { display: block; width: 100%; border: 1px solid var(--line); }
+.guide-evidence table { width: 100%; border-collapse: collapse; margin: 24px 0; table-layout: fixed; }
+.guide-evidence caption { text-align: left; font-weight: 700; margin-bottom: 12px; }
+.guide-evidence th, .guide-evidence td { border: 1px solid var(--line); padding: 14px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.guide-evidence th { width: 30%; background: var(--sheet); }
+.guide-evidence .article-figure { margin: 28px 0; }
 .article-figure figcaption { margin-top: 8px; font-size: var(--fs-2); color: var(--muted); }
 .article-contents, .article-related { padding: 24px; background: var(--sheet); border: 1px solid var(--line); }
 .article-contents { margin-bottom: 48px; }

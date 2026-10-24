@@ -23,6 +23,21 @@ let pageGroup: ContentGroup = '포트폴리오';
 let pageReferrer = '';
 let lastPage = '';
 let pageReady = false;
+let vitalsStarted = false;
+
+const GUIDE_KEYS = new Set(['open-dwg-dxf', 'measure-export', 'open-step-stp', 'open-skp', 'check-nc-toolpath']);
+export function navigationEvent(href: string): { name: string; params: Record<string, string> } | undefined {
+  try {
+    const url = new URL(href);
+    if (url.protocol !== 'https:' || url.hostname !== HOST) return undefined;
+    const path = url.pathname.replace(/\/(?:en|ja|zh-CN|de)\/?$/, '/');
+    const target = (Object.keys(PATHS) as AnalyticsTool[]).find(key => key !== 'portfolio' && path.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
+    if (target) return { name: 'viewer_open', params: { target_tool: target, launch_mode: url.searchParams.has('sample') ? 'sample' : url.searchParams.has('open') ? 'url' : 'empty' } };
+    const guide = url.pathname.replace(/^\/(en|ja|zh-CN|de)(?=\/)/, '').match(/^\/opencad\/guides\/([^/]+)\/?$/)?.[1];
+    if (guide && GUIDE_KEYS.has(guide)) return { name: 'guide_open', params: { guide_key: guide } };
+  } catch { /* Only public, allowlisted navigation identities are measured. */ }
+  return undefined;
+}
 
 /** Keep campaign slugs, excluding user-supplied file/URL parameters and fragments. */
 export function campaignQuery(search: string): string {
@@ -40,16 +55,34 @@ function referrer(): string {
 }
 
 function fields(): Record<string, string> {
-  return { tool: active!.tool, page_title: pageTitle, content_group: pageGroup, page_location: `https://${HOST}${pagePath}${consent === 'granted' ? campaignQuery(location.search) : ''}`, page_referrer: consent === 'granted' ? pageReferrer : '' };
+  const pageLanguage = location.pathname.match(/\/(en|ja|zh-CN|de)(?:\/|$)/)?.[1] ?? 'ko';
+  return { tool: active!.tool, page_title: pageTitle, content_group: pageGroup, page_language: pageLanguage, page_location: `https://${HOST}${pagePath}${consent === 'granted' ? campaignQuery(location.search) : ''}`, page_referrer: consent === 'granted' ? pageReferrer : '' };
 }
 
-function send(name: string, params: Record<string, string | number> = {}): void {
+function send(name: string, params: Record<string, string | number> = {}, context?: Record<string, string>): void {
   if (consent !== 'granted' || !started || !active) return;
-  try { (window as AnalyticsWindow).gtag?.('event', name, { ...params, ...fields(), send_to: active.id }); } catch { /* Analytics never interrupts CAD. */ }
+  try { (window as AnalyticsWindow).gtag?.('event', name, { ...params, ...(context ?? fields()), send_to: active.id }); } catch { /* Analytics never interrupts CAD. */ }
+}
+
+function startVitals(): void {
+  if (vitalsStarted || consent !== 'granted' || !started || !pageReady) return;
+  vitalsStarted = true;
+  // Standard document metrics belong to the initial route, including callbacks
+  // fired after an Angular navigation. Never send element selectors or file URLs.
+  const initialPage = fields();
+  import('web-vitals').then(({ onLCP, onINP, onCLS }) => {
+    const report = (metric: { name: string; value: number; delta: number; id: string; rating: string }): void => {
+      if (!['LCP', 'INP', 'CLS'].includes(metric.name) || !Number.isFinite(metric.value)) return;
+      send('web_vital', { metric_name: metric.name, metric_value: metric.value, metric_delta: metric.delta, metric_id: metric.id, metric_rating: metric.rating }, initialPage);
+    };
+    onLCP(report); onINP(report); onCLS(report);
+  }).catch(() => { /* Optional telemetry never interrupts the page. */ });
 }
 
 function pageView(): void {
-  if (!started || !active || !pageReady || (consent !== 'granted' && consent !== 'limited') || lastPage === pagePath) return;
+  if (!started || !active || !pageReady || (consent !== 'granted' && consent !== 'limited')) return;
+  startVitals();
+  if (lastPage === pagePath) return;
   const w = window as AnalyticsWindow;
   // Also pin automatic engagement/session events to public titles and locations.
   try {
@@ -169,9 +202,8 @@ function initialize(id: string, tool: AnalyticsTool): void {
     if (!link) return;
     try {
       const url = new URL(link.href);
-      const appPath = url.pathname.replace(/\/(?:en|ja|zh-CN|de)\/?$/, '/');
-      const tool = (Object.keys(PATHS) as AnalyticsTool[]).find((key) => key !== 'portfolio' && appPath.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
-      if (url.hostname === HOST && tool) send('viewer_open', { target_tool: tool });
+      const navigation = navigationEvent(link.href);
+      if (navigation) send(navigation.name, navigation.params);
       else if (url.hostname === 'github.com' && /^\/GyuTae-Kim\/(?:opencad-(?:dwgdxf|nc|step|skp|viewer3d)|GyuTae-Kim.github.io)\/?$/i.test(url.pathname)) {
         const repo = url.pathname.split('/')[2]!.toLowerCase();
         send('source_open', { target_tool: repo.startsWith('opencad-') ? repo.slice(8) : 'portfolio' });

@@ -12,6 +12,7 @@
         <div class="tool-actions">
           <a *ngIf="project.url" class="button primary" [href]="(project.url) | localLink">{{ '{0} 열기' | t:[(project.name)] }}<app-icon name="arrow-right"></app-icon></a>
           <a class="button outline" [href]="(project.source) | localLink" target="_blank" rel="noopener noreferrer"><app-icon name="github"></app-icon>{{ 'GitHub 소스 코드' | t }}</a>
+          <a *ngIf="guides[0] as guide" class="button outline" [routerLink]="guide.path | localLink">{{ '파일 열기·문제 해결' | t }}<app-icon name="arrow-right"></app-icon></a>
         </div>
       </div>
       <figure class="tool-shot" *ngIf="project.figure as figure; else coreFigure">

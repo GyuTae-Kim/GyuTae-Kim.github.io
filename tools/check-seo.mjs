@@ -67,6 +67,16 @@ for (const page of SEARCH_PAGES) {
       if (value) assert.equal(tags[0].content, value, `${file}: verification token ${name}`);
     }
     assert.equal(document.title, page.title, file);
+    if (page.article?.guide) {
+      assert.ok(document.querySelector('#example-check'), `${file}: static sample walkthrough`);
+      assert.equal(document.querySelectorAll('.guide-evidence table').length, 3, `${file}: support, sample and troubleshooting tables`);
+      assert.ok(document.querySelector('.article-actions a[href*="sample"]'), `${file}: directly runnable public example`);
+      for (const img of document.querySelectorAll('.guide-evidence img')) {
+        assert.equal(img.getAttribute('loading'), 'lazy', `${file}: below-fold evidence image`);
+        assert.ok(img.getAttribute('srcset')?.includes('720w'), `${file}: mobile evidence image`);
+        assert.ok(img.getAttribute('width') && img.getAttribute('height'), `${file}: reserve evidence image layout`);
+      }
+    }
     assert.equal(document.querySelectorAll('title').length, 1, file);
     for (const name of ['description', 'robots', 'author', 'viewport']) assert.equal(document.querySelectorAll(`meta[name="${name}"]`).length, 1, `${file}: unique ${name}`);
     assert.equal(document.querySelector('meta[name="author"]').content, '김규태 · Sean Kim');

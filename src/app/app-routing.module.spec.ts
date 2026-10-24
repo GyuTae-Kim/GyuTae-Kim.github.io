@@ -7,6 +7,11 @@ import { APP_ROUTES } from './app-routing.module';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 describe('published HTML aliases', () => {
+  function leafComponent(router: Router) {
+    let route = router.routerState.snapshot.root;
+    while (route.firstChild) route = route.firstChild;
+    return route.component;
+  }
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [I18nModule, RouterTestingModule.withRoutes(APP_ROUTES)] }).compileComponents();
   });
@@ -25,15 +30,19 @@ describe('published HTML aliases', () => {
     ]) {
       await zone.run(() => router.navigateByUrl(`${from}?utm_source=search#main`));
       expect(router.url).toBe(`${to}?utm_source=search#main`);
-      expect(router.routerState.snapshot.root.firstChild?.component).not.toBe(NotFoundComponent);
+      expect(leafComponent(router)).not.toBeNull();
+      expect(leafComponent(router)).not.toBe(NotFoundComponent);
     }
   });
 
   it('keeps unpublished aliases on the not-found route', async () => {
     const router = TestBed.inject(Router);
-    await TestBed.inject(NgZone).run(() => router.navigateByUrl('/unpublished-guide.html'));
-    expect(router.url).toBe('/unpublished-guide.html');
-    expect(router.routerState.snapshot.root.firstChild?.component).toBe(NotFoundComponent);
+    for (const prefix of ['', '/en', '/ja', '/zh-CN', '/de']) {
+      const url = `${prefix}/unpublished-guide.html`;
+      await TestBed.inject(NgZone).run(() => router.navigateByUrl(url));
+      expect(router.url).toBe(url);
+      expect(leafComponent(router)).toBe(NotFoundComponent);
+    }
   });
   it('retains language, attribution and fragments for translated HTML aliases', async () => {
     const router = TestBed.inject(Router);

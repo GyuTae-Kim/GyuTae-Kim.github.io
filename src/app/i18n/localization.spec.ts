@@ -1,4 +1,5 @@
-import { languageFromUrl, languagePath, localizedHref, originalPath, translate } from './localization';
+import { Language, languageFromUrl, languagePath, localizedHref, originalPath, translate } from './localization';
+import { catalogs } from './catalogs';
 
 describe('localized navigation and text', () => {
   it('keeps the same page, attribution and section when changing languages', () => {
@@ -12,5 +13,13 @@ describe('localized navigation and text', () => {
     expect(translate('프로젝트','en')).toBe('Projects');
     expect(translate('알 수 없는 문자열','ko')).toBe('알 수 없는 문자열');
     expect(translate('{0} 열기','en',['OpenCAD'])).toBe('Open OpenCAD');
+  });
+  it('does not cache missing sentence patterns before a locale has loaded', () => {
+    const language = 'late-loaded-test' as Language;
+    try {
+      expect(translate('모델 3개', language)).toBe('모델 3개');
+      catalogs[language] = { '모델 {0}개': 'Models: {0}' };
+      expect(translate('모델 3개', language)).toBe('Models: 3');
+    } finally { delete catalogs[language]; }
   });
 });

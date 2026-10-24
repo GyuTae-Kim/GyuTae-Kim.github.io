@@ -11,7 +11,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ArticleComponent } from './pages/article/article.component';
 import { SITE_ARTICLES } from './articles-data';
 import { SEARCH_ALIASES } from './site-seo';
-import { LANGUAGES, languageFromUrl, languagePath } from './i18n/localization';
+import { LANGUAGES, languageFromUrl, languagePath, ensureCatalog } from './i18n/localization';
 
 const PAGE_ROUTES: Routes = [
   ...SEARCH_ALIASES.map(({ from, to }): Routes[number] => ({
@@ -35,10 +35,14 @@ const PAGE_ROUTES: Routes = [
   { path: '**', component: NotFoundComponent },
 ];
 
-export const APP_ROUTES: Routes = [
+export const APP_ROUTES: Routes = [{
+  path: '',
+  canActivateChild: [(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => ensureCatalog(languageFromUrl(state.url)).then(() => true)],
+  children: [
   ...LANGUAGES.filter(({ code }) => code !== 'ko').map(({ code }) => ({ path: code, children: PAGE_ROUTES })),
   ...PAGE_ROUTES,
-];
+  ],
+}];
 
 @NgModule({
   imports: [
