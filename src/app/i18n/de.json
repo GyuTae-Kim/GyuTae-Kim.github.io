@@ -213,7 +213,7 @@
   "OpenCAD 무료 DWG·DXF 캐드 뷰어 사용 안내.": "Anleitung zur Verwendung des kostenlosen DWG·DXF CAD-Viewers OpenCAD.",
   "OpenCAD 무료 캐드 뷰어": "Kostenloser CAD-Viewer OpenCAD",
   "OpenCAD 무료 캐드 뷰어와 오픈소스 프로젝트.": "OpenCAD ist ein kostenloser CAD-Viewer und Open-Source-Projekt.",
-  "OpenCAD 무료 캐드·STEP·SKP·NC 뷰어 | 김규태": "OpenCAD Free CAD·STEP·SKP·NC Viewer | Sean Kim",
+  "OpenCAD 무료 캐드·STEP·SKP·NC 뷰어 | 김규태": "OpenCAD: Kostenlose CAD-, STEP-, SKP- und NC-Viewer | Sean Kim",
   "OpenCAD 사용 안내": "Anleitung zur Verwendung von OpenCAD",
   "OpenCAD 지원 기능 전체 보기": "Sehen Sie sich alle OpenCAD-Unterstützungsfunktionen an",
   "OpenCAD 지원 기능과 개발자 소개": "Einführung in die Supportfunktionen und Entwickler von OpenCAD",
@@ -1717,5 +1717,6 @@
   "장면 전환 지점을 재생 막대에 표시하고 미리보기와 장면 이동, 구간 저장까지 한 화면에서 하게 했습니다.": "Markiert Szenenwechsel auf der Zeitleiste und erledigt Vorschau, Szenennavigation und Abschnittsspeicherung in einer Ansicht.",
   "장면 검출을 뺀 플레이어 기능을 모두 개발했습니다.": "Ich habe alle Player-Funktionen außer der Szenenerkennung entwickelt.",
   "장면 전환을 표시하는 동영상 플레이어 개발 | 김규태": "Entwicklung eines Videoplayers, der Szenenwechsel markiert | Sean Kim",
-  "영상의 장면 전환 지점을 찾아 재생 막대에 표시하는 C# WPF 동영상 플레이어입니다. 분할 지점 미리보기와 타임라인 확대, 장면 이동, 분할 지점 편집, ffmpeg 구간 저장 등 김규태가 개발한 플레이어 기능을 소개합니다.": "Ein C#-WPF-Videoplayer, der Szenenwechsel im Video findet und auf der Zeitleiste markiert. Vorgestellt werden die von Sean Kim entwickelten Player-Funktionen, darunter Vorschau der Teilungspunkte, Zeitleisten-Zoom, Szenennavigation, Bearbeiten der Teilungspunkte und Abschnittsspeicherung mit ffmpeg."
+  "영상의 장면 전환 지점을 찾아 재생 막대에 표시하는 C# WPF 동영상 플레이어입니다. 분할 지점 미리보기와 타임라인 확대, 장면 이동, 분할 지점 편집, ffmpeg 구간 저장 등 김규태가 개발한 플레이어 기능을 소개합니다.": "Ein C#-WPF-Videoplayer, der Szenenwechsel im Video findet und auf der Zeitleiste markiert. Vorgestellt werden die von Sean Kim entwickelten Player-Funktionen, darunter Vorschau der Teilungspunkte, Zeitleisten-Zoom, Szenennavigation, Bearbeiten der Teilungspunkte und Abschnittsspeicherung mit ffmpeg.",
+  "DWG·DXF 도면을 열고 편집해 저장하는 무료 2D 캐드와 STEP·STP 3D 모델, SketchUp SKP 파일, NC·G-code·MPR 공구 경로를 확인하는 무료 OpenCAD 뷰어를 모았습니다. 형식별 실행 링크와 지원 범위, 오픈소스 3D 코어를 소개합니다.": "Kostenlose OpenCAD-Werkzeuge für den Browser: 2D-CAD zum Öffnen, Bearbeiten und Speichern von DWG/DXF-Zeichnungen sowie Viewer für STEP/STP-3D-Modelle, SketchUp-SKP-Dateien und NC/G-Code/MPR-Werkzeugwege. Mit Startlinks, unterstützten Funktionen und dem quelloffenen 3D-Kern."
 }

@@ -6,7 +6,6 @@ import { createRequire } from 'node:module';
 import { validateDate } from './content-dates.mjs';
 const require = createRequire(import.meta.url);
 const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified, LANGUAGES, languagePath, localizedHref, originalPath } = require('../dist/server/main.js');
-const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 const fontCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/coverage.json'), 'utf8'));
 const fontCharacters = new Set([...fontCoverage.covered, ...fontCoverage.fallback]);
@@ -182,15 +181,23 @@ for (const page of SEARCH_PAGES) {
   titles.add(`${page.language}:${page.title}`);
   descriptions.add(`${page.language}:${page.description}`);
 }
-const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { contentType: 'text/xml' });
+const sitemapIndex = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { contentType: 'text/xml' });
+assert.equal(sitemapIndex.window.document.documentElement.localName, 'sitemapindex');
+assert.equal(sitemapIndex.window.document.documentElement.namespaceURI, 'http://www.sitemaps.org/schemas/sitemap/0.9');
+const applicationSitemaps = OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? [new URL('sitemap.xml', url).href] : []);
+assert.deepEqual([...sitemapIndex.window.document.querySelectorAll('sitemap > loc')].map(el => el.textContent),
+  [...new Set([`${SITE_URL}/sitemap-pages.xml`, ...applicationSitemaps])]);
+assert.equal(sitemapIndex.window.document.querySelectorAll('url').length, 0, 'index never copies app URL dates');
+sitemapIndex.window.close();
+const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap-pages.xml'), 'utf8'), { contentType: 'text/xml' });
+assert.equal(sitemap.window.document.documentElement.localName, 'urlset');
 const sitemapUrls = [...sitemap.window.document.querySelectorAll('loc')].map((loc) => loc.textContent);
-assert.deepEqual(sitemapUrls, [...new Set([...SEARCH_PAGES.map((page) => SITE_URL + page.path), ...[...hostedApps].filter((url) => new URL(url).origin === SITE_URL)])]);
+assert.deepEqual(sitemapUrls, [...new Set(SEARCH_PAGES.map((page) => SITE_URL + page.path))]);
 for (const entry of sitemap.window.document.querySelectorAll('url')) {
   const url = entry.querySelector('loc').textContent;
-  const expected = contentModified(new URL(url).pathname) || linkedDates[url]?.lastmod;
-  const localPage = paths.has(new URL(url).pathname);
-  assert.equal(entry.querySelectorAll('lastmod').length, expected || localPage ? 1 : 0, url);
-  if (expected || localPage) assert.equal(entry.querySelector('lastmod')?.textContent, validateDate(expected), url);
+  const expected = contentModified(new URL(url).pathname);
+  assert.equal(entry.querySelectorAll('lastmod').length, 1, url);
+  assert.equal(entry.querySelector('lastmod')?.textContent, validateDate(expected), url);
 }
 sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
@@ -199,17 +206,19 @@ assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
 for (const app of OPENCAD_TOOLS.filter(tool => tool.url).map(tool => tool.url)) {
   if (new URL(app).origin === SITE_URL) assert.ok(robots.includes(`Sitemap: ${app}sitemap.xml`), `Missing application sitemap discovery: ${app}`);
 }
-// Old paths of renamed app repositories forward to a published app and stay out of search.
+// Old paths signal a permanent move without requiring JavaScript rendering.
 const movedApps = JSON.parse(readFileSync(new URL('./moved-apps.json', import.meta.url), 'utf8'));
 for (const [from, { url }] of Object.entries(movedApps)) {
   assert.ok(hostedApps.has(url), `${from}: forwards to a published app`);
   assert.ok(!sitemapUrls.includes(SITE_URL + from), `${from}: old app path stays out of the sitemap`);
   const raw = readFileSync(join(outDir, from.slice(1), 'index.html'), 'utf8');
   const moved = new JSDOM(raw).window.document;
-  assert.match(moved.querySelector('meta[name="robots"]').content, /^noindex/, `${from}: noindex`);
+  assert.match(moved.querySelector('meta[name="robots"]').content, /^index, follow$/, `${from}: do not block redirect processing`);
   assert.equal(moved.querySelector('link[rel="canonical"]').href, url, `${from}: canonical`);
-  assert.ok(raw.includes(`location.replace(${JSON.stringify(url)} + location.search + location.hash)`), `${from}: keeps query and fragment`);
-  assert.ok(raw.includes(`<noscript><meta http-equiv="refresh" content="0;url=${url}"></noscript>`), `${from}: refresh without scripts`);
+  assert.equal(moved.querySelector('head > meta[http-equiv="refresh"]')?.content, `0;url=${url}`, `${from}: crawler-visible permanent refresh`);
+  assert.ok(!moved.querySelector('noscript'), `${from}: refresh is unconditional`);
+  assert.ok(raw.includes(`${JSON.stringify(url)} + location.search + location.hash`), `${from}: keeps query and fragment`);
+  assert.ok(raw.includes(".content = '0;url=' + target; location.replace(target)"), `${from}: refresh and script share the complete destination`);
 }
 const notFound = new JSDOM(readFileSync(join(outDir, '404.html'), 'utf8'));
 assert.match(notFound.window.document.querySelector('meta[name="robots"]').content, /noindex/);

@@ -1,6 +1,6 @@
 import { Meta, Title } from '@angular/platform-browser';
 import { SeoService } from './seo.service';
-import { SEARCH_PAGES, SHARE_IMAGE, SITE_URL, contentModified } from './site-seo';
+import { LOCALIZED_SEARCH_PAGES, SEARCH_PAGES, SHARE_IMAGE, SITE_URL, contentModified } from './site-seo';
 
 describe('SeoService', () => {
   let document: Document;
@@ -52,6 +52,18 @@ describe('SeoService', () => {
     seo.update('/research');
     expect(document.querySelector<HTMLMetaElement>('meta[name="robots"]')?.content).toContain('index, follow');
     expect(document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href).toBe(SITE_URL + '/research');
+  });
+
+  it('keeps search and sharing descriptions translated across localized navigation', () => {
+    for (const page of LOCALIZED_SEARCH_PAGES.filter(page => page.language !== 'ko')) {
+      seo.update(page.path);
+      expect(document.title).withContext(page.path).not.toMatch(/[가-힣]/);
+      for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
+        const description = document.querySelector<HTMLMetaElement>(selector)?.content;
+        expect(description).withContext(`${page.path}: ${selector}`).toBeTruthy();
+        expect(description!).withContext(`${page.path}: ${selector}`).not.toMatch(/[가-힣]/);
+      }
+    }
   });
 
   it('normalizes trailing slashes without treating deeper unknown paths as sections', () => {

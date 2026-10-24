@@ -7,9 +7,8 @@ import Beasties from 'beasties';
 import { assertContentDate, contentFingerprint, validateDate } from './content-dates.mjs';
 
 const require = createRequire(import.meta.url);
-const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage, contentModified, LANGUAGES, languagePath, localizedHref, originalPath } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage, contentModified, LANGUAGES, languagePath, originalPath } = require('../dist/server/main.js');
 const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json', import.meta.url), 'utf8'));
-const linkedDates = JSON.parse(readFileSync(new URL('./linked-content-dates.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
 const stylesheet = base.match(/<link\b[^>]*href="(styles\.[^"]+\.css)"[^>]*>/)?.[1];
@@ -78,29 +77,29 @@ for (const [from, to] of Object.entries(redirects)) {
 }
 
 // A project site loses its Pages path when its repository is renamed, and GitHub does
-// not forward it. This user site then answers the old path: forward the query and
-// fragment (?sample, ?open=…) by script, and refresh without them only when scripts
-// are off, so a refresh cannot cancel the scripted move.
+// not forward it. Publish an immediate refresh that crawlers can read without JS.
+// Do not use noindex: Google may then skip the JS move entirely. Browsers update
+// the refresh destination before navigating so both paths retain query/fragment.
 const movedApps = JSON.parse(readFileSync(new URL('./moved-apps.json', import.meta.url), 'utf8'));
 for (const [from, { name, url }] of Object.entries(movedApps)) {
-  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, follow"><title>${escape(name)} 주소 이동 — 김규태 · Sean Kim</title><link rel="canonical" href="${escape(url)}"><script>location.replace(${JSON.stringify(url)} + location.search + location.hash)</script><noscript><meta http-equiv="refresh" content="0;url=${escape(url)}"></noscript></head><body><p>${escape(name)}의 주소가 바뀌었습니다. <a href="${escape(url)}">새 주소로 이동</a></p></body></html>`;
+  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="index, follow"><title>${escape(name)} 주소 이동 — 김규태 · Sean Kim</title><link rel="canonical" href="${escape(url)}"><meta http-equiv="refresh" content="0;url=${escape(url)}"><script>var target = ${JSON.stringify(url)} + location.search + location.hash; document.querySelector('meta[http-equiv="refresh"]').content = '0;url=' + target; location.replace(target)</script></head><body><p>${escape(name)}의 주소가 바뀌었습니다. <a href="${escape(url)}">새 주소로 이동</a></p></body></html>`;
   writePage(`${from.slice(1)}index.html`, html);
 }
 
-// Include published applications under this verified host; planned tools have no URL.
-const sitemapUrls = [...new Set([...SEARCH_PAGES.map(({ path }) => SITE_URL + path),
-  ...OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? LANGUAGES.map(({code}) => localizedHref(url,code)) : [])])];
+// Each repository owns its URLs and modification dates. Reference app sitemaps
+// instead of copying their entries and maintaining stale dates in this checkout.
+const sitemapUrls = [...new Set(SEARCH_PAGES.map(({ path }) => SITE_URL + path))];
 const urls = sitemapUrls.map((url) => {
   const path = new URL(url).pathname;
-  const lastmod = contentModified(path) || linkedDates[url]?.lastmod;
-  // Separate apps may not publish a trustworthy content date yet. The optional
-  // lastmod is omitted until they do; deployment time is not a content date.
-  const modified = lastmod ? `<lastmod>${validateDate(lastmod)}</lastmod>` : '';
+  const modified = `<lastmod>${validateDate(contentModified(path))}</lastmod>`;
   const page = SEARCH_PAGES.find(page => SITE_URL + page.path === url);
   const alternates = page ? [...LANGUAGES.map(({ code }) => `<xhtml:link rel="alternate" hreflang="${code}" href="${escape(SITE_URL + languagePath(originalPath(page.path), code))}"/>`),
     `<xhtml:link rel="alternate" hreflang="x-default" href="${escape(SITE_URL + originalPath(page.path))}"/>`].join('') : '';
   return `  <url><loc>${escape(url)}</loc>${modified}${alternates}</url>`;
 }).join('\n');
-writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`);
+writePage('sitemap-pages.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`);
+const sitemaps = [...new Set([`${SITE_URL}/sitemap-pages.xml`, ...OPENCAD_TOOLS.flatMap(({ url }) =>
+  url && new URL(url).origin === SITE_URL ? [new URL('sitemap.xml', url).href] : [])])];
+writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemaps.map(url => `  <sitemap><loc>${escape(url)}</loc></sitemap>`).join('\n')}\n</sitemapindex>\n`);
 writePage('.nojekyll', '');
-console.log(`sitemap.xml → ${sitemapUrls.length} URLs`);
+console.log(`sitemap-pages.xml → ${sitemapUrls.length} URLs; sitemap.xml → ${sitemaps.length} sitemaps`);
