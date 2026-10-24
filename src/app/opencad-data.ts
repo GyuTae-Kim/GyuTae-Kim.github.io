@@ -43,7 +43,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     // The id stays the /opencad card anchor (#2d-viewer) that older links point to.
     id: '2d-viewer', path: '/opencad/projects/dwg-dxf',
     name: 'OpenCAD DWG·DXF', kind: '2D 도면',
-    searchTitle: '무료 DWG·DXF 캐드 | 설치 없이 도면 열기·편집·저장 · OpenCAD',
+    searchTitle: 'OpenCAD DWG·DXF 캐드 기능·지원 범위',
     extensions: ['.dwg', '.dxf'],
     summary:
       'DWG·DXF 도면을 열어 보고, 새로 그리거나 고친 뒤 다시 저장하는 무료 2D 캐드입니다. 거리·각도·면적을 재고 PDF·PNG·SVG로 출력할 수도 있습니다.',
@@ -80,7 +80,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
   {
     id: 'step-viewer', path: '/opencad/projects/step-viewer',
     name: 'OpenCAD STEP 뷰어', kind: '3D CAD 부품·조립 모델',
-    searchTitle: '무료 STEP 뷰어 | STP·STEP 3D 파일 열기 · OpenCAD',
+    searchTitle: 'OpenCAD STEP 뷰어 기능 | 측정·단면·조립',
     extensions: ['.step', '.stp', '.p21'],
     summary: 'STEP·STP 3D CAD 파일을 설치 없이 브라우저에서 여는 무료 뷰어입니다. 조립 구조와 부품 속성을 확인하고, 구멍 지름과 면 사이 거리를 재며, 단면과 분해 보기로 안쪽까지 살펴볼 수 있습니다.',
     introduction: '협력사에서 받은 STEP 모델을 확인할 때 CAD 프로그램을 설치하지 않고 부품과 조립 구조를 살펴볼 수 있습니다. 부품끼리 겹치는 곳을 찾고 부피와 질량도 계산합니다. STEP 해석은 웹 워커에서, 3D 표시는 공통 OpenCAD 뷰어 코어에서 처리합니다.',
@@ -104,7 +104,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
   {
     id: 'skp-viewer', path: '/opencad/projects/skp-viewer',
     name: 'OpenCAD SketchUp 뷰어', kind: 'SketchUp 3D 모델',
-    searchTitle: '무료 SKP 뷰어 | SketchUp 파일 설치 없이 열기 · OpenCAD',
+    searchTitle: 'OpenCAD SKP 뷰어 기능 | 버전·태그·장면',
     extensions: ['.skp'],
     summary: 'SketchUp 6~2026에서 저장한 SKP 파일을 브라우저에서 여는 무료 뷰어입니다. 태그·재질과 그룹·컴포넌트를 살펴보고, 장면 재생과 걷기로 공간을 둘러보며 거리와 각도를 잴 수 있습니다.',
     introduction: '가구·인테리어 설계의 SketchUp 모델을 전달받았을 때 브라우저에서 형태와 구성을 확인하는 도구입니다. 파일에 저장된 스타일과 장면, 그림자 설정을 따라 SketchUp에서 보던 모습에 가깝게 엽니다. 로컬 파일을 웹 워커에서 읽고 OpenCAD 3D 코어로 표시합니다.',
@@ -128,7 +128,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
   {
     id: 'nc-viewer', path: '/opencad/projects/nc-viewer',
     name: 'OpenCAD NC 뷰어', kind: 'G-code·Heidenhain·MPR·PGI·XML',
-    searchTitle: '무료 NC·G-code 뷰어 | MPR 공구 경로 확인 · OpenCAD',
+    searchTitle: 'OpenCAD NC 뷰어 기능 | G-code·MPR 지원',
     extensions: ['.nc', '.gcode', '.ngc', '.h', '.mpr', '.pgi', '.xml'],
     summary: 'G-code와 Heidenhain(평문, DIN/ISO), 판재 가공 파일(woodWOP MPR, WangShi PGI, KDT XML)의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생하며, 장비에 넣기 전에 확인할 줄을 경고로 알려 줍니다.',
     introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain 프로그램을 해석하고, 코드·공구·정보 패널을 3D 경로와 연결합니다. Haas, Siemens 같은 방언과 선반 프로그램은 파일 내용으로 알아보고 화면 위 띠로 알려 줍니다. 주 프로그램과 부프로그램 파일을 함께 열면 한 작업으로 이어 읽습니다. 판재 가공 파일(MPR, PGI, XML)은 구멍과 홈, 포켓, 윤곽 가공을 판 위에 그리고, 가공 목록과 변수를 함께 보여 줍니다.',

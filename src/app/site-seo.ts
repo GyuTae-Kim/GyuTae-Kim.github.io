@@ -136,8 +136,18 @@ export const LOCALIZED_SEARCH_PAGES: SearchPage[] = LANGUAGES.flatMap(({ code })
 }));
 
 export function searchPage(url: string): SearchPage | undefined {
-  const path = url.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
-  return LOCALIZED_SEARCH_PAGES.find((page) => page.path.replace(/\/+$/, '') === path.replace(/\/+$/, ''));
+  const language = languageFromUrl(url);
+  const path = originalPath(url).split(/[?#]/)[0].replace(/\/+$/, '') || '/';
+  const page = SEARCH_PAGES.find(page => page.path === path);
+  if (!page) return undefined;
+  const localized = translateData(page, language);
+  if (localized.research) localized.description = `${localized.research.summary} ${localized.research.outcome}`;
+  if (localized.tool?.url) localized.tool.url = localizedHref(localized.tool.url, language);
+  if (localized.article?.viewer) {
+    localized.article.viewer.url = localizedHref(localized.article.viewer.url, language);
+    if (localized.article.viewer.sampleUrl) localized.article.viewer.sampleUrl = localizedHref(localized.article.viewer.sampleUrl, language);
+  }
+  return { ...localized, path: languagePath(page.path, language), language };
 }
 
 // The browser and the static build use the same graph and page descriptions.

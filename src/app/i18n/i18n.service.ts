@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Pipe, PipeTransform } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { LANGUAGES, Language, languageFromUrl, languagePath, localizedHref, translate } from './localization';
 
 @Injectable({ providedIn: 'root' })
@@ -9,7 +9,7 @@ export class I18nService {
   language: Language = 'ko';
   constructor(private router: Router, @Inject(DOCUMENT) private document: Document) {
     this.setUrl(router.getCurrentNavigation()?.extractedUrl.toString() ?? router.url);
-    router.events.subscribe(event => { if (event instanceof NavigationStart) this.setUrl(event.url); });
+    router.events.subscribe(event => { if (event instanceof NavigationEnd) this.setUrl(event.urlAfterRedirects); });
   }
   setUrl(url: string): void {
     this.language = languageFromUrl(url);

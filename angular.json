@@ -41,6 +41,7 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [{ "replace": "src/app/i18n/catalogs.ts", "with": "src/app/i18n/catalogs.browser.ts" }],
               "budgets": [
                 {
                   "type": "initial",

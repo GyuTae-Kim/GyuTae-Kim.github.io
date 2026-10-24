@@ -1,3 +1,5 @@
+import { GuideDetails, OPENCAD_GUIDE_DETAILS } from './opencad-guide-details';
+
 export interface SiteArticle {
   path: string;
   category: 'OpenCAD 사용 안내' | '제조 소프트웨어 개발 노트';
@@ -11,6 +13,7 @@ export interface SiteArticle {
   sections: { id: string; title: string; paragraphs: string[]; steps?: string[]; points?: string[] }[];
   related: { path: string; label: string }[];
   sources?: { url: string; label: string }[];
+  guide?: GuideDetails;
 }
 
 // Instructions follow the published OpenCAD commands. Development notes interpret
@@ -22,8 +25,8 @@ export const SITE_ARTICLES: SiteArticle[] = [
     description: '설치·회원가입 없이 OpenCAD에서 DWG·DXF 도면을 여는 방법입니다. 지원 버전, 파일 열기, 도면층과 글꼴 확인, 열리지 않는 파일을 점검하는 순서를 안내합니다.',
     lead: '도면을 전달받았지만 CAD 프로그램이 없을 때, 브라우저에서 OpenCAD를 열어 내용을 확인할 수 있습니다. 먼저 예제 도면으로 화면 조작을 익힌 뒤 실제 파일을 여세요.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 무료 DWG·DXF 2D 캐드 사용 안내.',
-    viewer: { url: 'https://gyutae-kim.github.io/opencad-dwgdxf/', label: '무료 DWG·DXF 캐드 열기' },
-    figure: { src: 'assets/opencad/viewer-2d-1440.webp', alt: 'OpenCAD에서 치수가 표시된 브래킷 예제 도면을 연 실제 화면.', caption: '예제 도면을 연 실제 화면. 위쪽 리본과 아래쪽 명령행에서 기능을 실행합니다.', width: 1440, height: 900 },
+    viewer: { url: 'https://gyutae-kim.github.io/opencad-dwgdxf/', label: '무료 DWG·DXF 캐드 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-dwgdxf/?sample' },
+    figure: { src: 'assets/opencad/viewer-2d-1440.webp', srcset: 'assets/opencad/viewer-2d-720.webp 720w, assets/opencad/viewer-2d-1440.webp 1440w', alt: 'OpenCAD에서 치수가 표시된 브래킷 예제 도면을 연 실제 화면.', caption: '예제 도면을 연 실제 화면. 위쪽 리본과 아래쪽 명령행에서 기능을 실행합니다.', width: 1440, height: 900 },
     sections: [
       { id: 'formats', title: '먼저 파일 형식과 지원 버전을 확인합니다', paragraphs: ['DWG는 CAD 도면을 저장하는 형식이고, DXF는 도면 데이터를 다른 프로그램과 주고받을 때 쓰는 형식입니다. 확장자만 바꿔서는 서로 변환되지 않습니다.', 'OpenCAD는 DWG R13~R2018과 DXF R12~R2018의 ASCII·이진 파일을 읽습니다. 지원 버전이어도 일부 객체, 외부 참조나 글꼴은 원본 프로그램과 다르게 보일 수 있습니다.'] },
       { id: 'open', title: '파일을 열고 화면을 맞추는 순서', paragraphs: ['최신 Chrome, Edge, Firefox, Safari 등 JavaScript와 WebGL2를 지원하는 브라우저를 사용하세요.'], steps: ['아래의 「무료 DWG·DXF 캐드 열기」를 누릅니다. 파일이 없으면 시작 화면의 「예제 도면 열기」로 먼저 둘러봅니다.', '「파일 열기」에서 .dwg 또는 .dxf 파일을 고르거나, 파일을 뷰어 화면에 끌어다 놓습니다.', '도면이 열리면 휠로 확대·축소하고 가운데 버튼을 누른 채 이동합니다. 전체 보기로 도면의 위치를 먼저 확인하세요.', '모형·배치 탭을 바꾸고 도면층의 켜짐·동결 상태를 확인합니다. 객체를 선택하면 특성에서 길이·면적 등 관련 값을 볼 수 있습니다.'] },
@@ -39,8 +42,8 @@ export const SITE_ARTICLES: SiteArticle[] = [
     description: 'OpenCAD에서 DWG·DXF 도면의 거리와 면적을 측정하고 PDF로 출력하는 방법입니다. DIST·AREA 명령, 객체 스냅, 단위 확인과 플롯 축척 점검을 안내합니다.',
     lead: '도면의 치수 문자와 실제 형상 크기는 다를 수 있습니다. 객체의 좌표를 기준으로 재고, 도면 단위를 확인한 뒤 출력 축척을 정하는 순서로 작업합니다.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 캐드 도면 측정과 PDF 출력 사용 안내.',
-    viewer: { url: 'https://gyutae-kim.github.io/opencad-dwgdxf/', label: '무료 DWG·DXF 캐드 열기' },
-    figure: { src: 'assets/opencad/viewer-2d-1440.webp', alt: '치수와 단면이 있는 브래킷 예제 도면을 OpenCAD에서 확인하는 화면.', caption: 'OpenCAD의 예제 도면으로 측정과 출력을 먼저 연습할 수 있습니다.', width: 1440, height: 900 },
+    viewer: { url: 'https://gyutae-kim.github.io/opencad-dwgdxf/', label: '무료 DWG·DXF 캐드 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-dwgdxf/?sample' },
+    figure: { src: 'assets/opencad/viewer-2d-1440.webp', srcset: 'assets/opencad/viewer-2d-720.webp 720w, assets/opencad/viewer-2d-1440.webp 1440w', alt: '치수와 단면이 있는 브래킷 예제 도면을 OpenCAD에서 확인하는 화면.', caption: 'OpenCAD의 예제 도면으로 측정과 출력을 먼저 연습할 수 있습니다.', width: 1440, height: 900 },
     sections: [
       { id: 'units', title: '측정 전에 도면 단위를 확인합니다', paragraphs: ['DWG·DXF 좌표의 1이 언제나 1mm를 뜻하는 것은 아닙니다. 원본 도면의 단위 설정과 알고 있는 기준 길이를 대조하세요. 단위 정보가 없거나 잘못된 파일은 측정값만으로 실제 크기를 확정할 수 없습니다.', '치수 문자가 수동으로 바뀐 도면도 있습니다. 표시 문자만 읽기보다 실제 형상을 측정하고, 필요하면 치수 목록에서 표시 문자와 실제 측정값을 나란히 확인하세요.'] },
       { id: 'distance', title: '두 점 사이의 거리를 잽니다', paragraphs: ['명령행에 DIST 또는 별칭 DI를 입력하고 Enter를 누르면 두 점의 거리를 잴 수 있습니다. MEASUREGEOM(별칭 MEA)에서도 거리·반지름·각도·면적을 선택할 수 있습니다.'], steps: ['뷰어에서 도면을 열고 측정할 부분을 충분히 확대합니다.', '객체 스냅을 켭니다(F3). 끝점·중간점·중심 등 목적에 맞는 스냅으로 정확한 점을 지정하세요.', 'DIST를 실행하고 첫 번째 점과 두 번째 점을 차례로 선택합니다.', '명령행에 나온 측정값을 읽고 도면 단위와 기준 길이에 맞는지 확인합니다. Esc로 진행 중인 명령을 종료할 수 있습니다.'] },
@@ -131,4 +134,4 @@ export const SITE_ARTICLES: SiteArticle[] = [
     ],
     related: [{ path: '/portfolio/panel-classification', label: '가구 패널 역할 인식과 파라메트릭 설계 연구' }, { path: '/portfolio/wedraw-pro', label: 'Wedraw Pro 개발 역할과 실제 화면' }, { path: '/portfolio/service-monitoring', label: '제조 소프트웨어 서비스 운영 감시 사례' }, { path: '/contact', label: '제조 소프트웨어 개발·채용·협업 연락처' }],
   },
-];
+].map(article => ({ ...article, guide: OPENCAD_GUIDE_DETAILS[article.path.split('/').pop()!] })) as SiteArticle[];

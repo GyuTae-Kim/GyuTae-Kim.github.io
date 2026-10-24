@@ -1,7 +1,9 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { AppModule } from './app/app.module';
+import { ensureCatalog, languageFromUrl } from './app/i18n/localization';
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
+// Load the locale before evaluating search metadata or bootstrapping Angular.
+ensureCatalog(languageFromUrl(location.pathname))
+  .then(() => import('./app/app.module'))
+  .then(({ AppModule }) => platformBrowserDynamic().bootstrapModule(AppModule))
   .catch(err => console.error(err));

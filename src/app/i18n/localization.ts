@@ -1,7 +1,5 @@
-import en from './en.json';
-import ja from './ja.json';
-import zh from './zh-CN.json';
-import de from './de.json';
+import { catalogs } from './catalogs';
+export { ensureCatalog } from './catalogs';
 
 export const LANGUAGES = [
   { code: 'ko', label: '한국어', locale: 'ko_KR' },
@@ -11,7 +9,6 @@ export const LANGUAGES = [
   { code: 'de', label: 'Deutsch', locale: 'de_DE' },
 ] as const;
 export type Language = typeof LANGUAGES[number]['code'];
-const catalogs: Record<string, Record<string, string>> = { en, ja, 'zh-CN': zh, de };
 export const normalizeMessage = (value: string): string => value.replace(/\s+/g, ' ').trim();
 export function languageFromUrl(url: string): Language {
   const segment = url.split(/[?#]/)[0].split('/')[1];
@@ -46,7 +43,7 @@ export function translate(value: string, language: Language, parameters: unknown
   const catalog = catalogs[language] ?? {};
   let result = catalog[key] ?? value;
   // Computed labels in component code use the same numbered parameters as templates.
-  if (language !== 'ko' && !catalog[key] && /[가-힣]/.test(key)) {
+  if (language !== 'ko' && catalogs[language] && !catalog[key] && /[가-힣]/.test(key)) {
     if (!patterns.has(language)) patterns.set(language, Object.keys(catalog).filter(k => /\{\d+\}/.test(k)).map(k => {
       const slots = k.match(/\{\d+\}/g)!;
       const expression = new RegExp('^' + k.split(/\{\d+\}/).map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('(.+?)') + '$');
