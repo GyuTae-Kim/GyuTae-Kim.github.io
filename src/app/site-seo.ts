@@ -124,6 +124,9 @@ export const SEARCH_ALIASES = SEARCH_PAGES.flatMap(({ path }) => path === '/'
 
 export const LOCALIZED_SEARCH_PAGES: SearchPage[] = LANGUAGES.flatMap(({ code }) => SEARCH_PAGES.map(page => {
   const localized = translateData(page, code);
+  // Research descriptions join two authored fields. Translate the fields before
+  // joining them so an updated summary never needs a second, combined catalog key.
+  if (localized.research) localized.description = `${localized.research.summary} ${localized.research.outcome}`;
   if (localized.tool?.url) localized.tool.url = localizedHref(localized.tool.url, code);
   if (localized.article?.viewer) {
     localized.article.viewer.url = localizedHref(localized.article.viewer.url, code);

@@ -18,7 +18,7 @@ Angular 15, TypeScript, SCSS, three.js(홈 3D 뷰어, 화면에 가까워질 때
 - `src/app/components/model-viewport/`: 홈 3D 뷰어. 가공 부품(모델링 → 특징 인식 → 바이스 가공)과 원룸 벽면 가구(설계 → 제조 → 설치)를 직접 만든 기하로 그립니다. WebGL이 없거나 움직임 줄이기 설정이면 `src/assets/viewer/`의 정지 이미지를 보여 줍니다.
 - `src/assets/cases/`, `src/assets/research/`: 프로젝트와 연구 그림. 목록용 썸네일은 `thumb-336.webp`, `thumb-672.webp`입니다.
 - `src/assets/og/`: 링크 미리보기 이미지(1200×630)
-- `tools/route-pages.mjs`: 빌드 뒤 주소마다 HTML을 만들어 하위 주소가 200으로 열리고, 주소별 제목, 설명, 미리보기 이미지, 실제 화면의 전체 본문을 갖게 합니다. `sitemap.xml`도 만듭니다.
+- `tools/route-pages.mjs`: 빌드 뒤 주소마다 HTML을 만들어 하위 주소가 200으로 열리고, 주소별 제목, 설명, 미리보기 이미지, 실제 화면의 전체 본문을 갖게 합니다. 사이트맵 인덱스 `sitemap.xml`과 포트폴리오 페이지 목록 `sitemap-pages.xml`도 만듭니다.
 
 ## 실행
 
@@ -42,16 +42,16 @@ git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.gith
 
 ## 검색 노출 관리 (구글 · 네이버)
 
-`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지 18개의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
+`npm run build`는 Angular의 실제 템플릿을 서버 렌더링해 공개 페이지의 전체 본문을 정적 HTML로 만듭니다. JavaScript를 실행하지 않아도 본문과 내부 링크를 읽을 수 있습니다. `dist/server/`는 빌드에만 쓰며, GitHub Pages에는 `docs/`만 배포합니다. 3D 뷰어는 정지 이미지로 먼저 표시하고 브라우저에서 작동합니다.
 
 `angular.json`의 production 빌드는 핵심 CSS 인라인(`optimization.styles.inlineCritical`)을 끄고 전체 스타일시트를 렌더 차단 `<link>`로 불러옵니다. Angular는 핵심 CSS를 본문이 빈 `docs/index.html` 기준으로 계산하므로, 켜 두면 `html`·`body` 규칙만 인라인되고 서버 렌더링한 본문이 스타일 없이 먼저 보입니다.
 
 - `src/app/site-seo.ts`: 제목·설명·대표 주소·공유 이미지와 Person, WebSite, 페이지, 프로젝트, 탐색 경로 구조화 데이터의 공통 원본입니다. 새 프로젝트는 기존 프로젝트 데이터에서 자동으로 가져옵니다.
 - `src/app/seo.service.ts`: 초기 HTML과 브라우저 이동에 공통으로 쓰는 메타데이터 생성 코드입니다. 제목·설명·작성자·canonical·Open Graph·Twitter·구조화 데이터를 생성합니다. 필드 구성은 같고 페이지별 값과 구조화 데이터 종류만 달라집니다. `src/index.html`에 이 정보를 중복 작성하지 않습니다. 없는 페이지에는 `noindex`를 적용합니다.
-- `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, `sitemap.xml`, `.nojekyll`을 만듭니다. 사이트맵의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
-- `tools/moved-apps.json`: 저장소 이름을 바꾼 앱의 예전 Pages 경로를 새 주소로 넘깁니다. 2D 캐드는 2026-10-16에 `2dcad-viewer`에서 `opencad-dwgdxf`로 이름을 바꿨고, GitHub는 저장소 주소와 달리 Pages 경로를 넘겨 주지 않으므로 이 사이트가 `/2dcad-viewer/`를 맡습니다. 빌드가 만드는 이동 페이지는 쿼리와 해시(`?sample`, `?open=…`)를 그대로 넘기고 `noindex`로 검색에서 빠집니다. 그 아래 경로는 `src/404.html`이 넘깁니다.
+- `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, 사이트맵 인덱스 `sitemap.xml`, 포트폴리오 목록 `sitemap-pages.xml`, `.nojekyll`을 만듭니다. 포트폴리오 목록의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
+- `tools/moved-apps.json`: 저장소 이름을 바꾼 앱의 예전 Pages 경로를 새 주소로 넘깁니다. 2D 캐드는 2026-10-16에 `2dcad-viewer`에서 `opencad-dwgdxf`로 이름을 바꿨고, GitHub는 저장소 주소와 달리 Pages 경로를 넘겨 주지 않으므로 이 사이트가 `/2dcad-viewer/`를 맡습니다. 빌드가 만드는 이동 페이지는 canonical과 JavaScript 없이도 읽을 수 있는 0초 meta refresh로 영구 이전을 알립니다. `noindex`는 사용하지 않으며, JavaScript를 사용하는 브라우저에서는 쿼리와 해시(`?sample`, `?open=…`)를 두 이동 방식의 목적지에 똑같이 붙입니다. 그 아래 경로는 `src/404.html`이 넘깁니다.
 - `tools/search-verification.json`: Search Console과 서치어드바이저가 제공한 HTML 태그의 `content` 값을 넣습니다. 빈 값은 태그를 생성하지 않습니다. 생성된 `docs/index.html`을 직접 수정하면 다음 빌드 때 사라집니다.
-- `npm run check:seo`: 빌드 후 전체 본문·메타데이터·구조화 데이터·내부 링크·이미지·사이트맵·robots.txt·404를 검사합니다.
+- `npm run check:seo`: 빌드 후 전체 본문·메타데이터·구조화 데이터·내부 링크·이미지·사이트맵 인덱스·포트폴리오 목록·robots.txt·구주소 이동·404를 검사합니다. `npm run check:i18n`은 본문과 검색·공유 메타데이터의 번역 누락도 검사합니다.
 
 ### 콘텐츠 수정일 관리
 
@@ -68,7 +68,7 @@ npm run check:seo
 
 PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 검사를 실행합니다.
 
-통합 사이트맵에 포함한 별도 저장소 뷰어의 날짜는 `tools/linked-content-dates.json`에서 관리합니다. 2D 캐드(OpenCAD DWG·DXF)는 `npm run sync:viewer-date`, 새 앱은 `npm run sync:viewer-date -- --url https://gyutae-kim.github.io/opencad-step/`처럼 앱을 먼저 배포한 뒤 공개된 앱 사이트맵 날짜를 가져오고 다시 빌드합니다. 함께 준비할 때는 `--file /절대경로/앱/dist/sitemap.xml`로 검증된 산출물을 읽을 수 있습니다. 일반 빌드에는 네트워크나 다른 체크아웃이 필요하지 않습니다. 앱 배포가 끝나기 전에 새 날짜를 담은 통합 사이트맵을 배포하지 마세요.
+`/sitemap.xml`은 `/sitemap-pages.xml`과 공개된 네 앱의 `/opencad-*/sitemap.xml`을 참조하는 사이트맵 인덱스입니다. 포트폴리오 저장소는 자기 페이지의 날짜만 관리하고, 앱별 URL·언어·수정일은 각 앱 저장소의 사이트맵이 관리합니다. 앱을 갱신할 때 포트폴리오로 날짜를 복사하거나 다시 배포할 필요가 없습니다. 새 앱은 실제 사이트맵을 공개한 뒤 `opencad-data.ts`의 공개 URL과 `robots.txt`에 추가합니다. 빌드는 외부 사이트맵을 내려받지 않으므로 네트워크 없이 재현할 수 있습니다. 배포 후에는 인덱스가 참조하는 모든 사이트맵의 HTTP 상태·XML·대표 URL을 별도로 확인하세요.
 
 ### 배포 후 등록
 
