@@ -1877,7 +1877,7 @@
   "파일 형식과 확인할 내용을 비교합니다": "Dateiformate und Prüfinhalte vergleichen",
   "아래 표는 OpenCAD에서 파일을 확인할 때의 구분입니다. 확장자만으로 모든 데이터의 포함 여부나 호환성을 보장할 수는 없으므로, 저장한 프로그램과 버전도 함께 확인하세요.": "Die Tabelle beschreibt die Dateiprüfung in OpenCAD. Eine Endung allein garantiert weder Datenumfang noch Kompatibilität. Prüfen Sie auch die Anwendung und Version, mit der die Datei gespeichert wurde.",
   "CAD 파일 선택표: 도면·3D 모델·공구 경로": "CAD-Dateiauswahl: Zeichnungen, 3D-Modelle und Werkzeugwege",
-  "파일 형식": "Dateiformat",
+  "파일 형식": "Dateityp",
   "확인할 내용": "Was prüfen?",
   "함께 확인할 자료": "Zusätzliche Angaben",
   "2D 도면의 치수·도면층·문자·배치": "Maße, Layer, Text und Layouts einer 2D-Zeichnung",
