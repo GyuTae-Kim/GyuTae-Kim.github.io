@@ -39,6 +39,11 @@
       <section class="article-section" *ngFor="let section of post.sections" [attr.aria-labelledby]="section.id">
         <h2 [id]="section.id">{{ (section.title) | t }}</h2>
         <p *ngFor="let text of section.paragraphs"><app-partner-text [text]="(text) | t"></app-partner-text></p>
+        <table *ngIf="section.table as table" class="article-comparison">
+          <caption>{{ table.caption | t }}</caption>
+          <thead><tr><th *ngFor="let column of table.columns" scope="col">{{ column | t }}</th></tr></thead>
+          <tbody><tr *ngFor="let row of table.rows"><th scope="row">{{ row[0] | t }}</th><td *ngFor="let cell of row.slice(1)">{{ cell | t }}</td></tr></tbody>
+        </table>
         <ol *ngIf="section.steps"><li *ngFor="let step of section.steps">{{ (step) | t }}</li></ol>
         <ul *ngIf="section.points"><li *ngFor="let point of section.points">{{ (point) | t }}</li></ul>
       </section>
