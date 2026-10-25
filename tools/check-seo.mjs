@@ -164,7 +164,16 @@ for (const page of SEARCH_PAGES) {
     if (page.article) {
       assert.ok(root.textContent.includes(page.article.lead), `${file}: article body`);
       assert.ok(data['@graph'].some((node) => node['@type'] === 'TechArticle' && node.headline === page.article.title && node.dateModified === contentModified(page.path)), `${file}: article structured data`);
-      for (const section of page.article.sections) assert.ok(document.getElementById(section.id), `${file}: article section ${section.id}`);
+      for (const section of page.article.sections) {
+        const heading = document.getElementById(section.id);
+        assert.ok(heading, `${file}: article section ${section.id}`);
+        if (section.table) {
+          const table = heading.parentElement.querySelector('table');
+          assert.equal(table?.querySelector('caption')?.textContent.trim(), section.table.caption, `${file}: comparison caption`);
+          assert.deepEqual([...table.querySelectorAll('thead th')].map(cell => cell.textContent.trim()), section.table.columns, `${file}: comparison column headers`);
+          assert.deepEqual([...table.querySelectorAll('tbody tr')].map(row => [...row.children].map(cell => cell.textContent.trim())), section.table.rows, `${file}: complete comparison is present without JavaScript`);
+        }
+      }
       if (page.article.viewer) {
         const actions = [...root.querySelectorAll('.article-actions a')].map(link => link.href);
         assert.deepEqual(actions, [page.article.viewer.url, ...(page.article.viewer.sampleUrl ? [page.article.viewer.sampleUrl] : [])], `${file}: guide opens its own viewer and sample`);
@@ -173,7 +182,8 @@ for (const page of SEARCH_PAGES) {
         const actions = [...root.querySelectorAll('nav.article-actions a')].map(link => link.href);
         assert.deepEqual(actions, page.article.actions.map(action => SITE_URL + languagePath(action.path, page.language)), `${file}: workflow actions keep their locale`);
         const crumbs = data['@graph'].find(node => node['@type'] === 'BreadcrumbList');
-        assert.equal(crumbs.itemListElement[1].item, SITE_URL + languagePath('/solutions', page.language), `${file}: workflow breadcrumb points to its collection`);
+        const collection = originalPath(page.path).startsWith('/solutions/') ? '/solutions' : '/opencad';
+        assert.equal(crumbs.itemListElement[1].item, SITE_URL + languagePath(collection, page.language), `${file}: article breadcrumb points to its collection`);
       }
     }
     if (originalPath(page.path) === '/solutions') {

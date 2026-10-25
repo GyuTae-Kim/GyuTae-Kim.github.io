@@ -25,7 +25,7 @@ let lastPage = '';
 let pageReady = false;
 let vitalsStarted = false;
 
-const GUIDE_KEYS = new Set(['open-dwg-dxf', 'measure-export', 'open-step-stp', 'open-skp', 'check-nc-toolpath']);
+const GUIDE_KEYS = new Set(['open-dwg-dxf', 'measure-export', 'open-step-stp', 'open-skp', 'check-nc-toolpath', 'choose-cad-format']);
 export function navigationEvent(href: string): { name: string; params: Record<string, string> } | undefined {
   try {
     const url = new URL(href);

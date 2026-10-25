@@ -57,6 +57,7 @@ describe('OpenCadComponent', () => {
     expect(guides.map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
       '/opencad/guides/open-step-stp', '/opencad/guides/open-skp', '/opencad/guides/check-nc-toolpath',
+      '/opencad/guides/choose-cad-format',
     ]);
   });
 });

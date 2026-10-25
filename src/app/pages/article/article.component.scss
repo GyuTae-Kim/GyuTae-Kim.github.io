@@ -9,6 +9,12 @@
 .guide-evidence th, .guide-evidence td { border: 1px solid var(--line); padding: 14px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
 .guide-evidence th { width: 30%; background: var(--sheet); }
 .guide-evidence .article-figure { margin: 28px 0; }
+.article-comparison { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 24px; }
+.article-comparison caption { text-align: left; font-weight: 700; margin-bottom: 12px; }
+.article-comparison th, .article-comparison td { border: 1px solid var(--line); text-align: left; vertical-align: top; padding: 12px; overflow-wrap: anywhere; }
+.article-comparison thead, .article-comparison tbody th { background: var(--sheet); }
+.article-comparison th:first-child { width: 25%; }
+@media (max-width: 600px) { .article-comparison { font-size: 14px; } .article-comparison th, .article-comparison td { padding: 10px 8px; } }
 .article-figure figcaption { margin-top: 8px; font-size: var(--fs-2); color: var(--muted); }
 .article-contents, .article-related { padding: 24px; background: var(--sheet); border: 1px solid var(--line); }
 .article-contents { margin-bottom: 48px; }

@@ -34,8 +34,11 @@ describe('OpenCadProjectComponent', () => {
     expect(page.querySelector('.project-hero .tool-shot img')!.getAttribute('src')).toBe('assets/opencad/viewer-2d-1440.webp');
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-dwgdxf/"]')).not.toBeNull();
     expect(page.querySelectorAll('.check-list li').length).toBe(5);
-    expect(Array.from(page.querySelectorAll('.guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
+    expect(Array.from(page.querySelectorAll('[aria-labelledby="project-guides"] .guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
+    ]);
+    expect(Array.from(page.querySelectorAll('[aria-labelledby="project-workflows"] .guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
+      '/solutions/furniture-manufacturing', '/solutions/cad-cam-automation',
     ]);
   });
 

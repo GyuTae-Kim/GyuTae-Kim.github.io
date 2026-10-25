@@ -30,6 +30,7 @@ const NAMES: Record<string, [ContentGroup, string]> = {
   '/opencad/guides/open-step-stp': ['OpenCAD 가이드', 'OpenCAD 가이드 | STEP 열기'],
   '/opencad/guides/open-skp': ['OpenCAD 가이드', 'OpenCAD 가이드 | SKP 열기'],
   '/opencad/guides/check-nc-toolpath': ['OpenCAD 가이드', 'OpenCAD 가이드 | NC 공구 경로'],
+  '/opencad/guides/choose-cad-format': ['OpenCAD 가이드', 'OpenCAD 가이드 | 파일 형식 선택'],
   '/notes': ['개발 노트', '개발 노트 | 목록'],
   '/notes/cad-cam-feature-recognition': ['개발 노트', '개발 노트 | CAD/CAM 특징 인식'],
   '/notes/furniture-manufacturing-data': ['개발 노트', '개발 노트 | 가구 제조 데이터'],
