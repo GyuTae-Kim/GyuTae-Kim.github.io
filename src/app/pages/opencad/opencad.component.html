@@ -28,6 +28,15 @@
     </div>
   </dl>
 
+  <section class="opencad-section" aria-labelledby="file-choice-title">
+    <h2 id="file-choice-title">{{ 'DWG·DXF·STEP·STP·SKP 파일에 맞는 뷰어 선택' | t }}</h2>
+    <table class="file-choice-table">
+      <caption>{{ '파일 형식과 확인할 작업으로 무료 뷰어를 고릅니다.' | t }}</caption>
+      <thead><tr><th scope="col">{{ '파일·뷰어 열기' | t }}</th><th scope="col">{{ '할 수 있는 일' | t }}</th><th scope="col">{{ '지원 범위·사용법' | t }}</th></tr></thead>
+      <tbody><tr *ngFor="let choice of fileChoices"><th scope="row"><a [href]="choice.tool.url! | localLink">{{ choice.label | t }}</a></th><td>{{ choice.purpose | t }}</td><td><a [routerLink]="choice.guidePath | localLink">{{ '사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></td></tr></tbody>
+    </table>
+  </section>
+
   <nav class="opencad-jump-links" [attr.aria-label]="'파일 형식별 뷰어 선택' | t">
     <a *ngFor="let tool of liveTools; let i = index" [routerLink]="([]) | localLink" [fragment]="tool.id">{{ (tool.kind) | t }}</a>
   </nav>
@@ -80,6 +89,11 @@
         </div>
       </div>
     </article>
+  </section>
+
+  <section class="opencad-section" aria-labelledby="opencad-solutions-title">
+    <div class="section-title"><h2 id="opencad-solutions-title">{{ '가구 설계·공장·제조 자동화에 활용하려면' | t }}</h2></div>
+    <ul class="guide-list"><li *ngFor="let article of audienceArticles"><h3><a [routerLink]="article.path | localLink">{{ article.title | t }}</a></h3><p>{{ article.description | t }}</p><app-icon class="row-arrow" name="arrow-right"></app-icon></li></ul>
   </section>
 
   <section class="opencad-section" aria-labelledby="opencad-core-title">

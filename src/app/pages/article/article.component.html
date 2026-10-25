@@ -2,7 +2,7 @@
   <ng-container *ngIf="article as post; else archive">
     <nav class="article-crumbs" [attr.aria-label]="'현재 위치' | t">
       <a [routerLink]="'/' | localLink">{{ '홈' | t }}</a><span aria-hidden="true">/</span>
-      <a [routerLink]="(post.category === 'OpenCAD 사용 안내' ? '/opencad' : '/notes') | localLink">{{ (post.category) | t }}</a>
+      <a [routerLink]="(post.category === 'OpenCAD 사용 안내' ? '/opencad' : post.category === '가구·제조 업무 안내' ? '/solutions' : '/notes') | localLink">{{ (post.category) | t }}</a>
     </nav>
     <article>
       <header class="page-intro">
@@ -10,6 +10,9 @@
         <h1>{{ (post.title) | t }}</h1>
         <p>{{ (post.lead) | t }}</p>
       </header>
+      <nav class="article-actions" *ngIf="post.actions?.length" [attr.aria-label]="'이 안내에서 시작하기' | t">
+        <a *ngFor="let action of post.actions; let first = first" class="button" [class.primary]="first" [class.outline]="!first" [routerLink]="action.path | localLink">{{ action.label | t }}<app-icon name="arrow-right"></app-icon></a>
+      </nav>
       <div class="article-actions" *ngIf="post.viewer as viewer">
         <a class="button primary" [href]="(viewer.url) | localLink">{{ (viewer.label) | t }}<app-icon name="arrow-right"></app-icon></a>
         <a *ngIf="viewer.sampleUrl" class="button outline" [href]="(viewer.sampleUrl) | localLink">{{ '예제로 먼저 보기' | t }}<app-icon name="arrow-right"></app-icon></a>
@@ -51,7 +54,7 @@
     </article>
   </ng-container>
   <ng-template #archive>
-    <header class="page-intro"><p class="eyebrow">{{ '김규태 Sean Kim' | t }}</p><h1>{{ '제조 소프트웨어 개발 노트' | t }}<span class="accent">.</span></h1><p>{{ 'AI·CAD/CAM과 가구 제조 소프트웨어 개발에서 내린 판단을 정리합니다. 프로젝트별 역할과 검증 결과는 글에서 연결한 상세 사례에 있습니다.' | t }}</p></header>
+    <header class="page-intro"><p class="eyebrow">{{ '김규태 Sean Kim' | t }}</p><h1>{{ (isSolutions ? audienceCollection.title : '제조 소프트웨어 개발 노트') | t }}<span class="accent">.</span></h1><p>{{ (isSolutions ? audienceCollection.lead : 'AI·CAD/CAM과 가구 제조 소프트웨어 개발에서 내린 판단을 정리합니다. 프로젝트별 역할과 검증 결과는 글에서 연결한 상세 사례에 있습니다.') | t }}</p></header>
     <div class="note-list"><article *ngFor="let note of notes"><p class="eyebrow">{{ (note.category) | t }}</p><h2><a [routerLink]="(note.path) | localLink">{{ (note.title) | t }}</a></h2><p>{{ (note.description) | t }}</p><a class="text-link" [routerLink]="(note.path) | localLink">{{ '글 읽기' | t }}<app-icon name="arrow-right"></app-icon></a></article></div>
     <aside class="article-related"><a [routerLink]="'/portfolio' | localLink">{{ '전체 개발 프로젝트 보기' | t }}</a> · <a [routerLink]="'/opencad' | localLink">{{ 'OpenCAD 사용 안내' | t }}</a></aside>
   </ng-template>

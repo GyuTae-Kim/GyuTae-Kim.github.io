@@ -1,14 +1,16 @@
 import { GuideDetails, OPENCAD_GUIDE_DETAILS } from './opencad-guide-details';
+import { AUDIENCE_ARTICLES } from './audience-data';
 
 export interface SiteArticle {
   path: string;
-  category: 'OpenCAD 사용 안내' | '제조 소프트웨어 개발 노트';
+  category: 'OpenCAD 사용 안내' | '제조 소프트웨어 개발 노트' | '가구·제조 업무 안내';
   title: string;
   description: string;
   lead: string;
   image: string;
   imageAlt: string;
   viewer?: { url: string; label: string; sampleUrl?: string };
+  actions?: { path: string; label: string }[];
   figure: { src: string; srcset?: string; alt: string; caption: string; width: number; height: number };
   sections: { id: string; title: string; paragraphs: string[]; steps?: string[]; points?: string[] }[];
   related: { path: string; label: string }[];
@@ -72,8 +74,8 @@ export const SITE_ARTICLES: SiteArticle[] = [
   },
   {
     path: '/opencad/guides/open-skp', category: 'OpenCAD 사용 안내',
-    title: 'SKP 파일 무료로 열기와 SketchUp 버전·누락 객체 점검',
-    description: 'OpenCAD SKP 뷰어에서 SketchUp 파일을 여는 방법입니다. 지원 저장 버전, 태그·구성·재질 확인과 일부만 읽힌 모델의 경고를 점검합니다.',
+    title: '스케치업 SKP 파일 무료로 열기와 버전·누락 객체 점검',
+    description: '무료 OpenCAD SKP 뷰어로 스케치업(SketchUp) 파일을 여는 방법입니다. 지원 저장 버전, 태그·구성·재질 확인과 일부만 읽힌 모델의 경고를 점검합니다.',
     lead: 'SKP 파일은 저장한 SketchUp 버전과 모델 구성에 따라 표시 결과가 달라질 수 있습니다. 예제 집 모형으로 화면 조작을 확인한 뒤 실제 파일의 버전과 태그·구성을 점검하세요.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD SketchUp SKP 뷰어의 파일 열기와 지원 버전 안내.',
     viewer: { url: 'https://gyutae-kim.github.io/opencad-skp/', label: '무료 SKP 뷰어 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-skp/?sample' },
@@ -134,4 +136,5 @@ export const SITE_ARTICLES: SiteArticle[] = [
     ],
     related: [{ path: '/portfolio/panel-classification', label: '가구 패널 역할 인식과 파라메트릭 설계 연구' }, { path: '/portfolio/wedraw-pro', label: 'Wedraw Pro 개발 역할과 실제 화면' }, { path: '/portfolio/service-monitoring', label: '제조 소프트웨어 서비스 운영 감시 사례' }, { path: '/contact', label: '제조 소프트웨어 개발·채용·협업 연락처' }],
   },
+  ...AUDIENCE_ARTICLES,
 ].map(article => ({ ...article, guide: OPENCAD_GUIDE_DETAILS[article.path.split('/').pop()!] })) as SiteArticle[];

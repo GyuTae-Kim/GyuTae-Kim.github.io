@@ -169,6 +169,26 @@ for (const page of SEARCH_PAGES) {
         const actions = [...root.querySelectorAll('.article-actions a')].map(link => link.href);
         assert.deepEqual(actions, [page.article.viewer.url, ...(page.article.viewer.sampleUrl ? [page.article.viewer.sampleUrl] : [])], `${file}: guide opens its own viewer and sample`);
       }
+      if (page.article.actions) {
+        const actions = [...root.querySelectorAll('nav.article-actions a')].map(link => link.href);
+        assert.deepEqual(actions, page.article.actions.map(action => SITE_URL + languagePath(action.path, page.language)), `${file}: workflow actions keep their locale`);
+        const crumbs = data['@graph'].find(node => node['@type'] === 'BreadcrumbList');
+        assert.equal(crumbs.itemListElement[1].item, SITE_URL + languagePath('/solutions', page.language), `${file}: workflow breadcrumb points to its collection`);
+      }
+    }
+    if (originalPath(page.path) === '/solutions') {
+      const targets = ['sketchup-furniture', 'furniture-manufacturing', 'cad-cam-automation'].map(slug => SITE_URL + languagePath('/solutions/' + slug, page.language));
+      assert.deepEqual([...root.querySelectorAll('.note-list h2 a')].map(link => link.href), targets, `${file}: distinct workflow guides appear in the static collection`);
+      const list = data['@graph'].find(node => node['@type'] === 'ItemList');
+      assert.deepEqual(list.itemListElement.map(item => item.url), targets, `${file}: workflow collection structured data matches visible links`);
+    }
+    if (originalPath(page.path) === '/opencad') {
+      const choices = [...root.querySelectorAll('.file-choice-table tbody tr')];
+      assert.equal(choices.length, 4, `${file}: choose a viewer without loading JavaScript`);
+      for (const row of choices) {
+        assert.ok(hostedApps.has(row.querySelector('th a').href), `${file}: selector opens a published localized app`);
+        assert.ok(row.querySelector('td a').href.startsWith(SITE_URL + languagePath('/opencad/guides/', page.language)), `${file}: selector links to a localized guide`);
+      }
     }
     for (const anchor of root.querySelectorAll('a[href]')) {
       const link = new URL(anchor.href);
