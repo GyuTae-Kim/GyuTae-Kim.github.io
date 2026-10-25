@@ -33,6 +33,10 @@ const NAMES: Record<string, [ContentGroup, string]> = {
   '/notes': ['개발 노트', '개발 노트 | 목록'],
   '/notes/cad-cam-feature-recognition': ['개발 노트', '개발 노트 | CAD/CAM 특징 인식'],
   '/notes/furniture-manufacturing-data': ['개발 노트', '개발 노트 | 가구 제조 데이터'],
+  '/solutions': ['업무별 안내', '업무별 안내 | 목록'],
+  '/solutions/sketchup-furniture': ['업무별 안내', '업무별 안내 | 스케치업 가구 설계'],
+  '/solutions/furniture-manufacturing': ['업무별 안내', '업무별 안내 | 가구 공장 제조 데이터'],
+  '/solutions/cad-cam-automation': ['업무별 안내', '업무별 안내 | 제조업 CAD/CAM 자동화'],
   '/contact': ['연락', '포트폴리오 | 연락'],
 };
 

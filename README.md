@@ -133,3 +133,16 @@ OpenCAD 프로젝트 목록은 `src/app/opencad-data.ts`에서 관리합니다. 
 분석 동의를 허용한 경우에만 공식 `web-vitals` 라이브러리를 지연 로딩하고 `web_vital` 이벤트를 전송합니다. 매개변수는 `metric_name`(LCP/INP/CLS), `metric_value`, `metric_delta`, `metric_id`, `metric_rating`입니다. 기본 문서 단위 지표는 최초 공개 페이지에 귀속하고 SPA 이동 뒤의 다른 페이지로 잘못 귀속하지 않습니다. 제한·거부 상태에서는 성능·클릭 이벤트를 보내지 않습니다. 필드 데이터가 쌓이기 전에는 실측 p75 목표 달성이나 검색 성과 상승을 주장하지 않습니다.
 
 Search Console은 브랜드/비브랜드 검색어를 나누고 페이지·언어·국가·기기별 노출과 클릭을 같은 기간으로 비교합니다. GA4는 자연검색 세션 중 뷰어 실행 세션 비율과 앱 세션 중 파일 열기 성공 세션 비율을 별도로 집계합니다. 단순 이벤트 수의 나눗셈은 반복 실행 때문에 전환율이 되지 않습니다. 예제와 실제 파일을 구분하고 분석에 동의한 방문자 범위임을 표시하세요. Web Vitals의 평균을 p75로 해석하지 말고 지표별·모바일/데스크톱별 원시 값의 75백분위를 사용합니다.
+
+### 검색 의도와 업무별 진입 경로
+
+| 필요한 작업 | 진입 경로 | 제공하는 내용 |
+| --- | --- | --- |
+| DWG·DXF 캐드 뷰어 | `/opencad`, `/opencad/guides/open-dwg-dxf` | 형식 선택, 실행, 지원 범위, 측정·편집·저장 안내 |
+| STEP·STP 3D 뷰어 | `/opencad/guides/open-step-stp` | 예제, 조립·PMI·단면, 빈 화면 점검 |
+| 스케치업 SKP 뷰어 | `/opencad/guides/open-skp` | 저장 버전, 태그·장면, 누락 객체 확인 |
+| 스케치업 가구 설계 | `/solutions/sketchup-furniture` | 파일 보기·모델링·제조 연동의 선택 기준 |
+| 가구 공장 도면·BOM·CNC 데이터 | `/solutions/furniture-manufacturing` | 반복 입력 점검, 출력 흐름, 준비 자료와 개발 사례 |
+| 제조업 CAD/CAM 자동화 | `/solutions/cad-cam-automation` | 도면·3D·NC 검토, 자동화 입력·출력, 검증 범위 |
+
+`/solutions`와 세 업무 안내는 `src/app/audience-data.ts`에서 관리합니다. 홈·주 메뉴·OpenCAD에서 연결하며 다섯 언어로 정적 렌더링합니다. 우선순위는 요청한 이용 대상과 실제 지원 기능을 기준으로 정했으며, 검색량이나 순위 상승을 측정한 결과로 해석하지 않습니다. 무료 개인 뷰어, 팀 제품 개발 사례와 연구 사례의 기능·검증 범위를 구분하세요.

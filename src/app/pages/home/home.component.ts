@@ -3,6 +3,7 @@ import { CASE_STUDIES, FIGURE_KIND_LABELS, thumbSrcset } from '../../portfolio-d
 import { RESEARCH_WORKS } from '../../research-data';
 import { OTHER_PROJECTS } from '../../other-projects-data';
 import { OPENCAD_PROJECTS, OPENCAD_TOOLS } from '../../opencad-data';
+import { AUDIENCE_ARTICLES } from '../../audience-data';
 
 // Short introductions for the home page; detailed evidence stays on each case page.
 // title: a shorter card title when the page title is too long for the home card.
@@ -53,6 +54,7 @@ const RESEARCH_ROLES: Record<string, string> = {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
+  audienceArticles = AUDIENCE_ARTICLES;
   // Published apps are rows with their screenshot; the shared 3D core follows as a slim card.
   openCadApps = OPENCAD_TOOLS.filter((tool) => tool.url && tool.figure);
   openCadCore = OPENCAD_PROJECTS.filter((project) => !project.url);
