@@ -1,7 +1,7 @@
 {
   "/": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "d02fc451d6fbda751ddf584cdf55d96849f074f1f8624932af669e7dc618c924"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "bcf3653bf87d26b5b4a37a4516082fb2b26653a2da61bd134c4ccc026a1a6245"
   },
   "/portfolio": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -52,32 +52,32 @@
     "fingerprint": "6d42b8a8bf09bace5e127b8ae5afde9a8b85bebd749be9c44f88fa8667e0b51c"
   },
   "/opencad": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6f0a3165c5d5c5150f348b30d413b15d57a74bffe6bf852add4ac5357f6c65a6"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "eeaaa6f6da486ac45e8b8c4814ddf2d11e7bdb24bfba5e5fc85640fbd8dbb257"
   },
   "/solutions": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "0c291a3c19e104264ae38ba71ab7fe9ecad41a0ef628e43da355c9a42785310f"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "8c5cc6664b00af7f602e59aeaf22c98702a4fafb718ab43688239802e952632c"
   },
   "/notes": {
     "lastmod": "2026-10-26T09:47:55Z",
     "fingerprint": "11d0fb1dfa829d5a489fb11a53e3130f5b593c796435d27252a37c48f3423beb"
   },
   "/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "65db27cbcbd571e6a22a0c7c120e42c605c241813f801c8fd59d3c8d5ceb44e8"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "fa715d5281251a8788a35ed0f237558f5a603170385100de19b1afd0872b5a6e"
   },
   "/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "f2472bc92fb0a4d543c8769b04aa3fb0afeae7c2e98f16d6325733ee42bb967c"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "32042e315a915ae82b975ca752abe9e4bef20159a46662d6dcd3b02a9e1ec173"
   },
   "/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "94384b6aeece29bf8ffcb88441212467d355ce76ad36175a43b56e68f6cca85f"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "dd4d5b4cf2c879dd8f4bc573b0ea39852b4945caf4bf2bbbf87a7ed9085ee4f8"
   },
   "/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6cdbf42419f1725280ac1531cda77db7bcdf925aa1292c561b0b95b2cd975d1e"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "63694479b760dc647c24fe1ccd7c84f8f2bfbce5622020e3fb2bdb63da8a773d"
   },
   "/opencad/guides/check-nc-toolpath": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -96,8 +96,8 @@
     "fingerprint": "78c7d6567a3cf5b56a46ee42279f3bbb3d726f136f3bf82d58e3af55b94e66cb"
   },
   "/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "842cf161895300a352058e93f419d58cfb29e24a7777840cc3dacac76b93ff3f"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "a7a0e39737fa58f5a89f31967c3117278c45110a9adb69e6e16389e45b800e37"
   },
   "/solutions/cad-cam-automation": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -108,20 +108,20 @@
     "fingerprint": "ce438a248e7fd2e609bf0749cd1667520d70c26c5bbcee6dfff6fc44cb606c06"
   },
   "/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "7201bfa96b65346b76785fc6334c84227ac65240069a5db643c2dbc3cf71a1cd"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "6863ac0d402c9b9f502aca8ca0adbcd875646b00091216d4ae7ad21958048f5d"
   },
   "/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "50e199138b845fc9ea5eaf9489bd6adbad14394e870d7344dc2bf43e7c98c144"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "afc1148a22534e7c6ad7dfcabd3262d627bd04dab4d238ab0f6636f341d3547a"
   },
   "/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "438c8ab8d07bf391f9798d778b66de01166607a8ebdd1b21a1966d6fbe76f2f1"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "d6a86f9db3e2439415dcec5b06b67369434e9712e45b5743f01000e47ec8e038"
   },
   "/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "190010b0f0a21ea49f0a87ead81408c5c5b297831868d7463bd3c31461d0157b"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "8627d973a137ba5134f81938a6a62e40fef40bf6d1bc298a2d7fc0ec4e9a0455"
   },
   "/opencad/projects/viewer3d": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -132,8 +132,8 @@
     "fingerprint": "2bc730d7d8437f39c08a8b63df91f043609104fda5ea2273dd55845d301f9bc2"
   },
   "/en/": {
-    "lastmod": "2026-10-26T10:00:59Z",
-    "fingerprint": "e22823459cf498f4fd478e3be0c88e56633c3379288e3a1f3a8ba1a53809362f"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "dcf2607cfdd52391e4f48d37ef55f3f0fb2b9535660058c41c45d3088ec283f5"
   },
   "/en/portfolio": {
     "lastmod": "2026-10-26T10:05:48Z",
@@ -184,32 +184,32 @@
     "fingerprint": "3ad1ed37ae08e842fbd769b3149dc286eea4296da1741f1c5d0ae7e0e8d4483c"
   },
   "/en/opencad": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "a9d5baf68886e09608bc1153ceba0a4b94074add93d86407ac2bdf6f28e78391"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "d0fec6355df4e30b563d66b7957d816ee1c08671e6b53e3162d5aac206e06b41"
   },
   "/en/solutions": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "02450eb171cae2a37838427f4cf310e7441f0ada3e5e4f9f363cb626510de8c0"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "7158fc204dea93947f67a693ff85fc7dbb6a97030c3e85db88d02bcd3115d106"
   },
   "/en/notes": {
     "lastmod": "2026-10-26T09:47:55Z",
     "fingerprint": "e5731389caeb22eee8113c5ec1614e13436f921ef8610c21dafc77d3f2b1ffbc"
   },
   "/en/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "395c4009c510cd9e1a42d9b0b2f744ea68cc882f7a68ca053005b8ce9d2be290"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "837df38bf8e835edb5b9b5978e5c19409910d0216b02073507b0fe72b3d45b60"
   },
   "/en/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "253d81de04a90372466cb42b889edc15d6ee935e955839c10d6d20d12ffdadad"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "2edffd8f8e4f5b1e402622c4cf35e0cda508c7f5d41f6bcc5d3dea673f7e0896"
   },
   "/en/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "669e66a49886b42f000393fb9aaeee219f76d04526b6f9709aa33cd9d9f29542"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "062c44d1028666b699b7c985f4986eae283aa8933e0e9f270b75bd72af3af895"
   },
   "/en/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "ecc4fca32d794e02706096fb4851943f6ca639760fd7f9fd9de5e93eaeae31c1"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "5988ea096648a32ffbbb0c3dccf29ab0d4be333100f6f24e5752f5ac22d6223b"
   },
   "/en/opencad/guides/check-nc-toolpath": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -228,8 +228,8 @@
     "fingerprint": "101af90dac64ebc3c2b714dafa95a706c61f0081ec9681481c1b46251dc2aac9"
   },
   "/en/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6c8848df5c7bb5100f2614fba841a9a9071b6fe2a6aa28cd839bad25874f1568"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "b6af2caa3496d475c9709d422639a986c754935f4b1a4170a0e30c7cf3067001"
   },
   "/en/solutions/cad-cam-automation": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -240,20 +240,20 @@
     "fingerprint": "be5380c3207d988e80cd50d7977e3ebe5bbf67f584e7b212e9b57621e2c3250e"
   },
   "/en/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "fb936c3d6df5f84476cbb2e1d6b9227873c0dc49a74cdc7d4bcf9b2bf2711217"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "305237e5230643fc59c328f00e4a4697357b2a536573a9ba3571099f4dc45db7"
   },
   "/en/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "ca294221e3a860210152a76644653f8f67f5e82ca88f4fe65f7a7e49e2ede01f"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "717e36593e5161310d84b8ff9ce9ea7ca4a72a570685e3b55dd6711b58700b7f"
   },
   "/en/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6f46cf8082766dd831a143548c975c8e9c18a21be519157893bb2be4f4fb1d26"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "72a0dfc57efc147dab1aee96ccc3791b4c55a4a5858676f572dd909f579fdbd2"
   },
   "/en/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "43a6a52fbad2fe3f7e255c9da050cbb60f8b9ee3aa3b541a378250071d7add26"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "32c1a6773ea70f4d8369aa97969345fe03ba0fca893c40123fcefaf4b1a6c4de"
   },
   "/en/opencad/projects/viewer3d": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -264,8 +264,8 @@
     "fingerprint": "2d90489602d5aceaaecb7b360089be0f1cb2aaea2352e1ec428e47d7726b1722"
   },
   "/ja/": {
-    "lastmod": "2026-10-26T10:00:59Z",
-    "fingerprint": "f71b8efc3fd6f3fa8b88427f8dd3f664ec1db6e23de23bb07544a2be2bea4144"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "9fab6a69c7d9591abff59274d6ae234fa02b17671bc9aa46248c283ad7413814"
   },
   "/ja/portfolio": {
     "lastmod": "2026-10-26T10:05:48Z",
@@ -316,32 +316,32 @@
     "fingerprint": "de31886b636e6398a993be653ae0b22946d85ccaf985b8b311b04cb2240193e6"
   },
   "/ja/opencad": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6096d489d3262390281a5005362858b0be940a053de6a5dec90dd06471b201c6"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "281e19e031d44be121f1f1023b72e9c214d0d5e8d13e90f28c9bf9d8ecb8eb05"
   },
   "/ja/solutions": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "c3c97bfa84fcaa76aafd5783e92fc8d4a78dc99152521a95eda402f006e9c026"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "bce967f1d3d03f2699452d4e4a8541fbfac617a15e2114497563ea0ea53bea35"
   },
   "/ja/notes": {
     "lastmod": "2026-10-26T09:47:55Z",
     "fingerprint": "32b9e5aafc937a54a5b5005cd59d60ca21852b7c13c8fe88a24a32b7818e70bd"
   },
   "/ja/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "041bf8e53e0635152366597bf75ba3563ed6f2c5f49f02a0e6d9ba7252280a53"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "548699e5a4e0ba35c96cac4b34aacf7250f2b754098405d5fda5aed3d15e375e"
   },
   "/ja/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "498e8d44e096ebf618d171739ac2a400df9cdeb01e9227d0f5159b29940a9579"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "5bf32f371789674b69bbcab56e11dc586351e04dad3bff3f27cf3244c566618b"
   },
   "/ja/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "fb0c2fbe7474c9d5222ae53a6e1822a2852190901f58d05d9e08ade07d1adcd9"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "a5d9e8ee163a9693f184f82ce5cc0a29922c7a83182870c397c205778661221f"
   },
   "/ja/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "87fa8335e3b000222a4b8b4eece6283d50c87219a87af2e2f98baff466dbb7e5"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "39cb5efdc5ac0ba485e23659f44a648a50e5738ca43c0a788f7bc7bd185af6ec"
   },
   "/ja/opencad/guides/check-nc-toolpath": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -360,8 +360,8 @@
     "fingerprint": "8f78a2d63fc77e6cd453fd09d7d107b0f8c3d56ce77dc2c748040c09971f7084"
   },
   "/ja/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "5818010e908023ccab28ad838ac904266614c17c4390d4f888321ccd1c19a98d"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "8d9dff1bc12fb70a5649a31f81cbc31551d6b3b3358704ec74196acbaf0d2812"
   },
   "/ja/solutions/cad-cam-automation": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -372,20 +372,20 @@
     "fingerprint": "767d413b18d6c75e692e424f150ead472542ed2c6555b41b522d77489eab649e"
   },
   "/ja/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "2e74a90f150033a51a90c715954a3123b95ac317d14e946c3409be441c312dbc"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "7ff291c3b952ff6560c1f3b87f3fe4f90174a3dfbaa1a326f0f3782b646dd258"
   },
   "/ja/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "e20bbfd1a2b504904387dadc39eaf2133d4a96c37cbdfb241e40836ce055f77d"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "08918402e84e1448e2ce9110d442c848f2faf2d1a272dc43331469b1f4361f97"
   },
   "/ja/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "1ac6a0c38f6e420048fec8c64922ec484e3d0d37f6d8eb0cb846b4afa4445905"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "3e62a5950511485b19b7d03c2047b38fa77701a1a9c26e5165d814f209dcc144"
   },
   "/ja/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "5d12611af82803f209074a578b819df364b55ae976b9ea649253a5ba09b8440f"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "22ea9011587ecd2a87a10e6b88fa5ae2660756f59a16d52d53ba76be1eb5fde9"
   },
   "/ja/opencad/projects/viewer3d": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -396,8 +396,8 @@
     "fingerprint": "4b109df9797b52b9114496e529f4a638b20be1a3c651bcb5e36c2fb7d37cb3b4"
   },
   "/zh-CN/": {
-    "lastmod": "2026-10-26T10:00:59Z",
-    "fingerprint": "ad2ee1bfedaece038c83ccac269a351f5a7c8af4de51f97f2702e8b8156b7bbd"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "fdf843781e02a007189f9e31ed62d530a3bdb484c029b7a634cf782725b030cf"
   },
   "/zh-CN/portfolio": {
     "lastmod": "2026-10-26T10:05:48Z",
@@ -448,32 +448,32 @@
     "fingerprint": "84cb10f15a30d4423560778ebe30dd45850e8d6c14c58bc6cf873cc15553958d"
   },
   "/zh-CN/opencad": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "11799542f034c778ef50b8ce021a35b6f09b1dc11affa7a9c05e507737283b0a"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "2230e4b4223c28fc589cf1eccb80292c3aeb8e97a2a72b6799337a30ebcd229a"
   },
   "/zh-CN/solutions": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6e0cc1a89f0ff18130da4b52941cd05ecef414f285cb078e5543e648313a7d63"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "4670a41e32264136996d6352e26a3628618fa69dff142b6769ac55f030037374"
   },
   "/zh-CN/notes": {
     "lastmod": "2026-10-26T09:47:55Z",
     "fingerprint": "ba4714aac738cc31b622c414f8e222e982d46b5e4b3eaf8a49d47f17285abfc8"
   },
   "/zh-CN/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "90c480d80d11a52e7e6b527db8a6db1650055fc8812d6cddabcb8306b156052a"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "bcdffc32d1f548d26027ee04b504c180b37cb44738db27771c98917c04bba595"
   },
   "/zh-CN/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "8b7bc888dd92bcc667c35e5cdbfb9b1ae48f43da14bdd7a2607f6f6bd2c57545"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "b761aec8c42e871d3380cf4cdc8019e2915b4fbe2288be93c6b1d90a88aa8879"
   },
   "/zh-CN/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "3c056fb9f035964910e9ace5d2f198283ff569c71b68753a99898fd23d44fabe"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "1acdda0cb17fa75ee30446f4cde7cc6d16f49f1d268184bb1db2702a1e1d92a1"
   },
   "/zh-CN/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "818ad197fc559b5428010e41d82dea57967027f2daa802c907a67cd413684556"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "b9eacb8efe9ddd34e286c67e058faf0b70727a6482607419b49cbf9d6321e3c3"
   },
   "/zh-CN/opencad/guides/check-nc-toolpath": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -492,8 +492,8 @@
     "fingerprint": "e3c32709d45163ff2f9c974a592a53ca00000a549fca2d0d3c9a985b0054d6ea"
   },
   "/zh-CN/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "1bd0bbf1d266235d60fd5bcf1c48988ebd577d523129de3d94389173aff91ff4"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "8eda389716f7ee45ee4855bc75f1d05956e9fb40b86a5f40c61a43b65a950eef"
   },
   "/zh-CN/solutions/cad-cam-automation": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -504,20 +504,20 @@
     "fingerprint": "b7a7d78f1886b561ad966b3e3f58f4331180dd7485bbe0e1a9144e62363f4ba0"
   },
   "/zh-CN/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "a5847ab55e12feeb31c68a3d4abd276e8d7da4c034d1ed528a5cba067ce72a46"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "0ea9003a5b92422ae8933d3d137953452491cbb583c7f3fcf102d96764945af5"
   },
   "/zh-CN/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "dd5c478eaa264b1ca04023a3b062f8ff1f430668610c70a3af671f3cb56d9fcb"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "8e8aafde15d66be46a38159854aff680e07ccb4ee3b28f3593605f574368a890"
   },
   "/zh-CN/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "8cf96cf53ff62b93653186f557290a87229f08744123e21ddb2130b2c77b2c6b"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "6bbd15e17ffada28c56325d7b9c15eede46c79066109fc9f0febfca8e87d0f90"
   },
   "/zh-CN/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "f128c4c31b3b830555b780221512ebbdd90883fa492d7f814bb3419064f7f4b3"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "e22677516e86ba45acc17a13ace735f5f87c5690e04bb384a3c4a13b1b918eb5"
   },
   "/zh-CN/opencad/projects/viewer3d": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -528,8 +528,8 @@
     "fingerprint": "f3590e6d1044d03e0e4bf4c90771762ad939876456ed5a654d48bf5ac863a3f6"
   },
   "/de/": {
-    "lastmod": "2026-10-26T10:00:59Z",
-    "fingerprint": "9def32a81366f831d8fbb1e7129f2038f87eeda5601f9a4742867a6c12d5a6da"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "deaff07464996422e44e73b737e13a380e3f35d8c7c9cd574daf3c649245a6e0"
   },
   "/de/portfolio": {
     "lastmod": "2026-10-26T10:05:48Z",
@@ -580,32 +580,32 @@
     "fingerprint": "ba1dd6568c45e9eb19c55eb060b0d5cea42d985552a1a8c5e92a1c3a91791689"
   },
   "/de/opencad": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "d47c4a0ae8baf596b5d7abf22670a7c4d23791d3e9a1e28f14ae62c5399eb664"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "3ad36e46051a9df9a060f5dc2e2c966621ac1176855c20a6cbd35daccfccae3e"
   },
   "/de/solutions": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "185cad218b4c5a7eddfcef68164bd1f9287d5f6ba0757129d2bf5417c33059e6"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "9c2b0ab423e0637c8e38bc1914648ef493a9e718f790c75f800fbb2a9ee4b06a"
   },
   "/de/notes": {
     "lastmod": "2026-10-26T09:47:55Z",
     "fingerprint": "70e7cc209bd9a1da55004f5b6fc28b69f484175f8442d61bb201955663929627"
   },
   "/de/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "14ee6b199e071dd6f6085c259515daabc00af9cfa494d49306a9bd489f725310"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "66dda62200ba9a0b29661856eb927df68fba765e17bbe963b151d599fc56a7bd"
   },
   "/de/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "fc0dd7f71a3dee7ceaf22ea3f11b15e64262580fdc57f9e14bd6125496854f04"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "d63ff3445a6a0d43bf18f3a222dd35326d23905b3a9b067e5800511f16be092f"
   },
   "/de/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "4f6ebe0879c00e045f90fb7f6ecaf2ed5ae1a7dd84761d5551aa5f2ffe42b8ee"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "4d36ca66ad8849b15413e31ee3a891c12ae7fa1c6b74ee5a2cb8647f5ba618c2"
   },
   "/de/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "4176ce9e3f7670f8b324e332f5644e0d5f24572cd8276136738935d4379c37af"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "463e0c78e433c2bb3aeb733ad35e1d32e5dfb0c375a470103d33cebcf18de3ca"
   },
   "/de/opencad/guides/check-nc-toolpath": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -624,8 +624,8 @@
     "fingerprint": "4ca67dffa5b2bbfe9ca6bf2f377240379a07b377c74116ce37c94adc1dba848a"
   },
   "/de/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "d7d4835bbf792f15a3b37e1da0ed96b93206af4deb3e873fbe108a783ca12ea3"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "b4849ac0d16522197ef6a5888bc50a3127ca8f3c8e362eedcddd4b0e7a73538c"
   },
   "/de/solutions/cad-cam-automation": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -636,20 +636,20 @@
     "fingerprint": "b8658a77344254d381729a9d4802bec3d0c60b541d7538430cbe11cb3d381e12"
   },
   "/de/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "eb6c4c668901cf283c5d4c4f704c0b0d041ec224e0ebada1c2b35a948fee0603"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "55c1ec51798388f3d595d865b65dc63d28fbdeb092c30a52a9ac7f58ba0d4a29"
   },
   "/de/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "9ec1d7274415223250cbdab48498049d03373e96218aa92fce810cdf90c31cbe"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "150c0bb6e54eda92585611b6696c3a0c12732535e3fa35e9e1ba948655d9f3b0"
   },
   "/de/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "af3a966a50168ccdabc944eb832bc3ff8b6d8ebca5a12919152b4074a11ee51c"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "0389a8008d32a7cfc933823c956aba871252200f0ee109b74d5ccf550c488af0"
   },
   "/de/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "611fe524e23b863bfdb1570bf1cd141c3c2f67ae3bd712c14188c2abcff55881"
+    "lastmod": "2026-10-26T14:28:56Z",
+    "fingerprint": "1134bd91009bc0fa375d6b4e81f5a22627ad595d6b80c961b6a07b5e79b03c31"
   },
   "/de/opencad/projects/viewer3d": {
     "lastmod": "2026-10-26T09:47:55Z",

@@ -24,24 +24,31 @@ export interface SiteArticle {
 export const SITE_ARTICLES: SiteArticle[] = [
   {
     path: '/opencad/guides/open-dwg-dxf', category: 'OpenCAD 사용 안내',
-    title: 'DWG·DXF 파일을 무료 캐드 뷰어로 여는 방법',
-    description: '설치·회원가입 없이 OpenCAD에서 DWG·DXF 도면을 여는 방법입니다. 지원 버전, 파일 열기, 도면층과 글꼴 확인, 열리지 않는 파일을 점검하는 순서를 안내합니다.',
+    title: '무료 온라인 DWG·DXF 뷰어: Mac·Windows에서 도면 열기',
+    description: 'Mac·Windows에서 AutoCAD 설치 없이 DWG·DXF 파일을 여는 안내입니다. 무료 온라인 OpenCAD의 지원 버전, 도면층·글꼴 확인, 로컬 파일 처리와 PDF 출력 방법을 확인하세요.',
     lead: '도면을 전달받았지만 CAD 프로그램이 없을 때, 브라우저에서 OpenCAD를 열어 내용을 확인할 수 있습니다. 먼저 예제 도면으로 화면 조작을 익힌 뒤 실제 파일을 여세요.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 무료 DWG·DXF 2D 캐드 사용 안내.',
     viewer: { url: 'https://gyutae-kim.github.io/opencad-dwgdxf/', label: '무료 DWG·DXF 캐드 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-dwgdxf/?sample' },
     figure: { src: 'assets/opencad/viewer-2d-1440.webp', srcset: 'assets/opencad/viewer-2d-720.webp 720w, assets/opencad/viewer-2d-1440.webp 1440w', alt: 'OpenCAD에서 치수가 표시된 브래킷 예제 도면을 연 실제 화면.', caption: '예제 도면을 연 실제 화면. 위쪽 리본과 아래쪽 명령행에서 기능을 실행합니다.', width: 1440, height: 900 },
     sections: [
+      {
+        id: 'mac-windows', title: 'Mac에서 DWG를 열거나 AutoCAD 없이 도면을 보려면',
+        paragraphs: [
+          'OpenCAD는 별도 CAD 설치나 회원가입 없이 최신 브라우저에서 DWG·DXF 도면을 엽니다. Windows와 macOS에서 JavaScript와 WebGL2를 지원하는 브라우저로 예제를 먼저 확인하세요. 파일 크기와 복잡도에 따라 기기의 메모리와 처리 시간이 달라집니다.',
+          'Autodesk DWG TrueView는 Windows용 도구입니다. Mac에서는 브라우저 뷰어 같은 대안을 검토하되, 보기·편집·변환 중 필요한 기능과 파일을 서버에 올리는지 먼저 확인하세요. OpenCAD는 선택한 도면 파일을 서버에 업로드하지 않고 이 기기에서 읽습니다.',
+        ],
+      },
       { id: 'formats', title: '먼저 파일 형식과 지원 버전을 확인합니다', paragraphs: ['DWG는 CAD 도면을 저장하는 형식이고, DXF는 도면 데이터를 다른 프로그램과 주고받을 때 쓰는 형식입니다. 확장자만 바꿔서는 서로 변환되지 않습니다.', 'OpenCAD는 DWG R13~R2018과 DXF R12~R2018의 ASCII·이진 파일을 읽습니다. 지원 버전이어도 일부 객체, 외부 참조나 글꼴은 원본 프로그램과 다르게 보일 수 있습니다.'] },
       { id: 'open', title: '파일을 열고 화면을 맞추는 순서', paragraphs: ['최신 Chrome, Edge, Firefox, Safari 등 JavaScript와 WebGL2를 지원하는 브라우저를 사용하세요.'], steps: ['아래의 「무료 DWG·DXF 캐드 열기」를 누릅니다. 파일이 없으면 시작 화면의 「예제 도면 열기」로 먼저 둘러봅니다.', '「파일 열기」에서 .dwg 또는 .dxf 파일을 고르거나, 파일을 뷰어 화면에 끌어다 놓습니다.', '도면이 열리면 휠로 확대·축소하고 가운데 버튼을 누른 채 이동합니다. 전체 보기로 도면의 위치를 먼저 확인하세요.', '모형·배치 탭을 바꾸고 도면층의 켜짐·동결 상태를 확인합니다. 객체를 선택하면 특성에서 길이·면적 등 관련 값을 볼 수 있습니다.'] },
       { id: 'missing', title: '빈 화면, 빠진 문자와 외부 참조를 점검합니다', paragraphs: ['도면 일부가 안 보인다면 전체 보기와 도면층 상태부터 확인하세요. 원본 도면이 별도 DWG·DXF, 이미지, PDF를 참조한다면 그 파일도 필요합니다. 외부 참조 창(XR)에서 폴더나 파일을 골라 연결할 수 있습니다.', 'SHX 글꼴 때문에 문자가 다르게 보일 때는 SHXFONTS로 이 컴퓨터의 글꼴 폴더를 선택할 수 있습니다. 한글 대체 글꼴과 원본 SHX 글꼴의 표시가 완전히 같지는 않을 수 있습니다.', '계속 열리지 않으면 파일 확장자와 저장 버전, 오류 문구를 확인해 GitHub 이슈에 알려 주세요. 공개 이슈에 고객 도면이나 기밀 파일을 첨부하지 말고, 공유 가능한 최소 예제로 재현해 주세요.'] },
       { id: 'privacy', title: '파일 처리와 사용 범위', paragraphs: ['선택한 도면의 읽기·표시·저장은 이 컴퓨터의 브라우저에서 처리하며 도면 파일을 서버에 업로드하지 않습니다. 앱과 표시용 글꼴 같은 정적 자료는 웹에서 내려받습니다.', 'OpenCAD는 김규태의 MIT 라이선스 개인 오픈소스 프로젝트입니다. 중요한 납품이나 가공에 사용할 도면은 원본 프로그램 및 작업 기준과 대조해 확인하세요.'] },
     ],
     related: [{ path: '/opencad/guides/measure-export', label: '도면 거리·면적 측정과 PDF 출력 방법' }, { path: '/opencad', label: 'OpenCAD 지원 기능과 개발자 소개' }],
-    sources: [{ url: 'https://github.com/GyuTae-Kim/opencad-dwgdxf#readme', label: 'OpenCAD 공개 사용 안내와 지원 범위' }],
+    sources: [{ url: 'https://github.com/GyuTae-Kim/opencad-dwgdxf#readme', label: 'OpenCAD 공개 사용 안내와 지원 범위' }, { url: 'https://www.autodesk.com/viewers', label: 'Autodesk 공식 뷰어·운영체제 안내' }],
   },
   {
     path: '/opencad/guides/measure-export', category: 'OpenCAD 사용 안내',
-    title: '캐드 도면 거리·면적 측정과 PDF 출력 방법',
+    title: 'DWG·DXF를 PDF로 출력하고 도면 치수 재기',
     description: 'OpenCAD에서 DWG·DXF 도면의 거리와 면적을 측정하고 PDF로 출력하는 방법입니다. DIST·AREA 명령, 객체 스냅, 단위 확인과 플롯 축척 점검을 안내합니다.',
     lead: '도면의 치수 문자와 실제 형상 크기는 다를 수 있습니다. 객체의 좌표를 기준으로 재고, 도면 단위를 확인한 뒤 출력 축척을 정하는 순서로 작업합니다.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 캐드 도면 측정과 PDF 출력 사용 안내.',
@@ -58,13 +65,20 @@ export const SITE_ARTICLES: SiteArticle[] = [
   },
   {
     path: '/opencad/guides/open-step-stp', category: 'OpenCAD 사용 안내',
-    title: 'STEP·STP 파일 열기와 빈 화면·누락 형상 점검 방법',
-    description: '무료 OpenCAD STEP 뷰어에서 STP·STEP 파일을 여는 방법입니다. 예제 조립 모델, 압축 파일 지원, 전체 보기·부품 표시와 해석 경고를 확인하는 순서를 안내합니다.',
+    title: '무료 온라인 STEP·STP 뷰어: 파일 열기와 측정',
+    description: '설치 없이 STEP·STP 3D 파일을 열고 치수와 단면을 확인하는 안내입니다. 무료 OpenCAD에서 조립 구조, 저장된 PMI, 거리 측정과 빈 화면·누락 형상을 점검하세요.',
     lead: 'STEP 파일이 열리지 않거나 화면이 비어 보인다면 파일 형식, 화면 위치, 부품 표시와 해석 결과를 나누어 확인하세요. 먼저 공개 예제를 열어 브라우저에서 3D가 표시되는지 확인할 수 있습니다.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD STEP·STP 뷰어의 파일 열기와 표시 문제 점검 안내.',
     viewer: { url: 'https://gyutae-kim.github.io/opencad-step/', label: '무료 STEP·STP 뷰어 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-step/?sample' },
     figure: { src: 'assets/opencad/viewer-step-1440.webp', srcset: 'assets/opencad/viewer-step-720.webp 720w, assets/opencad/viewer-step-1440.webp 1440w', alt: 'OpenCAD STEP 뷰어에서 받침판·블록·핀·고리로 만든 예제 조립 모델과 제품 나무를 확인하는 화면.', caption: '공개 예제를 연 실제 화면입니다. 고객 모델이나 특정 CAD 파일의 호환성을 보장하는 예시는 아닙니다.', width: 1440, height: 900 },
     sections: [
+      {
+        id: 'measure', title: 'STP와 STEP 차이, 치수 측정과 단면 확인',
+        paragraphs: [
+          'STP와 STEP은 같은 STEP 형식에 쓰이는 확장자입니다. 이름을 바꾸는 대신 원본 CAD의 내보내기 설정과 단위를 확인하세요. 부품을 선택한 뒤 거리·지름 측정과 단면 보기로 확인할 위치를 좁힐 수 있습니다.',
+          '파일에 저장된 PMI 치수와 뷰어에서 형상을 재는 측정값은 별개입니다. 곡면 사이 거리·부피·질량처럼 화면용 삼각형으로 계산하는 값은 근삿값이며, 평면·원기둥·원·직선 등 수식으로 구할 수 있는 측정과 구분해 확인하세요.',
+        ],
+      },
       { id: 'formats', title: '확장자와 압축 형식을 먼저 확인합니다', paragraphs: ['OpenCAD는 STEP Part 21 형식의 .stp·.step·.p21 파일을 읽습니다. AP203·AP214·AP242의 B-rep 형상, 조립, 색과 단위를 다루지만 모든 개체가 원본과 똑같이 표시되는 것은 아닙니다.', 'gzip(.stp.gz·.stpZ)과 STEP 파일이 들어 있는 ZIP도 지원합니다. STEP-XML(.stpx)은 지원하지 않습니다. 파일 이름의 확장자만 바꿔도 내부 형식이 변환되지는 않습니다.'] },
       { id: 'open', title: '예제 모델과 실제 파일을 차례로 엽니다', paragraphs: ['최신 브라우저에서 JavaScript와 WebGL2가 동작해야 합니다. 「예제로 먼저 보기」는 브라우저에서 만드는 작은 조립 모델을 열며, 개인 파일을 선택할 필요가 없습니다.'], steps: ['예제 모델에서 마우스 회전과 확대가 동작하는지 확인합니다.', '「열기」를 누르거나 STEP 파일을 창 안으로 끌어다 놓습니다. 압축 파일이면 압축 해제와 해석이 끝날 때까지 기다립니다.', '오른쪽 제품 나무와 정보 패널에서 부품 수, 단위와 경고를 확인합니다.', '모델을 바꿔 열면 이전 문서가 교체됩니다. 큰 파일을 읽는 중에는 「취소」 또는 Esc로 중지할 수 있습니다.'] },
       { id: 'blank', title: '파일은 열렸는데 화면이 비어 보일 때', paragraphs: ['먼저 「전체 보기」 또는 F를 눌러 모델이 화면 안에 들어오는지 확인하세요. 제품 나무에서 부품을 골라 「고른 부품 보기」로 확인하고, 숨긴 부품과 레이어가 있는지도 살펴봅니다.', '단면을 켰다면 끄고 비교하세요. 와이어프레임 등 보기 모드를 바꾸어 선만 있는 형상인지, 면이 있는 모델인지도 확인할 수 있습니다.', '정보 패널의 경고와 원본 CAD의 표시를 대조하세요. 예제는 정상인데 특정 파일만 누락된다면 해당 파일의 형상·개체 해석 문제일 수 있습니다. 지원 AP 이름만으로 완전한 호환성을 판단하지 마세요.'] },
@@ -75,20 +89,31 @@ export const SITE_ARTICLES: SiteArticle[] = [
   },
   {
     path: '/opencad/guides/open-skp', category: 'OpenCAD 사용 안내',
-    title: '스케치업 SKP 파일 무료로 열기와 버전·누락 객체 점검',
-    description: '무료 OpenCAD SKP 뷰어로 스케치업(SketchUp) 파일을 여는 방법입니다. 지원 저장 버전, 태그·구성·재질 확인과 일부만 읽힌 모델의 경고를 점검합니다.',
+    title: '무료 온라인 스케치업 뷰어: SKP 파일 열기',
+    description: 'SketchUp 설치 없이 SKP 파일을 확인하는 무료 온라인 뷰어 안내입니다. 데스크톱 뷰어 다운로드 종료 후의 선택지와 지원 버전, 태그·장면·치수 확인 방법을 살펴보세요.',
     lead: 'SKP 파일은 저장한 SketchUp 버전과 모델 구성에 따라 표시 결과가 달라질 수 있습니다. 예제 집 모형으로 화면 조작을 확인한 뒤 실제 파일의 버전과 태그·구성을 점검하세요.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD SketchUp SKP 뷰어의 파일 열기와 지원 버전 안내.',
     viewer: { url: 'https://gyutae-kim.github.io/opencad-skp/', label: '무료 SKP 뷰어 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-skp/?sample' },
     figure: { src: 'assets/opencad/viewer-skp-1440.webp', srcset: 'assets/opencad/viewer-skp-720.webp 720w, assets/opencad/viewer-skp-1440.webp 1440w', alt: 'OpenCAD SketchUp 뷰어에서 빨간 지붕의 예제 집과 나무, 태그·재질 목록을 확인하는 화면.', caption: '브라우저에서 만든 예제 집 모형의 실제 화면입니다. 사용자 파일을 서버에 올려 만든 이미지가 아닙니다.', width: 1440, height: 900 },
     sections: [
+      {
+        id: 'viewer-options', title: 'SketchUp Viewer 다운로드 대신 무엇을 선택하나요?',
+        paragraphs: [
+          'SketchUp 공식 안내에 따르면 2025년 4월 22일부터 데스크톱 뷰어의 신규 다운로드가 중단됐습니다. 공식 공유 대안과 로컬 파일 뷰어 중 작업에 맞는 방식을 선택하세요.',
+        ],
+        points: [
+          '로컬 SKP 파일 보기: OpenCAD에서 파일을 선택해 태그·장면·치수를 확인합니다. 모델 파일을 서버에 업로드하지 않습니다.',
+          '링크로 모델 공유: SketchUp 공식 Trimble Connect·Link Sharing 안내를 확인합니다.',
+          '가구 모델 편집: SketchUp 같은 모델링 도구가 필요합니다. OpenCAD SKP 뷰어는 모델 편집·재저장을 제공하지 않습니다.',
+        ],
+      },
       { id: 'version', title: 'SketchUp 저장 버전을 확인합니다', paragraphs: ['현재 OpenCAD SKP 뷰어는 SketchUp 6, 7, 8과 2013~2026에서 저장한 .skp 파일을 엽니다. SketchUp 3~5에서 저장한 아주 옛 파일은 읽지 못하고, 열면 저장 버전을 알려 줍니다. 확장자만 .skp로 바꾸어도 지원되는 파일로 변환되지 않습니다.', 'OpenCAD는 SketchUp의 공식 제품이 아니며 SKP 편집·재저장 기능을 제공하지 않습니다. 지원하지 않는 버전이라면 SketchUp 6 이상에서 다시 저장해 달라고 파일 제공자에게 요청하세요.'] },
       { id: 'open', title: '예제와 내 모델을 여는 순서', paragraphs: ['「예제로 먼저 보기」에서는 이 브라우저에서 만든 집 모형이 열립니다. 태그·재질·구성 패널과 전체 보기를 먼저 익힐 수 있습니다.'], steps: ['「열기」에서 .skp 파일을 선택하거나 창 안에 끌어다 놓습니다.', '모델이 열리면 「전체 보기」 또는 F로 화면에 맞춥니다.', '태그·재질 패널에서 표시 상태를, 구성 패널에서 그룹·컴포넌트 관계를 확인합니다.', '정보 패널에서 저장 버전, 단위, 해석 경고와 일부만 읽혔다는 안내가 있는지 확인합니다.'] },
       { id: 'objects', title: '일부 객체나 재질이 안 보일 때', paragraphs: ['태그와 구성 항목이 꺼져 있는지 먼저 확인하세요. 「숨긴 형상 보기」 설정과 단면 설정도 살펴보고, 선택한 그룹을 확대해 전체 모델과 비교합니다.', '파일 안 무늬 그림을 읽어 재질을 표시하지만 모든 재질·객체가 원본과 같지는 않을 수 있습니다. 원본 프로그램의 같은 장면과 대조하세요. 장면 탭을 누르면 그 장면에 저장된 카메라, 숨긴 태그, 단면과 스타일로 바뀝니다.'] },
       { id: 'partial', title: '일부만 읽혔다는 경고가 나온다면', paragraphs: ['끝이 잘렸거나 내부 데이터 길이가 깨진 파일은 읽을 수 있는 부분만 표시할 수 있습니다. 큰 모델도 처리 한도에 도달하면 안내가 나옵니다. 화면에 형상이 보인다는 사실만으로 모델 전체를 읽었다고 판단하지 마세요.', '새 파일을 열지 못하면 기존 모델이 남을 수 있으므로 화면의 문서 이름과 경고를 함께 확인하세요. 파일 제공자에게 원본이 정상적으로 열리는지 확인하고, 오류를 제보할 때는 버전·브라우저·경고와 공유 가능한 최소 예제를 정리합니다.', '모델은 이 기기의 브라우저에서 처리합니다. 공개 이슈에 고객 모델이나 기밀 파일을 첨부하지 마세요.'] },
     ],
     related: [{ path: '/opencad/projects/skp-viewer', label: 'SKP 뷰어 지원 범위와 제한' }, { path: '/opencad/guides/open-step-stp', label: 'STEP·STP 교환 파일 열기와 표시 점검' }, { path: '/opencad', label: '다른 OpenCAD 뷰어 보기' }],
-    sources: [{ url: 'https://github.com/GyuTae-Kim/opencad-skp#readme', label: '공개 SKP 뷰어 사용법과 버전·복구 제한' }],
+    sources: [{ url: 'https://github.com/GyuTae-Kim/opencad-skp#readme', label: '공개 SKP 뷰어 사용법과 버전·복구 제한' }, { url: 'https://help.sketchup.com/en/accounts-and-administration/end-support-viewer-desktop', label: 'SketchUp 공식 데스크톱 뷰어 지원 종료·공유 대안 안내' }],
   },
   {
     path: '/opencad/guides/check-nc-toolpath', category: 'OpenCAD 사용 안내',
