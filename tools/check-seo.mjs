@@ -233,6 +233,16 @@ const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap-pages.xml'), 'utf8'
 assert.equal(sitemap.window.document.documentElement.localName, 'urlset');
 const sitemapUrls = [...sitemap.window.document.querySelectorAll('loc')].map((loc) => loc.textContent);
 assert.deepEqual(sitemapUrls, [...new Set(SEARCH_PAGES.map((page) => SITE_URL + page.path))]);
+const textSitemap = readFileSync(join(outDir, 'sitemap.txt'), 'utf8');
+assert.ok(textSitemap.endsWith('\n'), 'text sitemap ends with a newline');
+const directUrls = textSitemap.trimEnd().split('\n');
+assert.deepEqual(directUrls, [...new Set([...sitemapUrls, ...hostedApps])], 'direct text sitemap lists every canonical page and published app once');
+for (const url of directUrls) {
+  assert.ok(!/\s/.test(url), `text sitemap contains only URLs: ${url}`);
+  const parsed = new URL(url);
+  assert.equal(parsed.origin, SITE_URL, url);
+  assert.equal(parsed.search + parsed.hash, '', url);
+}
 for (const entry of sitemap.window.document.querySelectorAll('url')) {
   const url = entry.querySelector('loc').textContent;
   const expected = contentModified(new URL(url).pathname);
@@ -243,6 +253,7 @@ sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
+assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.txt`));
 for (const app of OPENCAD_TOOLS.filter(tool => tool.url).map(tool => tool.url)) {
   if (new URL(app).origin === SITE_URL) assert.ok(robots.includes(`Sitemap: ${app}sitemap.xml`), `Missing application sitemap discovery: ${app}`);
 }

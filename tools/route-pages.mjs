@@ -4,10 +4,11 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 import Beasties from 'beasties';
-import { assertContentDate, contentFingerprint, validateDate } from './content-dates.mjs';
+import { assertContentDate, contentFingerprint } from './content-dates.mjs';
+import { writeSitemaps } from './sitemaps.mjs';
 
 const require = createRequire(import.meta.url);
-const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, renderPage, contentModified, LANGUAGES, languagePath, originalPath } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, renderPage, contentModified } = require('../dist/server/main.js');
 const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
@@ -86,20 +87,5 @@ for (const [from, { name, url }] of Object.entries(movedApps)) {
   writePage(`${from.slice(1)}index.html`, html);
 }
 
-// Each repository owns its URLs and modification dates. Reference app sitemaps
-// instead of copying their entries and maintaining stale dates in this checkout.
-const sitemapUrls = [...new Set(SEARCH_PAGES.map(({ path }) => SITE_URL + path))];
-const urls = sitemapUrls.map((url) => {
-  const path = new URL(url).pathname;
-  const modified = `<lastmod>${validateDate(contentModified(path))}</lastmod>`;
-  const page = SEARCH_PAGES.find(page => SITE_URL + page.path === url);
-  const alternates = page ? [...LANGUAGES.map(({ code }) => `<xhtml:link rel="alternate" hreflang="${code}" href="${escape(SITE_URL + languagePath(originalPath(page.path), code))}"/>`),
-    `<xhtml:link rel="alternate" hreflang="x-default" href="${escape(SITE_URL + originalPath(page.path))}"/>`].join('') : '';
-  return `  <url><loc>${escape(url)}</loc>${modified}${alternates}</url>`;
-}).join('\n');
-writePage('sitemap-pages.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`);
-const sitemaps = [...new Set([`${SITE_URL}/sitemap-pages.xml`, ...OPENCAD_TOOLS.flatMap(({ url }) =>
-  url && new URL(url).origin === SITE_URL ? [new URL('sitemap.xml', url).href] : [])])];
-writePage('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemaps.map(url => `  <sitemap><loc>${escape(url)}</loc></sitemap>`).join('\n')}\n</sitemapindex>\n`);
+writeSitemaps(outDir);
 writePage('.nojekyll', '');
-console.log(`sitemap-pages.xml → ${sitemapUrls.length} URLs; sitemap.xml → ${sitemaps.length} sitemaps`);
