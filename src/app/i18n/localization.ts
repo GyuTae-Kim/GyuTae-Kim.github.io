@@ -27,12 +27,12 @@ export function localizedHref(value: string, language: Language): string {
   const origin = 'https://gyutae-kim.github.io';
   if (!value.startsWith(origin)) return value;
   const url = new URL(value);
+  if (url.origin !== origin) return value;
   if (url.pathname.startsWith('/assets/')) return value;
   const app = url.pathname.match(/^\/(2dcad-viewer|opencad-(?:dwgdxf|step|skp|nc))\/(?:en|ja|zh-CN|de)?\/?$/);
   if (app) {
-    if (language === 'ko') return value;
     const name = app[1] === '2dcad-viewer' ? 'opencad-dwgdxf' : app[1];
-    url.pathname = `/${name}/${language}/`;
+    url.pathname = `/${name}/${language === 'ko' ? '' : language + '/'}`;
     return url.href;
   }
   return origin + languagePath(url.pathname + url.search + url.hash, language);

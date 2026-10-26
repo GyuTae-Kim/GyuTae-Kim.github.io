@@ -16,14 +16,14 @@ for(const page of LOCALIZED_SEARCH_PAGES.filter(page=>page.language!=='ko')){
  const doc=dom.window.document;
  // Search and sharing metadata are authored copy too. Checking only app-root
  // misses catalog fallbacks in the head even when the visible page is translated.
- for(const selector of ['title','meta[name="description"]','meta[property="og:title"]','meta[property="og:description"]','meta[name="twitter:title"]','meta[name="twitter:description"]']) {
+ for(const selector of ['title','meta[name="author"]','meta[name="description"]','meta[property="og:site_name"]','meta[property="og:title"]','meta[property="og:description"]','meta[name="twitter:title"]','meta[name="twitter:description"]']) {
   const element=doc.querySelector(selector);
   assert.ok(element,`${page.path}: missing ${selector}`);
   const text=element.getAttribute('content')??element.textContent;
   if(/[가-힣]/.test(text))missing.push({path:page.path,attribute:selector,text});
  }
  // Native language names and original screenshots remain native; all authored DOM copy is translated.
- doc.querySelectorAll('.language-menu,script,style').forEach(el=>el.remove());
+ doc.querySelectorAll('.language-menu,.language-versions,script,style').forEach(el=>el.remove());
  const walker=doc.createTreeWalker(doc.querySelector('app-root'),4);
  while(walker.nextNode()){const text=walker.currentNode.textContent.trim();if(/[가-힣]/.test(text))missing.push({path:page.path,text});}
  for(const el of doc.querySelectorAll('app-root [title],app-root [aria-label],app-root [placeholder],app-root img[alt]')) for(const attr of ['title','aria-label','placeholder','alt']) { const text=el.getAttribute(attr);if(text&&/[가-힣]/.test(text))missing.push({path:page.path,attribute:attr,text}); }

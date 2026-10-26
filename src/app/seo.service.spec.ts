@@ -58,6 +58,8 @@ describe('SeoService', () => {
     for (const page of LOCALIZED_SEARCH_PAGES.filter(page => page.language !== 'ko')) {
       seo.update(page.path);
       expect(document.title).withContext(page.path).not.toMatch(/[가-힣]/);
+      expect(document.querySelector<HTMLMetaElement>('meta[name="author"]')?.content).toBe('Sean Kim');
+      expect(document.querySelector<HTMLMetaElement>('meta[property="og:site_name"]')?.content).toBe('Sean Kim');
       for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
         const description = document.querySelector<HTMLMetaElement>(selector)?.content;
         expect(description).withContext(`${page.path}: ${selector}`).toBeTruthy();

@@ -5,7 +5,7 @@ import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { validateDate } from './content-dates.mjs';
 const require = createRequire(import.meta.url);
-const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified, LANGUAGES, languagePath, localizedHref, originalPath } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified, LANGUAGES, languagePath, localizedHref, originalPath, translate } = require('../dist/server/main.js');
 const outDir = resolve(process.argv[2] || 'docs');
 const fontCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/coverage.json'), 'utf8'));
 const fontCharacters = new Set([...fontCoverage.covered, ...fontCoverage.fallback]);
@@ -54,7 +54,7 @@ for (const page of SEARCH_PAGES) {
     assert.ok(!document.querySelector('head > link[rel="stylesheet"][href^="styles."]'), `${file}: no blocking shared CSS request`);
     assert.ok(!document.querySelector('link[href*="fonts.googleapis.com"], link[href*="cdn.jsdelivr.net"]'), `${file}: no external font CSS`);
     const fontRoot = document.querySelector('app-root').cloneNode(true);
-    fontRoot.querySelectorAll('.language-menu').forEach(el => el.remove());
+    fontRoot.querySelectorAll('.language-menu,.language-versions').forEach(el => el.remove());
     const unstyledText = fontRoot.textContent;
     const missingGlyphs = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !fontCharacters.has(c.codePointAt(0))))];
     if (page.language === 'ko') assert.deepEqual(missingGlyphs, [], `${file}: run tools/prepare-site-fonts.py for new characters`);
@@ -79,7 +79,7 @@ for (const page of SEARCH_PAGES) {
     }
     assert.equal(document.querySelectorAll('title').length, 1, file);
     for (const name of ['description', 'robots', 'author', 'viewport']) assert.equal(document.querySelectorAll(`meta[name="${name}"]`).length, 1, `${file}: unique ${name}`);
-    assert.equal(document.querySelector('meta[name="author"]').content, '김규태 · Sean Kim');
+    assert.equal(document.querySelector('meta[name="author"]').content, translate('김규태 · Sean Kim', page.language));
     const shape = [...document.querySelectorAll('meta[name="description"], meta[name="robots"], meta[name="author"], meta[property^="og:"], meta[name^="twitter:"]')]
       .map(tag => tag.getAttribute('name') ?? tag.getAttribute('property')).sort();
     commonHeadShape ??= shape;
@@ -98,7 +98,7 @@ for (const page of SEARCH_PAGES) {
     const imageUrl = `${SITE_URL}/${page.image}`;
     const sharingTags = [
       ['meta[property="og:type"]', page.article ? 'article' : 'website'],
-      ['meta[property="og:site_name"]', '김규태 · Sean Kim'],
+      ['meta[property="og:site_name"]', translate('김규태 · Sean Kim', page.language)],
       ['meta[property="og:title"]', page.title],
       ['meta[property="og:description"]', page.description],
       ['meta[property="og:url"]', SITE_URL + page.path],
@@ -137,6 +137,12 @@ for (const page of SEARCH_PAGES) {
     const data = JSON.parse(document.querySelector('#site-structured-data').textContent);
     assert.ok(data['@graph'].some((node) => node['@type'] === page.kind && node.url === SITE_URL + page.path), file);
     const pageNode = data['@graph'].find(node => node['@type'] === page.kind && node.url === SITE_URL + page.path);
+    assert.equal(pageNode.inLanguage, page.language, `${file}: page language`);
+    assert.deepEqual(data['@graph'].find(node => node['@type'] === 'WebSite').inLanguage, LANGUAGES.map(({ code }) => code), `${file}: multilingual website`);
+    if (originalPath(page.path) === '/opencad') {
+      const tools = data['@graph'].find(node => node['@id'] === `${SITE_URL + page.path}#tools`);
+      assert.deepEqual(tools.itemListElement.map(item => item.url), OPENCAD_TOOLS.filter(tool => tool.url).map(tool => localizedHref(tool.url, page.language)), `${file}: structured viewer links stay in this language`);
+    }
     assert.equal(pageNode.dateModified, validateDate(contentModified(page.path)), `${file}: structured modification date`);
     if (page.tool) {
       const software = data['@graph'].find(node => node['@id'] === `${SITE_URL + page.path}#software`);
@@ -147,6 +153,16 @@ for (const page of SEARCH_PAGES) {
       else assert.ok(!document.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]'), `${file}: no unpublished app URL`);
     }
     const root = document.querySelector('app-root');
+    const languageLinks = [...root.querySelectorAll('.language-versions a')];
+    assert.equal(languageLinks.length, LANGUAGES.length, `${file}: visible language alternatives`);
+    for (const { code, label } of LANGUAGES) {
+      const link = languageLinks.find(link => link.hreflang === code);
+      assert.ok(link && !link.closest('[hidden]'), `${file}: discoverable ${code} version`);
+      assert.equal(link.lang, code, `${file}: native language label`);
+      assert.equal(link.textContent, label, `${file}: language name`);
+      assert.equal(link.href, SITE_URL + languagePath(originalPath(page.path), code), `${file}: matching page in ${code}`);
+      assert.equal(link.getAttribute('aria-current'), code === page.language ? 'page' : null, `${file}: current language`);
+    }
     assert.equal(root.querySelectorAll('h1').length, 1, `${file}: one visible page heading`);
     assert.ok(root.querySelector('main').textContent.trim().length > 150, `${file}: real body content`);
     assert.doesNotMatch(root.textContent, /\{\{/, `${file}: unresolved bindings`);
