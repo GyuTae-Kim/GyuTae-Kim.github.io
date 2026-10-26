@@ -117,7 +117,7 @@ export const SITE_ARTICLES: SiteArticle[] = [
   },
   {
     path: '/opencad/guides/check-nc-toolpath', category: 'OpenCAD 사용 안내',
-    title: 'NC·G-code 공구 경로 보기와 단위·해석 경고 점검',
+    title: '무료 NC·G-code 뷰어: 공구 경로·단위 확인',
     description: '무료 OpenCAD NC 뷰어에서 G-code와 Heidenhain, 판재 가공 파일(MPR, PGI, XML)의 공구 경로를 확인하는 방법입니다. 예제 재생, 코드 줄 연결, 방언·단위와 해석 경고를 점검합니다.',
     lead: 'NC 파일을 열었다면 화면의 경로뿐 아니라 방언, 단위와 해석 경고를 함께 확인하세요. OpenCAD의 합성 예제를 먼저 재생하면 코드 줄과 공구 이동을 연결해 살펴보는 방법을 익힐 수 있습니다.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD NC·G-code 뷰어의 공구 경로와 해석 결과 점검 안내.',

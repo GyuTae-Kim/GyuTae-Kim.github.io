@@ -60,7 +60,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/',
     title: '김규태 Sean Kim | AI·CAD/CAM 개발자 포트폴리오',
-    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 피쳐·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 직접 맡은 역할과 결과를 소개합니다. 강화학습·컴퓨터 비전 연구의 구현과 실험 결과도 확인하세요.',
+    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 직접 맡은 역할과 결과를 소개합니다. 강화학습·컴퓨터 비전 연구의 구현과 실험 결과도 확인하세요.',
     image: 'assets/og/home.jpg',
     imageAlt: '김규태 Sean Kim 포트폴리오. 가구 설계부터 가공 데이터까지 3D 형상을 다룹니다.',
     kind: 'ProfilePage',
