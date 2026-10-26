@@ -132,12 +132,12 @@
     "fingerprint": "2bc730d7d8437f39c08a8b63df91f043609104fda5ea2273dd55845d301f9bc2"
   },
   "/en/": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "fc03e1890a6fc445b7c3bfc570d823e8cea1a9813ecbbea840e4ad0519f1ad78"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "e22823459cf498f4fd478e3be0c88e56633c3379288e3a1f3a8ba1a53809362f"
   },
   "/en/portfolio": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "78c55a659744d9a23044d881b7e6e36e74a39cd5d87f8ac65b854a86cbad3aa2"
+    "lastmod": "2026-10-26T10:05:48Z",
+    "fingerprint": "fbb6a1116144ee327eee79a5decad082ff2be2b283a07e941356fed658d3cc78"
   },
   "/en/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -168,20 +168,20 @@
     "fingerprint": "15b0fa69bf620c8f04644b21889d763887b455fffdda32ca72c30881c5f187b5"
   },
   "/en/research": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "a1d3d5f56bca284d27548fcd7fcd3e16fc516782bc60d0aed4e5502a637ec2a2"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "beffbf94471467a46512531a71f30c36f06d538ac605ab5de906c32ce303ba1e"
   },
   "/en/research/graph-tsp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "7e1c7bfc391441437659adff0139e6b46a3215a3b0f71c31b8dc3293a192d3f4"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "1c3d2d396f4dc3ad661fa2e8432dd7463ec0f6dba4ca2941828f0671b80621c7"
   },
   "/en/research/fashion-classification": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "68c4afd34d3dfe5cf76fb206ca4dfdc9868931f685ef81c2ca9d40ff8ef79522"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "93998c25e31af291fbedd72867a9b80960fd4834a1303d53235405cf0f7a15f0"
   },
   "/en/research/virtual-try-on": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "5397985201bfb6a095a9e242607054063d933d9d9af8bcc2fdb3d8abb6d4c663"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "3ad1ed37ae08e842fbd769b3149dc286eea4296da1741f1c5d0ae7e0e8d4483c"
   },
   "/en/opencad": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -264,12 +264,12 @@
     "fingerprint": "2d90489602d5aceaaecb7b360089be0f1cb2aaea2352e1ec428e47d7726b1722"
   },
   "/ja/": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "0f03e4656c3058042f5b0588a2680c78fe254d0e4111d166ab2be4745617e2b5"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "f71b8efc3fd6f3fa8b88427f8dd3f664ec1db6e23de23bb07544a2be2bea4144"
   },
   "/ja/portfolio": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "2397627a7011424504923fbd7ed2d17300987efde2c2506d167614519718e8e1"
+    "lastmod": "2026-10-26T10:05:48Z",
+    "fingerprint": "debf9fda0a2abef85e277b7ac21615043219c0a7afd85721780486919056676f"
   },
   "/ja/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -300,20 +300,20 @@
     "fingerprint": "f5357e9d7f876de0bc5a3f75948e1c90c4ea670d4846608d3f5cdc3a221b4aef"
   },
   "/ja/research": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "3b44965d4823c5a8aaf46911fd3e451b1c373f9d3c8ffd75ebe489c71a854dd8"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "17392f6f97090f5089e96c91735977afdaf1bf20be849aa63407769c42e8100f"
   },
   "/ja/research/graph-tsp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "0de4eb908cd0f97ed61a9f69086e9d3d735cac4fd86d7deb99032a1071df6309"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "e71a7ea2fa7a4c2239144e9cd21381de320b3e62796a70469a3576bde130ce98"
   },
   "/ja/research/fashion-classification": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "4a6a9f85723b8564c1bc8b1b18ecb9b3c8ddeaa03581df51d01f13cd7edbce6a"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "98a07f828bc0260cb4e115fb7e310a897ca7c0e55344610c91f2892e901c5791"
   },
   "/ja/research/virtual-try-on": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "5ebc3d911daf09569de939bb2b2e08485dc844d38e6bc8265654dadcedd35725"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "de31886b636e6398a993be653ae0b22946d85ccaf985b8b311b04cb2240193e6"
   },
   "/ja/opencad": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -396,12 +396,12 @@
     "fingerprint": "4b109df9797b52b9114496e529f4a638b20be1a3c651bcb5e36c2fb7d37cb3b4"
   },
   "/zh-CN/": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "4fcbc6a3a04170ce92e31dd401a937f650c78c5cfc54c86c5399d4a4dcac3fb7"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "ad2ee1bfedaece038c83ccac269a351f5a7c8af4de51f97f2702e8b8156b7bbd"
   },
   "/zh-CN/portfolio": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "08d4ad68dd4b6fc61914c630d478d5d6850956cfaab7aa1adaaf647c2ce40716"
+    "lastmod": "2026-10-26T10:05:48Z",
+    "fingerprint": "af19e9318f074c3b3e93f16a266dae987a4025c864ba8eb8a5421c265b48a064"
   },
   "/zh-CN/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -432,20 +432,20 @@
     "fingerprint": "183e8020f338608957f3dc99753fb6f8f68d15ad7f47b25a359918d4ce113aa9"
   },
   "/zh-CN/research": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "f245b91d97cda9b918fdca452988d0f0578b7f849cbfe74ff27f74abdfe613c4"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "4fb655e4e5c1b843e5c65f81c8ef5c33e1d4bb9755ef23c16a545a2f068f2229"
   },
   "/zh-CN/research/graph-tsp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "27b3db3a59bde272e2300d61742852b4694f17b978d2a9fa04cd27fff119e6a4"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "10bc1d7c05330b3dac5a44fcb878708674c4d34341fbf94a51f74026b9ba0a79"
   },
   "/zh-CN/research/fashion-classification": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "3087b6f1551b1cda0e5fffd4415436460335aba83b3e81095522cf62fb219b9f"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "76a959de67a6d1caa4360651da3d4e0a9f54babebb6b4cdea7f8bd05c36bbadc"
   },
   "/zh-CN/research/virtual-try-on": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "01acbe22a768f60d1cb9d4807d52057a3c1a6ee2ffe128d4a193e3e3f26421ad"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "84cb10f15a30d4423560778ebe30dd45850e8d6c14c58bc6cf873cc15553958d"
   },
   "/zh-CN/opencad": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -528,12 +528,12 @@
     "fingerprint": "f3590e6d1044d03e0e4bf4c90771762ad939876456ed5a654d48bf5ac863a3f6"
   },
   "/de/": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "b0b567f6a253f0142b838f15191fe82c9085c0d6b6c49a0fbf394295aabadfb5"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "9def32a81366f831d8fbb1e7129f2038f87eeda5601f9a4742867a6c12d5a6da"
   },
   "/de/portfolio": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "ad690210f6aaa45cd0136c99db0ce0d1184d9d01bf78a9a2b6d65a3ba5f37ccf"
+    "lastmod": "2026-10-26T10:05:48Z",
+    "fingerprint": "459862ac3dc485caf0f3ae9788e2193d2c50a791a4475ab25ef469cd92c263f4"
   },
   "/de/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-26T09:47:55Z",
@@ -564,20 +564,20 @@
     "fingerprint": "6cc1ae8e7046d4cf39d5d8e4df8734fb198461c47b5a3abff0250e3eade46de7"
   },
   "/de/research": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "18819606111ce6ed861c439e13bfb0e7573c6adc26a0c3aa6c2adf94ba42910b"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "e27619bd0b3aecea67f10ed88869b270f0e43b4cf4b4a1bfb2117e5b0de18f3c"
   },
   "/de/research/graph-tsp": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "ab24f568109d04daa9709755d519699cda19b41fbf91e5e327dc392ef7370812"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "d648dfdd3490156e2692e7e1d4b8eee8a0786822a88c31641490d19e01243b5d"
   },
   "/de/research/fashion-classification": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "6ec728c772191498be1450fbbbfbe8248a1444d6c4ab5496106c7ad6787dfc7e"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "0bc67a60deb0bdb0fca8972cbbdc86c0122a2725f6ee6d354d3489216c0ed290"
   },
   "/de/research/virtual-try-on": {
-    "lastmod": "2026-10-26T09:47:55Z",
-    "fingerprint": "be2a3c49c2a21f5a4caf74e9e3000fe9b2f344240cc55bb5e224cec87290f4dc"
+    "lastmod": "2026-10-26T10:00:59Z",
+    "fingerprint": "ba1dd6568c45e9eb19c55eb060b0d5cea42d985552a1a8c5e92a1c3a91791689"
   },
   "/de/opencad": {
     "lastmod": "2026-10-26T09:47:55Z",
