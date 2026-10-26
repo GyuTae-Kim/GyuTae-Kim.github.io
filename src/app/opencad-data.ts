@@ -43,10 +43,10 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     // The id stays the /opencad card anchor (#2d-viewer) that older links point to.
     id: '2d-viewer', path: '/opencad/projects/dwg-dxf',
     name: 'OpenCAD DWG·DXF', kind: '2D 도면',
-    searchTitle: 'OpenCAD DWG·DXF 캐드 기능·지원 범위',
+    searchTitle: '무료 DWG·DXF 웹캐드 | 오픈캐드 2D 편집·저장',
     extensions: ['.dwg', '.dxf'],
     summary:
-      'DWG·DXF 도면을 열어 보고, 새로 그리거나 고친 뒤 다시 저장하는 무료 2D 캐드입니다. 거리·각도·면적을 재고 PDF·PNG·SVG로 출력할 수도 있습니다.',
+      '설치나 회원가입 없이 DWG·DXF 도면을 열고, 새로 그리거나 편집한 뒤 저장하는 무료 웹캐드입니다. 거리·각도·면적 측정과 PDF·PNG·SVG 출력도 지원합니다.',
     introduction: '전달받은 DWG·DXF 도면을 CAD 프로그램 없이 브라우저에서 열고, 필요하면 고쳐서 다시 저장하는 2D 캐드입니다. 화면 배치와 명령 이름, 단축키는 AutoCAD와 같게 만들었습니다. 파일 해석과 장면 준비는 웹 워커에서, 화면 표시는 WebGL2로 처리합니다.',
     url: 'https://gyutae-kim.github.io/opencad-dwgdxf/',
     source: 'https://github.com/GyuTae-Kim/opencad-dwgdxf',

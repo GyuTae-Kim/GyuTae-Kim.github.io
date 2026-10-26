@@ -1,0 +1,150 @@
+{
+  "observedDateKst": "2026-10-27",
+  "engine": "Google",
+  "language": "ko",
+  "countryParameter": "kr",
+  "personalizationParameter": "pws=0",
+  "scope": "One observed first result page per query; not a universal rank measurement",
+  "observations": [
+    {
+      "query": "웹캐드",
+      "visibleOrganicResults": 9,
+      "ourDomainInFirstPage": false,
+      "results": [
+        {
+          "title": "Autoesk AutoCAD Web | AutoCAD 온라인 | AutoCAD 모바일\n\nAutodesk\nhttps://www.autodesk.com › autocad-web › overview",
+          "url": "https://www.autodesk.com/kr/products/autocad-web/overview"
+        },
+        {
+          "title": "AutoCAD Web - Autodesk AutoCAD 2027 | Download & Buy ...\n\nAutoCAD Web\nhttps://web.autocad.com",
+          "url": "https://web.autocad.com/"
+        },
+        {
+          "title": "언제 어디서나 설치가 필요없는 오토캐드 웹 앱 AutoCAD Web ...\n\n블로그\nhttps://m.blog.naver.com › anyussystems",
+          "url": "https://m.blog.naver.com/anyussystems/221920951963"
+        },
+        {
+          "title": "DWG FastView | 온라인CAD 뷰어 & 편집기 | DWG FastView\n\nDWG FastView\nhttps://kr.dwgfastview.com",
+          "url": "https://kr.dwgfastview.com/"
+        },
+        {
+          "title": "무료 웹 CAD - Tinkercad\n\nidchowto.com -\nhttps://idchowto.com › 무료-웹-cad-tinkercad",
+          "url": "https://idchowto.com/%EB%AC%B4%EB%A3%8C-%EC%9B%B9-cad-tinkercad/"
+        },
+        {
+          "title": "오토캐드 웹 AutoCAD Web 공식 무료 강의\n\nYouTube · 오토데스크코리아\n팔로어 4.3만명 이상",
+          "url": "https://www.youtube.com/playlist?list=PLcL2ZDJp8GzzSRS0wIPXt9ldjHEGXvbRH"
+        },
+        {
+          "title": "무료 캐드 프로그램, 온쉐이프(Onshape) - 그래픽디자인방\n\n티스토리\nhttps://graphicdesignroom.tistory.com › ...",
+          "url": "https://graphicdesignroom.tistory.com/6"
+        },
+        {
+          "title": "웹하드™ 웹CAD 특징\n\n웹하드\nhttps://only.webhard.co.kr › overview › extras-webcad",
+          "url": "https://only.webhard.co.kr/overview/extras-webcad"
+        },
+        {
+          "title": "[오토캐드 팁] 오토캐드(AutoCAD) WEB 사용하기\n\n블로그\nhttps://m.blog.naver.com › studycadcam",
+          "url": "https://m.blog.naver.com/studycadcam/222881690008"
+        }
+      ]
+    },
+    {
+      "query": "오픈캐드",
+      "visibleOrganicResults": 8,
+      "ourDomainInFirstPage": false,
+      "results": [
+        {
+          "title": "OpenSCAD - The Programmers Solid 3D CAD Modeller\n\nOpenSCAD\nhttps://openscad.org",
+          "url": "https://openscad.org/"
+        },
+        {
+          "title": "OpenSCAD\n\n나무위키\nhttps://namu.wiki › OpenSCAD",
+          "url": "https://namu.wiki/w/OpenSCAD"
+        },
+        {
+          "title": "코딩으로 하는 캐드.. OpenSCAD\n\nNaver Blog\nhttps://blog.naver.com › dingo72",
+          "url": "https://blog.naver.com/dingo72/223843519339?viewType=pc"
+        },
+        {
+          "title": "DWG와 DXF를 직접 편집. 2D 제도. 3D 모델링.\n\nopencadstudio.com\nhttps://www.opencadstudio.com › ko-KR",
+          "url": "https://www.opencadstudio.com/ko-KR/"
+        },
+        {
+          "title": "이 새 소프트웨어 써본 사람 있음? Open CAD Studio (오토 ...\n\nReddit · r/FreeCAD\n댓글 40개 이상 · 1개월 전",
+          "url": "https://www.reddit.com/r/FreeCAD/comments/1wal3dt/anyone_used_this_new_software_open_cad_studio/?tl=ko"
+        },
+        {
+          "title": "OpenSCAD - 프로그래머를 위한 3D CAD 모델러\n\nGeekNews\nhttps://news.hada.io › topic",
+          "url": "https://news.hada.io/topic?id=16780"
+        },
+        {
+          "title": "오픈스캐드 - 새로운 질서 위키\n\n새로운 질서 위키\nhttps://wiki.neworder.xyz › wiki › 오픈스캐드",
+          "url": "https://wiki.neworder.xyz/wiki/%EC%98%A4%ED%94%88%EC%8A%A4%EC%BA%90%EB%93%9C"
+        },
+        {
+          "title": "오픈SCAD - 위키백과, 우리 모두의 백과사전\n\nWikipedia\nhttps://ko.wikipedia.org › wiki › 오픈SCAD",
+          "url": "https://ko.wikipedia.org/wiki/%EC%98%A4%ED%94%88SCAD"
+        }
+      ]
+    },
+    {
+      "query": "무료캐드",
+      "visibleOrganicResults": 9,
+      "ourDomainInFirstPage": false,
+      "results": [
+        {
+          "title": "무료 캐드 깔기 - 네이버 블로그\n\nNaver Blog\nhttps://blog.naver.com › katekim_designer",
+          "url": "https://blog.naver.com/katekim_designer/223745494433?viewType=pc"
+        },
+        {
+          "title": "AutoCAD 다운로드 | AutoCAD 무료 체험판\n\nAutodesk\nhttps://www.autodesk.com › products › autocad › free-trial",
+          "url": "https://www.autodesk.com/kr/products/autocad/free-trial"
+        },
+        {
+          "title": "AutoCad 를 대체할 무료 캐드 프로그램 FreeCAD 설치하기\n\n티스토리\nhttps://freelicenseblog.tistory.com › ...",
+          "url": "https://freelicenseblog.tistory.com/12"
+        },
+        {
+          "title": "CAD· - Windows에서 무료 다운로드 및 설치\n\nMicrosoft\nhttps://apps.microsoft.com › detail",
+          "url": "https://apps.microsoft.com/detail/9ns1k4x06n9q?hl=ko-KR&gl=KR"
+        },
+        {
+          "title": "캐드 프로그램 무료 사용 어디까지 가능할까?\n\n스마트캐드\nhttps://smartcad.co.kr › smartcad-info",
+          "url": "https://smartcad.co.kr/smartcad-info/?vid=6"
+        },
+        {
+          "title": "3D 모델을 위한 최고의 무료 CAD 프로그램 10가지 - 2026년 ...\n\n3Druck.com\nhttps://3druck.com › 홈 › 소프트웨어",
+          "url": "https://3druck.com/ko/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8/%EB%AC%B4%EB%A3%8C-cad-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-3d-%EB%AA%A8%EB%8D%B8-37121722/"
+        },
+        {
+          "title": "무료 사용 가능한 2D, 3D CAD 프로그램 총 정리 및 비교\n\n지투소프트\nhttps://dam.ztoo-soft.com › blog › 무료-사용-가능한-2...",
+          "url": "https://dam.ztoo-soft.com/blog/%EB%AC%B4%EB%A3%8C-%EC%82%AC%EC%9A%A9-%EA%B0%80%EB%8A%A5%ED%95%9C-2d-3d-cad-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EC%B4%9D-%EC%A0%95%EB%A6%AC-%EB%B0%8F-%EB%B9%84%EA%B5%90"
+        },
+        {
+          "title": "무료 CAD 프로그램 같은 거 아는 사람 있어?\n\nReddit · r/cad\n댓글 60개 이상 · 1년 전",
+          "url": "https://www.reddit.com/r/cad/comments/1iericx/does_anyone_know_any_free_cad_like_software/?tl=ko"
+        },
+        {
+          "title": "완전 무료화된 CAD를 제공합니다. dwg파일 호환됩니다.\n\narchline.co.kr\nhttps://www.archline.co.kr › bimladder",
+          "url": "https://www.archline.co.kr/bimladder"
+        }
+      ]
+    }
+  ],
+  "changes": [
+    "Give the existing OpenCAD hub a Korean brand and free web CAD title, H1 and introduction.",
+    "Link the actual DWG/DXF editor directly from the hub introduction.",
+    "Describe DWG/DXF editing separately from 3D and NC viewing.",
+    "Use native copy for the same changes in English, Japanese, Simplified Chinese and German."
+  ],
+  "limits": [
+    "Public HTTP 200, crawlability, structured data and deployment do not prove Google indexing or ranking.",
+    "These changes do not establish the cause of the Google-side pending sitemap reports.",
+    "No keyword doorway pages, fabricated backlinks or guaranteed rankings."
+  ],
+  "guidance": [
+    "https://developers.google.com/search/docs/appearance/title-link",
+    "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
+  ]
+}
