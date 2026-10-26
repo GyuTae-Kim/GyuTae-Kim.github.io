@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-26T15:41:02.218719+00:00",
+  "scope": "Portfolio and OpenCAD hub, project introductions, guides, workflow pages and development notes in this repository. External viewer application repositories are not modified.",
+  "method": "Compare existing localized titles, descriptions and authored headings against Korean meaning and terminology in first-party locale documentation. This is a terminology and search-intent review, not a search-volume estimate.",
+  "locales": [
+    {
+      "language": "ko",
+      "terms": [
+        "무료 캐드 뷰어",
+        "가공 특징 인식",
+        "가구 설계",
+        "재단 리스트",
+        "부품표",
+        "CNC"
+      ],
+      "change": "Correct the portfolio description wording and expose the free NC/G-code viewer purpose in the guide title."
+    },
+    {
+      "language": "en",
+      "terms": [
+        "free online CAD viewer",
+        "machining feature recognition",
+        "Fusion CAM automation",
+        "SketchUp furniture design",
+        "cut list",
+        "bill of materials"
+      ],
+      "change": "Use explicit development-note and workflow titles; replace generic processing-strategy copy with machining terminology."
+    },
+    {
+      "language": "ja",
+      "terms": [
+        "無料CADビューア",
+        "加工フィーチャ認識",
+        "Fusion CAM自動化",
+        "家具設計",
+        "カットリスト",
+        "部品表",
+        "Gコード"
+      ],
+      "change": "Correct machining-feature mistranslations, title separators, native G-code wording and furniture parts-list terminology."
+    },
+    {
+      "language": "zh-CN",
+      "terms": [
+        "免费在线 CAD 查看器",
+        "CAD 看图",
+        "加工特征识别",
+        "家具板件",
+        "开料清单",
+        "物料清单",
+        "G 代码",
+        "单位"
+      ],
+      "change": "Correct units and machining terminology, separate the CAD-viewer title from the drawing-review description, and use a consistent author name."
+    },
+    {
+      "language": "de",
+      "terms": [
+        "kostenloser CAD-Viewer",
+        "DWG öffnen",
+        "Feature-Erkennung",
+        "Fusion-CAM-Automatisierung",
+        "Möbelbau",
+        "Zuschnittliste",
+        "Stückliste",
+        "Werkzeugwege"
+      ],
+      "change": "Restore recognition and automation in portfolio titles and use furniture-planning, machining and production-handoff terminology."
+    }
+  ],
+  "findings": [
+    {
+      "language": "ja",
+      "issue": "A live technical-note search title mistranslated machining features as machining functions (加工機能), while several complete titles lacked the author separator.",
+      "resolution": "Use 加工フィーチャ認識 in the relevant titles and copy and restore the author separator."
+    },
+    {
+      "language": "zh-CN",
+      "issue": "The NC guide headline used 单元 for measurement units; several titles and the article byline used inconsistent or duplicated author names.",
+      "resolution": "Use 单位 and consistent Sean Kim bylines without changing technical responsibilities."
+    },
+    {
+      "language": "zh-CN",
+      "issue": "The CAD collection title combined an action and a product noun redundantly: 看图与查看器.",
+      "resolution": "Use CAD 查看器 in the title and CAD 看图工具 in the explanatory description."
+    },
+    {
+      "language": "de",
+      "issue": "Some search titles described machining features or furniture but omitted recognition, automation or planning; development-note descriptions used generic processing vocabulary.",
+      "resolution": "Restore Feature-Erkennung, Fusion-CAM-Automatisierung and Möbelplanung; clarify Bearbeitungsstrategien and Produktionsübergabe."
+    },
+    {
+      "language": "en",
+      "issue": "Story-style technical-note titles and a furniture-factory compound obscured the documented technical topic.",
+      "resolution": "Use concise Fusion CAM, machining feature recognition and SketchUp manufacturing-data titles."
+    }
+  ],
+  "sources": [
+    {
+      "language": "ja",
+      "url": "https://www.autodesk.com/jp/viewers",
+      "terms": [
+        "ビューア",
+        "図面",
+        "測定"
+      ]
+    },
+    {
+      "language": "ja",
+      "url": "https://help.autodesk.com/cloudhelp/2020/JPN/Inventor-Help/files/GUID-3E0794C5-75B4-4425-8163-45FCCF8597B3.htm",
+      "terms": [
+        "加工フィーチャ"
+      ]
+    },
+    {
+      "language": "ja",
+      "url": "https://help.autodesk.com/cloudhelp/2024/JPN/AutoCAD-DidYouKnow/files/GUID-D9FCC3B0-AD0B-49CD-9A64-D3A2CE682903.htm",
+      "terms": [
+        "部品表"
+      ]
+    },
+    {
+      "language": "zh-CN",
+      "url": "https://www.autodesk.com.cn/viewers",
+      "terms": [
+        "查看器",
+        "图纸",
+        "测量"
+      ]
+    },
+    {
+      "language": "zh-CN",
+      "url": "https://help.autodesk.com/cloudhelp/CHS/Fusion-CAM/files/MFG-POST-PROCESSOR-LIBRARY-REF.htm",
+      "terms": [
+        "刀具路径",
+        "G 代码",
+        "单位"
+      ]
+    },
+    {
+      "language": "de",
+      "url": "https://www.autodesk.com/de/solutions/aec/dwg",
+      "terms": [
+        "DWG-Dateien öffnen",
+        "Viewer"
+      ]
+    },
+    {
+      "language": "de",
+      "url": "https://help.autodesk.com/cloudhelp/2025/DEU/FCAM/files/GUID-21E47FE1-5573-43FF-8F46-F2E1E9917F9F.htm",
+      "terms": [
+        "Feature-Erkennung"
+      ]
+    },
+    {
+      "language": "de",
+      "url": "https://www.homag.com/fileadmin/software/brochures/productionmanager/productionManager-de.pdf",
+      "terms": [
+        "Stücklisten",
+        "Zuschnittlisten",
+        "CNC-Programme"
+      ]
+    }
+  ],
+  "limits": [
+    "First-party terminology is evidence for local wording, not proof that a keyword has the largest Google search volume.",
+    "English technical terms such as CAD/CAM and SketchUp remain where naturally used in the locale.",
+    "Existing canonical URLs and language alternates are retained; no keyword-only doorway pages or meta keywords are added.",
+    "Translation and deployment verification do not establish Google indexing or ranking gains."
+  ],
+  "additionalSynonyms": [
+    {
+      "language": "ja",
+      "term": "スケッチアップ",
+      "context": "SketchUp reading used alongside the official Latin brand in the existing SKP guide description and introduction.",
+      "source": "https://sketchup.trimble.com/ja-jp/blog/article/a-visualization-specialist-s-perspective-on-sketchup-s-dynamic-toolset",
+      "sourceType": "Publisher article"
+    },
+    {
+      "language": "zh-CN",
+      "term": "草图大师",
+      "context": "Community-used SketchUp alias, mentioned once alongside SketchUp in the SKP guide description and introduction; not presented as the official product name.",
+      "source": "https://forums.sketchup.com/t/for-2021-immersive-projection-design/313813",
+      "sourceType": "First-person community usage on the product forum"
+    }
+  ]
+}
