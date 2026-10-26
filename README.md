@@ -34,11 +34,13 @@ npm run check:seo # 배포 산출물 검색 최적화 검사
 
 `npm run deploy`는 `docs/`에 빌드한 뒤 `gh-pages` 브랜치로 올립니다. 배포한 `docs/`는 `master`에도 커밋해 두 브랜치의 내용을 같게 유지합니다.
 
-전역 gitignore에 `*.png`가 있는 환경에서는 `gh-pages`가 PNG를 빼고 올립니다. 배포 캐시 저장소에서만 전역 무시를 끄고 배포하세요.
+전역 gitignore에 `*.png`가 있으면 `gh-pages`가 PNG를 빼고 올릴 수 있습니다. `deploy`는 게시 명령의 하위 Git 프로세스에만 `core.excludesFile=/dev/null`을 전달해 이 누락을 방지합니다. 사용자 전역 설정이나 캐시 저장소 설정을 변경할 필요가 없습니다. CI에서 검증한 산출물을 다시 빌드하지 않고 게시할 때도 같은 설정을 사용하세요.
 
 ```sh
-git -C "node_modules/.cache/gh-pages/https!github.com!GyuTae-Kim!GyuTae-Kim.github.io.git" config core.excludesFile /dev/null
+GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.excludesFile GIT_CONFIG_VALUE_0=/dev/null npx --no-install gh-pages -d docs --dotfiles
 ```
+
+게시 후 `git fetch origin gh-pages`와 `git diff --exit-code HEAD:docs origin/gh-pages`로 파일 내용·경로·모드의 일치를 확인하고, Pages 빌드 완료와 실제 공개 파일 응답을 별도로 검증합니다.
 
 ## 검색 노출 관리 (구글 · 네이버)
 
