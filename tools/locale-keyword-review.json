@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-10-26T15:23:54.943300+00:00",
+  "reviewedAt": "2026-10-26T15:41:02.218719+00:00",
   "scope": "Portfolio and OpenCAD hub, project introductions, guides, workflow pages and development notes in this repository. External viewer application repositories are not modified.",
   "method": "Compare existing localized titles, descriptions and authored headings against Korean meaning and terminology in first-party locale documentation. This is a terminology and search-intent review, not a search-volume estimate.",
   "locales": [
@@ -169,5 +169,21 @@
     "English technical terms such as CAD/CAM and SketchUp remain where naturally used in the locale.",
     "Existing canonical URLs and language alternates are retained; no keyword-only doorway pages or meta keywords are added.",
     "Translation and deployment verification do not establish Google indexing or ranking gains."
+  ],
+  "additionalSynonyms": [
+    {
+      "language": "ja",
+      "term": "スケッチアップ",
+      "context": "SketchUp reading used alongside the official Latin brand in the existing SKP guide description and introduction.",
+      "source": "https://sketchup.trimble.com/ja-jp/blog/article/a-visualization-specialist-s-perspective-on-sketchup-s-dynamic-toolset",
+      "sourceType": "Publisher article"
+    },
+    {
+      "language": "zh-CN",
+      "term": "草图大师",
+      "context": "Community-used SketchUp alias, mentioned once alongside SketchUp in the SKP guide description and introduction; not presented as the official product name.",
+      "source": "https://forums.sketchup.com/t/for-2021-immersive-projection-design/313813",
+      "sourceType": "First-person community usage on the product forum"
+    }
   ]
 }
