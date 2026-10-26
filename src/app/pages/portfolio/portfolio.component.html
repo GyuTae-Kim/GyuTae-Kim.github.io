@@ -4,11 +4,18 @@
       {{ '찾는 프로젝트가 없습니다. 아래 목록에서 골라 주세요.' | t }}
     </p>
     <div class="page-intro">
-      <h1>{{ 'AI·CAD/CAM 개발 프로젝트' | t }}<span class="accent">.</span></h1>
+      <h1>{{ '김규태의 AI·CAD/CAM 개발 사례' | t }}<span class="accent">.</span></h1>
       <p>
         {{ '3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 인식 결과로 Fusion CAM 공정을 만들고 가구 크기 변경을 계산했습니다.' | t }}<br />{{ '가구 설계에서 생산까지 잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.' | t }}
       </p>
     </div>
+    <nav class="portfolio-topics" [attr.aria-label]="'전문 분야별 개발 사례' | t">
+      <a [routerLink]="'/portfolio/cad-feature-recognition' | localLink">{{ '가공 특징 인식·Fusion CAM' | t }}</a>
+      <a [routerLink]="'/portfolio/panel-classification' | localLink">{{ '가구 패널 인식·파라메트릭 설계' | t }}</a>
+      <a [routerLink]="'/portfolio/wedraw-pro' | localLink">{{ 'SketchUp·BOM·CNC 데이터' | t }}</a>
+      <a [routerLink]="'/portfolio/service-monitoring' | localLink">{{ '서비스 운영·오류 추적' | t }}</a>
+      <a [routerLink]="'/research' | localLink">{{ '강화학습·컴퓨터 비전 연구' | t }}</a>
+    </nav>
     <nav class="archive-nav portfolio-jump" [attr.aria-label]="'프로젝트 목록 바로가기' | t">
       <a [routerLink]="([]) | localLink" fragment="other-projects">{{ '프로젝트 기록' | t }}<app-icon name="arrow-down"></app-icon></a>
       <a [routerLink]="([]) | localLink" fragment="achievements">{{ '특허·프로그램 성과' | t }}<app-icon name="arrow-down"></app-icon></a>

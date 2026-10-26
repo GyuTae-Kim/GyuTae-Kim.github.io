@@ -1,6 +1,7 @@
 import { Meta, Title } from '@angular/platform-browser';
 import { SeoService } from './seo.service';
 import { LOCALIZED_SEARCH_PAGES, SEARCH_PAGES, SHARE_IMAGE, SITE_URL, contentModified } from './site-seo';
+import { LANGUAGES, languagePath } from './i18n/localization';
 
 describe('SeoService', () => {
   let document: Document;
@@ -73,6 +74,24 @@ describe('SeoService', () => {
     expect(document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href).toBe(SITE_URL + '/portfolio');
     seo.update('/research/unknown');
     expect(document.querySelector<HTMLMetaElement>('meta[name="robots"]')?.content).toBe('noindex, follow');
+  });
+  it('connects localized portfolio authors to the matching profile while preserving name aliases', () => {
+    for (const { code } of LANGUAGES) {
+      const profileUrl = SITE_URL + languagePath('/', code);
+      seo.update(languagePath('/portfolio/wedraw-pro', code));
+      let graph = JSON.parse(document.getElementById('site-structured-data')!.textContent!)['@graph'];
+      const person = graph.find((node: Record<string, string>) => node['@type'] === 'Person');
+      const work = graph.find((node: Record<string, string>) => node['@type'] === 'CreativeWork');
+      expect(person.url).toBe(profileUrl);
+      expect(person.name).toBe(code === 'ko' ? '김규태' : 'Sean Kim');
+      expect(person.alternateName).toContain('GyuTae-Kim');
+      expect(person.mainEntityOfPage['@id']).toBe(profileUrl + '#webpage');
+      expect(work.author['@id']).toBe(person['@id']);
+      expect(work.mainEntityOfPage['@id']).toBe(SITE_URL + languagePath('/portfolio/wedraw-pro', code) + '#webpage');
+      seo.update(languagePath('/', code));
+      graph = JSON.parse(document.getElementById('site-structured-data')!.textContent!)['@graph'];
+      expect(graph.find((node: Record<string, string>) => node['@type'] === 'ProfilePage').mainEntity['@id']).toBe(person['@id']);
+    }
   });
   it('uses self canonicals and reciprocal language alternatives, then clears them on 404', () => {
     for (const language of ['en','ja','zh-CN','de']) {

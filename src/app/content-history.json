@@ -1,662 +1,662 @@
 {
   "/": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "58e4c82fe7c3fde59099cf9c97d414a334e0fc1a50386550f07a94b85262c90d"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "d02fc451d6fbda751ddf584cdf55d96849f074f1f8624932af669e7dc618c924"
   },
   "/portfolio": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "70a9efb4c577d2ba955ca39eb6c27860bd07443564a206cecc0af267aea7b0ee"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a00784ee1cb4fe751fde551c1d63f0fc708304804c668eea1680c008243ddf37"
   },
   "/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "257492790d3295205a36eb37a634fea013e40eba6d650a019329446b1ff6bd3e"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "578ddec8d69f53984c47c6b661fc45d2fef8301aaadd035175d045a619a35d8d"
   },
   "/portfolio/panel-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "8d138b122f4cbf7630ca7cedd6f4631527adb4f25b2c95e7e1bb9c3f24c05ec6"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "1e8bf1fda90654b0803a7c86ff15975464f6d17e76d91230bb87b61d1217f6fb"
   },
   "/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9ebdb1199d89fc237f3d1400ff76f2014ffddcae6208f930964270de07055d40"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "da5e321342d1e08bd9ff8509c08d59f84597ac0682feca526ffd18b23f007756"
   },
   "/portfolio/service-monitoring": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9047f1e02357f56b3e617fb0d434a5ef2f523b1614690fcec8921b77d350f196"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "96f833fa2dd3fe895edfbca7c4793e2663eef37f2dbe856f1805f92bf24d9661"
   },
   "/portfolio/voda-architecture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0f90dd75a35a288359e9435931238b8db434b5a402c2f5849536fee243320e4b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "47966d30bac01dfa28aeda171554adbbf2b9072911f210f38771a7cade836042"
   },
   "/portfolio/vory-q-curation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0dd32562e52cfc99eece0767b41f8c11da47f6fe72b55a5a5e19bfa3436f0c54"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e585f54b6e0325653c3775a8b3cc3d7cd07db3640a42abc0aadfc71fba0a14d8"
   },
   "/portfolio/scene-change-player": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "05a711bb655ac26dd1daff26e168c48ee81ff90aff48aa0640e08a9db47d8661"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ba9fbac523b24eefe298b35a9fc54de4be23a786d634ba043a3019be4baa7122"
   },
   "/research": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "65527325b306d68560a264b722192c9040c9e0231bd50c3f4d43f79e17385408"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "03b6ce4189de262912f2131d89b184ca8977bc5c900e36b5244adc1e73c80e9c"
   },
   "/research/graph-tsp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "a630020150eac07c2dcada2c7fbe1ba5b582badc7f72ae53326f000d414a1a14"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "3e02397ea3aa5a057fb82f4cfa6bd2c5df9dc0e528345a3fb70c266ad1854949"
   },
   "/research/fashion-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5ab3d678818077a27098f0f81b8c49be56a53206eb7b5e586df40c9623bf5ca4"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "18e5dd4f83ef8271ac8cfaff40a84da657b1ebc77a03d046e9a1aef6f6f0a9c7"
   },
   "/research/virtual-try-on": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c621f568e15eeb864720a9d93d85d3495f63a77409370c5c199a68f87f55eefb"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6d42b8a8bf09bace5e127b8ae5afde9a8b85bebd749be9c44f88fa8667e0b51c"
   },
   "/opencad": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5dea9181348909418ad5841a723fc56b257ba238b3a512d8261f08a5b9088c01"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6f0a3165c5d5c5150f348b30d413b15d57a74bffe6bf852add4ac5357f6c65a6"
   },
   "/solutions": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "34fbfba747c6b39cb042f9ec64c156a050dde215626800fd19d5be83cf1137e0"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "0c291a3c19e104264ae38ba71ab7fe9ecad41a0ef628e43da355c9a42785310f"
   },
   "/notes": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5c340fb0c9a041fe0aab798e4e7863098f17aad648cefcce1ae4f780fb0b6399"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "11d0fb1dfa829d5a489fb11a53e3130f5b593c796435d27252a37c48f3423beb"
   },
   "/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c6fd4c8ca8068cf06cf5fd8e8163d94d9b37fa369ab12f9c5d470736bd319820"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "65db27cbcbd571e6a22a0c7c120e42c605c241813f801c8fd59d3c8d5ceb44e8"
   },
   "/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "1b7ec5fcd316be30c86f22b8d6667b7738f56741a67e83795d88d3264229c698"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "f2472bc92fb0a4d543c8769b04aa3fb0afeae7c2e98f16d6325733ee42bb967c"
   },
   "/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "273f71c56fb4dfa3595af5392529ab1e63aa966deec6651c9f77374dc9222596"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "94384b6aeece29bf8ffcb88441212467d355ce76ad36175a43b56e68f6cca85f"
   },
   "/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "68c6263376ecea4e4a09a52f4eaf91ca9878d8a35c3bdbd110cc00f3a0955b91"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6cdbf42419f1725280ac1531cda77db7bcdf925aa1292c561b0b95b2cd975d1e"
   },
   "/opencad/guides/check-nc-toolpath": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "bdd22597da7b2990f4b3f99f24b42595424c5d855f113f3948878f48ce2fe577"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "c86d21423dc550ad40f39d5c976fee11590d08c4667c2662a7dbae97771fd72c"
   },
   "/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0be408247b091a4a75007fa36e41f6ea1b7e07f22dad8cb7056d7eb60a841be5"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "0c078c31c6340083a945e36ab70bcb530c273dfdc72e6c489f726dfbc36c827e"
   },
   "/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6700cdc3c0ac9b07366368628d45b84cf4e8d68c5117a02d382a0f60b26bf94d"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4df9ec84322388d1a6a81ecff1bd8291c85eb082d17899ccf60a51d7ae0ed7d7"
   },
   "/solutions/sketchup-furniture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "a4fac5ffce95853b73c2e671e27013bdd9eed24b58f5d924dae93de2ac29743a"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "78c7d6567a3cf5b56a46ee42279f3bbb3d726f136f3bf82d58e3af55b94e66cb"
   },
   "/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "84c7a93b61b3300bf3ed39f10595c265bb8fc247ff0bf6b29371f709fa060437"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "842cf161895300a352058e93f419d58cfb29e24a7777840cc3dacac76b93ff3f"
   },
   "/solutions/cad-cam-automation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "24bb9754b0a94dbe4e5d7ad3c0b789f04ffcb6959b2fc722574897b90302edb5"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "98c14d5e305a3525565b7d8d6a3a82845e8e5cebeba1d99b2178d0702243c901"
   },
   "/opencad/guides/choose-cad-format": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6cbbc7da0fe22872ab54c18df098f499a7f240d07440d6a3fcba0c2ad82a9c7b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ce438a248e7fd2e609bf0749cd1667520d70c26c5bbcee6dfff6fc44cb606c06"
   },
   "/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "db351e67109adccaeaa04fbce32f8f7209c5ba927a3d361e9b1be3cfe889e58e"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "7201bfa96b65346b76785fc6334c84227ac65240069a5db643c2dbc3cf71a1cd"
   },
   "/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "01cb199f742a12ea2e4be9a3909f22de691a1cd5316bad7c608303bad9a250f0"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "50e199138b845fc9ea5eaf9489bd6adbad14394e870d7344dc2bf43e7c98c144"
   },
   "/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "390949c80a63e3d3fce27c543ccd82c642bc03a43f91fc9943360a1fbfd9307b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "438c8ab8d07bf391f9798d778b66de01166607a8ebdd1b21a1966d6fbe76f2f1"
   },
   "/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "776faf83266713e67c5290ee75f4e83c0a9eb9dd16eb422a66a60684d4a7a9a2"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "190010b0f0a21ea49f0a87ead81408c5c5b297831868d7463bd3c31461d0157b"
   },
   "/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "2190757320058336afe2efbabb173db43a46de13eb57b8cfe28edf09e50296ba"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "2e3faa7b81043df5e5fabc4f34b2f1c6d608036aa378d648881b26e0739f7d94"
   },
   "/contact": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "7e3713224ce77260f55f743454d73c930450c475af59d563d52f6033c8393445"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "2bc730d7d8437f39c08a8b63df91f043609104fda5ea2273dd55845d301f9bc2"
   },
   "/en/": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "48e62e54c020d0f76c085d867a7fcc792a673eddbf74eff9cbf9db8c64033431"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "fc03e1890a6fc445b7c3bfc570d823e8cea1a9813ecbbea840e4ad0519f1ad78"
   },
   "/en/portfolio": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "97b2a8120cce04bc9ad0bf0da7759ff23225b55b2d5b9422d22380da719b20d9"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "78c55a659744d9a23044d881b7e6e36e74a39cd5d87f8ac65b854a86cbad3aa2"
   },
   "/en/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ae2c2b6ab7cdade3135ead37083df2a360d5d8c0a339f6393c420cd85fcb1876"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "41d48a2aa2337cc690605c763cd817c087d693a9bec721b830e01203ba5b8bdf"
   },
   "/en/portfolio/panel-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "78f1acbca29625dcab798e38a329f74ce09892368cb7fb404a4a0d2d8afd4ae9"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e60e4aadc0c4e5261b6dc081fed1e4b5026f3670b0f8f74e1243663ece4c3870"
   },
   "/en/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6fadb742d78bf1119e9115423e3669775c194f044f501762b3b2304d5072a5fd"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4a0b4f8d61308e34513e5ce9cae86cd77cc31e9c9ce2b784c7551c750f6c5685"
   },
   "/en/portfolio/service-monitoring": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "73df8d5e4502cdbdeb3d2bb561b45da80716da75b3bb37fd9beb0c80745282c7"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "bd967170d83ae4911bf0714c2f64fb26ecba6461dcc709b40327f0c5c6e65cd2"
   },
   "/en/portfolio/voda-architecture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6eff6fb9b5cd001e41a95d3c3b5aa55e11e670b68cf13720975ae6c2d2326401"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "afd43ac803fd7ecbc7eae4646502979d4409edd77d5a148a39e78bd0f547e4db"
   },
   "/en/portfolio/vory-q-curation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "52a95dbfea1355b4467873d27a7893ff3e08282f026359373773cb34ee732feb"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "12b7b51041da4913f66cb6673f9eea6da263335b5219a63982a2100a137361f9"
   },
   "/en/portfolio/scene-change-player": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d0a1ecf0bed3a3945ecab95f1dab64641364bc292e8cff308857ad681789dc30"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "15b0fa69bf620c8f04644b21889d763887b455fffdda32ca72c30881c5f187b5"
   },
   "/en/research": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9f1c1e35ec4ff69b54e76b20e3134a9003c727401b83b3c929b336659d470948"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a1d3d5f56bca284d27548fcd7fcd3e16fc516782bc60d0aed4e5502a637ec2a2"
   },
   "/en/research/graph-tsp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c6f48b78159ead092618442ce6c4a2a26ff4e79058147e817c96851498b1f099"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "7e1c7bfc391441437659adff0139e6b46a3215a3b0f71c31b8dc3293a192d3f4"
   },
   "/en/research/fashion-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "2dfd7b310ca66526de1427cb7c0906d5970334b7b822014ac475458e7bc52047"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "68c4afd34d3dfe5cf76fb206ca4dfdc9868931f685ef81c2ca9d40ff8ef79522"
   },
   "/en/research/virtual-try-on": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "e88d40b0da7c291175d0662f029d8c2e345dc85e08fe24a55f37d9db5a2d64e5"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "5397985201bfb6a095a9e242607054063d933d9d9af8bcc2fdb3d8abb6d4c663"
   },
   "/en/opencad": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "427ef26532bc8297c82734869bd259877119943347300c32fcca70f587b8d498"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a9d5baf68886e09608bc1153ceba0a4b94074add93d86407ac2bdf6f28e78391"
   },
   "/en/solutions": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6f628801b293248008ca614154ff18ad8a8cfdb7ecc9ae852dcabeaaac4976ce"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "02450eb171cae2a37838427f4cf310e7441f0ada3e5e4f9f363cb626510de8c0"
   },
   "/en/notes": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ef1864931b484b0f06475cf0e15b1bb5cdb2b7b9faf6a23bba978dd5657e0ef8"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e5731389caeb22eee8113c5ec1614e13436f921ef8610c21dafc77d3f2b1ffbc"
   },
   "/en/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "48bf92c075853a2ca74e4a679eda76be40cd0005cf95533d052417f6296103de"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "395c4009c510cd9e1a42d9b0b2f744ea68cc882f7a68ca053005b8ce9d2be290"
   },
   "/en/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "698529e8ff3e42e64bd382eaddad2d56270a64e96c1bb590d68f42f385c52269"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "253d81de04a90372466cb42b889edc15d6ee935e955839c10d6d20d12ffdadad"
   },
   "/en/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "926935b98f06411087eb567fddc06e280ed71830100d77077dd1d9037f7c8849"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "669e66a49886b42f000393fb9aaeee219f76d04526b6f9709aa33cd9d9f29542"
   },
   "/en/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "788d8a0ae1a054683d9c83e8e912cf11cc409cb7f0a33cbbb0ca3ffabcc8cfcd"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ecc4fca32d794e02706096fb4851943f6ca639760fd7f9fd9de5e93eaeae31c1"
   },
   "/en/opencad/guides/check-nc-toolpath": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "45f9adff615f52e7fd949c045b56a2d0bb0e0ef36b0d915a5056f6a65ef642b1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "818b75b8ffcecfb3c071a943731081ee0452738bd0d7ebc50918609354f80dcf"
   },
   "/en/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "cf1bc787056305b9ce00d685d6f8175ab9234e0c179a2fc228bc639385a6e21b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ea0a77b77c80ff9f6ff14fd0779ca2d203f94ef6c9a8f475cfd2ddbdb22b957e"
   },
   "/en/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "4cb328f935c1ef730affd3b02be865e7c55a6126592cdcbc5d1be248ce29fbaf"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "cf7442e7364c69b76855fe9f4ab1e2e7ea096ba7c88a1964299ddba0b23ba81e"
   },
   "/en/solutions/sketchup-furniture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "adbb858c23fb161eb77caa6e0602ae38aad068d8c9ce545ebd3057df05269d87"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "101af90dac64ebc3c2b714dafa95a706c61f0081ec9681481c1b46251dc2aac9"
   },
   "/en/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "30cc2509ba4e9825a9dfffd5ae3d3f727e9ff5b6ee3b3333ed68991c476b2356"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6c8848df5c7bb5100f2614fba841a9a9071b6fe2a6aa28cd839bad25874f1568"
   },
   "/en/solutions/cad-cam-automation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5fb047c2ceba4b955dd7509a69015fa0b1663a0e39f57eb00d4da71b4b4bf9ac"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6b476983ccd8127bac4328029e916f561409ab8e3ae0c2b3ed6c805aebb1b727"
   },
   "/en/opencad/guides/choose-cad-format": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "71f95531d3617813489998b536e83e506f2b916425672d20ca7f878d013b2b1a"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "be5380c3207d988e80cd50d7977e3ebe5bbf67f584e7b212e9b57621e2c3250e"
   },
   "/en/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ff6f7d88f9e4939566fa30b2f441753c5a761b333942152f8c329fe55400a4c6"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "fb936c3d6df5f84476cbb2e1d6b9227873c0dc49a74cdc7d4bcf9b2bf2711217"
   },
   "/en/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "8f10adf3901185a9993c71ea8b3602119da669abde881a4e377d2042b4aec4ca"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ca294221e3a860210152a76644653f8f67f5e82ca88f4fe65f7a7e49e2ede01f"
   },
   "/en/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f3beac0f4f08448844940c5a85094f775506bda939f6b1c353332cd5a15bab27"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6f46cf8082766dd831a143548c975c8e9c18a21be519157893bb2be4f4fb1d26"
   },
   "/en/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "7b3896a0eb2cc34a918f424216dcbf8f8ad86aa31b5130a73489651ce3cd9d99"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "43a6a52fbad2fe3f7e255c9da050cbb60f8b9ee3aa3b541a378250071d7add26"
   },
   "/en/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c66da191798e95adc7661141860a00d158ca25081f2391e381f52b557119a6e0"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "92809ab2113bd8dbb622591ba0bbc75af2c9fc1e249bfc2406f1fcec95db4713"
   },
   "/en/contact": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9ac669e237177c205bcad995ab4cfc4b2c781755008ea405fd69fd5239d7f431"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "2d90489602d5aceaaecb7b360089be0f1cb2aaea2352e1ec428e47d7726b1722"
   },
   "/ja/": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "03380fa9e0a7d307136b2480e0a849ada5f618bee43d2d6a74263540786ccca5"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "0f03e4656c3058042f5b0588a2680c78fe254d0e4111d166ab2be4745617e2b5"
   },
   "/ja/portfolio": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9602dcb7ed21bba667ee38670f00b399b80c6a84b103774db8337ab786d52afc"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "2397627a7011424504923fbd7ed2d17300987efde2c2506d167614519718e8e1"
   },
   "/ja/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9b0ad9b4b02456a0d834795d432d98161792c46d9d8b88cdad3a84f1a08c0082"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "fa37ad5ac0dac92224858b414cad74273172f77aaebbb4f10edb7d60ffa2aafd"
   },
   "/ja/portfolio/panel-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "b5ae8c854f4adda7dc51b78a54320053a47f411e8049ea351b48e23f00263c2b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "725b723eb0247fe1c57b933498c47597187a14f8acc7cfa7b116f55898944738"
   },
   "/ja/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c411894acead55f195464dc124d59ebef105607a80299a1e78e656141b03bd55"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "0300ac405b0f1909ea4f4a203be7feb870795c9c0fefd6873dbcc24b0fba55d0"
   },
   "/ja/portfolio/service-monitoring": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f192dd8e19c8b6af2a21afb94f178901b80739f80ec656760f52f268c67d3fba"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "b02b17f1639326ade4e2e1469cbddea556ee35ec1f4a47aa5e52e0e4831bdfde"
   },
   "/ja/portfolio/voda-architecture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "552e3d65601527c7154540006e86e3e630d51e379f23b9164deb5c61e72481a4"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "c3b1fd634407d6bdb87ee86b75e9cf39fae23b452783c7b9c51463446f8c1e8e"
   },
   "/ja/portfolio/vory-q-curation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6a597dd08c872d31c539e0c2735510ce1ed79dd5d6f9b32fb1c84abb6719db95"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6b98ddd65380c0ffa69921e8a8012e59e1d332c3f184e45bdb93da838fe44d3d"
   },
   "/ja/portfolio/scene-change-player": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "92f313fb21c091a0ef68881f846116910ddbca3e85d7ba7d40aa20c1e73ef90f"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "f5357e9d7f876de0bc5a3f75948e1c90c4ea670d4846608d3f5cdc3a221b4aef"
   },
   "/ja/research": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "30adb6de77895523a0b0ed64f01c36ea2ca87bd0a1c9a58bf55db67b3ddaa964"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "3b44965d4823c5a8aaf46911fd3e451b1c373f9d3c8ffd75ebe489c71a854dd8"
   },
   "/ja/research/graph-tsp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d7b7613e4e44c553b0e0ec094fea1b333a567847896ac5c808b4e5f5b75fce68"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "0de4eb908cd0f97ed61a9f69086e9d3d735cac4fd86d7deb99032a1071df6309"
   },
   "/ja/research/fashion-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6f03864f44498f8999248e9d790a450bac3555e424eefaf5b4ea38db0e5834ab"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4a6a9f85723b8564c1bc8b1b18ecb9b3c8ddeaa03581df51d01f13cd7edbce6a"
   },
   "/ja/research/virtual-try-on": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ae045905906eb5d19f56e7274dfc397010e8eb125ec3808a3ba493afeb2a88e9"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "5ebc3d911daf09569de939bb2b2e08485dc844d38e6bc8265654dadcedd35725"
   },
   "/ja/opencad": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "dd5cda010278bf63efc6e362d1a709fb6bebcecd96086bac9de019f90df39ff0"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6096d489d3262390281a5005362858b0be940a053de6a5dec90dd06471b201c6"
   },
   "/ja/solutions": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "3c63097158b8c1bbec177b69305bc6ccfaf01e7940ef354ea832e7a4b32f86eb"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "c3c97bfa84fcaa76aafd5783e92fc8d4a78dc99152521a95eda402f006e9c026"
   },
   "/ja/notes": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d2dc5147355a97e1443c69283ac7bf9a440c96282dea767b8a41c44e357723c1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "32b9e5aafc937a54a5b5005cd59d60ca21852b7c13c8fe88a24a32b7818e70bd"
   },
   "/ja/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f481eeb9b62b302dff1ed56cdec7d185ba1dde03448e0088591e4190bd72f9bd"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "041bf8e53e0635152366597bf75ba3563ed6f2c5f49f02a0e6d9ba7252280a53"
   },
   "/ja/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "18242cad25039459d5d23232b05d4cf84bc7d851ff29c6f6577d1db4ce71d3ff"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "498e8d44e096ebf618d171739ac2a400df9cdeb01e9227d0f5159b29940a9579"
   },
   "/ja/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "1ec9f8d0f795b690f3768802109577503e5abbe82bc740f55e2aeb1de3d77523"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "fb0c2fbe7474c9d5222ae53a6e1822a2852190901f58d05d9e08ade07d1adcd9"
   },
   "/ja/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f4256c99379b839fd1b0987426fe34bc7ffed53e3a0797de84ee31367ced7d8d"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "87fa8335e3b000222a4b8b4eece6283d50c87219a87af2e2f98baff466dbb7e5"
   },
   "/ja/opencad/guides/check-nc-toolpath": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d7272c6562c7a61f674589e4fa07e4b189b8ba09b00e3e4dc0a2328665bb7815"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ab415d63877d32d2eaebc5eb9e0143e7370c75e79e7cb5fea2094cab2b980109"
   },
   "/ja/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "29175798c7ed62eb52632acc183e09da396785742ef9e500fb7c325fe1c50c13"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "f0d05e3ca2cb362e07f65dfff674d16f9a47b7a6ecd7ed5dff5e7eb8cc3865f7"
   },
   "/ja/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "7449fa274b9905cbc5c3b19ae4c0ff3425ff82091fffaf1f224a100b46c4c8a7"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "df8e6c9b9465c0fa9f9a791dbbdd6c780f0675184bc4d8041833147561551daf"
   },
   "/ja/solutions/sketchup-furniture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "adb9beae75b7487e1cd8756a90148e9f0888a47d2c724c25bb55430219b33ff9"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "8f78a2d63fc77e6cd453fd09d7d107b0f8c3d56ce77dc2c748040c09971f7084"
   },
   "/ja/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6b847ffafea41d08da245e4c701b8e2d316078c20a4da626db745cb952ae6482"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "5818010e908023ccab28ad838ac904266614c17c4390d4f888321ccd1c19a98d"
   },
   "/ja/solutions/cad-cam-automation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "04e3b319e787508c387aaf672a6c3843862a0d9ea5473c93efc29296e2605897"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a29c712ccc0b7d6a2914a89c36a63bf67701631667965097ee33bd467d544529"
   },
   "/ja/opencad/guides/choose-cad-format": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "eaf821584da4193ed6cb83e6937c3e5749dda90aa203d67128d49e012c406b11"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "767d413b18d6c75e692e424f150ead472542ed2c6555b41b522d77489eab649e"
   },
   "/ja/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0427f47fe9d28f3b801fafb6712dd742110512f42a8872a452b957f8ab8906fe"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "2e74a90f150033a51a90c715954a3123b95ac317d14e946c3409be441c312dbc"
   },
   "/ja/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f36a3c69c5d4149f5cc7315728fe266f72bb610fb20bc1d81e8fc9bcdbd7476d"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e20bbfd1a2b504904387dadc39eaf2133d4a96c37cbdfb241e40836ce055f77d"
   },
   "/ja/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "e61479a7a97602c7ee2060cb5b4725c9e3077e634e58367af4102d4831acd3bd"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "1ac6a0c38f6e420048fec8c64922ec484e3d0d37f6d8eb0cb846b4afa4445905"
   },
   "/ja/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "054c91e0ad1f7fcd6295665c93c6ce1e8955c55eed22e67fcaf2921aeb9ac743"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "5d12611af82803f209074a578b819df364b55ae976b9ea649253a5ba09b8440f"
   },
   "/ja/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "63b1d26d08339888bd67685ce47d1d4fa55f251a8d537e12ef16f1d72b850ef8"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "19c853f40d745178d74027a8ce963d518be56b907eed2f7140a9ae990cb46858"
   },
   "/ja/contact": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d71ce8309eb7ee0e8ef68752cd96ce6c1e5ec1eab49c37988f2a72b414f1d9ec"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4b109df9797b52b9114496e529f4a638b20be1a3c651bcb5e36c2fb7d37cb3b4"
   },
   "/zh-CN/": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "64d81356a3c275a634e410bb9a1d1986a6da81976005c48b46341ab147d7ca6c"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4fcbc6a3a04170ce92e31dd401a937f650c78c5cfc54c86c5399d4a4dcac3fb7"
   },
   "/zh-CN/portfolio": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f600ce2bff0aa9f1694da9f05d8d4ce9b92a51f1bb9840db67563b3d4990ddee"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "08d4ad68dd4b6fc61914c630d478d5d6850956cfaab7aa1adaaf647c2ce40716"
   },
   "/zh-CN/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "28cf6ebc99525f6c907a30f1807abbc5ade9bd7cf1d3ed1ad78ea747cf277069"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "d67b95e6a4fb0aac3ec8855049c26efb9271383da2226373ee097f299fc3736c"
   },
   "/zh-CN/portfolio/panel-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f337c12a282683b2857a743f55e6f5359f716c5710384768029793ea4eaf5f3b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "df1595f75c7f4bec5dd7ca448ddd6f6eac5ca64643b95f32f59043fdc4a438ec"
   },
   "/zh-CN/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "3a857371e2ba54f3077a35c0be1db597fd5fdf148b8cedad80684fe6db4be6c3"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "36ee8a5a9b0a8f3f4f16984427af3c61e79c54c290febaf8c16dcbff0cbaf612"
   },
   "/zh-CN/portfolio/service-monitoring": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "a843b59d47bd7d6d64142d776fc0a90e4ed440a1a94727f74274607c41942ff4"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "19798c2cff0cb888bd98d26150f5b56a2b898125c81279279fa19bd8b1f3fccd"
   },
   "/zh-CN/portfolio/voda-architecture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "4398fbe7d2ab2006e8789f8461887a32598a1d601e39d4a2d73401132d50f676"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "193ed77cbb671ea6696ea058627c363886d3c46de2c1a8b38a49429ce070fd68"
   },
   "/zh-CN/portfolio/vory-q-curation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c51294aabfc085e5d47681ae7299dd420f32412054bfdff5a24b5805c4ab4c44"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a0f3c23298c1c9833ce55a146382a15cf722ea39ba5afee194bce4514ad46877"
   },
   "/zh-CN/portfolio/scene-change-player": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "df3210d61aa6baa893c1638e5a08376c171ae1d2a6148e9eddcde185b53450af"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "183e8020f338608957f3dc99753fb6f8f68d15ad7f47b25a359918d4ce113aa9"
   },
   "/zh-CN/research": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "a3cd61e7dc668e34050d434708ad01cea79b04b92fd75e520a80fac5d7c815ef"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "f245b91d97cda9b918fdca452988d0f0578b7f849cbfe74ff27f74abdfe613c4"
   },
   "/zh-CN/research/graph-tsp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "e019dcb33b3dff27648277730f67dc628cc17ac58b89232b73f2568b89525af8"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "27b3db3a59bde272e2300d61742852b4694f17b978d2a9fa04cd27fff119e6a4"
   },
   "/zh-CN/research/fashion-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "933c1701f25bed1f85df655321a6bdbc4f9c656f1cd4361f737e6347b2010ac1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "3087b6f1551b1cda0e5fffd4415436460335aba83b3e81095522cf62fb219b9f"
   },
   "/zh-CN/research/virtual-try-on": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "b6d55979600da89025de370e66836693574c6a4a338d356bf563243cf371899a"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "01acbe22a768f60d1cb9d4807d52057a3c1a6ee2ffe128d4a193e3e3f26421ad"
   },
   "/zh-CN/opencad": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "829c704e5ef41d642ed7e6ad20b4d2bdac0792238e383949f910ecad156a1233"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "11799542f034c778ef50b8ce021a35b6f09b1dc11affa7a9c05e507737283b0a"
   },
   "/zh-CN/solutions": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5e0343001ef22dc51adb68eba6cbe9c290e34fe8473a2cb572bccf19af73be26"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6e0cc1a89f0ff18130da4b52941cd05ecef414f285cb078e5543e648313a7d63"
   },
   "/zh-CN/notes": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "80062b3d0b177d510731b2f03e0601642e24caf03ddc87810b7f61852362a704"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ba4714aac738cc31b622c414f8e222e982d46b5e4b3eaf8a49d47f17285abfc8"
   },
   "/zh-CN/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "780a3ace2321784487c8966a0bb28a56373f439625413680e8a0c2d9b4a4b29b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "90c480d80d11a52e7e6b527db8a6db1650055fc8812d6cddabcb8306b156052a"
   },
   "/zh-CN/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "9f012410e6a29061262f920d41dd6c28e0024e3b12e90db6555a42f992198d00"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "8b7bc888dd92bcc667c35e5cdbfb9b1ae48f43da14bdd7a2607f6f6bd2c57545"
   },
   "/zh-CN/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6f4d10ed2919648625b39c04873378e9f73fb3adbcda9d05767588c0e7853eb6"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "3c056fb9f035964910e9ace5d2f198283ff569c71b68753a99898fd23d44fabe"
   },
   "/zh-CN/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "411550f7758e5f8e072df3fa740da8c1ba17a99b030e7eb9cdacb026415ed3e9"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "818ad197fc559b5428010e41d82dea57967027f2daa802c907a67cd413684556"
   },
   "/zh-CN/opencad/guides/check-nc-toolpath": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "403e08cebd476328cf666ba8dea9a699e578a1e59c9eba31d87cf30e552d42b2"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "7a32f453f786fd43bad1e20f1c92e8900c23becba6edd36de41951fd9aaa530e"
   },
   "/zh-CN/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "2a29481b1684f1d36dbe04b627b21595ea08f3630b69cc50d65dcdc716b2b838"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4036ff2e99bd6ff5c56fad9526acf007297c7fc37683fa62b40d6e9263ea4df1"
   },
   "/zh-CN/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5a99f341670673914a3af59def2eb6e962f2d3d5d2124dc6307dfd814fc5ca37"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "463ae9c695bff09ada76449b2108808778a24ca526c6b4dbdbb6cf3c89581269"
   },
   "/zh-CN/solutions/sketchup-furniture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ebb4a92fd1fcd54736a8a0d039a1f08d41fec4a508cf91a08f53415fbd89310f"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e3c32709d45163ff2f9c974a592a53ca00000a549fca2d0d3c9a985b0054d6ea"
   },
   "/zh-CN/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f8805a7642146daeac57fffc9b20c673c6e2c1b38f455e0ffa4c7b199bb663fe"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "1bd0bbf1d266235d60fd5bcf1c48988ebd577d523129de3d94389173aff91ff4"
   },
   "/zh-CN/solutions/cad-cam-automation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0d750c73d808a501aec17eb5612910e00b8e75e60faf7de5eecc1bcea1a3c482"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "3889ad96add53e4e83307d6d23be3d09755f6ceb2fdd2d0c2756672fdbca1419"
   },
   "/zh-CN/opencad/guides/choose-cad-format": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "b14ff0a0609a1031f14677fa1c9d707e346ba6012e692030252f7217ae07e1e1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "b7a7d78f1886b561ad966b3e3f58f4331180dd7485bbe0e1a9144e62363f4ba0"
   },
   "/zh-CN/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "410cdb8122d3c558c6f990c587f258b9e104094ebf36a39a0d2e2d79c5fd5d8f"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a5847ab55e12feeb31c68a3d4abd276e8d7da4c034d1ed528a5cba067ce72a46"
   },
   "/zh-CN/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c00be9b98f300bda3df00a31a0498dd34d33833fb3c105abf00ee3b6910b8d7b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "dd5c478eaa264b1ca04023a3b062f8ff1f430668610c70a3af671f3cb56d9fcb"
   },
   "/zh-CN/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0c6492600dd3e847361f843d4fc8f0bd4c4e57ec240c8fc6fa2fd919455ca42e"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "8cf96cf53ff62b93653186f557290a87229f08744123e21ddb2130b2c77b2c6b"
   },
   "/zh-CN/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5250146cae238584ffb076a862e0169c7e1d973459b104325d7c2aa8d6078fbe"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "f128c4c31b3b830555b780221512ebbdd90883fa492d7f814bb3419064f7f4b3"
   },
   "/zh-CN/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d097c3a3d26497a8056d1f71b8dfc50f27e5f03857fd38a716e12533049177b9"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "d7ffb1383683a392d0e0d0f478ec70dc53e8cb82307bcb68a940c2a26a8545f0"
   },
   "/zh-CN/contact": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "754780cb951fb88752b102279d644d77109ae8f5a18e71fe4a4403bfd3e25814"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "f3590e6d1044d03e0e4bf4c90771762ad939876456ed5a654d48bf5ac863a3f6"
   },
   "/de/": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "564366c6de07486d514ed8e032bf5cd31b545c3076cd8db7fb741b93292d1cb1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "b0b567f6a253f0142b838f15191fe82c9085c0d6b6c49a0fbf394295aabadfb5"
   },
   "/de/portfolio": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "92338dfe47bfb7cd63a33a3b46618ec2dade14e4639866337c5cb0107e8c5038"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ad690210f6aaa45cd0136c99db0ce0d1184d9d01bf78a9a2b6d65a3ba5f37ccf"
   },
   "/de/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "1c6050fb3a06aacf51462991a50f7daacf9551cd830643defcd968305081a10f"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a2f9863eda67805d9fbfef5b0f57147520feeb5e2c7703d60b2e9ce8bc8810fa"
   },
   "/de/portfolio/panel-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "f716a3207fdd65d8fc983accfe6142d98e8d0cd2d8cc2ccf2d065404edf37f82"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "7f07cab3d32185b554e7e248ce2401a4351e4ca69323b55f5de052c14ff5d3be"
   },
   "/de/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "b897698159382b3f4c8313982481f58b98b006730680db7996d98116fd938821"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a993f0a909e98ebf285cc65af65d0e1d1529a0aa82f34f989703ea17c8f4b8e5"
   },
   "/de/portfolio/service-monitoring": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ff0413890a6b60dd7f90b3730ac691fa9134a8af9262f34224b6895ec4322bf8"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "b3180dee5d02ed10bf69487e9cd8715bf12ac7559238a249ecd1a05a2483ee53"
   },
   "/de/portfolio/voda-architecture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "839ac4ad343644bb7427a912c20f69291b67723f2bc17a5ca371178c7c1d10a1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e8e997bde75a942f7bfd17437aabc02cb8da02128e26d1509e6d51b94fa52b57"
   },
   "/de/portfolio/vory-q-curation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "749ee02669e54eaf1086ca5ec660befcf7e36edf85682e6b9a802e07257c001a"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "a135c1bc1f189204b7bab3358f6386498a2c5774ec0fdde91fc2aac1b3e4881d"
   },
   "/de/portfolio/scene-change-player": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "bdf659c22fcdfe5c5f29276389f220d7dd93d3f6ec313a782fef8f73d91a19da"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6cc1ae8e7046d4cf39d5d8e4df8734fb198461c47b5a3abff0250e3eade46de7"
   },
   "/de/research": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c8bec0ee8798ea71a0e30febb79d94a912f19637bb94d0fbd445561b7434619b"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "18819606111ce6ed861c439e13bfb0e7573c6adc26a0c3aa6c2adf94ba42910b"
   },
   "/de/research/graph-tsp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "1e164aa65fa338d3f972e63b67b58eb8c15458e4dad3a9ffb3f751c07608a095"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "ab24f568109d04daa9709755d519699cda19b41fbf91e5e327dc392ef7370812"
   },
   "/de/research/fashion-classification": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "d6c064a6e4552153510c189f91adec9ed2784960c74abe863d4044135f0df7a6"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "6ec728c772191498be1450fbbbfbe8248a1444d6c4ab5496106c7ad6787dfc7e"
   },
   "/de/research/virtual-try-on": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "8e87c8083e69fc8b0839437aec02aef372516eb7beffa5fa35af552daecaa03e"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "be2a3c49c2a21f5a4caf74e9e3000fe9b2f344240cc55bb5e224cec87290f4dc"
   },
   "/de/opencad": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "0d1bb2c541acbe9d0ebb97760711417104710875663242ffb6ecfa98101aa850"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "d47c4a0ae8baf596b5d7abf22670a7c4d23791d3e9a1e28f14ae62c5399eb664"
   },
   "/de/solutions": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "ccca25ac4d30cadd3c9c27d44d68882013960ada49e66a5ff60619da8a52cb61"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "185cad218b4c5a7eddfcef68164bd1f9287d5f6ba0757129d2bf5417c33059e6"
   },
   "/de/notes": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "8c38c1f9e164e040fd71b57d50168d77a3e6ac158948eaedad640b2b6115f512"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "70e7cc209bd9a1da55004f5b6fc28b69f484175f8442d61bb201955663929627"
   },
   "/de/opencad/guides/open-dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c0affe9a69aa64badb636fcbfb70f9cc31c9403904abd8098f26e60deba3c613"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "14ee6b199e071dd6f6085c259515daabc00af9cfa494d49306a9bd489f725310"
   },
   "/de/opencad/guides/measure-export": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "fcabaa63a4d2a4a05608b66de5a6ac02634fb42b00d1f6c1cb0fabce540364d6"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "fc0dd7f71a3dee7ceaf22ea3f11b15e64262580fdc57f9e14bd6125496854f04"
   },
   "/de/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "870b884d964fffe7efd9036c40f3c15f70a9e3669ed61d06061da99cbc8bbe88"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4f6ebe0879c00e045f90fb7f6ecaf2ed5ae1a7dd84761d5551aa5f2ffe42b8ee"
   },
   "/de/opencad/guides/open-skp": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "928549b7e4eb2cd5898ee1df95125c3486f07ccec6b5f13872c52370ce797954"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4176ce9e3f7670f8b324e332f5644e0d5f24572cd8276136738935d4379c37af"
   },
   "/de/opencad/guides/check-nc-toolpath": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "8a16cbfb09833f07ae1937c4b9add094902a326dca3a0427c4600bdeb159aa5e"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "9806a7d500969ad4c170854a694c9b1ba135923240744b98d4404f4d1022a476"
   },
   "/de/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "4f4512bc433e062d1ec35dbcd0d32f47fa09e88e849033a5fa0e5fb6d8b2c606"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "0ef75baff5075e4dc260ea49dcae36130ceffe8e94ac38a0cd592f6f362db9c9"
   },
   "/de/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "a4793d39bb20eba93fb7476c108b104321a343eb473d76fb1fc6ccad05ebe870"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "bc1e782b48e7b2d82b7faaf2560e6f6b98b5163ae2eb543dab2f80290f21c109"
   },
   "/de/solutions/sketchup-furniture": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "3de02256e9c9c7948eab30248b83c32bf7f7e28934c8efbe80819910f171ffcd"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "4ca67dffa5b2bbfe9ca6bf2f377240379a07b377c74116ce37c94adc1dba848a"
   },
   "/de/solutions/furniture-manufacturing": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "c75cacdb17468f5fab3ac0c4b8a43e2c827277830b4da1ba64be320e1d0d2a1f"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "d7d4835bbf792f15a3b37e1da0ed96b93206af4deb3e873fbe108a783ca12ea3"
   },
   "/de/solutions/cad-cam-automation": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "dea50fe4f0014083e8bdecc61876c859ef38854aa3f811643ad8ae805a2c35bf"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "e6c27b03abbc55bb8b045f874865bd30ec344f3a05129209703f257b3df289ed"
   },
   "/de/opencad/guides/choose-cad-format": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "8bab608fe302dceb99008dad4b2270c07d1704a7dbe362b47b349af397faffbb"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "b8658a77344254d381729a9d4802bec3d0c60b541d7538430cbe11cb3d381e12"
   },
   "/de/opencad/projects/dwg-dxf": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "6893e203585976a1c21ee2c1c7770c7b904b2d3ecad7a726a09f47f8cb81df0c"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "eb6c4c668901cf283c5d4c4f704c0b0d041ec224e0ebada1c2b35a948fee0603"
   },
   "/de/opencad/projects/step-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "41ba68ae7f099df8d3e5b58026f011e81a418240efc62e8ec3876ef74caf9f75"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "9ec1d7274415223250cbdab48498049d03373e96218aa92fce810cdf90c31cbe"
   },
   "/de/opencad/projects/skp-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "5790358a95a2014e4f6cbd67bb3be0a91aaca12d7d8e32b907cb5613f586e916"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "af3a966a50168ccdabc944eb832bc3ff8b6d8ebca5a12919152b4074a11ee51c"
   },
   "/de/opencad/projects/nc-viewer": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "b8e1b13363d5dd2e46ae27838d00940d190d214809421f5ac0a4f2b4e526787d"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "611fe524e23b863bfdb1570bf1cd141c3c2f67ae3bd712c14188c2abcff55881"
   },
   "/de/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "b9bdb134fe261421447a6f866033fbaeffa23e06d86c72802c2f77fac3a58aa1"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "5f3f7c172e9062a9cac509e82510a3b377f50f4040d9b93e57c1d14e104c7ae0"
   },
   "/de/contact": {
-    "lastmod": "2026-10-26T08:58:00Z",
-    "fingerprint": "1e20331c4b1c2cf8095829e9be0ca8e4ad854e74abc6b1e07987f997bdd40a09"
+    "lastmod": "2026-10-26T09:47:55Z",
+    "fingerprint": "b0f78bb41f7decd6948c678f6952b0a38eb0f39edca2427c9e01eb2cb898d071"
   }
 }

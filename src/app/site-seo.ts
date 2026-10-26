@@ -39,6 +39,23 @@ const PROJECT_SEARCH_COPY: Record<string, { title: string; description: string }
   'scene-change-player': { title: '장면 전환을 표시하는 동영상 플레이어 개발 | 김규태', description: '영상의 장면 전환 지점을 찾아 재생 막대에 표시하는 C# WPF 동영상 플레이어입니다. 분할 지점 미리보기와 타임라인 확대, 장면 이동, 분할 지점 편집, ffmpeg 구간 저장 등 김규태가 개발한 플레이어 기능을 소개합니다.' },
 };
 
+// Short search summaries describe the experiment and its limits. Full results
+// remain in the article instead of concatenating several paragraphs into a snippet.
+const RESEARCH_SEARCH_COPY: Record<string, { title: string; description: string }> = {
+  'graph-tsp': {
+    title: '강화학습·그래프 신경망 TSP 경로 탐색 연구 | 김규태',
+    description: '그래프 표현과 Q-learning, 삽입 휴리스틱을 연결한 TSP 경로 탐색 연구입니다. 김규태가 구현한 학습 코드와 공개 코드 재실행, 기준선 비교와 학습 오류 분석을 소개합니다.',
+  },
+  'fashion-classification': {
+    title: 'ResNet 의류 이미지 분류·컴퓨터 비전 연구 | 김규태',
+    description: 'ResNet 기반 의류 이미지 분류 연구입니다. 김규태가 구현한 K-Fashion 학습·평가 과정과 공개 Fashion-MNIST 재실험에서 확인한 데이터 증강·잔차 연결·클래스별 오분류를 소개합니다.',
+  },
+  'virtual-try-on': {
+    title: '가상 착용 앱·컴퓨터 비전 API 연동 연구 | 김규태',
+    description: '공개 가상 착용 모델과 Flask API·Android 앱을 연결한 연구입니다. 김규태가 맡은 인물·의류 입력 전처리, 마스크 처리와 서버·앱 연동, 재사용한 모델과 검증 범위를 소개합니다.',
+  },
+};
+
 export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/',
@@ -75,8 +92,8 @@ export const SEARCH_PAGES: SearchPage[] = [
   },
   ...RESEARCH_WORKS.map((research): SearchPage => ({
     path: `/research/${research.id}`,
-    title: `${research.title} — ${SITE_NAME}`,
-    description: `${research.summary} ${research.outcome}`,
+    title: RESEARCH_SEARCH_COPY[research.id].title,
+    description: RESEARCH_SEARCH_COPY[research.id].description,
     image: research.id === 'graph-tsp' ? 'assets/og/research.jpg' : `assets/og/${research.id}.jpg`,
     imageAlt: research.id === 'graph-tsp'
       ? '강화학습으로 TSP 경로를 만드는 그래프 모델. 학습 정책과 최원 삽입 경로 비교.'
@@ -130,9 +147,6 @@ export const SEARCH_ALIASES = SEARCH_PAGES.flatMap(({ path }) => path === '/'
 
 export const LOCALIZED_SEARCH_PAGES: SearchPage[] = LANGUAGES.flatMap(({ code }) => SEARCH_PAGES.map(page => {
   const localized = translateData(page, code);
-  // Research descriptions join two authored fields. Translate the fields before
-  // joining them so an updated summary never needs a second, combined catalog key.
-  if (localized.research) localized.description = `${localized.research.summary} ${localized.research.outcome}`;
   if (localized.tool?.url) localized.tool.url = localizedHref(localized.tool.url, code);
   if (localized.article?.viewer) {
     localized.article.viewer.url = localizedHref(localized.article.viewer.url, code);
@@ -147,7 +161,6 @@ export function searchPage(url: string): SearchPage | undefined {
   const page = SEARCH_PAGES.find(page => page.path === path);
   if (!page) return undefined;
   const localized = translateData(page, language);
-  if (localized.research) localized.description = `${localized.research.summary} ${localized.research.outcome}`;
   if (localized.tool?.url) localized.tool.url = localizedHref(localized.tool.url, language);
   if (localized.article?.viewer) {
     localized.article.viewer.url = localizedHref(localized.article.viewer.url, language);
@@ -206,12 +219,12 @@ export function structuredData(page: SearchPage): object {
   if (page.project) graph.push({
     '@type': 'CreativeWork', '@id': `${url}#project`, url, name: page.project.title,
     description: page.description, keywords: page.project.tags,
-    author: { '@id': personId }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
+    author: { '@id': personId }, mainEntityOfPage: { '@id': `${url}#webpage` }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
   });
   if (page.research) graph.push({
     '@type': 'CreativeWork', '@id': `${url}#research`, url, name: page.research.title,
     description: page.description, keywords: page.research.tags,
-    author: { '@id': personId }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
+    author: { '@id': personId }, mainEntityOfPage: { '@id': `${url}#webpage` }, image: `${SITE_URL}/${page.image}`, inLanguage: 'ko',
   });
   if (page.article) graph.push({
     '@type': 'TechArticle', '@id': `${url}#article`, headline: page.article.title,
@@ -259,6 +272,13 @@ export function structuredData(page: SearchPage): object {
     } : { codeRepository: page.tool.source, programmingLanguage: 'TypeScript' }),
   });
   const localized = translateData(graph, language) as Record<string, unknown>[];
+  // Public name aliases identify the same person across languages. Do not
+  // machine-translate an identifier or send foreign author links to Korean.
+  const person = localized.find(node => node['@id'] === personId)!;
+  person['name'] = language === 'ko' ? '김규태' : 'Sean Kim';
+  person['alternateName'] = ['김규태', 'Sean Kim', 'GyuTae-Kim'].filter(name => name !== person['name']);
+  person['url'] = SITE_URL + languagePath('/', language);
+  person['mainEntityOfPage'] = { '@id': `${person['url']}#webpage` };
   // This is one multilingual website; each page and work has its own language.
   for (const node of localized) if ('inLanguage' in node) {
     node['inLanguage'] = node['@type'] === 'WebSite' ? LANGUAGES.map(({ code }) => code) : language;
