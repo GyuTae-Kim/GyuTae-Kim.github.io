@@ -137,6 +137,12 @@ for (const page of SEARCH_PAGES) {
     const data = JSON.parse(document.querySelector('#site-structured-data').textContent);
     assert.ok(data['@graph'].some((node) => node['@type'] === page.kind && node.url === SITE_URL + page.path), file);
     const pageNode = data['@graph'].find(node => node['@type'] === page.kind && node.url === SITE_URL + page.path);
+    const person = data['@graph'].find(node => node['@type'] === 'Person');
+    const profileUrl = SITE_URL + languagePath('/', page.language);
+    assert.equal(person.url, profileUrl, `${file}: author profile in this language`);
+    assert.equal(person.name, page.language === 'ko' ? '김규태' : 'Sean Kim', `${file}: public name`);
+    assert.ok(person.alternateName.includes('GyuTae-Kim'), `${file}: stable public identifier`);
+    assert.equal(person.mainEntityOfPage['@id'], profileUrl + '#webpage', `${file}: author profile identity`);
     assert.equal(pageNode.inLanguage, page.language, `${file}: page language`);
     assert.deepEqual(data['@graph'].find(node => node['@type'] === 'WebSite').inLanguage, LANGUAGES.map(({ code }) => code), `${file}: multilingual website`);
     if (originalPath(page.path) === '/opencad') {

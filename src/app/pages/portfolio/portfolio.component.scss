@@ -1043,3 +1043,9 @@
     text-align: center;
   }
 }
+:host .portfolio-topics {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0;
+  a { padding: 10px 14px; border: 1px solid var(--line); color: var(--blue); font-size: var(--fs-2); }
+  a:hover { border-color: var(--blue); }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+}
