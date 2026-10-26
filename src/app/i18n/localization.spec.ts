@@ -14,6 +14,20 @@ describe('localized navigation and text', () => {
     expect(translate('알 수 없는 문자열','ko')).toBe('알 수 없는 문자열');
     expect(translate('{0} 열기','en',['OpenCAD'])).toBe('Open OpenCAD');
   });
+  it('switches published viewer links between every language without losing file parameters', () => {
+    for (const app of ['opencad-dwgdxf', 'opencad-step', 'opencad-skp', 'opencad-nc']) {
+      const root = `https://gyutae-kim.github.io/${app}/`;
+      const query = '?sample=demo%20part.step#view';
+      for (const from of ['ko', 'en', 'ja', 'zh-CN', 'de'] as Language[]) {
+        const source = root + (from === 'ko' ? '' : from + '/') + query;
+        for (const to of ['ko', 'en', 'ja', 'zh-CN', 'de'] as Language[]) {
+          expect(localizedHref(source, to)).toBe(root + (to === 'ko' ? '' : to + '/') + query);
+        }
+      }
+    }
+    expect(localizedHref('https://gyutae-kim.github.io.example.org/file', 'en')).toBe('https://gyutae-kim.github.io.example.org/file');
+    expect(localizedHref('https://gyutae-kim.github.io/assets/example.step', 'de')).toBe('https://gyutae-kim.github.io/assets/example.step');
+  });
   it('does not cache missing sentence patterns before a locale has loaded', () => {
     const language = 'late-loaded-test' as Language;
     try {

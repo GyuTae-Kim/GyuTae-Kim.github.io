@@ -259,14 +259,17 @@ export function structuredData(page: SearchPage): object {
     } : { codeRepository: page.tool.source, programmingLanguage: 'TypeScript' }),
   });
   const localized = translateData(graph, language) as Record<string, unknown>[];
-  for (const node of localized) if ('inLanguage' in node) node['inLanguage'] = language;
+  // This is one multilingual website; each page and work has its own language.
+  for (const node of localized) if ('inLanguage' in node) {
+    node['inLanguage'] = node['@type'] === 'WebSite' ? LANGUAGES.map(({ code }) => code) : language;
+  }
   for (const node of localized) {
     if (node['@type'] === 'BreadcrumbList' || node['@type'] === 'ItemList') {
       for (const item of node['itemListElement'] as Record<string, string>[]) for (const key of ['item', 'url']) {
         const link = item[key];
-        if (link?.startsWith(SITE_URL) && !/^\/(?:2dcad-viewer|opencad-(?:dwgdxf|step|skp|nc))\//.test(new URL(link).pathname)) {
-          item[key] = SITE_URL + languagePath(link.slice(SITE_URL.length), language);
-        }
+        // Include the separately published viewer apps. Their locale follows
+        // the app name, whereas portfolio locales precede the page path.
+        if (link?.startsWith(SITE_URL)) item[key] = localizedHref(link, language);
       }
     }
   }

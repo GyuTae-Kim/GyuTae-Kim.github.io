@@ -23,11 +23,12 @@ export class SeoService {
       return;
     }
     this.title.setTitle(page.title);
-    this.meta.updateTag({ name: 'author', content: SITE_NAME });
+    const siteName = translate(SITE_NAME, language);
+    this.meta.updateTag({ name: 'author', content: siteName });
     this.meta.updateTag({ name: 'description', content: page.description });
     const image = `${SITE_URL}/${page.image}`;
     for (const [key, value] of Object.entries({
-      type: page.article ? 'article' : 'website', site_name: SITE_NAME, locale: LANGUAGES.find(item => item.code === language)!.locale,
+      type: page.article ? 'article' : 'website', site_name: siteName, locale: LANGUAGES.find(item => item.code === language)!.locale,
       title: page.title, description: page.description, url: SITE_URL + page.path,
       image, 'image:secure_url': image, 'image:type': SHARE_IMAGE.type,
       'image:width': String(SHARE_IMAGE.width), 'image:height': String(SHARE_IMAGE.height),

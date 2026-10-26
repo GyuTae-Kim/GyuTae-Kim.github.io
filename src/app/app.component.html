@@ -55,6 +55,10 @@
 </header>
 <main id="main" tabindex="-1"><router-outlet></router-outlet></main>
 <footer class="site-footer">
+  <nav class="language-versions" [attr.aria-label]="'언어별 페이지' | t">
+    <a *ngFor="let language of i18n.languages" [href]="i18n.languageHref(language.code)"
+       [attr.lang]="language.code" [attr.hreflang]="language.code" [attr.aria-current]="i18n.language === language.code ? 'page' : null">{{ language.label }}</a>
+  </nav>
   <dl>
     <div>
       <dt>{{ '작성' | t }}</dt>

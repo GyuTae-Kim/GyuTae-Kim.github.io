@@ -6,6 +6,15 @@
 .header-icon:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .navigation-trigger { display: none; }
 .language-control { position: relative; flex: none; }
+.language-versions {
+  display: flex; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 20px;
+  font: 14px / 1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
+  a[aria-current='page'] { color: var(--ink); font-weight: 700; }
+  a:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+  a[lang='ja'] { font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; }
+  a[lang='zh-CN'] { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+}
 .language-menu {
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 100;
   display: flex; flex-direction: column; width: 184px; padding: 4px;

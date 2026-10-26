@@ -16,6 +16,7 @@ export class I18nService {
     this.document.documentElement.lang = this.language;
   }
   switchLanguage(language: Language): string { return languagePath(this.router.url.split(/[?#]/)[0], language); }
+  languageHref(language: Language): string { return languagePath(this.router.url, language); }
   text(value: string, parameters: unknown[] = []): string { return translate(value, this.language, parameters); }
   link<T>(value: T): T {
     if (Array.isArray(value)) return (value.length ? [this.link(value[0]), ...value.slice(1)] : value) as T;
