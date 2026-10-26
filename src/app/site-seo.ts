@@ -105,7 +105,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   })),
   {
     path: '/opencad',
-    title: '무료 캐드 뷰어 | DWG·DXF·STEP·STP·SKP · OpenCAD',
+    title: '무료 온라인 캐드 뷰어 | DWG·DXF·STEP·STP·SKP · OpenCAD',
     description: 'DWG·DXF 도면을 열고 편집해 저장하는 무료 2D 캐드와 STEP·STP 3D 모델, SketchUp SKP 파일, NC·G-code·MPR 공구 경로를 확인하는 무료 OpenCAD 뷰어를 모았습니다. 형식별 실행 링크와 지원 범위, 오픈소스 3D 코어를 소개합니다.',
     image: 'assets/og/opencad.jpg',
     imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 공구 경로 뷰어 네 가지의 화면.',
