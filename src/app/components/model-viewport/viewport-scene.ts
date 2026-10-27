@@ -37,7 +37,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { ModelId, TINTS } from './viewport-data';
+import { ModelId, TINTS, translateViewportCaption } from './viewport-data';
 
 // Concept models for the home viewport, drawn like a CAD sheet: white faces, ink edges,
 // numbered balloons. Units are millimetres; the part is built Z-up and turned Y-up.
@@ -3156,7 +3156,7 @@ export class ViewportScene {
     });
 
     const rawCaption = this.current.hud?.() ?? '';
-    const caption = this.options.translate?.(rawCaption) ?? rawCaption;
+    const caption = this.options.translate ? translateViewportCaption(rawCaption, this.options.translate) : rawCaption;
     this.hud.style.display = caption ? '' : 'none';
     if (this.hud.textContent !== caption) this.hud.textContent = caption;
 

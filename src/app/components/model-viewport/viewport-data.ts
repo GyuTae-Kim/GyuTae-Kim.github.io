@@ -3,6 +3,18 @@
 
 export type ModelId = 'part' | 'furniture';
 
+/** Translate scene-authored HUD messages before adding their numeric step. */
+export function translateViewportCaption(raw: string, translate: (text: string) => string): string {
+  const whole = translate(raw);
+  if (!/[가-힣]/.test(whole)) return whole;
+  const numbered = raw.match(/^(\d{2}\s+)(.+)$/);
+  const prefix = numbered?.[1] ?? '';
+  const message = numbered?.[2] ?? raw;
+  const translated = translate(message);
+  // Operation and tool names are separate messages joined by a neutral dot.
+  return prefix + (/[가-힣]/.test(translated) ? message.split(' · ').map(translate).join(' · ') : translated);
+}
+
 export interface LegendItem {
   label: string;
   detail?: string;
