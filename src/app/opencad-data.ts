@@ -38,8 +38,10 @@ export interface OpenCadProject extends OpenCadTool {
 // 2026-10-22 after the round-4 releases (opencad-dwgdxf 800f61f, opencad-step d46bbbf,
 // opencad-skp 133e05e, opencad-nc 34fd886), and again on 2026-10-27 for the round-5
 // pull requests (offline NC and 2D CAD, SketchUp edge colours and walking, STEP
-// snapping, multi-select and inertia, core v0.8.0). A demo is not a claim that every
-// file or machine is supported.
+// snapping, multi-select and inertia, core v0.8.0). The round-6 to round-8 pull
+// requests were checked on 2026-10-27 as well (opencad-nc c1fd44f, opencad-step
+// d8f79bf, opencad-skp e5e6d7a, opencad-dwgdxf 1e89e01, opencad-viewer3d v0.9.1
+// b1839ec). A demo is not a claim that every file or machine is supported.
 export const OPENCAD_PROJECTS: OpenCadProject[] = [
   {
     // The id stays the /opencad card anchor (#2d-viewer) that older links point to.
@@ -55,7 +57,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     features: [
       { label: '열기', text: 'DWG R13~R2018, DXF R12~R2018 파일과 빈 새 도면' },
       { label: '확인', text: '거리, 각도, 면적과 질량 특성(MASSPROP) 측정, 도면층, 치수 목록, 문자 찾기' },
-      { label: '편집', text: '그리기와 수정 명령, 치수, 해치, 블록, 쓰지 않는 항목 정리(PURGE)' },
+      { label: '편집', text: '그리기와 수정 명령, 겹친 스냅을 Tab으로 바꿔 고르기, 치수, 해치, 블록, 쓰지 않는 항목 정리(PURGE)' },
       { label: '저장', text: 'DWG, DXF로 저장하고, 저장 형식에서 빠지는 객체는 저장 전에 알림' },
       { label: '출력', text: 'PDF, PNG, SVG 출력, 여러 배치를 한 PDF로 묶기(PUBLISH), PDF 안 도면층 켜고 끄기와 문자 검색' },
       { label: '모바일', text: '편집 리본 대신 보기 모드: 거리·반지름·각도·면적 재기, 객체 스냅 고르기, 점 좌표와 문자 찾기, 누른 객체의 치수 정보. 홈 화면에 추가하면 인터넷 없이도 열림' },
@@ -94,11 +96,11 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     },
     features: [
       { label: '형식', text: 'STEP AP203, AP214, AP242의 B-rep 형상, 조립, 색, 단위와 PMI 주석' },
-      { label: '탐색', text: '여러 부품을 함께 골라 제품 나무와 오른쪽 클릭 메뉴에서 숨기기, 이것만 보기, 나머지 흐리게, 부품 속성 보기' },
+      { label: '탐색', text: '부품이나 몸체, 면 단위로 여러 개를 함께 골라 제품 나무와 오른쪽 클릭 메뉴에서 숨기기, 이것만 보기, 나머지 흐리게, 부품 속성 보기' },
       { label: '보기', text: '표준 뷰, 음영과 와이어프레임, 숨은선 제거, X-ray, 단면, 분해 보기' },
-      { label: '측정', text: '원 중심과 모서리 가운데 점에 붙는 두 점 거리, 모서리 길이와 구멍 지름, 면 사이 거리와 각도, 부피와 질량, 관성 모멘트, 부품 간섭 검사' },
+      { label: '측정', text: '원 중심, 모서리 가운데 점, 두 모서리의 교차점, 수직 발, 축 방향에 붙는 두 점 거리, 모서리 길이와 구멍 지름, 면 사이 거리와 각도, 부피와 질량, 관성 모멘트, 부품 간섭 검사' },
       { label: '내보내기', text: '큰 PNG와 투명 배경 그림, STL·OBJ 파일, 측정 기록 CSV, 지금 화면을 담은 보기 링크' },
-      { label: '모바일', text: '보기·측정 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 거리와 면 치수를 확인. 홈 화면에 추가하면 인터넷 없이도 열림' },
+      { label: '모바일', text: '보기·측정 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 거리와 면 치수를 확인. 손가락으로도 여러 부품을 함께 고름. 홈 화면에 추가하면 인터넷 없이도 열림' },
     ],
     steps: ['STEP 뷰어를 열고 「예제 열기」로 작은 조립 모형을 확인합니다.', '「열기」를 누르거나 .step·.stp 파일을 창에 끌어다 놓습니다.', '제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.', '「측정」에서 두 점이나 면, 모서리를 눌러 거리와 지름을 재고, 「내보내기」로 그림이나 STL 파일을 저장하거나 보기 링크를 복사합니다.'],
     limitations: ['3D 모델을 확인하는 뷰어라 형상을 고치거나 STEP으로 다시 저장하지는 않습니다. STL·OBJ 내보내기는 화면에 그린 삼각형 그물을 그대로 씁니다.', '부피와 질량, 관성 모멘트, 간섭 검사, 곡면끼리의 최소 거리는 화면용 삼각형으로 계산한 근삿값입니다. 평면, 원기둥, 원, 직선처럼 수식으로 구하는 측정만 정확한 값입니다.', '지원 AP 형식이어도 일부 형상은 읽지 못할 수 있습니다. 정보 패널의 경고를 원본 CAD 화면과 비교해 보세요.'],
@@ -119,9 +121,9 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     features: [
       { label: '형식', text: 'SketchUp 6, 7, 8과 2013~2026에서 저장한 .skp 파일. SketchUp 5 이하 파일은 아직 열지 못합니다.' },
       { label: '탐색', text: '태그 켜고 끄기, 재질 확인, 이름으로 그룹과 컴포넌트 찾기, 면이나 모서리 하나만 골라 넓이와 길이 보기' },
-      { label: '보기', text: '배경과 모서리 색까지 파일 스타일대로 열기, 일곱 가지 그리기 방식, 그림자와 안개, 여러 단면과 단면 채우기' },
+      { label: '보기', text: '배경과 모서리 색(재질별 색 포함)까지 파일 스타일대로 열기, 일곱 가지 그리기 방식, 그림자와 안개, 여러 단면과 단면 채우기' },
       { label: '장면', text: '장면 탭과 장면 재생, 벽에 막히고 바닥을 따라가는 걷기, 시야각 조절, 2점 투시' },
-      { label: '측정', text: '줄자와 각도기(끝점, 중간점, 원 중심, 수직 발에 붙음), 최근 측정 10개 복사, 그림 저장과 인쇄' },
+      { label: '측정', text: '줄자와 각도기(끝점, 중간점, 원 중심, 수직 발, 두 모서리의 교차점에 붙음), 길이를 입력해 안내점 찍기, 최근 측정 10개 복사, 그림 저장과 인쇄' },
       { label: '모바일', text: '보기·측정 단추만 한 줄에 두고 줄자·각도기는 길게 눌러 정밀 조준, 걷기는 조이스틱으로. 홈 화면에 추가하면 인터넷 없이도 열림' },
     ],
     steps: ['SKP 뷰어를 열고 「예제 열기」로 브라우저에서 만든 집 모형을 확인합니다.', '「열기」로 .skp 파일을 선택하거나 창 안으로 끌어다 놓습니다.', '태그·재질·구성 패널과 3D 화면에서 모델을 확인합니다. 장면이 있으면 장면 탭을 누르거나 ▶로 차례로 재생합니다.', '줄자(T)와 각도기로 거리와 각도를 재고, 「그림 저장」에서 PNG로 저장하거나 인쇄합니다.'],
@@ -133,7 +135,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     searchTitle: 'OpenCAD NC 뷰어 기능 | G-code·MPR 지원',
     extensions: ['.nc', '.gcode', '.ngc', '.h', '.mpr', '.pgi', '.xml'],
     summary: 'G-code와 Heidenhain(평문, DIN/ISO), 판재 가공 파일(woodWOP MPR, WangShi PGI, KDT XML)의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생하며, 장비에 넣기 전에 확인할 줄을 경고로 알려 줍니다.',
-    introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain 프로그램을 해석하고, 코드 줄을 고르면 3D 경로에서 그 이동을, 경로를 고르면 해당 코드 줄을 보여 줍니다. Haas, Siemens 같은 방언과 선반 프로그램은 파일 내용으로 알아보고 화면 위 띠로 알려 줍니다. 주 프로그램과 부프로그램 파일을 함께 열면 한 작업으로 이어 읽습니다. 판재 가공 파일(MPR, PGI, XML)은 구멍과 홈, 포켓, 윤곽 가공을 판 위에 그리고, 가공 목록과 변수도 보여 줍니다.',
+    introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain 프로그램을 해석하고, 코드 줄을 고르면 3D 경로에서 그 이동을, 경로를 고르면 해당 코드 줄을 보여 줍니다. Haas, Siemens 같은 방언과 선반 프로그램은 파일 내용으로 알아보고 화면 위 띠로 알려 줍니다. 주 프로그램과 부프로그램 파일을 함께 열면 한 작업으로 이어 읽습니다. 판재 가공 파일(MPR, PGI, XML)은 구멍과 홈, 포켓(자유 형상 포함), 윤곽 가공, 엣지 밴딩을 판 위에 그리고, 가공 목록과 변수도 보여 줍니다.',
     url: 'https://gyutae-kim.github.io/opencad-nc/', source: 'https://github.com/GyuTae-Kim/opencad-nc', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-nc',
@@ -145,7 +147,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
       { label: '경로', text: '3D 공구 경로와 코드 줄 연결, 공구별 표시, 가공 순서 재생, 한 이동씩 넘기기, 코드 찾기' },
       { label: '정보', text: '이송·급속 이동 길이, 예상 시간, 절삭 범위와 가장 깊은 Z, 고른 줄의 이송·주축·보정 상태, 판재 가공 파일의 작업과 변수' },
       { label: '경고', text: '공구 번호와 다른 H·D 번호, 주축이 멈춘 채 절삭, 가장 깊은 절삭보다 낮은 급속 같은 줄을 경고하고, 누르면 그 줄로 이동' },
-      { label: '보기', text: '회전·확대, 표준 뷰, 단면, 두 점 측정과 PNG 저장' },
+      { label: '보기', text: '회전·확대, 표준 뷰, 단면, 원호 중심, 가운데 점, 교차점, 수직 발에 붙는 두 점 측정과 PNG 저장' },
       { label: '모바일', text: '보기·측정·재생 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 공구 경로 위 두 점 거리를 확인. 홈 화면에 추가하면 인터넷 없이도 열림' },
     ],
     steps: ['NC 뷰어를 열고 「예제 열기」로 합성 G-code를 확인합니다.', 'NC 파일(G-code, Heidenhain, MPR, PGI, XML)을 열거나 창 안으로 끌어다 놓습니다. 부프로그램이 다른 파일에 있으면 함께 고릅니다.', '코드 줄이나 3D 경로를 선택해 해당 이동을 확인합니다.', '공구별 표시와 재생 막대로 가공 순서를 살펴봅니다. 정보 패널의 경고를 누르면 해당 코드 줄로 갑니다.'],
@@ -161,8 +163,8 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     features: [
       { label: '표시', text: 'WebGL2, 음영·모서리·와이어프레임·X-ray, 그림자와 안개, 선분·점 그리기' },
       { label: '조작', text: '회전·이동·확대, 터치 조작, 뷰 큐브와 표준 뷰, 바닥을 따라가는 걷기' },
-      { label: '선택', text: 'BVH 기반 선택, 그룹별 표시와 강조, 큰 그림 저장' },
-      { label: '측정', text: '끝점, 가운데 점, 원 중심에 붙는 두 점 측정과 면 사이 최소 거리' },
+      { label: '선택', text: 'BVH 기반 선택, 붙잡기 점이 수십만 개여도 빠르게 찾는 색인, 그룹별 표시와 외곽선 색, 큰 그림 저장' },
+      { label: '측정', text: '끝점, 가운데 점, 원 중심, 교차점, 수직 발, 축 방향에 붙는 두 점 측정과 면 사이 최소 거리' },
       { label: '단면', text: '여러 단면 평면과 잘린 면 채우기, 큰 좌표에서도 떨리지 않는 묶음 원점' },
       { label: '연결', text: 'NC·STEP·SKP 해석기와 공유하는 Scene3d 장면 형식' },
     ],
