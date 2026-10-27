@@ -11,7 +11,7 @@
       >
     </h1>
     <p class="profile-text">
-      {{ '3D 형상을 읽는 AI를 설계 변경과 가공 공정으로 연결합니다. Fusion CAM 자동화를 연구개발하고, 팀에서는 Wedraw Pro의 제조 데이터 출력과 생산 투입을 리딩했습니다. 서비스 운영에서 드러난 오류도 추적해 고칩니다.' | t }}
+      {{ '3D 형상을 읽는 AI를 만들고, 이를 가구 설계 변경과 가공 공정 생성에 적용했습니다. Fusion CAM 자동화를 연구개발하고, 팀에서는 Wedraw Pro의 제조 데이터 출력과 생산 투입을 리딩했습니다. 서비스 운영에서 드러난 오류도 추적해 고칩니다.' | t }}
     </p>
     <nav class="index-nav" [attr.aria-label]="'이 페이지의 구성' | t">
       <a
@@ -73,13 +73,13 @@
     <section class="index-section" id="work" aria-labelledby="work-title">
       <div class="section-title">
         <span class="section-no">01</span>
-        <h2 id="work-title">{{ 'AI에서 제조로 잇는 개발' | t }}</h2>
+        <h2 id="work-title">{{ '주요 프로젝트' | t }}</h2>
         <a class="text-link" [routerLink]="'/portfolio' | localLink"
           >{{ '개발 프로젝트 전체 보기' | t }}<app-icon name="arrow-right"></app-icon></a
         >
       </div>
       <p class="section-lead">
-        {{ '형상을 인식하고, 바꾸고, 공장이 쓸 데이터로 만드는 세 프로젝트입니다. 각 사례에 직접 맡은 역할과 문제·해결, 구현 결과를 정리했습니다.' | t }}
+        {{ '3D 형상을 인식하는 AI 연구에서 공장이 쓰는 제조 데이터까지 이어지는 세 프로젝트입니다. 프로젝트마다 맡은 역할과 결과, 부딪힌 문제와 해결 방법을 담았습니다.' | t }}
       </p>
       <ol class="index-rows">
         <li *ngFor="let project of cases">
@@ -136,7 +136,7 @@
             </span>
             <span class="row-result">{{ (project.intro.result) | t }}</span>
             <span class="row-note"><b>{{ '담당' | t }}</b>{{ (project.intro.role) | t }}</span>
-            <span class="operation-link">{{ '사례 보기' | t }}<app-icon name="arrow-right"></app-icon></span>
+            <span class="operation-link">{{ '프로젝트 보기' | t }}<app-icon name="arrow-right"></app-icon></span>
           </a>
         </li>
       </ul>
@@ -144,7 +144,7 @@
 
     <section class="index-section" aria-labelledby="home-opencad-title">
       <div class="section-title"><h2 id="home-opencad-title">{{ '오픈캐드: 무료 웹캐드와 3D 뷰어' | t }}</h2><a class="text-link" [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></div>
-      <p class="section-lead">{{ 'DWG·DXF 도면을 열고 편집·저장하는 2D 캐드와 STEP·SketchUp 모델, NC 공구 경로를 확인하는 무료 도구를 만들고 있습니다. 설치 없이 쓰는 개인 오픈소스 프로젝트이며, 공통 3D 코어의 개발 내용도 소개합니다.' | t }}</p>
+      <p class="section-lead">{{ 'DWG·DXF 도면을 열고 고쳐 저장하는 2D 캐드, STEP·SketchUp 모델과 NC 공구 경로를 보는 뷰어를 만들고 있습니다. 모두 설치 없이 무료로 쓰는 개인 오픈소스 프로젝트이고, 뷰어들이 함께 쓰는 3D 코어도 공개했습니다.' | t }}</p>
       <ol class="index-rows">
         <li *ngFor="let tool of openCadApps">
           <a
@@ -193,7 +193,7 @@
         >
       </div>
       <p class="section-lead">
-        {{ '학부연구생 때 강화학습·의류 분류·가상 착용을 연구했습니다. 논문과 공개 모델을 바탕으로 직접 구현한 부분, 실험에서 부딪힌 문제와 결과를 소개합니다. 아래 이미지는 공개 코드를 재실행한 예시입니다.' | t }}
+        {{ '학부연구생 때 강화학습, 의류 분류, 가상 착용을 연구했습니다. 논문과 공개 모델을 참고해 구현한 부분과 실험에서 부딪힌 문제, 결과를 소개합니다. 아래 이미지는 공개 코드를 실행해 만든 예시입니다.' | t }}
       </p>
       <ol class="index-rows">
         <li *ngFor="let work of research">
@@ -254,10 +254,10 @@
         />
         <div>
           <p class="about-statement">
-            {{ '반복하던 판단과 입력을 줄여, 사람이 중요한 일에 집중하도록 돕고 싶습니다.' | t }}
+            {{ '현실에 적용 가능한 AI로, 사람들의 일과 생활을 조금 더 편하게 만들고 싶습니다.' | t }}
           </p>
           <p>
-            {{ '연구에서는 형상을 해석하고 규칙을 학습하는 방법을 구현했습니다. 제품에서는 이를 설계 수정, 제조 데이터 출력, 생산 전 확인으로 연결했습니다. 운영에서는 처리 결과와 오류를 모아 놓친 문제를 찾고 원인을 고쳤습니다. 이런 도구가 설계 정보를 다시 입력하는 수고와 가공 전 시행착오를 줄이고, 작은 제조 현장에서도 축적된 기술을 활용하는 데 도움이 되길 기대합니다.' | t }}
+            {{ '연구에서는 3D 형상을 해석하고 규칙을 학습하는 방법을 구현했고, 제품에서는 그 결과를 설계 수정과 제조 데이터 출력, 생산 전 확인에 썼습니다. 운영에서는 처리 결과와 오류를 모아 놓친 문제를 찾아 고쳤습니다. 설계 정보를 다시 입력하는 수고와 가공 전 시행착오를 줄여, 작은 제조 현장에서도 쌓아 온 기술을 쓸 수 있게 하는 것이 목표입니다.' | t }}
           </p>
           <dl class="skill-list" [attr.aria-label]="'다뤄 본 기술' | t">
             <div *ngFor="let group of skills">

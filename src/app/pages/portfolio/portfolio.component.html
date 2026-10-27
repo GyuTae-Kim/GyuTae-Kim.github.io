@@ -182,7 +182,7 @@
           </figcaption>
         </figure>
       </div>
-      <p class="showcase-note">{{ '색상은 위 목록의 기본 피쳐와 같습니다. 학습에 사용한 형상과 라벨을 보여주는 자료이며, 새로운 부품에 대한 예측 정확도를 나타내지는 않습니다.' | t }}</p>
+      <p class="showcase-note">{{ '색상은 위 목록의 기본 피쳐와 같습니다. 학습에 사용한 형상과 정답 라벨이며, 새 부품을 예측한 결과가 아닙니다.' | t }}</p>
     </section>
     <section class="evidence-section" *ngFor="let evidence of selected!.evidence" [attr.aria-labelledby]="evidence.id">
       <h2 class="detail-title" [id]="evidence.id">{{ (evidence.title) | t }}</h2>
@@ -221,7 +221,7 @@
           <p>{{ (item.text) | t }}</p>
         </article>
       </div>
-      <p class="showcase-note" *ngIf="selected!.id === 'cad-feature-recognition'">{{ '위 내용은 기술 활용에 대한 기대 효과입니다. 현장 도입에 따른 시간·비용 절감량은 별도 실증이 필요합니다.' | t }}</p>
+      <p class="showcase-note" *ngIf="selected!.id === 'cad-feature-recognition'">{{ '위 내용은 기대 효과입니다. 현장에 도입했을 때 시간과 비용이 얼마나 줄어드는지는 따로 확인해야 합니다.' | t }}</p>
     </section>
     <section class="case-concept" *ngIf="selected!.concept as concept" aria-labelledby="case-concept-title">
       <h2 class="detail-title" id="case-concept-title"><span>3D</span>{{ '개념 모델로 보는 과정' | t }}</h2>
@@ -408,7 +408,7 @@
         </ol>
       </section>
       <section class="detail-block" *ngIf="other!.checked.length" aria-labelledby="other-checks-title">
-        <h2 class="detail-title" id="other-checks-title">{{ '검증과 확인한 결과' | t }}</h2>
+        <h2 class="detail-title" id="other-checks-title">{{ '확인한 결과' | t }}</h2>
         <ul class="operation-checks"><li *ngFor="let item of other!.checked">{{ (item) | t }}</li></ul>
       </section>
       <div class="watch-board" *ngIf="other!.watch as watch" role="group" [attr.aria-label]="'감시 범위' | t">

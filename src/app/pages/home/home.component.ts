@@ -8,11 +8,11 @@ import { OPENCAD_PROJECTS, OPENCAD_TOOLS } from '../../opencad-data';
 // title: a shorter card title when the page title is too long for the home card.
 const PROJECT_INTROS: Record<string, { title?: string; result: string; role: string }> = {
   'cad-feature-recognition': {
-    result: '가공 피쳐 인식부터 Fusion CAM 공정 생성과 결과 확인까지 연결했습니다.',
-    role: '형상 분석·가공 전략·Fusion 연동을 개발했습니다. 디지털 트윈은 결과 시각화만 맡았습니다.',
+    result: '가공 피쳐를 인식해 Fusion CAM 공정을 만들고 결과까지 확인했습니다.',
+    role: '형상 분석, 가공 전략 설계, Fusion 연동을 개발했습니다. 디지털 트윈은 결과 시각화만 맡았습니다.',
   },
   'panel-classification': {
-    result: '패널을 구분하고 크기 변경을 계수식으로 계산해, 웹에서 실시간 설계와 발주로 이어지게 했습니다.',
+    result: '패널을 인식하고 크기 변경을 계수식으로 계산해, 웹에서 실시간으로 설계를 바꾸고 발주할 수 있게 했습니다.',
     role: '팀에서 패널 인식 AI와 패널의 크기·위치 변화를 계산하는 계수식 구성을 맡았습니다.',
   },
   'wedraw-pro': {
@@ -21,7 +21,7 @@ const PROJECT_INTROS: Record<string, { title?: string; result: string; role: str
   },
   'service-monitoring': {
     title: '서비스 감시와 오류 추적',
-    result: '서버 상태뿐 아니라 송장·알림톡의 처리 실패까지 감지하고, 운영 문제 6건의 원인을 고쳤습니다.',
+    result: '서버 상태와 함께 송장·알림톡의 처리 실패까지 잡아내고, 운영 문제 6건의 원인을 고쳤습니다.',
     role: '감시 기준부터 오류 수집·알림·관리자 콘솔까지 직접 개발했습니다.',
   },
   'voda-architecture': {

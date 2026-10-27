@@ -29,7 +29,7 @@ export interface SearchPage {
 
 // Search copy describes the work and responsibility documented on each case page.
 const PROJECT_SEARCH_COPY: Record<string, { title: string; description: string }> = {
-  'cad-feature-recognition': { title: '3D 가공 특징 인식·Fusion CAM 자동화 | 김규태', description: '3D CAD 모델의 가공 특징을 AI로 인식하고 Autodesk Fusion CAM 공정으로 연결한 연구개발 사례입니다. 김규태가 맡은 형상 분석·AI 학습·가공 전략 설계와 시뮬레이션 검증 범위를 소개합니다.' },
+  'cad-feature-recognition': { title: '3D 가공 특징 인식·Fusion CAM 자동화 | 김규태', description: '3D CAD 모델의 가공 특징을 AI로 인식해 Autodesk Fusion CAM 공정까지 만든 연구개발 사례입니다. 김규태가 맡은 형상 분석, AI 학습, 가공 전략 설계와 시뮬레이션 결과 시각화를 소개합니다.' },
   'panel-classification': { title: '가구 패널 인식 AI·파라메트릭 설계 | 김규태', description: '가구의 패널 역할을 AI로 인식하고 크기 변경 규칙을 계산하는 파라메트릭 설계 연구입니다. 팀 프로젝트에서 김규태가 맡은 패널·접합면 분석, AI 연구와 계수식 계산을 소개합니다.' },
   'wedraw-pro': { title: 'SketchUp 가구 설계·제조 데이터 개발 | 김규태', description: 'SketchUp 기반 가구 설계에서 도면·발주·제조 데이터와 생산 투입으로 이어지는 Wedraw Pro 개발 사례입니다. 팀에서 김규태가 리딩한 제조 데이터 출력·생산 투입과 도면·발주 초기 개발을 소개합니다.' },
   'service-monitoring': { title: '제조 소프트웨어 운영·서비스 장애 감시 | 김규태', description: '제조 소프트웨어의 서버와 PC 앱 오류를 모아 서비스 장애를 감시한 개발 사례입니다. 감시가 찾아낸 DB 응답 지연과 외부 연동 오류, 실제 수정 과정과 김규태의 역할을 소개합니다.' },
@@ -43,15 +43,15 @@ const PROJECT_SEARCH_COPY: Record<string, { title: string; description: string }
 const RESEARCH_SEARCH_COPY: Record<string, { title: string; description: string }> = {
   'graph-tsp': {
     title: '강화학습·그래프 신경망 TSP 경로 탐색 연구 | 김규태',
-    description: '그래프 표현과 Q-learning, 삽입 휴리스틱을 연결한 TSP 경로 탐색 연구입니다. 김규태가 구현한 학습 코드와 공개 코드 재실행, 기준선 비교와 학습 오류 분석을 소개합니다.',
+    description: '그래프 표현과 Q-learning, 삽입 휴리스틱을 결합한 TSP 경로 탐색 연구입니다. 김규태가 구현한 학습 코드와 기준선 비교 실험, 학습 오류 분석을 소개합니다.',
   },
   'fashion-classification': {
     title: 'ResNet 의류 이미지 분류·컴퓨터 비전 연구 | 김규태',
-    description: 'ResNet 기반 의류 이미지 분류 연구입니다. 김규태가 구현한 K-Fashion 학습·평가 과정과 공개 Fashion-MNIST 재실험에서 확인한 데이터 증강·잔차 연결·클래스별 오분류를 소개합니다.',
+    description: 'ResNet으로 의류 이미지를 분류한 연구입니다. 김규태가 구현한 K-Fashion 학습·평가 과정과, 공개 데이터 Fashion-MNIST 실험에서 찾은 데이터 증강·잔차 연결 문제와 클래스별 오분류를 소개합니다.',
   },
   'virtual-try-on': {
     title: '가상 착용 앱·컴퓨터 비전 API 연동 연구 | 김규태',
-    description: '공개 가상 착용 모델과 Flask API·Android 앱을 연결한 연구입니다. 김규태가 맡은 인물·의류 입력 전처리, 마스크 처리와 서버·앱 연동, 재사용한 모델과 검증 범위를 소개합니다.',
+    description: '공개 가상 착용 모델을 Flask API와 Android 앱으로 묶은 연구입니다. 김규태가 맡은 인물·의류 입력 전처리와 마스크 처리, 서버·앱 연동, 가져다 사용한 모델을 소개합니다.',
   },
 };
 
@@ -59,7 +59,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/',
     title: '김규태 Sean Kim | AI·CAD/CAM 개발자 포트폴리오',
-    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 직접 맡은 역할과 결과를 소개합니다. 강화학습·컴퓨터 비전 연구의 구현과 실험 결과도 확인하세요.',
+    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 맡은 역할과 결과를 소개합니다. 학부연구생 때 한 강화학습·컴퓨터 비전 연구와 실험 결과도 볼 수 있습니다.',
     image: 'assets/og/home.jpg',
     imageAlt: '김규태 Sean Kim 포트폴리오. 가구 설계부터 가공 데이터까지 3D 형상을 다룹니다.',
     kind: 'ProfilePage',
@@ -67,7 +67,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/portfolio',
     title: 'AI·CAD/CAM·제조 소프트웨어 개발 사례 | 김규태',
-    description: '3D 형상 AI, CAD 자동화, CAM 공정 생성과 가구 제조 소프트웨어 개발 사례입니다. 김규태가 프로젝트별로 맡은 연구개발·제조 데이터·서비스 운영 역할과 결과, 검증 범위를 소개합니다.',
+    description: '3D 형상 AI, CAD 자동화, CAM 공정 생성과 가구 제조 소프트웨어 개발 사례입니다. 프로젝트마다 김규태가 맡은 역할과 결과를 소개합니다.',
     image: 'assets/og/portfolio.jpg',
     imageAlt: '연구에서 제조까지 이어지는 AI·CAD/CAM 개발 프로젝트.',
     kind: 'CollectionPage',
@@ -98,21 +98,21 @@ export const SEARCH_PAGES: SearchPage[] = [
       ? '강화학습으로 TSP 경로를 만드는 그래프 모델. 학습 정책과 최원 삽입 경로 비교.'
       : research.id === 'fashion-classification'
         ? 'ResNet 의류 분류 연구. Fashion-MNIST 예측 예시와 직접 구현한 학습·평가 흐름.'
-        : '가상 착용 앱 연구. 인물 사진·입힐 옷·착용 결과를 비교한 공개 코드 재실행 예시.',
+        : '가상 착용 앱 연구. 인물 사진과 입힐 옷, 착용 결과를 나란히 놓은 예시.',
     kind: 'WebPage',
     research,
   })),
   {
     path: '/opencad',
     title: '오픈캐드(OpenCAD) | 무료 웹캐드·DWG DXF 편집',
-    description: '오픈캐드(OpenCAD)에서 DWG·DXF 도면을 열고 그리기·편집·저장까지 무료로 하세요. 설치·회원가입 없는 웹캐드와 STEP·STP·스케치업 SKP·NC 뷰어를 제공합니다. 파일을 서버로 올리지 않고 브라우저에서 처리하며 형식별 지원 범위를 안내합니다.',
+    description: '오픈캐드(OpenCAD)에서는 DWG·DXF 도면을 무료로 열고, 새로 그리거나 고친 뒤 저장할 수 있습니다. 설치와 회원가입 없이 쓰는 웹캐드이며 STEP·STP, 스케치업 SKP, NC 뷰어도 있습니다. 파일은 서버로 올리지 않고 브라우저에서 처리하며, 형식별 지원 범위도 안내합니다.',
     image: 'assets/og/opencad.jpg',
     imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 공구 경로 뷰어 네 가지의 화면.',
     kind: 'CollectionPage',
   },
   {
     path: '/notes', title: 'AI·CAD/CAM·가구 제조 소프트웨어 개발 노트 | 김규태',
-    description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, 가구 설계·제조 데이터 개발에서 내린 판단과 검증 범위를 정리합니다.',
+    description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, 가구 설계·제조 데이터를 개발하며 고민한 것과 확인한 내용을 적었습니다.',
     image: 'assets/og/portfolio.jpg', imageAlt: '김규태의 AI·CAD/CAM·제조 소프트웨어 개발 노트.', kind: 'CollectionPage',
   },
   ...SITE_ARTICLES.map((article): SearchPage => ({
@@ -127,7 +127,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/contact',
     title: 'AI·CAD/CAM 개발자 채용·제조 기술 협업 | 김규태',
-    description: 'AI·CAD/CAM 개발자 채용, 3D 형상 인식과 설계·제조 자동화 협업을 위한 김규태(Sean Kim)의 연락처입니다. Python AI 연구, Fusion CAM 연동, SketchUp·가구 제조 데이터 개발 경험과 프로젝트를 확인하세요.',
+    description: 'AI·CAD/CAM 개발자 채용, 3D 형상 인식과 설계·제조 자동화 협업을 위한 김규태(Sean Kim)의 연락처입니다. Python AI 연구와 Fusion CAM 연동, SketchUp 가구 제조 데이터 개발 경험도 함께 소개합니다.',
     image: 'assets/og/home.jpg',
     imageAlt: '김규태 Sean Kim의 연구개발 협업 연락처.',
     kind: 'ContactPage',
