@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { LocalLinkPipe, TranslatePipe } from './i18n.service';
+import { ImageOriginalPipe, LocalImagePipe, LocalLinkPipe, TranslatePipe } from './i18n.service';
 
-@NgModule({ declarations: [LocalLinkPipe, TranslatePipe], exports: [LocalLinkPipe, TranslatePipe] })
+@NgModule({ declarations: [ImageOriginalPipe, LocalImagePipe, LocalLinkPipe, TranslatePipe], exports: [ImageOriginalPipe, LocalImagePipe, LocalLinkPipe, TranslatePipe] })
 export class I18nModule {}

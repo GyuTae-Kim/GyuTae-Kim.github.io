@@ -664,7 +664,7 @@
   "닫기": "Close",
   "닫힌 경계를 재는지, 구멍이나 제외할 영역이 있는지 확인하세요. 열린 선이나 잘못 연결된 경계를 눈대중으로 합쳐 계산하면 원하는 면적과 달라질 수 있습니다. 객체 특성에 표시되는 길이·면적도 함께 비교할 수 있습니다.": "Verify whether you are measuring a closed boundary and check for any holes or areas that should be excluded. Manually \"closing\" open lines or improperly connected boundaries can lead to an inaccurate area calculation. You can also cross-reference these values ​​with the length and area data displayed in the object properties.",
   "닫힌 포켓": "Closed pocket",
-  "닫힌 포켓 합성 형상": "Closed pocket composite geometry",
+  "닫힌 포켓 합성 형상": "Synthetic closed-pocket geometry",
   "담당": "Responsibility",
   "담당 역할·연구 화면·검증 범위를 담은 전체 사례": "A comprehensive use case covering assigned roles, research interfaces, and verification scope.",
   "담당자가 여러 관리 화면을 계속 지켜보는 대신 이상과 복구를 알림으로 확인해, 반복 점검 부담을 줄이고 원인 파악에 집중할 수 있습니다.": "Instead of constantly monitoring multiple management screens, the person in charge receives notifications for anomalies and recovery—reducing the burden of repetitive checks and allowing them to focus on identifying root causes.",
@@ -748,8 +748,8 @@
   "마스크가 배경까지 번진 옷": "Clothing where the mask has bled into the background",
   "마스크가 배경으로 새면 몸통이 번지고, 소매 길이가 바뀌면 팔에 잔상이 생기고, 기장이 다르면 원래 옷 무늬가 밑단 아래에 남습니다.": "If the mask leaks into the background, the torso area will bleed; if the sleeve length changes, \"ghosting\" (residual images) may appear on the arms; and if the overall length differs, the original clothing pattern may remain visible below the hem.",
   "마지막 하트비트": "Last heartbeat",
-  "막힌 구멍": "Blocked hole",
-  "막힌 구멍 합성 형상": "Synthesized shape for a blocked hole",
+  "막힌 구멍": "Blind hole",
+  "막힌 구멍 합성 형상": "Synthetic blind-hole geometry",
   "만들어낸 결과": "Results",
   "맞닿은 면의 볼록, 오목 관계를 그래프로": "Graph of convex and concave relationships between adjacent faces",
   "맡은 역할": "Assigned role",
@@ -1056,7 +1056,7 @@
   "열기": "Open",
   "열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면": "If there are any drawings that won't open, or specific formats you would like us to support,",
   "열린 포켓": "Open pocket",
-  "열린 포켓 합성 형상": "Open pocket composite geometry",
+  "열린 포켓 합성 형상": "Synthetic open-pocket geometry",
   "열린 포켓의 바닥 필렛과 홀을 구분한 테일 고정 블록의 학습 라벨": "Training label for a tail-fixing block, distinguishing between the bottom fillet of an open pocket and its holes",
   "예제 G-code를 연 화면": "Screen showing an example G-code file",
   "예제 도면을 연 실제 화면. 위쪽 리본과 아래쪽 명령행에서 기능을 실행합니다.": "Actual screen with an example drawing opened. Use the ribbon at the top and the command line at the bottom to execute functions.",
@@ -1898,5 +1898,6 @@
   "오픈캐드: 무료 웹캐드와 3D 뷰어": "OpenCAD: free online CAD and 3D viewers",
   "끝점, 가운데 점, 원 중심에 붙는 두 점 측정과 면 사이 최소 거리": "Two-point measurement that snaps to endpoints, midpoints and circle centers, and minimum distance between faces",
   "여러 단면 평면과 잘린 면 채우기, 큰 좌표에서도 떨리지 않는 묶음 원점": "Multiple section planes with cut-face fill, per-group origins that keep large coordinates from jittering",
-  "단면": "Section"
+  "단면": "Section",
+  "번역 참고 이미지 · 한국어 원본 보기": "Translated reference · View Korean original"
 }

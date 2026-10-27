@@ -664,7 +664,7 @@
   "닫기": "Schließen",
   "닫힌 경계를 재는지, 구멍이나 제외할 영역이 있는지 확인하세요. 열린 선이나 잘못 연결된 경계를 눈대중으로 합쳐 계산하면 원하는 면적과 달라질 수 있습니다. 객체 특성에 표시되는 길이·면적도 함께 비교할 수 있습니다.": "Prüfen Sie, ob Sie geschlossene Begrenzungen messen und ob Löcher oder Bereiche vorhanden sind, die ausgeschlossen werden sollen. Wenn Sie die Fläche durch manuelles Zusammenführen offener Linien oder nicht verbundener Begrenzungen berechnen, kann das Ergebnis von der gewünschten Fläche abweichen. Sie können auch die in den Objekteigenschaften angezeigte Länge und Fläche vergleichen.",
   "닫힌 포켓": "Geschlossene Tasche",
-  "닫힌 포켓 합성 형상": "Zusammengesetzte Form der geschlossenen Tasche",
+  "닫힌 포켓 합성 형상": "Synthetische Geometrie einer geschlossenen Tasche",
   "담당": "Verantwortliche Person",
   "담당 역할·연구 화면·검증 범위를 담은 전체 사례": "Vollständige Fallstudie mit Rolle der verantwortlichen Person, Recherchebildschirm und Prüfumfang",
   "담당자가 여러 관리 화면을 계속 지켜보는 대신 이상과 복구를 알림으로 확인해, 반복 점검 부담을 줄이고 원인 파악에 집중할 수 있습니다.": "Anstatt ständig mehrere Managementbildschirme zu überwachen, kann die verantwortliche Person Anomalien und deren Behebung über Benachrichtigungen prüfen. Dies reduziert den Aufwand für wiederholte Prüfungen und ermöglicht es ihr, sich auf die Ursachenanalyse zu konzentrieren.",
@@ -748,8 +748,8 @@
   "마스크가 배경까지 번진 옷": "Kleidung mit Maske, die in den Hintergrund hineinragt",
   "마스크가 배경으로 새면 몸통이 번지고, 소매 길이가 바뀌면 팔에 잔상이 생기고, 기장이 다르면 원래 옷 무늬가 밑단 아래에 남습니다.": "Wenn die Maske in den Hintergrund hineinragt, wird der Oberkörper unscharf. Ändert sich die Ärmellänge, entstehen Nachbilder an den Armen; ist die Länge unterschiedlich, bleibt das ursprüngliche Schnittmuster unterhalb des Saums sichtbar.",
   "마지막 하트비트": "Letzter Herzschlag",
-  "막힌 구멍": "Verschlossenes Loch",
-  "막힌 구멍 합성 형상": "Verbundform des verschlossenen Lochs",
+  "막힌 구멍": "Sackloch",
+  "막힌 구멍 합성 형상": "Synthetische Sacklochgeometrie",
   "만들어낸 결과": "Ergebnisse",
   "맞닿은 면의 볼록, 오목 관계를 그래프로": "Konvexe und konkave Beziehungen benachbarter Flächen als Graph",
   "맡은 역할": "Zugewiesene Rolle",
@@ -1056,7 +1056,7 @@
   "열기": "Öffnen",
   "열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면": "Falls eine Zeichnung nicht geöffnet werden kann oder Sie ein bestimmtes Format bevorzugen:",
   "열린 포켓": "Offene Tasche",
-  "열린 포켓 합성 형상": "Geometrie der offenen Tasche",
+  "열린 포켓 합성 형상": "Synthetische Geometrie einer offenen Tasche",
   "열린 포켓의 바닥 필렛과 홀을 구분한 테일 고정 블록의 학습 라벨": "Lernbezeichnung für den Befestigungsblock am Ende der offenen Tasche, der die untere Verrundung und die Bohrung trennt",
   "예제 G-code를 연 화면": "Beispiel-G-Code geöffnet",
   "예제 도면을 연 실제 화면. 위쪽 리본과 아래쪽 명령행에서 기능을 실행합니다.": "Beispielzeichnung geöffnet. Führen Sie Funktionen aus dem oberen Menüband und der unteren Befehlszeile aus.",
@@ -1898,5 +1898,6 @@
   "오픈캐드: 무료 웹캐드와 3D 뷰어": "OpenCAD: kostenloses Online-CAD und 3D-Viewer",
   "끝점, 가운데 점, 원 중심에 붙는 두 점 측정과 면 사이 최소 거리": "Zweipunktmessung mit Fang an Endpunkten, Mittelpunkten und Kreismittelpunkten sowie kleinster Abstand zwischen Flächen",
   "여러 단면 평면과 잘린 면 채우기, 큰 좌표에서도 떨리지 않는 묶음 원점": "Mehrere Schnittebenen mit Schnittflächenfüllung, eigene Ursprünge je Gruppe, damit große Koordinaten nicht zittern",
-  "단면": "Schnitt"
+  "단면": "Schnitt",
+  "번역 참고 이미지 · 한국어 원본 보기": "Übersetzte Referenz · Koreanisches Original ansehen"
 }

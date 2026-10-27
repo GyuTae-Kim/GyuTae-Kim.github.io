@@ -1,0 +1,1885 @@
+{
+  "description": "Localized SVG annotation layers over unchanged original geometry, photographs and plotted results. Model geometry, data marks and numeric measurements are not regenerated.",
+  "languages": [
+    "en",
+    "ja",
+    "zh-CN",
+    "de"
+  ],
+  "images": [
+    {
+      "path": "assets/cases/feature-cam/step2.webp",
+      "width": 900,
+      "height": 675,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "닫힌 포켓 · 필렛",
+          "box": [
+            0.022176807353842965,
+            0.023332369978393497,
+            0.12231305440266928,
+            0.030258336716149747
+          ],
+          "translations": {
+            "en": "Closed pocket · Fillet",
+            "ja": "クローズドポケット・フィレット",
+            "zh-CN": "封闭型腔 · 圆角",
+            "de": "Geschlossene Tasche · Verrundung"
+          }
+        },
+        {
+          "sourceText": "열린 포켓•필렛",
+          "box": [
+            0.5222222209722223,
+            0.020710059615384635,
+            0.1266666666666667,
+            0.035502958579881616
+          ],
+          "translations": {
+            "en": "Open pocket · Fillet",
+            "ja": "オープンポケット・フィレット",
+            "zh-CN": "开放型腔 · 圆角",
+            "de": "Offene Tasche · Verrundung"
+          }
+        },
+        {
+          "sourceText": "막힌 구멍",
+          "box": [
+            0.0222222216984127,
+            0.4940828403634826,
+            0.07333333333333333,
+            0.029585798816568087
+          ],
+          "translations": {
+            "en": "Blind hole",
+            "ja": "止まり穴",
+            "zh-CN": "盲孔",
+            "de": "Sackloch"
+          }
+        },
+        {
+          "sourceText": "모따기 • 구멍",
+          "box": [
+            0.5220128791091969,
+            0.48999916415761624,
+            0.10486312866210945,
+            0.03775315030792059
+          ],
+          "translations": {
+            "en": "Chamfer · Holes",
+            "ja": "面取り・穴",
+            "zh-CN": "倒角 · 孔",
+            "de": "Fase · Bohrungen"
+          }
+        },
+        {
+          "sourceText": "면 라벨",
+          "box": [
+            0.015555556249999982,
+            0.9526627217085798,
+            0.05555555555555556,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Face labels",
+            "ja": "面ラベル",
+            "zh-CN": "面标签",
+            "de": "Flächenlabels"
+          }
+        },
+        {
+          "sourceText": "포켓•구멍",
+          "box": [
+            0.12888888815555558,
+            0.9526627220414202,
+            0.07333333333333333,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Pockets · Holes",
+            "ja": "ポケット・穴",
+            "zh-CN": "型腔 · 孔",
+            "de": "Taschen · Bohrungen"
+          }
+        },
+        {
+          "sourceText": "필렛",
+          "box": [
+            0.2644444441666666,
+            0.9526627220167653,
+            0.033333333333333326,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Fillet",
+            "ja": "フィレット",
+            "zh-CN": "圆角",
+            "de": "Verrundung"
+          }
+        },
+        {
+          "sourceText": "모따기",
+          "box": [
+            0.3577777782,
+            0.9526627221597632,
+            0.04666666666666669,
+            0.026627218934911157
+          ],
+          "translations": {
+            "en": "Chamfer",
+            "ja": "面取り",
+            "zh-CN": "倒角",
+            "de": "Fase"
+          }
+        },
+        {
+          "sourceText": "가공 없는 면",
+          "box": [
+            0.46664448154134225,
+            0.9525341410508379,
+            0.08671103583441847,
+            0.02688438229306911
+          ],
+          "translations": {
+            "en": "Unmachined face",
+            "ja": "未加工面",
+            "zh-CN": "未加工面",
+            "de": "Unbearbeitete Fläche"
+          }
+        }
+      ],
+      "sourceSha256": "72a8001ef1e9654e1cefaed0c7cd6a09ecebf3f4b5ad2be5218fcda839bb68f4"
+    },
+    {
+      "path": "assets/cases/feature-cam/step3.webp",
+      "width": 900,
+      "height": 675,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "외곽 황삭 • 공정 2/22",
+          "box": [
+            0.05999999791666672,
+            0.023668639238165645,
+            0.16666666666666669,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Outer roughing · 2/22",
+            "ja": "外形荒加工・2/22",
+            "zh-CN": "外轮廓粗加工 · 2/22",
+            "de": "Außenkontur schruppen · 2/22"
+          }
+        },
+        {
+          "sourceText": "개방 포켓 황삭 • 공정 9/22",
+          "box": [
+            0.06444444697222214,
+            0.5266272188609467,
+            0.20222222222222225,
+            0.029585798816568087
+          ],
+          "translations": {
+            "en": "Open-pocket roughing · 9/22",
+            "ja": "開放ポケット荒加工・9/22",
+            "zh-CN": "开放型腔粗加工 · 9/22",
+            "de": "Offene Tasche schruppen · 9/22"
+          }
+        },
+        {
+          "sourceText": "선행 드릴링 • 공정 5/22",
+          "box": [
+            0.5666666644166667,
+            0.023668639238165645,
+            0.18000000000000005,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Pre-drilling · 5/22",
+            "ja": "下穴加工・5/22",
+            "zh-CN": "预钻孔 · 5/22",
+            "de": "Vorbohren · 5/22"
+          }
+        },
+        {
+          "sourceText": "외곽 윤곽 정 • 공정 21/22",
+          "box": [
+            0.5688888885555555,
+            0.526627218602071,
+            0.2088888888888889,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Outer contour finishing · 21/22",
+            "ja": "外形仕上げ・21/22",
+            "zh-CN": "外轮廓精加工 · 21/22",
+            "de": "Außenkontur schlichten · 21/22"
+          }
+        }
+      ],
+      "sourceSha256": "32aefab3e46ece600085397f0deed92dd07f827baabeb311872e76cd6a59de94"
+    },
+    {
+      "path": "assets/cases/panel/hero.webp",
+      "width": 1600,
+      "height": 1000,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "원래",
+          "box": [
+            0.23546511623794342,
+            0.9279069770860177,
+            0.03488372087478636,
+            0.030232557296752893
+          ],
+          "translations": {
+            "en": "Before",
+            "ja": "変更前",
+            "zh-CN": "修改前",
+            "de": "Vorher"
+          }
+        },
+        {
+          "sourceText": "폭 변경 후",
+          "box": [
+            0.6641559783613893,
+            0.9273208927706302,
+            0.07721129894256595,
+            0.0314047250747681
+          ],
+          "translations": {
+            "en": "After width change",
+            "ja": "幅変更後",
+            "zh-CN": "宽度修改后",
+            "de": "Nach Breitenänderung"
+          }
+        }
+      ],
+      "sourceSha256": "8d07db0424caa49d9486a5cc826832024f6ff7a42235ee28663acfa844aa924b"
+    },
+    {
+      "path": "assets/cases/panel/step1.webp",
+      "width": 900,
+      "height": 675,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "판재끼리 맞닿는 접합면",
+          "box": [
+            0.046666668577777744,
+            0.026627218786982265,
+            0.19111111111111112,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "Contact faces between panels",
+            "ja": "板材同士の接合面",
+            "zh-CN": "板件之间的接合面",
+            "de": "Kontaktflächen zwischen Platten"
+          }
+        }
+      ],
+      "sourceSha256": "3a997123331932a8c9684dae61140670ad2d95f9713aa593cf8e3d146cde41c5"
+    },
+    {
+      "path": "assets/cases/panel/step3.webp",
+      "width": 900,
+      "height": 675,
+      "frames": 9,
+      "layers": [
+        {
+          "sourceText": "접합면 찾기",
+          "box": [
+            0.5755100665841943,
+            0.2956143019501112,
+            0.11564653184678819,
+            0.0389489111815684
+          ],
+          "translations": {
+            "en": "Find contact faces",
+            "ja": "接合面を検出",
+            "zh-CN": "查找接合面",
+            "de": "Kontaktflächen finden"
+          }
+        },
+        {
+          "sourceText": "그 폭을 바꾼 패널",
+          "box": [
+            0.5776648781958578,
+            0.4222503743257522,
+            0.15578135172526042,
+            0.04011463554653194
+          ],
+          "translations": {
+            "en": "Resized panel",
+            "ja": "幅を変更した板材",
+            "zh-CN": "宽度已修改的板件",
+            "de": "Platte mit geänderter Breite"
+          }
+        },
+        {
+          "sourceText": "따라서 맞춰지는 패널",
+          "box": [
+            0.5777777766049383,
+            0.4792899410092044,
+            0.21111111111111114,
+            0.03846153846153855
+          ],
+          "translations": {
+            "en": "Connected panels update",
+            "ja": "接合する板材を調整",
+            "zh-CN": "相连板件随之调整",
+            "de": "Verbundene Platten werden angepasst"
+          }
+        },
+        {
+          "sourceText": "- 접합면",
+          "box": [
+            0.5822222224222221,
+            0.5414201180177514,
+            0.08666666666666667,
+            0.03254437869822491
+          ],
+          "translations": {
+            "en": "Contact face",
+            "ja": "接合面",
+            "zh-CN": "接合面",
+            "de": "Kontaktfläche"
+          }
+        },
+        {
+          "sourceText": "한 패널의 폭이 바뀌면 맞닿은",
+          "box": [
+            0.5755555570317461,
+            0.6213017749788673,
+            0.20666666666666667,
+            0.029585798816567976
+          ],
+          "translations": {
+            "en": "When a panel width changes,",
+            "ja": "板材の幅を変えると、",
+            "zh-CN": "修改一块板件的宽度后，",
+            "de": "Ändert sich eine Plattenbreite,"
+          }
+        },
+        {
+          "sourceText": "패널들이 접합 관계를 따라",
+          "box": [
+            0.5755555571296297,
+            0.65384615367357,
+            0.18888888888888888,
+            0.026627218934911268
+          ],
+          "translations": {
+            "en": "connected panels follow",
+            "ja": "接合関係に従って他の板材が",
+            "zh-CN": "相连板件沿接合关系",
+            "de": "folgen verbundene Platten"
+          }
+        },
+        {
+          "sourceText": "차례로 크기•위치를 맞춥니다.",
+          "box": [
+            0.5755555576666666,
+            0.6834319526035503,
+            0.21111111111111114,
+            0.029585798816567976
+          ],
+          "translations": {
+            "en": "and adjust size and position.",
+            "ja": "寸法と位置を順に調整します。",
+            "zh-CN": "依次调整尺寸和位置。",
+            "de": "und passen Maße und Position an."
+          }
+        }
+      ],
+      "sourceSha256": "98cc963021650ac6dafcbc70506aad4cf1114b8ccc9693cc5f458255c5348263"
+    },
+    {
+      "path": "assets/cases/panel/step3-still.webp",
+      "width": 900,
+      "height": 675,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "전파 8 /8",
+          "box": [
+            0.5754599753082887,
+            0.29538265929130647,
+            0.10685782538519961,
+            0.0394121993928267
+          ],
+          "translations": {
+            "en": "Propagation 8/8",
+            "ja": "伝播 8/8",
+            "zh-CN": "传播 8/8",
+            "de": "Übertragung 8/8"
+          }
+        },
+        {
+          "sourceText": "그 폭을 바꾼 패널",
+          "box": [
+            0.5798504630237643,
+            0.421893846594416,
+            0.1536324055989583,
+            0.037869112026056584
+          ],
+          "translations": {
+            "en": "Resized panel",
+            "ja": "幅を変更した板材",
+            "zh-CN": "宽度已修改的板件",
+            "de": "Platte mit geänderter Breite"
+          }
+        },
+        {
+          "sourceText": "따라서 맞춰지는 패널",
+          "box": [
+            0.5777777760185185,
+            0.4792899410502959,
+            0.21111111111111114,
+            0.038461538461538436
+          ],
+          "translations": {
+            "en": "Connected panels update",
+            "ja": "接合する板材を調整",
+            "zh-CN": "相连板件随之调整",
+            "de": "Verbundene Platten werden angepasst"
+          }
+        },
+        {
+          "sourceText": "- 접합면",
+          "box": [
+            0.5822222213555557,
+            0.5414201185502958,
+            0.08666666666666656,
+            0.03254437869822491
+          ],
+          "translations": {
+            "en": "Contact face",
+            "ja": "接合面",
+            "zh-CN": "接合面",
+            "de": "Kontaktfläche"
+          }
+        },
+        {
+          "sourceText": "한 패널의 폭이 바뀌면 맞닿은",
+          "box": [
+            0.5755555570317461,
+            0.6213017749788673,
+            0.20666666666666667,
+            0.029585798816567976
+          ],
+          "translations": {
+            "en": "When a panel width changes,",
+            "ja": "板材の幅を変えると、",
+            "zh-CN": "修改一块板件的宽度后，",
+            "de": "Ändert sich eine Plattenbreite,"
+          }
+        },
+        {
+          "sourceText": "패널들이 접합 관계를 따라",
+          "box": [
+            0.5755555554,
+            0.650887573668639,
+            0.18888888888888888,
+            0.029585798816568087
+          ],
+          "translations": {
+            "en": "connected panels follow",
+            "ja": "接合関係に従って他の板材が",
+            "zh-CN": "相连板件沿接合关系",
+            "de": "folgen verbundene Platten"
+          }
+        },
+        {
+          "sourceText": "차례로 크기•위치를 맞춥니다.",
+          "box": [
+            0.5755555573148148,
+            0.6834319526134123,
+            0.21111111111111114,
+            0.029585798816568087
+          ],
+          "translations": {
+            "en": "and adjust size and position.",
+            "ja": "寸法と位置を順に調整します。",
+            "zh-CN": "依次调整尺寸和位置。",
+            "de": "und passen Maße und Position an."
+          }
+        }
+      ],
+      "sourceSha256": "f2459089aee1645520c8f67ca502fa4184733ae8cf8130a6ea79acfc7bdf7b65"
+    },
+    {
+      "path": "assets/research/k-fashion-class-count.png",
+      "width": 1400,
+      "height": 500,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "총 200000",
+          "box": [
+            0.008671513734270622,
+            0.46717470099617653,
+            0.0640523202078683,
+            0.0819107551574707
+          ],
+          "translations": {
+            "en": "Total 200000",
+            "ja": "合計 200000",
+            "zh-CN": "总计 200000",
+            "de": "Gesamt 200000"
+          }
+        }
+      ],
+      "sourceSha256": "41b004f6d40ccdc4c9d3ebf1df348b1eae062cf893cd5401356dc1b1eeb80d54"
+    },
+    {
+      "path": "assets/research/results/classification/accuracy-bars.webp",
+      "width": 1600,
+      "height": 982,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "원래 설정",
+          "box": [
+            0.04066352172788072,
+            0.0541684658174586,
+            0.13378923416137695,
+            0.059511767385447834
+          ],
+          "translations": {
+            "en": "Original settings",
+            "ja": "元の設定",
+            "zh-CN": "原始设置",
+            "de": "Ursprüngliche Einstellungen"
+          }
+        },
+        {
+          "sourceText": "숏컷 연결 수정",
+          "box": [
+            0.03908228120802107,
+            0.2892971072973013,
+            0.20817264556884765,
+            0.0644317906645796
+          ],
+          "translations": {
+            "en": "Shortcut fix",
+            "ja": "ショートカット接続を修正",
+            "zh-CN": "修复捷径连接",
+            "de": "Shortcut-Verbindung korrigiert"
+          }
+        },
+        {
+          "sourceText": "증강 끔",
+          "box": [
+            0.037473994507138356,
+            0.5208753113669353,
+            0.10964503288269044,
+            0.06226829016038693
+          ],
+          "translations": {
+            "en": "Augmentation off",
+            "ja": "データ拡張なし",
+            "zh-CN": "关闭数据增强",
+            "de": "Ohne Datenerweiterung"
+          }
+        },
+        {
+          "sourceText": "모두 수정",
+          "box": [
+            0.039004460925948906,
+            0.7550159492401463,
+            0.13565386772155763,
+            0.06207211877080909
+          ],
+          "translations": {
+            "en": "Both fixes",
+            "ja": "両方を修正",
+            "zh-CN": "两项均修复",
+            "de": "Beide Korrekturen"
+          }
+        }
+      ],
+      "sourceSha256": "72db7b31096e296473c128a3eb0518a127e3a06d95ce980b8a647766ce0fcaf0"
+    },
+    {
+      "path": "assets/research/results/classification/prediction-gallery.webp",
+      "width": 2000,
+      "height": 857,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "드레스",
+          "box": [
+            0.03924418707713383,
+            0.3251748259984335,
+            0.06976744079589844,
+            0.061771561771561734
+          ],
+          "translations": {
+            "en": "Dress",
+            "ja": "ワンピース",
+            "zh-CN": "连衣裙",
+            "de": "Kleid"
+          }
+        },
+        {
+          "sourceText": "원래 설정",
+          "box": [
+            0.017394811368610277,
+            0.44365030055537447,
+            0.1047452621459961,
+            0.0652417691993269
+          ],
+          "translations": {
+            "en": "Original settings",
+            "ja": "元の設定",
+            "zh-CN": "原始设置",
+            "de": "Ursprüngliche Einstellungen"
+          }
+        },
+        {
+          "sourceText": "× 티셔츠",
+          "box": [
+            0.02325581367860937,
+            0.5694915260265135,
+            0.09738372039794921,
+            0.06803761106548878
+          ],
+          "translations": {
+            "en": "× T-shirt",
+            "ja": "× Tシャツ",
+            "zh-CN": "× T恤",
+            "de": "× T-Shirt"
+          }
+        },
+        {
+          "sourceText": "증강 끔",
+          "box": [
+            0.017395287853901494,
+            0.725102851733488,
+            0.08148849487304688,
+            0.06504853344185924
+          ],
+          "translations": {
+            "en": "Augmentation off",
+            "ja": "データ拡張なし",
+            "zh-CN": "关闭数据增强",
+            "de": "Ohne Datenerweiterung"
+          }
+        },
+        {
+          "sourceText": "드레스",
+          "box": [
+            0.15552325537318235,
+            0.32517482600745407,
+            0.07412790679931641,
+            0.05827505827505819
+          ],
+          "translations": {
+            "en": "Dress",
+            "ja": "ワンピース",
+            "zh-CN": "连衣裙",
+            "de": "Kleid"
+          }
+        },
+        {
+          "sourceText": "코트",
+          "box": [
+            0.2965116273746934,
+            0.32167832278457753,
+            0.05523255920410153,
+            0.05128205128205132
+          ],
+          "translations": {
+            "en": "Coat",
+            "ja": "コート",
+            "zh-CN": "外套",
+            "de": "Mantel"
+          }
+        },
+        {
+          "sourceText": "× 드레스",
+          "box": [
+            0.2659883741707735,
+            0.5694915256122008,
+            0.10029069519042966,
+            0.06803761106548889
+          ],
+          "translations": {
+            "en": "× Dress",
+            "ja": "× ワンピース",
+            "zh-CN": "× 连衣裙",
+            "de": "× Kleid"
+          }
+        },
+        {
+          "sourceText": "코트",
+          "box": [
+            0.4156976744412343,
+            0.32167832147263675,
+            0.04651162719726565,
+            0.054778554778554756
+          ],
+          "translations": {
+            "en": "Coat",
+            "ja": "コート",
+            "zh-CN": "外套",
+            "de": "Mantel"
+          }
+        },
+        {
+          "sourceText": "× 티셔츠",
+          "box": [
+            0.3895348858425406,
+            0.5694915252837058,
+            0.09593022918701172,
+            0.06454110979200245
+          ],
+          "translations": {
+            "en": "× T-shirt",
+            "ja": "× Tシャツ",
+            "zh-CN": "× T恤",
+            "de": "× T-Shirt"
+          }
+        },
+        {
+          "sourceText": "바지",
+          "box": [
+            0.5363372099478788,
+            0.32517482602264647,
+            0.04651162719726565,
+            0.061771561771561845
+          ],
+          "translations": {
+            "en": "Trousers",
+            "ja": "パンツ",
+            "zh-CN": "长裤",
+            "de": "Hose"
+          }
+        },
+        {
+          "sourceText": "바지",
+          "box": [
+            0.646802325222116,
+            0.32517482411978016,
+            0.05668604660034182,
+            0.061771561771561845
+          ],
+          "translations": {
+            "en": "Trousers",
+            "ja": "パンツ",
+            "zh-CN": "长裤",
+            "de": "Hose"
+          }
+        },
+        {
+          "sourceText": "X드레스",
+          "box": [
+            0.6322674429381377,
+            0.5694915255557037,
+            0.09738372039794918,
+            0.06803761106548889
+          ],
+          "translations": {
+            "en": "× Dress",
+            "ja": "× ワンピース",
+            "zh-CN": "× 连衣裙",
+            "de": "× Kleid"
+          }
+        },
+        {
+          "sourceText": "티셔츠",
+          "box": [
+            0.7703488389339004,
+            0.32517482435047707,
+            0.06831394958496095,
+            0.061771561771561734
+          ],
+          "translations": {
+            "en": "T-shirt",
+            "ja": "Tシャツ",
+            "zh-CN": "T恤",
+            "de": "T-Shirt"
+          }
+        },
+        {
+          "sourceText": "티셔츠",
+          "box": [
+            0.8779069767837879,
+            0.32517482411439946,
+            0.08139534759521483,
+            0.061771561771561734
+          ],
+          "translations": {
+            "en": "T-shirt",
+            "ja": "Tシャツ",
+            "zh-CN": "T恤",
+            "de": "T-Shirt"
+          }
+        }
+      ],
+      "sourceSha256": "ade3efd7ddfae640e533391d6a5ae9a28b518a32b8395fa104b899efbd14b8fb"
+    },
+    {
+      "path": "assets/research/results/try-on/pipeline-compact.webp",
+      "width": 1920,
+      "height": 645,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "사진",
+          "box": [
+            0.08683473429522444,
+            0.849845201207954,
+            0.040616246064503994,
+            0.06682146444409254
+          ],
+          "translations": {
+            "en": "Photo",
+            "ja": "写真",
+            "zh-CN": "照片",
+            "de": "Foto"
+          }
+        },
+        {
+          "sourceText": "인체 파싱",
+          "box": [
+            0.2507002814781428,
+            0.8452012372936302,
+            0.08823529084523518,
+            0.0714654272923897
+          ],
+          "translations": {
+            "en": "Human parsing",
+            "ja": "人体パーシング",
+            "zh-CN": "人体解析",
+            "de": "Körpersegmentierung"
+          }
+        },
+        {
+          "sourceText": "포즈",
+          "box": [
+            0.46078431360406924,
+            0.8498452000688658,
+            0.04061624606450398,
+            0.05882352941176472
+          ],
+          "translations": {
+            "en": "Pose",
+            "ja": "姿勢",
+            "zh-CN": "姿态",
+            "de": "Pose"
+          }
+        },
+        {
+          "sourceText": "의류 마스크",
+          "box": [
+            0.6132853229617115,
+            0.843777396392536,
+            0.10676268736521399,
+            0.07911187281180465
+          ],
+          "translations": {
+            "en": "Garment mask",
+            "ja": "衣服マスク",
+            "zh-CN": "服装掩码",
+            "de": "Kleidungsmaske"
+          }
+        },
+        {
+          "sourceText": "착용 결과",
+          "box": [
+            0.8459383764961499,
+            0.8452012380079157,
+            0.08823529084523518,
+            0.0714654272923898
+          ],
+          "translations": {
+            "en": "Try-on result",
+            "ja": "試着結果",
+            "zh-CN": "试穿结果",
+            "de": "Anprobeergebnis"
+          }
+        }
+      ],
+      "sourceSha256": "234ac03e4c5f8c2ac22f0c037a99a4260a10e7569750ff07743613f43117d0d6"
+    },
+    {
+      "path": "assets/research/results/try-on/tryon-before-after.webp",
+      "width": 1920,
+      "height": 2480,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "원래 사진",
+          "box": [
+            0.11629550148152576,
+            0.02027049389325475,
+            0.09761537710825602,
+            0.020505523681640603
+          ],
+          "translations": {
+            "en": "Input photo",
+            "ja": "入力写真",
+            "zh-CN": "输入照片",
+            "de": "Eingabefoto"
+          }
+        },
+        {
+          "sourceText": "입힐 옷",
+          "box": [
+            0.461538462485152,
+            0.02016129050030835,
+            0.07692307631174716,
+            0.020564516129032206
+          ],
+          "translations": {
+            "en": "Target garment",
+            "ja": "着せる衣服",
+            "zh-CN": "目标服装",
+            "de": "Zielkleidung"
+          }
+        },
+        {
+          "sourceText": "착용 결과",
+          "box": [
+            0.7841417547253627,
+            0.020057138492837856,
+            0.0996339400609334,
+            0.02093223448722592
+          ],
+          "translations": {
+            "en": "Try-on result",
+            "ja": "試着結果",
+            "zh-CN": "试穿结果",
+            "de": "Anprobeergebnis"
+          }
+        }
+      ],
+      "sourceSha256": "f784235e03b6e72e01bfbb0ca9248a8406af06a48a832ee78175958bf090a12e"
+    },
+    {
+      "path": "assets/research/results/tsp/insertion-steps.webp",
+      "width": 1800,
+      "height": 1980,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "3단계",
+          "box": [
+            0.011182107261467587,
+            0.030303031044080497,
+            0.07987220764160155,
+            0.032323231359924987
+          ],
+          "translations": {
+            "en": "Step 3",
+            "ja": "ステップ3",
+            "zh-CN": "步骤3",
+            "de": "Schritt 3"
+          }
+        },
+        {
+          "sourceText": "14단계",
+          "box": [
+            0.007987222648843873,
+            0.5202020204605228,
+            0.09744408501519097,
+            0.03232323232323242
+          ],
+          "translations": {
+            "en": "Step 14",
+            "ja": "ステップ14",
+            "zh-CN": "步骤14",
+            "de": "Schritt 14"
+          }
+        },
+        {
+          "sourceText": "8단계",
+          "box": [
+            0.5143769959120486,
+            0.031818181789712185,
+            0.08146965026855468,
+            0.03080808080808084
+          ],
+          "translations": {
+            "en": "Step 8",
+            "ja": "ステップ8",
+            "zh-CN": "步骤8",
+            "de": "Schritt 8"
+          }
+        },
+        {
+          "sourceText": "완성",
+          "box": [
+            0.5143769963111521,
+            0.5202020205007634,
+            0.06389776441786033,
+            0.03357705010308165
+          ],
+          "translations": {
+            "en": "Complete",
+            "ja": "完成",
+            "zh-CN": "完成",
+            "de": "Fertig"
+          }
+        }
+      ],
+      "sourceSha256": "84f0de2acc81fada2c131cd5635d828b4cf87b7a968df7f7a8200ef9ba750246"
+    },
+    {
+      "path": "assets/research/results/tsp/method-bars.webp",
+      "width": 1800,
+      "height": 880,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "도시 50개",
+          "box": [
+            0.31250000121527777,
+            0.042045454780128,
+            0.14583333333333331,
+            0.09354776469143955
+          ],
+          "translations": {
+            "en": "50 cities",
+            "ja": "50都市",
+            "zh-CN": "50个城市",
+            "de": "50 Städte"
+          }
+        },
+        {
+          "sourceText": "최근접 이웃",
+          "box": [
+            0.15820355718516355,
+            0.19358284295557537,
+            0.15161614312065969,
+            0.06980760747736159
+          ],
+          "translations": {
+            "en": "Nearest neighbor",
+            "ja": "最近傍法",
+            "zh-CN": "最近邻",
+            "de": "Nächster Nachbar"
+          }
+        },
+        {
+          "sourceText": "무작위 순서 +삽입",
+          "box": [
+            0.06686046867025999,
+            0.3556818175061298,
+            0.23982557508680555,
+            0.06865052526647397
+          ],
+          "translations": {
+            "en": "Random order + insertion",
+            "ja": "ランダム順＋挿入",
+            "zh-CN": "随机顺序＋插入",
+            "de": "Zufallsreihenfolge + Einfügen"
+          }
+        },
+        {
+          "sourceText": "학습 정책",
+          "box": [
+            0.1860465126019145,
+            0.5222551938297701,
+            0.12209302266438801,
+            0.06865389780564735
+          ],
+          "translations": {
+            "en": "Learned policy",
+            "ja": "学習済み方策",
+            "zh-CN": "学习策略",
+            "de": "Gelernte Strategie"
+          }
+        },
+        {
+          "sourceText": "최원 삽입",
+          "box": [
+            0.185890807313477,
+            0.6842657440128432,
+            0.12385792202419699,
+            0.07063764875585388
+          ],
+          "translations": {
+            "en": "Farthest insertion",
+            "ja": "最遠挿入法",
+            "zh-CN": "最远插入法",
+            "de": "Entfernteste Einfügung"
+          }
+        },
+        {
+          "sourceText": "도시 100개",
+          "box": [
+            0.6728056749135067,
+            0.05767645805690902,
+            0.1529351637098525,
+            0.06565598574551668
+          ],
+          "translations": {
+            "en": "100 cities",
+            "ja": "100都市",
+            "zh-CN": "100个城市",
+            "de": "100 Städte"
+          }
+        }
+      ],
+      "sourceSha256": "2c6d5d02da2c1e97d5f46016d999c16f630595519727d066fee5a63cde3c78e6"
+    },
+    {
+      "path": "assets/research/results/tsp/tour-race-poster.webp",
+      "width": 960,
+      "height": 580,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "학습 정책",
+          "box": [
+            0.020833334023437487,
+            0.03448275844827586,
+            0.11041666666666666,
+            0.0482758620689655
+          ],
+          "translations": {
+            "en": "Learned policy",
+            "ja": "学習済み方策",
+            "zh-CN": "学习策略",
+            "de": "Gelernte Strategie"
+          }
+        },
+        {
+          "sourceText": "최원 삽입",
+          "box": [
+            0.5207285689268777,
+            0.03381775642297269,
+            0.11062619686126707,
+            0.04960586613622209
+          ],
+          "translations": {
+            "en": "Farthest insertion",
+            "ja": "最遠挿入法",
+            "zh-CN": "最远插入法",
+            "de": "Entfernteste Einfügung"
+          }
+        },
+        {
+          "sourceText": "OR-Tools 대비 1.12배",
+          "box": [
+            0.015477284536120569,
+            0.9032116616530871,
+            0.2654277165730794,
+            0.09477552874334927
+          ],
+          "translations": {
+            "en": "1.12× OR-Tools",
+            "ja": "OR-Tools比 1.12倍",
+            "zh-CN": "OR-Tools的1.12倍",
+            "de": "1,12× OR-Tools"
+          }
+        },
+        {
+          "sourceText": "OR-TOoIs 대비 1.08배",
+          "box": [
+            0.5187499977083334,
+            0.9103448278735633,
+            0.275,
+            0.06206896551724139
+          ],
+          "translations": {
+            "en": "1.08× OR-Tools",
+            "ja": "OR-Tools比 1.08倍",
+            "zh-CN": "OR-Tools的1.08倍",
+            "de": "1,08× OR-Tools"
+          }
+        }
+      ],
+      "sourceSha256": "19f02f8edbdbaa50cc4226091aa725900ced384126d48d935b482fff7e924c16"
+    },
+    {
+      "path": "assets/research/results/tsp/tour-race.webp",
+      "width": 960,
+      "height": 580,
+      "frames": 52,
+      "layers": [
+        {
+          "sourceText": "학습 정책",
+          "box": [
+            0.016666665711805573,
+            0.034482758793103474,
+            0.11458333333333333,
+            0.0482758620689655
+          ],
+          "translations": {
+            "en": "Learned policy",
+            "ja": "学習済み方策",
+            "zh-CN": "学习策略",
+            "de": "Gelernte Strategie"
+          }
+        },
+        {
+          "sourceText": "최원 삽입",
+          "box": [
+            0.5208333340234376,
+            0.03448275844827586,
+            0.11041666666666661,
+            0.0482758620689655
+          ],
+          "translations": {
+            "en": "Farthest insertion",
+            "ja": "最遠挿入法",
+            "zh-CN": "最远插入法",
+            "de": "Entfernteste Einfügung"
+          }
+        }
+      ],
+      "sourceSha256": "e890e38ce06919a65cc79e42e67102c8a697ef40eeb704f161ca8a4f65150400"
+    },
+    {
+      "path": "assets/research/results/tsp/tours-compare.webp",
+      "width": 1800,
+      "height": 1000,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "학습 정책 • 1.12배",
+          "box": [
+            0.005813956890641583,
+            0.05759162425857345,
+            0.24127905951605905,
+            0.05540837669372567
+          ],
+          "translations": {
+            "en": "Learned policy · 1.12×",
+            "ja": "学習済み方策・1.12倍",
+            "zh-CN": "学习策略 · 1.12倍",
+            "de": "Gelernte Strategie · 1,12×"
+          }
+        }
+      ],
+      "sourceSha256": "5d864d985e9eedcdb908bcfa0be108e44ddee65ada2510e92879f9e451f33ea1"
+    },
+    {
+      "path": "assets/cases/operations/dashboard-live-public.jpg",
+      "width": 1582,
+      "height": 994,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "서버상태",
+          "box": [
+            0.013002952749645186,
+            0.050405214755363414,
+            0.06992432682312244,
+            0.03544823168748823
+          ],
+          "translations": {
+            "en": "Server status",
+            "ja": "サーバー状態",
+            "zh-CN": "服务器状态",
+            "de": "Serverstatus"
+          }
+        },
+        {
+          "sourceText": "• 모든 서버가 정상 동작 중입니다",
+          "box": [
+            0.030523251311222212,
+            0.1847575060236114,
+            0.190406982576199,
+            0.025504063312676295
+          ],
+          "translations": {
+            "en": "All servers are operating normally",
+            "ja": "すべてのサーバーが正常に稼働しています",
+            "zh-CN": "所有服务器运行正常",
+            "de": "Alle Server laufen normal"
+          }
+        },
+        {
+          "sourceText": "• 정상",
+          "box": [
+            0.013081394941223005,
+            0.28169014098519607,
+            0.0305232567672633,
+            0.01623133730360682
+          ],
+          "translations": {
+            "en": "Healthy",
+            "ja": "正常",
+            "zh-CN": "正常",
+            "de": "Normal"
+          }
+        },
+        {
+          "sourceText": "• 성능 저하 • 장애 • 확인 불가",
+          "box": [
+            0.050872092465230244,
+            0.2816901409832715,
+            0.16133720504046992,
+            0.016231337303606708
+          ],
+          "translations": {
+            "en": "Degraded · Outage · Unknown",
+            "ja": "性能低下・障害・不明",
+            "zh-CN": "性能下降 · 故障 · 未知",
+            "de": "Beeinträchtigt · Ausfall · Unbekannt"
+          }
+        },
+        {
+          "sourceText": "그 기록 없음",
+          "box": [
+            0.22090418190234706,
+            0.28154561334164363,
+            0.05092419263837311,
+            0.01658544789857308
+          ],
+          "translations": {
+            "en": "No history",
+            "ja": "履歴なし",
+            "zh-CN": "暂无记录",
+            "de": "Kein Verlauf"
+          }
+        },
+        {
+          "sourceText": "가동 기록",
+          "box": [
+            0.6468023257216576,
+            0.28169014087979016,
+            0.039244185205355886,
+            0.01854080549428161
+          ],
+          "translations": {
+            "en": "Uptime history",
+            "ja": "稼働履歴",
+            "zh-CN": "运行记录",
+            "de": "Betriebsverlauf"
+          }
+        },
+        {
+          "sourceText": "최근 상태 · 응답시간",
+          "box": [
+            0.8226744201452136,
+            0.2816901408962864,
+            0.0843023210952315,
+            0.01854080549428161
+          ],
+          "translations": {
+            "en": "Recent status · Response time",
+            "ja": "最近の状態・応答時間",
+            "zh-CN": "近期状态 · 响应时间",
+            "de": "Letzter Status · Antwortzeit"
+          }
+        },
+        {
+          "sourceText": "정상",
+          "box": [
+            0.9534883719736506,
+            0.3510392616694782,
+            0.020348837041071155,
+            0.01847574936312213
+          ],
+          "translations": {
+            "en": "Healthy",
+            "ja": "正常",
+            "zh-CN": "正常",
+            "de": "Normal"
+          }
+        },
+        {
+          "sourceText": "정상",
+          "box": [
+            0.9505813958202662,
+            0.4364896078984455,
+            0.01889534816428473,
+            0.01847574936312224
+          ],
+          "translations": {
+            "en": "Healthy",
+            "ja": "正常",
+            "zh-CN": "正常",
+            "de": "Normal"
+          }
+        },
+        {
+          "sourceText": "• 정상",
+          "box": [
+            0.9345691840721734,
+            0.7481536277782286,
+            0.03493139987950389,
+            0.01870429060108947
+          ],
+          "translations": {
+            "en": "Healthy",
+            "ja": "正常",
+            "zh-CN": "正常",
+            "de": "Normal"
+          }
+        }
+      ],
+      "sourceSha256": "f144ecbd239f19af6ebfd4eb2bb91d321a4fed7cbba2fbb94f4d17a02b42234d"
+    },
+    {
+      "path": "assets/cases/operations/dashboard-incidents-public.jpg",
+      "width": 2172,
+      "height": 724,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "장애 이력",
+          "box": [
+            0.02080155014542953,
+            0.32469639084059576,
+            0.05284134459100376,
+            0.05060721760955311
+          ],
+          "translations": {
+            "en": "Incident history",
+            "ja": "障害履歴",
+            "zh-CN": "故障历史",
+            "de": "Störungsverlauf"
+          }
+        },
+        {
+          "sourceText": "© 복구틤",
+          "box": [
+            0.03055555551391248,
+            0.5165745862544775,
+            0.04444444421027027,
+            0.03759208041660034
+          ],
+          "translations": {
+            "en": "Recovered",
+            "ja": "復旧済み",
+            "zh-CN": "已恢复",
+            "de": "Wiederhergestellt"
+          }
+        },
+        {
+          "sourceText": "• 서버 오류 응답",
+          "box": [
+            0.21805555546641142,
+            0.5124309395688166,
+            0.07916666526162164,
+            0.041735726825440134
+          ],
+          "translations": {
+            "en": "Server error response",
+            "ja": "サーバーエラー応答",
+            "zh-CN": "服务器错误响应",
+            "de": "Serverfehlerantwort"
+          }
+        }
+      ],
+      "sourceSha256": "90318514983d77a9b4ad2468d49fc6ee7aca1580b9b0576ac83bdfdf43185c1b"
+    },
+    {
+      "path": "assets/cases/operations/dashboard-timeline-public.jpg",
+      "width": 2172,
+      "height": 724,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "응답시간 (평균)",
+          "box": [
+            0.016645429010089998,
+            0.07465792562665818,
+            0.0889313629318996,
+            0.05068414909404939
+          ],
+          "translations": {
+            "en": "Response time (average)",
+            "ja": "平均応答時間",
+            "zh-CN": "平均响应时间",
+            "de": "Antwortzeit (Mittelwert)"
+          }
+        }
+      ],
+      "sourceSha256": "524865d8a17146d565f7591c4dcfecf23053f6eba0a5144df22d03a9399ddff7"
+    },
+    {
+      "path": "assets/cases/operations/response-drop-public.webp",
+      "width": 1143,
+      "height": 308,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "응답시간 (평균)",
+          "box": [
+            0.019101053333124587,
+            0.04299991755730159,
+            0.07718250968239523,
+            0.06335081372942242
+          ],
+          "translations": {
+            "en": "Response time (average)",
+            "ja": "平均応答時間",
+            "zh-CN": "平均响应时间",
+            "de": "Antwortzeit (Mittelwert)"
+          }
+        },
+        {
+          "sourceText": "\" DB ~ 개발",
+          "box": [
+            0.24300699192890451,
+            0.9090909093073593,
+            0.06468531468531469,
+            0.038961038961038974
+          ],
+          "translations": {
+            "en": "DB · Development",
+            "ja": "DB・開発",
+            "zh-CN": "DB · 开发",
+            "de": "DB · Entwicklung"
+          }
+        },
+        {
+          "sourceText": "API 서버~ 운영",
+          "box": [
+            0.5244755264277389,
+            0.9025974022727273,
+            0.11713286713286708,
+            0.045454545454545525
+          ],
+          "translations": {
+            "en": "API server · Production",
+            "ja": "APIサーバー・本番",
+            "zh-CN": "API服务器 · 生产",
+            "de": "API-Server · Produktion"
+          }
+        },
+        {
+          "sourceText": "• DB ~ 운영",
+          "box": [
+            0.6398601411130536,
+            0.9090909086580086,
+            0.07517482517482521,
+            0.038961038961038974
+          ],
+          "translations": {
+            "en": "DB · Production",
+            "ja": "DB・本番",
+            "zh-CN": "DB · 生产",
+            "de": "DB · Produktion"
+          }
+        },
+        {
+          "sourceText": "•GPU 워커",
+          "box": [
+            0.741258740472028,
+            0.9090909093073593,
+            0.047202797202797186,
+            0.038961038961038974
+          ],
+          "translations": {
+            "en": "GPU worker",
+            "ja": "GPUワーカー",
+            "zh-CN": "GPU工作节点",
+            "de": "GPU-Worker"
+          }
+        }
+      ],
+      "sourceSha256": "d51e494fa4ca708583d306767e719c053e245382a86838d0868bbce2a8bb5eec"
+    },
+    {
+      "path": "assets/cases/operations/slack-daily-report-public.jpg",
+      "width": 1859,
+      "height": 846,
+      "frames": 1,
+      "layers": [
+        {
+          "sourceText": "감시 정기 보고] 정상적으로 감시 중 • 전체 정상",
+          "box": [
+            0.17441861030547676,
+            0.08274231782803199,
+            0.3677325505082325,
+            0.0450532092552095
+          ],
+          "translations": {
+            "en": "Monitoring report · All checks healthy",
+            "ja": "監視定期レポート・すべて正常",
+            "zh-CN": "定期监控报告 · 全部正常",
+            "de": "Monitoringbericht · Alle Prüfungen normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.19186046484674146,
+            0.14376996833741873,
+            0.047965117423765136,
+            0.044728434677665185
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.21656976663937716,
+            0.20447284373677976,
+            0.047965117423765136,
+            0.04493613953286024
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.18459302315589882,
+            0.2647754127254648,
+            0.04651162752541163,
+            0.045128741162888564
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.21802325554138777,
+            0.32587859400302044,
+            0.04796511742376511,
+            0.04527979821459904
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.17877907076635557,
+            0.3865248220142323,
+            0.04796511332194009,
+            0.044917257683215084
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.2107558140196862,
+            0.44680851075819406,
+            0.04651162752541163,
+            0.045204268561469196
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.23691860586078342,
+            0.5106382975509925,
+            0.049418603220293594,
+            0.04527224547474096
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.21656976721212076,
+            0.5718849837565576,
+            0.04796511742376511,
+            0.04513629390274665
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.22383721047565788,
+            0.632387707670431,
+            0.04796511332194012,
+            0.04492858679300227
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.232558139262318,
+            0.6932907345781003,
+            0.047965117423765136,
+            0.044728434677665074
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.19622093016494274,
+            0.7539936103501983,
+            0.04651162752541163,
+            0.04506076424961669
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.2194767446093872,
+            0.8178913745121712,
+            0.0465116275254116,
+            0.041533544553932544
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        },
+        {
+          "sourceText": ": 정상",
+          "box": [
+            0.20784883703666393,
+            0.8753993607761834,
+            0.04796511742376511,
+            0.044728434677665074
+          ],
+          "translations": {
+            "en": ": Healthy",
+            "ja": ": 正常",
+            "zh-CN": ": 正常",
+            "de": ": Normal"
+          }
+        }
+      ],
+      "sourceSha256": "4eb051b76eab2a85ae95fd78602bfe93541321b6ebd7ed25e7e6c886e6a73046"
+    }
+  ],
+  "derivatives": [
+    {
+      "path": "assets/research/results/classification/thumb-336.webp",
+      "source": "assets/research/results/classification/prediction-gallery.webp",
+      "width": 336,
+      "height": 144
+    },
+    {
+      "path": "assets/research/results/classification/thumb-672.webp",
+      "source": "assets/research/results/classification/prediction-gallery.webp",
+      "width": 672,
+      "height": 288
+    },
+    {
+      "path": "assets/research/results/tsp/thumb-336.webp",
+      "source": "assets/research/results/tsp/tours-compare.webp",
+      "width": 336,
+      "height": 187
+    },
+    {
+      "path": "assets/research/results/tsp/thumb-672.webp",
+      "source": "assets/research/results/tsp/tours-compare.webp",
+      "width": 672,
+      "height": 373
+    },
+    {
+      "path": "assets/cases/panel/thumb-336.webp",
+      "source": "assets/cases/panel/hero.webp",
+      "width": 336,
+      "height": 210
+    },
+    {
+      "path": "assets/cases/panel/thumb-672.webp",
+      "source": "assets/cases/panel/hero.webp",
+      "width": 672,
+      "height": 420
+    },
+    {
+      "path": "assets/cases/operations/dashboard-live-public-1100.webp",
+      "source": "assets/cases/operations/dashboard-live-public.jpg",
+      "width": 1100,
+      "height": 691
+    },
+    {
+      "path": "assets/cases/operations/dashboard-incidents-public-1100.webp",
+      "source": "assets/cases/operations/dashboard-incidents-public.jpg",
+      "width": 1100,
+      "height": 367
+    },
+    {
+      "path": "assets/cases/operations/dashboard-timeline-public-1100.webp",
+      "source": "assets/cases/operations/dashboard-timeline-public.jpg",
+      "width": 1100,
+      "height": 367
+    },
+    {
+      "path": "assets/cases/operations/response-drop-public-1100.webp",
+      "source": "assets/cases/operations/response-drop-public.webp",
+      "width": 1100,
+      "height": 296
+    },
+    {
+      "path": "assets/cases/operations/slack-daily-report-public-1100.webp",
+      "source": "assets/cases/operations/slack-daily-report-public.jpg",
+      "width": 1100,
+      "height": 501
+    },
+    {
+      "path": "assets/cases/operations/thumb-monitoring-336.webp",
+      "source": "assets/cases/operations/dashboard-live-public.jpg",
+      "width": 336,
+      "height": 210
+    },
+    {
+      "path": "assets/cases/operations/thumb-monitoring-672.webp",
+      "source": "assets/cases/operations/dashboard-live-public.jpg",
+      "width": 672,
+      "height": 420
+    }
+  ]
+}

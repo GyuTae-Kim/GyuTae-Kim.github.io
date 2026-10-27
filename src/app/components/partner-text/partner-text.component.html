@@ -5,7 +5,7 @@
       <button type="button" class="partner-trigger" [attr.aria-describedby]="tooltipId + '-' + i" [attr.aria-expanded]="active === i">{{ (part.text) | t }}</button>
       <span class="partner-tooltip" role="tooltip" [id]="tooltipId + '-' + i" [class.open]="active === i" [attr.aria-hidden]="active !== i" [style.left.px]="left" [style.top.px]="top">
         <span class="partner-card">
-          <img src="assets/partners/kimm.png" [attr.alt]="'KIMM 한국기계연구원 로고' | t" width="824" height="148" />
+          <img [src]="'assets/partners/kimm.png' | localImage" [attr.alt]="'KIMM 한국기계연구원 로고' | t" width="824" height="148" />
           <strong>{{ '한국기계연구원' | t }}</strong>
         </span>
       </span>

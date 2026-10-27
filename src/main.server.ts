@@ -1,3 +1,4 @@
+export { localizedImage, imageOriginal } from './app/i18n/image-assets';
 import 'zone.js/node';
 import { enableProdMode, NgModule } from '@angular/core';
 import { renderModule, ServerModule } from '@angular/platform-server';

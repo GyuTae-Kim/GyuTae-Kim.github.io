@@ -18,8 +18,8 @@
         <a *ngIf="viewer.sampleUrl" class="button outline" [href]="(viewer.sampleUrl) | localLink">{{ '예제로 먼저 보기' | t }}<app-icon name="arrow-right"></app-icon></a>
       </div>
       <figure class="article-figure">
-        <img [src]="post.figure.src" [attr.srcset]="post.figure.srcset || null" [attr.sizes]="post.figure.srcset ? '(max-width: 760px) 100vw, 960px' : null" [alt]="(post.figure.alt) | t" [width]="post.figure.width" [height]="post.figure.height" [attr.fetchpriority]="post.guide ? 'high' : null" [attr.decoding]="post.guide ? 'async' : null" />
-        <figcaption>{{ (post.figure.caption) | t }}</figcaption>
+        <img [src]="(post.figure.src) | localImage" [attr.srcset]="(post.figure.srcset || null) | localImage" [attr.sizes]="post.figure.srcset ? '(max-width: 760px) 100vw, 960px' : null" [alt]="(post.figure.alt) | t" [width]="post.figure.width" [height]="post.figure.height" [attr.fetchpriority]="post.guide ? 'high' : null" [attr.decoding]="post.guide ? 'async' : null" />
+        <figcaption>{{ (post.figure.caption) | t }} <a *ngIf="(post.figure.src | imageOriginal) as originalImage" [href]="originalImage" target="_blank" rel="noopener noreferrer" class="image-original-link">{{ '번역 참고 이미지 · 한국어 원본 보기' | t }}</a></figcaption>
       </figure>
       <nav class="article-contents" [attr.aria-label]="'글 목차' | t">
         <strong>{{ '이 글에서 확인할 내용' | t }}</strong>
@@ -32,8 +32,8 @@
         <table><caption>{{ '문제 해결 순서' | t }}</caption><tbody><tr *ngFor="let row of guide.checks"><th scope="row">{{ row.label | t }}</th><td>{{ row.text | t }}</td></tr></tbody></table>
         <p><a [routerLink]="guide.projectPath | localLink">{{ '전체 기능과 지원 범위' | t }}<app-icon name="arrow-right"></app-icon></a></p>
         <figure class="article-figure" *ngFor="let figure of guide.figures">
-          <img [src]="figure.src" [attr.srcset]="figure.src.replace('-1440.', '-720.') + ' 720w, ' + figure.src + ' 1440w'" sizes="(max-width: 760px) 100vw, 960px" [alt]="figure.alt | t" [width]="figure.width" [height]="figure.height" loading="lazy" decoding="async" />
-          <figcaption>{{ figure.caption | t }}</figcaption>
+          <img [src]="(figure.src) | localImage" [attr.srcset]="(figure.src.replace('-1440.', '-720.') + ' 720w, ' + figure.src + ' 1440w') | localImage" sizes="(max-width: 760px) 100vw, 960px" [alt]="figure.alt | t" [width]="figure.width" [height]="figure.height" loading="lazy" decoding="async" />
+          <figcaption>{{ figure.caption | t }} <a *ngIf="(figure.src | imageOriginal) as originalImage" [href]="originalImage" target="_blank" rel="noopener noreferrer" class="image-original-link">{{ '번역 참고 이미지 · 한국어 원본 보기' | t }}</a></figcaption>
         </figure>
       </section>
       <section class="article-section" *ngFor="let section of post.sections" [attr.aria-labelledby]="section.id">

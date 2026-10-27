@@ -10,7 +10,7 @@
     </div>
     <div class="contact-card">
       <img
-        src="assets/sean-kim.webp"
+        [src]="'assets/sean-kim.webp' | localImage"
         [attr.alt]="'김규태(Sean Kim) 프로필 사진' | t"
         width="88"
         height="88"
@@ -77,8 +77,8 @@
       <li *ngFor="let project of cases">
         <a class="topic-card" [routerLink]="(['/portfolio', project.id]) | localLink">
           <img
-            [src]="project.thumb + '-672.webp'"
-            [attr.srcset]="srcset(project.thumb)"
+            [src]="(project.thumb + '-672.webp') | localImage"
+            [attr.srcset]="(srcset(project.thumb)) | localImage"
             sizes="(max-width: 720px) 100vw, 340px"
             alt=""
             width="560"
