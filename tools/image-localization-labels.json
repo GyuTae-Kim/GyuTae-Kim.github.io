@@ -1235,7 +1235,25 @@
           }
         }
       ],
-      "sourceSha256": "e890e38ce06919a65cc79e42e67102c8a697ef40eeb704f161ca8a4f65150400"
+      "sourceSha256": "e890e38ce06919a65cc79e42e67102c8a697ef40eeb704f161ca8a4f65150400",
+      "lastFrameLegend": {
+        "sourceRatios": [
+          "1.12",
+          "1.08"
+        ],
+        "prefix": {
+          "en": "vs. OR-Tools",
+          "ja": "OR-Tools比",
+          "zh-CN": "相对 OR-Tools",
+          "de": "zu OR-Tools"
+        },
+        "suffix": {
+          "en": "×",
+          "ja": "倍",
+          "zh-CN": "倍",
+          "de": "×"
+        }
+      }
     },
     {
       "path": "assets/research/results/tsp/tours-compare.webp",

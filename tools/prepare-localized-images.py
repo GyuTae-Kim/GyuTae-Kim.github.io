@@ -101,6 +101,17 @@ def svg_layers(row,lang,image,frame=None):
    size-=1
   parts.append(f'<rect x="{x-2:.2f}" y="{y-2:.2f}" width="{max(bw,ImageFont.truetype(fontPath,size).getlength(text))+4:.2f}" height="{bh+4:.2f}" fill="{background}"/>')
   parts.append(f'<text x="{x:.2f}" y="{y+bh*.91:.2f}" font-family="{escape(family)}" font-size="{size}" fill="{fg}">{escape(text)}</text>')
+ if frame==row['frames']-1 and row.get('lastFrameLegend'):
+  legend=row['lastFrameLegend'];fontPath,family=FONT[lang]
+  parts.append(f'<rect x="0" y="{h-60}" width="{w}" height="60" fill="#f7f8f2"/>')
+  prefix=legend['prefix'][lang]
+  for index,ratio in enumerate(legend['sourceRatios']):
+   x=index*w/2+20;number=ratio.replace('.',',') if lang=='de' else ratio
+   number+=legend['suffix'][lang]
+   pixels=[image.convert('RGB').getpixel((int(index*w/2+px),py)) for px in range(170,240) for py in range(h-50,h-15)]
+   color=max(pixels,key=lambda p:max(p)-min(p));color='#%02x%02x%02x'%color
+   offset=ImageFont.truetype(fontPath,21).getlength(prefix)+14
+   parts.append(f'<text x="{x}" y="{h-20}" font-family="{escape(family)}" font-size="21" fill="#536157">{escape(prefix)}</text><text x="{x+offset}" y="{h-20}" font-family="{escape(family)}" font-size="36" font-weight="bold" fill="{color}">{escape(number)}</text>')
  parts.append('</svg>');return ''.join(parts)
 
 def build(row,lang,work):
