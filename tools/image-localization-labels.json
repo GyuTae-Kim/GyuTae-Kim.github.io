@@ -1235,7 +1235,25 @@
           }
         }
       ],
-      "sourceSha256": "e890e38ce06919a65cc79e42e67102c8a697ef40eeb704f161ca8a4f65150400"
+      "sourceSha256": "e890e38ce06919a65cc79e42e67102c8a697ef40eeb704f161ca8a4f65150400",
+      "lastFrameLegend": {
+        "sourceRatios": [
+          "1.12",
+          "1.08"
+        ],
+        "prefix": {
+          "en": "vs. OR-Tools",
+          "ja": "OR-Tools比",
+          "zh-CN": "相对 OR-Tools",
+          "de": "zu OR-Tools"
+        },
+        "suffix": {
+          "en": "×",
+          "ja": "倍",
+          "zh-CN": "倍",
+          "de": "×"
+        }
+      }
     },
     {
       "path": "assets/research/results/tsp/tours-compare.webp",
@@ -1518,69 +1536,43 @@
             "zh-CN": "平均响应时间",
             "de": "Antwortzeit (Mittelwert)"
           }
-        },
-        {
-          "sourceText": "\" DB ~ 개발",
-          "box": [
-            0.24300699192890451,
-            0.9090909093073593,
-            0.06468531468531469,
-            0.038961038961038974
-          ],
-          "translations": {
-            "en": "DB · Development",
-            "ja": "DB・開発",
-            "zh-CN": "DB · 开发",
-            "de": "DB · Entwicklung"
-          }
-        },
-        {
-          "sourceText": "API 서버~ 운영",
-          "box": [
-            0.5244755264277389,
-            0.9025974022727273,
-            0.11713286713286708,
-            0.045454545454545525
-          ],
-          "translations": {
-            "en": "API server · Production",
-            "ja": "APIサーバー・本番",
-            "zh-CN": "API服务器 · 生产",
-            "de": "API-Server · Produktion"
-          }
-        },
-        {
-          "sourceText": "• DB ~ 운영",
-          "box": [
-            0.6398601411130536,
-            0.9090909086580086,
-            0.07517482517482521,
-            0.038961038961038974
-          ],
-          "translations": {
-            "en": "DB · Production",
-            "ja": "DB・本番",
-            "zh-CN": "DB · 生产",
-            "de": "DB · Produktion"
-          }
-        },
-        {
-          "sourceText": "•GPU 워커",
-          "box": [
-            0.741258740472028,
-            0.9090909093073593,
-            0.047202797202797186,
-            0.038961038961038974
-          ],
-          "translations": {
-            "en": "GPU worker",
-            "ja": "GPUワーカー",
-            "zh-CN": "GPU工作节点",
-            "de": "GPU-Worker"
-          }
         }
       ],
-      "sourceSha256": "d51e494fa4ca708583d306767e719c053e245382a86838d0868bbce2a8bb5eec"
+      "sourceSha256": "d51e494fa4ca708583d306767e719c053e245382a86838d0868bbce2a8bb5eec",
+      "legend": {
+        "en": [
+          "DB",
+          "DB · Development",
+          "GPU worker · Development",
+          "API server · Production",
+          "DB · Production",
+          "GPU worker · Production"
+        ],
+        "ja": [
+          "DB",
+          "DB・開発",
+          "GPUワーカー・開発",
+          "APIサーバー・本番",
+          "DB・本番",
+          "GPUワーカー・本番"
+        ],
+        "zh-CN": [
+          "DB",
+          "DB · 开发",
+          "GPU工作节点 · 开发",
+          "API服务器 · 生产",
+          "DB · 生产",
+          "GPU工作节点 · 生产"
+        ],
+        "de": [
+          "DB",
+          "DB · Entwicklung",
+          "GPU-Worker · Entwicklung",
+          "API-Server · Produktion",
+          "DB · Produktion",
+          "GPU-Worker · Produktion"
+        ]
+      }
     },
     {
       "path": "assets/cases/operations/slack-daily-report-public.jpg",

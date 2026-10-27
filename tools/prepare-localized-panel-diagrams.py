@@ -1,6 +1,6 @@
 """Localize the text nodes of the original panel SVGs without changing geometry."""
 from pathlib import Path
-import hashlib,json,xml.etree.ElementTree as ET
+import argparse,hashlib,json,xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parent.parent
 LANGS=['en','ja','zh-CN','de']
 TEXT={
@@ -11,6 +11,9 @@ TEXT={
 '일정':['Fixed','一定','固定','Konstant'],
 '정면에서 본 폭 변경 예시 · 판 두께 생략':['Front view · Panel thickness omitted','正面から見た幅変更・板厚は省略','正面宽度变化示意 · 省略板厚','Vorderansicht · Plattendicke nicht dargestellt']}
 ET.register_namespace('','http://www.w3.org/2000/svg')
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--proof',type=Path,required=True)
+args=parser.parse_args()
 proof=[]
 for i,lang in enumerate(LANGS):
  catalog=json.loads((ROOT/f'src/app/i18n/{lang}.json').read_text())
@@ -26,5 +29,6 @@ for i,lang in enumerate(LANGS):
   target=ROOT/f'src/assets/i18n/{lang}/cases/panel/types/{source.name}';target.parent.mkdir(parents=True,exist_ok=True);ET.ElementTree(root).write(target,encoding='unicode')
   assert not any('가'<=c<='힣' for c in target.read_text())
   proof.append({'source':str(source.relative_to(ROOT)),'language':lang,'sha256':hashlib.sha256(target.read_bytes()).hexdigest()})
-(ROOT/'.runtime/image-localization-20261027/panel-proof.json').write_text(json.dumps({'all_pass':True,'outputs':proof},indent=2)+'\n')
+args.proof.parent.mkdir(parents=True,exist_ok=True)
+args.proof.write_text(json.dumps({'all_pass':True,'outputs':proof},indent=2)+'\n')
 print('Localized',len(proof),'SVG panel diagrams; original geometry retained.')

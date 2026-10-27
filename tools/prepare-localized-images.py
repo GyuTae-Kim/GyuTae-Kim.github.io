@@ -57,6 +57,22 @@ def svg_layers(row,lang,image,frame=None):
  import io
  encoded=io.BytesIO();image.save(encoded,format='PNG');data=base64.b64encode(encoded.getvalue()).decode()
  if row['path']=='assets/cases/feature-cam/step2.webp':return feature_grid(lang,data,image)
+ if row['path']=='assets/cases/operations/response-drop-public.webp':
+  # The six source keys combine environment, redacted host IDs and service
+  # names. Rebuild only their caption band so no Korean fragments or labels
+  # overlap. Keep the plotted pixels and the source key colours unchanged.
+  copy=row['legend'][lang];fontPath,family=FONT[lang];size=13
+  while sum(ImageFont.truetype(fontPath,size).getlength(t)+34 for t in copy)>w-28:size-=1
+  widths=[ImageFont.truetype(fontPath,size).getlength(t)+34 for t in copy]
+  x=(w-sum(widths))/2
+  parts=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" xml:lang="{lang}"><image width="{w}" height="{h}" href="data:image/png;base64,{data}"/><rect x="0" y="270" width="{w}" height="{h-270}" fill="white"/>']
+  parts.append(f'<rect x="15" y="8" width="320" height="28" fill="white"/><text x="21" y="30" font-family="{escape(family)}" font-size="21" fill="#28332f">{escape(row["layers"][0]["translations"][lang])}</text>')
+  for label,key_x,width in zip(copy,[227,320,420,556,682,785],widths):
+   pixels=[image.convert('RGB').getpixel((px,py)) for px in range(key_x-4,key_x+5) for py in range(284,290)]
+   color=max(pixels,key=lambda p:max(p)-min(p));color='#%02x%02x%02x'%color
+   parts.append(f'<path d="M{x} 287h16" stroke="{color}" stroke-width="2"/><circle cx="{x+8}" cy="287" r="2.5" fill="white" stroke="{color}"/><text x="{x+21}" y="291" font-family="{escape(family)}" font-size="{size}" fill="#37433e">{escape(label)}</text>')
+   x+=width
+  return ''.join(parts)+'</svg>'
  parts=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" xml:lang="{lang}"><image width="{w}" height="{h}" href="data:image/png;base64,{data}"/>']
  for i,layer in enumerate(row['layers']):
   x,y,bw,bh=[a*b for a,b in zip(layer['box'],[w,h,w,h])]
@@ -85,6 +101,17 @@ def svg_layers(row,lang,image,frame=None):
    size-=1
   parts.append(f'<rect x="{x-2:.2f}" y="{y-2:.2f}" width="{max(bw,ImageFont.truetype(fontPath,size).getlength(text))+4:.2f}" height="{bh+4:.2f}" fill="{background}"/>')
   parts.append(f'<text x="{x:.2f}" y="{y+bh*.91:.2f}" font-family="{escape(family)}" font-size="{size}" fill="{fg}">{escape(text)}</text>')
+ if frame==row['frames']-1 and row.get('lastFrameLegend'):
+  legend=row['lastFrameLegend'];fontPath,family=FONT[lang]
+  parts.append(f'<rect x="0" y="{h-60}" width="{w}" height="60" fill="#f7f8f2"/>')
+  prefix=legend['prefix'][lang]
+  for index,ratio in enumerate(legend['sourceRatios']):
+   x=index*w/2+20;number=ratio.replace('.',',') if lang=='de' else ratio
+   number+=legend['suffix'][lang]
+   pixels=[image.convert('RGB').getpixel((int(index*w/2+px),py)) for px in range(170,240) for py in range(h-50,h-15)]
+   color=max(pixels,key=lambda p:max(p)-min(p));color='#%02x%02x%02x'%color
+   offset=ImageFont.truetype(fontPath,21).getlength(prefix)+14
+   parts.append(f'<text x="{x}" y="{h-20}" font-family="{escape(family)}" font-size="21" fill="#536157">{escape(prefix)}</text><text x="{x+offset}" y="{h-20}" font-family="{escape(family)}" font-size="36" font-weight="bold" fill="{color}">{escape(number)}</text>')
  parts.append('</svg>');return ''.join(parts)
 
 def build(row,lang,work):
