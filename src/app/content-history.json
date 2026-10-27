@@ -136,8 +136,8 @@
     "fingerprint": "be83e5085240678bfaf244a295fec31c7b085e32a73e7a5882fae680ab0cb918"
   },
   "/en/portfolio/service-monitoring": {
-    "lastmod": "2026-10-27T09:01:18Z",
-    "fingerprint": "0d9278933174ab82dc2e704ee1b8186cf98c3e0d239c815b75bb1f384d596ed5"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "a74e8c7bb7a252c8c1fa776072662363a887ba10b464f931ec6cc372fac8e0f5"
   },
   "/en/portfolio/voda-architecture": {
     "lastmod": "2026-10-27T08:02:47Z",
@@ -348,8 +348,8 @@
     "fingerprint": "9ac706c355cf8b257e00cfdb1df2838046c1859f7b48dc3d50f6ed8a36f40425"
   },
   "/zh-CN/": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "1277941cd4ed2c0c1ec4295ccf1d4b19461ccdebf8132c3d31b05facce0ee2f9"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "5881f10828aceb56ec779ed2de7db00a56d0cf4697e928b86f4754f1cfbd83ab"
   },
   "/zh-CN/portfolio": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -384,8 +384,8 @@
     "fingerprint": "632eaa23a3d76afa44982bbfb9f61ef454e7938806063fe58a4b5c5c34b40014"
   },
   "/zh-CN/research": {
-    "lastmod": "2026-10-27T08:30:18Z",
-    "fingerprint": "6c8d1570067ece8e778a89c90d5de27a03d798040941664ead42d4e360e3b5c5"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "ab0737ad6cbbcae35a24b04b722d71c54fe8816ff4839f2a447d3b02adb15f3c"
   },
   "/zh-CN/research/graph-tsp": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -400,8 +400,8 @@
     "fingerprint": "6916a22161b36153d7f26ad74563096ed1303636c56a4eaca626ca2099c4c44c"
   },
   "/zh-CN/opencad": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "480e0598f2b95c76de2e4fa3e8d69d3ec415aa0584d02dfb530917aaa8db47ee"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "6c7c2050831d0b53ef578b53cb8e834020af4859446c3e096cc6a10f66fd1838"
   },
   "/zh-CN/notes": {
     "lastmod": "2026-10-27T08:30:18Z",
@@ -456,16 +456,16 @@
     "fingerprint": "89597451de94449ecdf0f10916270c0c4de8bb971b4dc9a764fe6c8f6f6846ef"
   },
   "/zh-CN/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "b6cc7812b130bfe973b72bedc626582a246f5426ccb03bce814c3020b0131514"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "930318e3cc3e12d1b8f87c947845e9d743896611f6ac4b9b4b4fb96e0b41c648"
   },
   "/zh-CN/contact": {
     "lastmod": "2026-10-27T08:30:18Z",
     "fingerprint": "01037646fdc5d1acbd1121ff571e82eb89bf7698a58352b090a7c1e3e4bbdd36"
   },
   "/de/": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "0f40fc116daf119ae30ec4e9bb470488851427017da9711b0879c3c6a888d3bb"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "6cfc14b0ba57567f04eb775ea25a2fe4d7302bfc4950cc8c2cec30314565fbc2"
   },
   "/de/portfolio": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -484,8 +484,8 @@
     "fingerprint": "8af418984b661cf5349655e9655285e4bd006e998cd5c5de26d3ddb5b79932f6"
   },
   "/de/portfolio/service-monitoring": {
-    "lastmod": "2026-10-27T09:01:18Z",
-    "fingerprint": "8623f786af5167bb6193d2e3199b46039ef5414fe37bd92599430e36ff93e35e"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "a25a29e0995d5474365cf942d4d9c1929adbaa04775655293a20c61b2ab1983f"
   },
   "/de/portfolio/voda-architecture": {
     "lastmod": "2026-10-27T08:02:47Z",
@@ -500,8 +500,8 @@
     "fingerprint": "90864ab1861ce9879a645ef7a602478d345eed2c654ab372ab621b2df0510645"
   },
   "/de/research": {
-    "lastmod": "2026-10-27T08:30:18Z",
-    "fingerprint": "ff2a3795eb2608b5b99063148c366d0cbf875cab024603295c7fea015dcef7b2"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "98eab98e1af360945349bbd864329aefe364b69bb0938f751c13d9b143217734"
   },
   "/de/research/graph-tsp": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -512,12 +512,12 @@
     "fingerprint": "37e319817dfe4781d9f48d7c7d39e3db872fbb1be564e1cef629f42368ff9c60"
   },
   "/de/research/virtual-try-on": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "59bc8ac2ca6345cb39a5de3bcdbbfca9452124cddb33d00aae8199d920a4293f"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "c8dd387240226cceab9c56d5854b93c3f9ed4de789d488d512e7b8de11f38291"
   },
   "/de/opencad": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "1101f04056f6a764be437668f2f5d0e6c1d11f44f288ff650f75cab5679f56ff"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "7349411f296f83cc77d14c8fd637290760383942d6ba0a30e83b1e588a5231fe"
   },
   "/de/notes": {
     "lastmod": "2026-10-27T08:30:18Z",
@@ -572,8 +572,8 @@
     "fingerprint": "396bde8ef1db92fe5a787ac5e819d5db3483315a69f324060358ed3b43d53a86"
   },
   "/de/opencad/projects/viewer3d": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "924b72bbedcafce21cc31d45c047bd75a3a1b6f09d885f0b13e9492230955dc4"
+    "lastmod": "2026-10-27T09:41:47Z",
+    "fingerprint": "9f88e301faa3dff3b9a16eaf1d39cefbd225dac66f10e7927b48480b1bedf759"
   },
   "/de/contact": {
     "lastmod": "2026-10-27T08:30:18Z",
