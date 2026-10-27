@@ -24,7 +24,6 @@ const PAGE_ROUTES: Routes = [
   ...OPENCAD_PROJECTS.map((tool) => ({ path: tool.path.slice(1), component: OpenCadProjectComponent, data: { tool } })),
   { path: '', component: HomeComponent },
   { path: 'notes', component: ArticleComponent },
-  { path: 'solutions', component: ArticleComponent, data: { collection: 'solutions' } },
   { path: 'contact', component: ContactComponent },
   { path: 'portfolio', component: PortfolioComponent },
   { path: 'portfolio/:id', component: PortfolioComponent },
