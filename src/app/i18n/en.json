@@ -6,7 +6,7 @@
   "01 네스팅 · 몸통재 18T, {0}/{1}": "01 Nesting/body material 18T, {0}/{1}",
   "01 네스팅 · 하부장 측판 꺼내기": "01 Nesting · Take out the lower cabinet side plate",
   "02 엣지밴딩 · {0} 모서리 {1}/3": "02 Edge banding {0} corner {1}/3",
-  "03 스키퍼 라우터 · 목찬넬 60 × 40 따내기": "03 Skipper Router · Mok Channel 60 × 40 Picking",
+  "03 스키퍼 라우터 · 목찬넬 60 × 40 따내기": "03 Skipper router · Wooden-channel notch 60 × 40",
   "04 스키퍼 아랫면 · 경첩 자리 Ø3": "04 Bottom of skipper · Hinge position Ø3",
   "04 스키퍼 아랫면 · 선반핀 Ø3": "04 Bottom of skipper · Shelf pin Ø3",
   "04 스키퍼 윗면 · 연결 피스 Ø6": "04 Skipper top · Connection piece Ø6",
@@ -1032,7 +1032,7 @@
   "여러 홀과 포켓이 있는 베이스 플레이트 학습 모델. 면의 가공 피쳐 라벨을 색상으로 구분했습니다.": "Learning model of a base plate with multiple holes and pockets. Machining features on the faces are color-coded.",
   "연결": "Connection",
   "연결 피스 12곳": "12 connecting pieces",
-  "연결 피스 Ø6 · 선반핀 Ø3": "Connecting piece Ø6 · Shelf pin Ø3",
+  "연결 피스 Ø6 · 선반핀 Ø3": "Connector screw Ø6 · Shelf pin Ø3",
   "연결 피스 위치와 하드웨어 배치": "Positioning of connecting pieces and hardware placement",
   "연결 피스와 하드웨어를 배치하고 BOM·도면·엣지밴딩을 계산합니다. 생성한 가공 코드는 NC 뷰어에서 가공 면과 홀 위치를 확인합니다.": "Place connecting pieces and hardware, then generate the BOM, drawings, and edge banding data. Use the NC viewer to verify the machining faces and hole locations in the generated machining code.",
   "연결과 느린 조회": "Attachment and slow lookup",
@@ -1183,7 +1183,7 @@
   "작은 문제에서 정답과 먼저 맞춰 보기": "Check against the correct answer using a smaller-scale problem first",
   "작은 팀의 운영 대응": "Operational response for a small team",
   "잠깐 튄 값과 계속되는 이상을 비교해 봅니다.": "Compare transient spikes with persistent anomalies.",
-  "장 7개": "7 sections",
+  "장 7개": "7 cabinets",
   "장비마다 매크로·사이클·좌표계를 다르게 해석할 수 있습니다. 지원하는 방언이어도 모든 명령을 똑같이 재현하지는 못합니다.": "Macros, cycles, and coordinate systems may be interpreted differently depending on the equipment. Even when a specific dialect is supported, not all commands are reproduced in the exact same way.",
   "Okuma OSP 프로그램은 알아보고 좌표계(G15 H)만 읽습니다. CALL, VC 변수 같은 Okuma 고유 문법은 그리지 않고 경고로 알립니다.": "Okuma OSP programs are recognized, but only the coordinate system (G15 H) is read. Okuma-specific syntax such as CALL and VC variables is not drawn and is reported as a warning.",
   "G53, G28처럼 기계 좌표로 가는 이동은 작업 원점의 기계 위치를 설정에 넣기 전까지 안전 높이로 추정해 점선으로 그립니다.": "Moves to machine coordinates such as G53 and G28 are drawn as dashed lines at an estimated safe height until you enter the machine position of the work origin in the settings.",
@@ -1391,7 +1391,7 @@
   "패널·접합면 분석": "Analysis of panels and joining surfaces",
   "패널과 면의 기하 정보, 접촉 관계 표현": "Representation of geometric data and contact relationships between panels and surfaces",
   "패널과 문": "Panels and doors",
-  "패널과 문 · 장 7개": "Panels and doors (7 categories)",
+  "패널과 문 · 장 7개": "Panels and doors · 7 cabinets",
   "패널과 접합면을 잇는 계층 그래프": "Hierarchical graph connecting panels and their joining surfaces",
   "패널끼리 맞닿는 접합면을 빨강으로 표시한 가구 와이어프레임": "Furniture wireframe with panel-to-panel contact surfaces highlighted in red",
   "패널마다 위치와 크기를 선형회귀로 맞춤": "Position and size of each panel determined via linear regression",
@@ -1897,5 +1897,6 @@
   "끝점, 가운데 점, 원 중심에 붙는 두 점 측정과 면 사이 최소 거리": "Two-point measurement that snaps to endpoints, midpoints and circle centers, and minimum distance between faces",
   "여러 단면 평면과 잘린 면 채우기, 큰 좌표에서도 떨리지 않는 묶음 원점": "Multiple section planes with cut-face fill, per-group origins that keep large coordinates from jittering",
   "단면": "Section",
-  "번역 참고 이미지 · 한국어 원본 보기": "Translated reference · View Korean original"
+  "번역 참고 이미지 · 한국어 원본 보기": "Translated reference · View Korean original",
+  "언어 선택": "Choose language"
 }

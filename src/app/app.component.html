@@ -37,10 +37,10 @@
     </nav>
     </div>
     <div class="language-control">
-      <button class="header-icon language-trigger" type="button" aria-label="Language" title="Language" aria-haspopup="menu" aria-controls="language-list" [attr.aria-expanded]="languageOpen" (click)="toggleLanguage()" (keydown.arrowdown)="openLanguage($event, 0)" (keydown.arrowup)="openLanguage($event, -1)">
+      <button class="header-icon language-trigger" type="button" [attr.aria-label]="'언어 선택' | t" [attr.title]="'언어 선택' | t" aria-haspopup="menu" aria-controls="language-list" [attr.aria-expanded]="languageOpen" (click)="toggleLanguage()" (keydown.arrowdown)="openLanguage($event, 0)" (keydown.arrowup)="openLanguage($event, -1)">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg>
       </button>
-      <div id="language-list" class="language-menu language-list" role="menu" aria-label="Language" [hidden]="!languageOpen" (keydown)="languageKey($event)">
+      <div id="language-list" class="language-menu language-list" role="menu" [attr.aria-label]="'언어 선택' | t" [hidden]="!languageOpen" (keydown)="languageKey($event)">
         <a *ngFor="let language of i18n.languages" role="menuitemradio" tabindex="-1" [attr.data-language]="language.code" [routerLink]="i18n.switchLanguage(language.code)" queryParamsHandling="preserve" [preserveFragment]="true" (click)="chooseLanguage()"
            [attr.lang]="language.code" [attr.hreflang]="language.code" [attr.aria-checked]="i18n.language === language.code">{{ language.label }}</a>
       </div>

@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs';
 import {JSDOM} from 'jsdom';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-const {LOCALIZED_SEARCH_PAGES, LANGUAGES, SITE_URL}=require('../dist/server/main.js');
+const {LOCALIZED_SEARCH_PAGES, LANGUAGES, SITE_URL, translate}=require('../dist/server/main.js');
 const catalog=code=>JSON.parse(readFileSync(new URL(`../src/app/i18n/${code}.json`,import.meta.url),'utf8'));
 const keys=Object.keys(catalog('en')).sort();
 for(const{code}of LANGUAGES.filter(item=>item.code!=='ko')){
@@ -14,6 +14,11 @@ const missing=[];
 for(const page of LOCALIZED_SEARCH_PAGES.filter(page=>page.language!=='ko')){
  const stem=page.path.replace(/^\/|\/$/g,'');const dom=new JSDOM(readFileSync(`docs/${stem}/index.html`,'utf8'),{url:SITE_URL+page.path});
  const doc=dom.window.document;
+ const languageLabel=translate('언어 선택',page.language);
+ for(const selector of ['.language-trigger','.language-menu']) {
+  assert.equal(doc.querySelector(selector)?.getAttribute('aria-label'),languageLabel,`${page.path}: native language control label`);
+ }
+ assert.equal(doc.querySelector('.language-trigger')?.getAttribute('title'),languageLabel,`${page.path}: native language control tooltip`);
  // Search and sharing metadata are authored copy too. Checking only app-root
  // misses catalog fallbacks in the head even when the visible page is translated.
  for(const selector of ['title','meta[name="author"]','meta[name="description"]','meta[property="og:site_name"]','meta[property="og:title"]','meta[property="og:description"]','meta[name="twitter:title"]','meta[name="twitter:description"]']) {
