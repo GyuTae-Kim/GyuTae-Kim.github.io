@@ -113,7 +113,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     url: 'https://gyutae-kim.github.io/opencad-skp/', source: 'https://github.com/GyuTae-Kim/opencad-skp', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-skp',
-      alt: 'OpenCAD SketchUp 뷰어로 예제 집 모형을 연 화면. 가운데에 빨간 지붕의 집과 나무, 잔디 바닥이 3D로 보이고, 오른쪽 패널에 태그 5개와 재질 11개 목록이 있습니다.',
+      alt: 'OpenCAD SketchUp 뷰어로 예제 집 모형을 연 화면. 가운데에 빨간 지붕의 집과 나무, 잔디 바닥이 3D로 보이고, 오른쪽 패널에 태그 6개와 재질 11개 목록이 있습니다.',
       caption: '예제 집 모형을 연 화면',
     },
     features: [
