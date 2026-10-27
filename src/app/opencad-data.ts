@@ -68,7 +68,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     steps: [
       'DWG·DXF 캐드를 열고 시작 화면의 「예제 도면 열기」로 화면 조작을 먼저 익힙니다.',
       '「파일 열기」(Ctrl+O)로 .dwg·.dxf 파일을 고르거나 창에 끌어다 놓습니다. 빈 도면에서 시작하려면 「새 도면」(Ctrl+N)을 누릅니다.',
-      '휠로 확대·축소하고 가운데 버튼으로 이동합니다. DI(거리), MEA(측정), LA(도면층)처럼 AutoCAD와 같은 명령을 명령행에 입력할 수 있습니다.',
+      '휠로 확대·축소하고 가운데 버튼으로 이동합니다. DI(거리), MEA(측정), LA(도면층)처럼 AutoCAD와 같은 명령을 명령행에 입력합니다.',
       '고친 도면은 DWG나 DXF로 저장합니다. 저장 형식에서 빠지는 객체가 있으면 저장하기 전에 알려 줍니다. 필요하면 PDF·PNG·SVG로 출력합니다.',
     ],
     limitations: [
@@ -84,8 +84,8 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     name: 'OpenCAD STEP 뷰어', kind: '3D CAD 부품·조립 모델',
     searchTitle: 'OpenCAD STEP 뷰어 기능 | 측정·단면·조립',
     extensions: ['.step', '.stp', '.p21'],
-    summary: 'STEP·STP 3D CAD 파일을 설치 없이 브라우저에서 여는 무료 뷰어입니다. 조립 구조와 부품 속성을 확인하고, 구멍 지름과 면 사이 거리를 재며, 단면과 분해 보기로 안쪽까지 살펴볼 수 있습니다.',
-    introduction: '협력사에서 받은 STEP 모델을 확인할 때 CAD 프로그램을 설치하지 않고 부품과 조립 구조를 살펴볼 수 있습니다. 부품끼리 겹치는 곳을 찾고 부피와 질량도 계산합니다. STEP 해석은 웹 워커에서, 3D 표시는 공통 OpenCAD 뷰어 코어에서 처리합니다.',
+    summary: 'STEP·STP 3D CAD 파일을 설치 없이 브라우저에서 여는 무료 뷰어입니다. 조립 구조와 부품 속성을 확인하고, 구멍 지름과 면 사이 거리를 재며, 단면과 분해 보기로 안쪽까지 살펴봅니다.',
+    introduction: '협력사에서 받은 STEP 모델을 CAD 프로그램 설치 없이 열어 부품과 조립 구조를 살펴보는 뷰어입니다. 부품끼리 겹치는 곳을 찾고 부피와 질량도 계산합니다. STEP 해석은 웹 워커에서, 3D 표시는 공통 OpenCAD 뷰어 코어에서 처리합니다.',
     url: 'https://gyutae-kim.github.io/opencad-step/', source: 'https://github.com/GyuTae-Kim/opencad-step', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-step',
@@ -101,14 +101,14 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
       { label: '모바일', text: '보기·측정 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 거리와 면 치수를 확인. 홈 화면에 추가하면 인터넷 없이도 열림' },
     ],
     steps: ['STEP 뷰어를 열고 「예제 열기」로 작은 조립 모형을 확인합니다.', '「열기」를 누르거나 .step·.stp 파일을 창에 끌어다 놓습니다.', '제품 나무에서 부품을 고르거나 숨기고, 마우스나 손가락으로 회전·이동·확대합니다.', '「측정」에서 두 점이나 면, 모서리를 눌러 거리와 지름을 재고, 「내보내기」로 그림이나 STL 파일을 저장하거나 보기 링크를 복사합니다.'],
-    limitations: ['3D 모델을 확인하는 뷰어라 형상을 고치거나 STEP으로 다시 저장하지는 않습니다. STL·OBJ 내보내기는 화면에 그린 삼각형 그물을 그대로 씁니다.', '부피와 질량, 관성 모멘트, 간섭 검사, 곡면끼리의 최소 거리는 화면용 삼각형으로 계산한 근삿값입니다. 평면, 원기둥, 원, 직선처럼 수식으로 바로 구할 수 있는 측정만 정확한 값입니다.', '지원 AP 형식이어도 일부 형상은 읽지 못할 수 있습니다. 정보 패널의 경고를 원본 CAD 화면과 비교해 보세요.'],
+    limitations: ['3D 모델을 확인하는 뷰어라 형상을 고치거나 STEP으로 다시 저장하지는 않습니다. STL·OBJ 내보내기는 화면에 그린 삼각형 그물을 그대로 씁니다.', '부피와 질량, 관성 모멘트, 간섭 검사, 곡면끼리의 최소 거리는 화면용 삼각형으로 계산한 근삿값입니다. 평면, 원기둥, 원, 직선처럼 수식으로 구하는 측정만 정확한 값입니다.', '지원 AP 형식이어도 일부 형상은 읽지 못할 수 있습니다. 정보 패널의 경고를 원본 CAD 화면과 비교해 보세요.'],
   },
   {
     id: 'skp-viewer', path: '/opencad/projects/skp-viewer',
     name: 'OpenCAD SketchUp 뷰어', kind: 'SketchUp 3D 모델',
     searchTitle: 'OpenCAD SKP 뷰어 기능 | 버전·태그·장면',
     extensions: ['.skp'],
-    summary: 'SketchUp 6~2026에서 저장한 SKP 파일을 브라우저에서 여는 무료 뷰어입니다. 태그·재질과 그룹·컴포넌트를 살펴보고, 장면 재생과 걷기로 공간을 둘러보며 거리와 각도를 잴 수 있습니다.',
+    summary: 'SketchUp 6~2026에서 저장한 SKP 파일을 브라우저에서 여는 무료 뷰어입니다. 태그·재질과 그룹·컴포넌트를 살펴보고, 장면 재생과 걷기로 공간을 둘러보며 거리와 각도를 잽니다.',
     introduction: '가구·인테리어 설계의 SketchUp 모델을 전달받았을 때 브라우저에서 형태와 구성을 확인하는 도구입니다. 파일에 저장된 스타일과 장면, 그림자 설정을 따라 SketchUp에서 보던 모습에 가깝게 엽니다. 로컬 파일을 웹 워커에서 읽고 OpenCAD 3D 코어로 표시합니다.',
     url: 'https://gyutae-kim.github.io/opencad-skp/', source: 'https://github.com/GyuTae-Kim/opencad-skp', sharedCore: true,
     figure: {
@@ -133,7 +133,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
     searchTitle: 'OpenCAD NC 뷰어 기능 | G-code·MPR 지원',
     extensions: ['.nc', '.gcode', '.ngc', '.h', '.mpr', '.pgi', '.xml'],
     summary: 'G-code와 Heidenhain(평문, DIN/ISO), 판재 가공 파일(woodWOP MPR, WangShi PGI, KDT XML)의 3D 공구 경로를 확인하는 무료 NC 뷰어입니다. 코드 줄과 이동을 함께 짚고 가공 순서를 재생하며, 장비에 넣기 전에 확인할 줄을 경고로 알려 줍니다.',
-    introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain 프로그램을 해석하고, 코드 줄을 고르면 3D 경로에서 그 이동을, 경로를 고르면 해당 코드 줄을 보여 줍니다. Haas, Siemens 같은 방언과 선반 프로그램은 파일 내용으로 알아보고 화면 위 띠로 알려 줍니다. 주 프로그램과 부프로그램 파일을 함께 열면 한 작업으로 이어 읽습니다. 판재 가공 파일(MPR, PGI, XML)은 구멍과 홈, 포켓, 윤곽 가공을 판 위에 그리고, 가공 목록과 변수를 함께 보여 줍니다.',
+    introduction: 'CNC 프로그램의 이동 순서와 공구 경로를 살펴보는 도구입니다. G-code의 직선·원호·나선 이동과 Heidenhain 프로그램을 해석하고, 코드 줄을 고르면 3D 경로에서 그 이동을, 경로를 고르면 해당 코드 줄을 보여 줍니다. Haas, Siemens 같은 방언과 선반 프로그램은 파일 내용으로 알아보고 화면 위 띠로 알려 줍니다. 주 프로그램과 부프로그램 파일을 함께 열면 한 작업으로 이어 읽습니다. 판재 가공 파일(MPR, PGI, XML)은 구멍과 홈, 포켓, 윤곽 가공을 판 위에 그리고, 가공 목록과 변수도 보여 줍니다.',
     url: 'https://gyutae-kim.github.io/opencad-nc/', source: 'https://github.com/GyuTae-Kim/opencad-nc', sharedCore: true,
     figure: {
       base: 'assets/opencad/viewer-nc',
@@ -148,7 +148,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
       { label: '보기', text: '회전·확대, 표준 뷰, 단면, 두 점 측정과 PNG 저장' },
       { label: '모바일', text: '보기·측정·재생 단추만 한 줄에 두고, 측정 막대와 길게 눌러 정밀 조준으로 공구 경로 위 두 점 거리를 확인. 홈 화면에 추가하면 인터넷 없이도 열림' },
     ],
-    steps: ['NC 뷰어를 열고 「예제 열기」로 합성 G-code를 확인합니다.', 'NC 파일(G-code, Heidenhain, MPR, PGI, XML)을 열거나 창 안으로 끌어다 놓습니다. 부프로그램이 다른 파일에 있으면 함께 고릅니다.', '코드 줄이나 3D 경로를 선택해 해당 이동을 함께 확인합니다.', '공구별 표시와 재생 막대로 가공 순서를 살펴봅니다. 정보 패널의 경고를 누르면 해당 코드 줄로 갑니다.'],
+    steps: ['NC 뷰어를 열고 「예제 열기」로 합성 G-code를 확인합니다.', 'NC 파일(G-code, Heidenhain, MPR, PGI, XML)을 열거나 창 안으로 끌어다 놓습니다. 부프로그램이 다른 파일에 있으면 함께 고릅니다.', '코드 줄이나 3D 경로를 선택해 해당 이동을 확인합니다.', '공구별 표시와 재생 막대로 가공 순서를 살펴봅니다. 정보 패널의 경고를 누르면 해당 코드 줄로 갑니다.'],
     limitations: ['장비마다 매크로·사이클·좌표계를 다르게 해석할 수 있습니다. 지원하는 방언이어도 모든 명령을 똑같이 재현하지는 못합니다.', 'Okuma OSP 프로그램은 알아보고 좌표계(G15 H)만 읽습니다. CALL, VC 변수 같은 Okuma 고유 문법은 그리지 않고 경고로 알립니다.', 'G53, G28처럼 기계 좌표로 가는 이동은 작업 원점의 기계 위치를 설정에 넣기 전까지 안전 높이로 추정해 점선으로 그립니다.', '공구 경로 화면과 예상 시간만으로는 충돌이나 가공 품질을 알 수 없습니다. 장비에 넣기 전에 원본 CAM과 장비 조건으로 따로 검증하세요.'],
   },
   {
@@ -166,7 +166,7 @@ export const OPENCAD_PROJECTS: OpenCadProject[] = [
       { label: '단면', text: '여러 단면 평면과 잘린 면 채우기, 큰 좌표에서도 떨리지 않는 묶음 원점' },
       { label: '연결', text: 'NC·STEP·SKP 해석기와 공유하는 Scene3d 장면 형식' },
     ],
-    steps: ['GitHub에서 설치·사용 예제와 Scene3d 타입을 확인합니다.', 'Viewer3d를 화면 요소에 연결하고 해석한 장면을 setScene으로 전달합니다.', '완성된 사용 예시는 NC·STEP·SKP 뷰어의 예제 열기에서 확인할 수 있습니다.'],
+    steps: ['GitHub에서 설치·사용 예제와 Scene3d 타입을 확인합니다.', 'Viewer3d를 화면 요소에 연결하고 해석한 장면을 setScene으로 전달합니다.', '완성된 사용 예시는 NC·STEP·SKP 뷰어에서 예제를 열면 나옵니다.'],
     limitations: ['개발용 라이브러리라 따로 여는 사이트는 없습니다. 파일은 형식에 맞는 뷰어에서 여세요.', '파일 해석 기능은 이 코어에 포함되지 않으며 NC·STEP·SKP 저장소가 각각 담당합니다.'],
   },
 ];

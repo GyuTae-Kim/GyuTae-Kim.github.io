@@ -21,7 +21,7 @@ const PROJECT_INTROS: Record<string, { title?: string; result: string; role: str
   },
   'service-monitoring': {
     title: '서비스 감시와 오류 추적',
-    result: '서버 상태와 함께 송장·알림톡의 처리 실패까지 잡아내고, 운영 문제 6건의 원인을 고쳤습니다.',
+    result: '서버 이상과 송장·알림톡의 처리 실패까지 잡아내고, 운영 문제 6건의 원인을 고쳤습니다.',
     role: '감시 기준부터 오류 수집·알림·관리자 콘솔까지 직접 개발했습니다.',
   },
   'voda-architecture': {
