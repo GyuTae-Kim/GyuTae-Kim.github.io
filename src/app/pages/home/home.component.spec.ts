@@ -45,7 +45,7 @@ describe('HomeComponent', () => {
 
   it('keeps research image context and individual case links', () => {
     const root = fixture.nativeElement as HTMLElement;
-    expect(root.querySelector('#research .section-lead')!.textContent).toContain('공개 코드를 재실행');
+    expect(root.querySelector('#research .section-lead')!.textContent).toContain('공개 코드를 실행해');
     RESEARCH_WORKS.filter((work) => work.result).forEach((work) => {
       const row = root.querySelector(`.research-row[href="/research/${work.id}"]`)!;
       expect(row).withContext(work.id).not.toBeNull();

@@ -63,7 +63,7 @@
     <section class="archive-bridge">
       <h2>{{ '이제는 형상과 제조를 다룹니다.' | t }}</h2>
       <p>
-        {{ '학부연구생 때 관심을 가졌던 표현 학습과 오류 분석을,' | t }}<br />{{ '지금은 3D 형상 데이터와 가공 특징 인식, CAD/CAM 도구의 실행과 검증으로 넓혀 가고 있습니다.' | t }}
+        {{ '학부연구생 때 관심을 가졌던 표현 학습과 오류 분석을,' | t }}<br />{{ '지금은 3D 형상 데이터의 가공 특징 인식과 CAD/CAM 자동화로 넓혀 가고 있습니다.' | t }}
       </p>
       <a class="button primary" [routerLink]="'/portfolio' | localLink"
         >{{ '최근 연구개발 프로젝트' | t }}<app-icon name="arrow-right"></app-icon></a
@@ -152,11 +152,11 @@
         *ngIf="work.result as result"
         [attr.aria-label]="'{0} 실험 결과' | t:[(work.title) ]"
       >
-        <p class="result-label">{{ '공개 코드 재실행 · 분석과 검증' | t }}</p>
+        <p class="result-label">{{ '실험 결과와 시행착오' | t }}</p>
         <h2 class="result-headline">{{ (result.headline) | t }}</h2>
         <p class="result-scope" *ngIf="result.scope">{{ (result.scope) | t }}</p>
         <p class="result-summary">{{ (result.summary) | t }}</p>
-        <ul class="env-chips" [attr.aria-label]="'재실행 조건' | t">
+        <ul class="env-chips" [attr.aria-label]="'실험 조건' | t">
           <li *ngFor="let item of result.details.environment.split(' · ')">{{ (item) | t }}</li>
         </ul>
         <figure
