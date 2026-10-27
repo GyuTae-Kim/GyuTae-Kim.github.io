@@ -17,13 +17,13 @@ describe('GA public page identities', () => {
     expect(analyticsPage('/opencad')).toEqual({ path: '/opencad', title: 'OpenCAD | 도구 모음', group: 'OpenCAD 소개' });
     expect(analyticsPage('/opencad/projects/skp-viewer').title).toBe('OpenCAD 소개 | SKP 뷰어');
     expect(analyticsPage('/opencad/guides/open-skp').title).toBe('OpenCAD 가이드 | SKP 열기');
-    expect(analyticsPage('/solutions/furniture-manufacturing')).toEqual({ path: '/solutions/furniture-manufacturing', title: '업무별 안내 | 가구 공장 제조 데이터', group: '업무별 안내' });
+    expect(analyticsPage('/notes/furniture-manufacturing-data')).toEqual({ path: '/notes/furniture-manufacturing-data', title: '개발 노트 | 가구 제조 데이터', group: '개발 노트' });
   });
 
   it('keeps localized routes in their stable public categories', () => {
     for (const lang of ['en', 'ja', 'zh-CN', 'de']) {
       expect(analyticsPage(`/${lang}/opencad?open=private.dwg#secret`)).toEqual(analyticsPage('/opencad'));
-      expect(analyticsPage(`/${lang}/solutions/furniture-manufacturing?name=private#secret`)).toEqual(analyticsPage('/solutions/furniture-manufacturing'));
+      expect(analyticsPage(`/${lang}/notes/furniture-manufacturing-data?name=private#secret`)).toEqual(analyticsPage('/notes/furniture-manufacturing-data'));
     }
   });
 

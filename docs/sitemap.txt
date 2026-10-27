@@ -12,7 +12,6 @@ https://gyutae-kim.github.io/research/graph-tsp
 https://gyutae-kim.github.io/research/fashion-classification
 https://gyutae-kim.github.io/research/virtual-try-on
 https://gyutae-kim.github.io/opencad
-https://gyutae-kim.github.io/solutions
 https://gyutae-kim.github.io/notes
 https://gyutae-kim.github.io/opencad/guides/open-dwg-dxf
 https://gyutae-kim.github.io/opencad/guides/measure-export
@@ -21,9 +20,6 @@ https://gyutae-kim.github.io/opencad/guides/open-skp
 https://gyutae-kim.github.io/opencad/guides/check-nc-toolpath
 https://gyutae-kim.github.io/notes/cad-cam-feature-recognition
 https://gyutae-kim.github.io/notes/furniture-manufacturing-data
-https://gyutae-kim.github.io/solutions/sketchup-furniture
-https://gyutae-kim.github.io/solutions/furniture-manufacturing
-https://gyutae-kim.github.io/solutions/cad-cam-automation
 https://gyutae-kim.github.io/opencad/guides/choose-cad-format
 https://gyutae-kim.github.io/opencad/projects/dwg-dxf
 https://gyutae-kim.github.io/opencad/projects/step-viewer
@@ -45,7 +41,6 @@ https://gyutae-kim.github.io/en/research/graph-tsp
 https://gyutae-kim.github.io/en/research/fashion-classification
 https://gyutae-kim.github.io/en/research/virtual-try-on
 https://gyutae-kim.github.io/en/opencad
-https://gyutae-kim.github.io/en/solutions
 https://gyutae-kim.github.io/en/notes
 https://gyutae-kim.github.io/en/opencad/guides/open-dwg-dxf
 https://gyutae-kim.github.io/en/opencad/guides/measure-export
@@ -54,9 +49,6 @@ https://gyutae-kim.github.io/en/opencad/guides/open-skp
 https://gyutae-kim.github.io/en/opencad/guides/check-nc-toolpath
 https://gyutae-kim.github.io/en/notes/cad-cam-feature-recognition
 https://gyutae-kim.github.io/en/notes/furniture-manufacturing-data
-https://gyutae-kim.github.io/en/solutions/sketchup-furniture
-https://gyutae-kim.github.io/en/solutions/furniture-manufacturing
-https://gyutae-kim.github.io/en/solutions/cad-cam-automation
 https://gyutae-kim.github.io/en/opencad/guides/choose-cad-format
 https://gyutae-kim.github.io/en/opencad/projects/dwg-dxf
 https://gyutae-kim.github.io/en/opencad/projects/step-viewer
@@ -78,7 +70,6 @@ https://gyutae-kim.github.io/ja/research/graph-tsp
 https://gyutae-kim.github.io/ja/research/fashion-classification
 https://gyutae-kim.github.io/ja/research/virtual-try-on
 https://gyutae-kim.github.io/ja/opencad
-https://gyutae-kim.github.io/ja/solutions
 https://gyutae-kim.github.io/ja/notes
 https://gyutae-kim.github.io/ja/opencad/guides/open-dwg-dxf
 https://gyutae-kim.github.io/ja/opencad/guides/measure-export
@@ -87,9 +78,6 @@ https://gyutae-kim.github.io/ja/opencad/guides/open-skp
 https://gyutae-kim.github.io/ja/opencad/guides/check-nc-toolpath
 https://gyutae-kim.github.io/ja/notes/cad-cam-feature-recognition
 https://gyutae-kim.github.io/ja/notes/furniture-manufacturing-data
-https://gyutae-kim.github.io/ja/solutions/sketchup-furniture
-https://gyutae-kim.github.io/ja/solutions/furniture-manufacturing
-https://gyutae-kim.github.io/ja/solutions/cad-cam-automation
 https://gyutae-kim.github.io/ja/opencad/guides/choose-cad-format
 https://gyutae-kim.github.io/ja/opencad/projects/dwg-dxf
 https://gyutae-kim.github.io/ja/opencad/projects/step-viewer
@@ -111,7 +99,6 @@ https://gyutae-kim.github.io/zh-CN/research/graph-tsp
 https://gyutae-kim.github.io/zh-CN/research/fashion-classification
 https://gyutae-kim.github.io/zh-CN/research/virtual-try-on
 https://gyutae-kim.github.io/zh-CN/opencad
-https://gyutae-kim.github.io/zh-CN/solutions
 https://gyutae-kim.github.io/zh-CN/notes
 https://gyutae-kim.github.io/zh-CN/opencad/guides/open-dwg-dxf
 https://gyutae-kim.github.io/zh-CN/opencad/guides/measure-export
@@ -120,9 +107,6 @@ https://gyutae-kim.github.io/zh-CN/opencad/guides/open-skp
 https://gyutae-kim.github.io/zh-CN/opencad/guides/check-nc-toolpath
 https://gyutae-kim.github.io/zh-CN/notes/cad-cam-feature-recognition
 https://gyutae-kim.github.io/zh-CN/notes/furniture-manufacturing-data
-https://gyutae-kim.github.io/zh-CN/solutions/sketchup-furniture
-https://gyutae-kim.github.io/zh-CN/solutions/furniture-manufacturing
-https://gyutae-kim.github.io/zh-CN/solutions/cad-cam-automation
 https://gyutae-kim.github.io/zh-CN/opencad/guides/choose-cad-format
 https://gyutae-kim.github.io/zh-CN/opencad/projects/dwg-dxf
 https://gyutae-kim.github.io/zh-CN/opencad/projects/step-viewer
@@ -144,7 +128,6 @@ https://gyutae-kim.github.io/de/research/graph-tsp
 https://gyutae-kim.github.io/de/research/fashion-classification
 https://gyutae-kim.github.io/de/research/virtual-try-on
 https://gyutae-kim.github.io/de/opencad
-https://gyutae-kim.github.io/de/solutions
 https://gyutae-kim.github.io/de/notes
 https://gyutae-kim.github.io/de/opencad/guides/open-dwg-dxf
 https://gyutae-kim.github.io/de/opencad/guides/measure-export
@@ -153,9 +136,6 @@ https://gyutae-kim.github.io/de/opencad/guides/open-skp
 https://gyutae-kim.github.io/de/opencad/guides/check-nc-toolpath
 https://gyutae-kim.github.io/de/notes/cad-cam-feature-recognition
 https://gyutae-kim.github.io/de/notes/furniture-manufacturing-data
-https://gyutae-kim.github.io/de/solutions/sketchup-furniture
-https://gyutae-kim.github.io/de/solutions/furniture-manufacturing
-https://gyutae-kim.github.io/de/solutions/cad-cam-automation
 https://gyutae-kim.github.io/de/opencad/guides/choose-cad-format
 https://gyutae-kim.github.io/de/opencad/projects/dwg-dxf
 https://gyutae-kim.github.io/de/opencad/projects/step-viewer

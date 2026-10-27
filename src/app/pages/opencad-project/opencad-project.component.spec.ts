@@ -37,9 +37,7 @@ describe('OpenCadProjectComponent', () => {
     expect(Array.from(page.querySelectorAll('[aria-labelledby="project-guides"] .guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
       '/opencad/guides/open-dwg-dxf', '/opencad/guides/measure-export',
     ]);
-    expect(Array.from(page.querySelectorAll('[aria-labelledby="project-workflows"] .guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
-      '/solutions/furniture-manufacturing', '/solutions/cad-cam-automation',
-    ]);
+    expect(page.querySelector('[aria-labelledby="project-guides"] .related-links a')!.getAttribute('href')).toBe('/opencad/guides/choose-cad-format');
   });
 
   it('pictures the core with the viewers drawn by it and links no unpublished app', async () => {

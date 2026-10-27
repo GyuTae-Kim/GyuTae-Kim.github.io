@@ -180,11 +180,6 @@
       </a>
     </section>
 
-    <section class="index-section" aria-labelledby="home-solutions-title">
-      <div class="section-title"><h2 id="home-solutions-title">{{ '스케치업·가구 공장·제조업 업무 안내' | t }}</h2><a class="text-link" [routerLink]="'/solutions' | localLink">{{ '업무별 안내' | t }}<app-icon name="arrow-right"></app-icon></a></div>
-      <ul class="guide-list"><li *ngFor="let article of audienceArticles"><h3><a [routerLink]="article.path | localLink">{{ article.title | t }}</a></h3><p>{{ article.description | t }}</p><app-icon class="row-arrow" name="arrow-right"></app-icon></li></ul>
-    </section>
-
     <section
       class="index-section"
       id="research"
