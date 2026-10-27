@@ -17,6 +17,8 @@ import { IconComponent } from './components/icon/icon.component';
 import { PartnerTextComponent } from './components/partner-text/partner-text.component';
 import { PanelCatalogComponent } from './components/panel-catalog/panel-catalog.component';
 import { I18nModule } from './i18n/i18n.module';
+import { UrlSerializer } from '@angular/router';
+import { CanonicalUrlSerializer } from './canonical-url-serializer';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { I18nModule } from './i18n/i18n.module';
     PanelCatalogComponent,
   ],
   imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule, I18nModule],
+  providers: [{ provide: UrlSerializer, useClass: CanonicalUrlSerializer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

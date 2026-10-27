@@ -6,6 +6,7 @@
 .header-icon:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .navigation-trigger { display: none; }
 .language-control { position: relative; flex: none; }
+.profile-discovery > p { margin: 0; font-size: 13px; color: var(--muted); }
 .language-versions {
   display: flex; flex-wrap: wrap; gap: 4px 20px; margin-bottom: 20px;
   font: 14px / 1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
