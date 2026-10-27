@@ -6,7 +6,7 @@ export const CAD_FORMAT_GUIDE: SiteArticle = {
   description: '받은 CAD 파일에 맞는 무료 뷰어를 고르는 안내입니다. DWG와 DXF, STEP와 STP, 스케치업 SKP의 차이, 윈도우·맥에서 여는 방법과 설계·공장 전달 체크리스트를 확인하세요.',
   lead: '파일을 열어 치수를 확인하려는지, 3D 형상을 검토하려는지, 공장에 생산 자료를 보내려는지 먼저 정하세요. 확장자와 작업 목적을 함께 보면 필요한 뷰어와 추가로 요청할 자료를 고르기 쉽습니다.',
   image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 도면·3D 모델·공구 경로 도구 모음 표지.',
-  actions: [{ path: '/opencad', label: '형식에 맞는 무료 뷰어 열기' }, { path: '/solutions', label: '가구·제조 업무별 안내 보기' }],
+  actions: [{ path: '/opencad', label: '형식에 맞는 무료 뷰어 열기' }],
   figure: { src: 'assets/og/opencad.jpg', alt: 'OpenCAD 도면·3D 모델·공구 경로 도구 모음 표지.', caption: 'OpenCAD 도구 모음. 파일 종류에 맞는 뷰어와 사용 안내를 연결합니다.', width: 1200, height: 630 },
   sections: [
     {
@@ -33,8 +33,6 @@ export const CAD_FORMAT_GUIDE: SiteArticle = {
     { path: '/opencad/guides/open-step-stp', label: 'STEP·STP 3D 모델 열기' },
     { path: '/opencad/guides/open-skp', label: 'SKP 파일 열기·지원 버전 확인' },
     { path: '/opencad/guides/check-nc-toolpath', label: 'NC·G-code·MPR 경로 확인' },
-    { path: '/solutions/furniture-manufacturing', label: '가구 공장 도면·BOM·CNC 가공 데이터 연결' },
-    { path: '/solutions/cad-cam-automation', label: '제조업 CAD/CAM 자동화와 도면·3D·NC 검토' },
   ],
   sources: [
     { url: 'https://github.com/GyuTae-Kim/opencad-dwgdxf#readme', label: 'OpenCAD 공개 사용 안내와 지원 범위' },

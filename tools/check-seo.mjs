@@ -204,15 +204,8 @@ for (const page of SEARCH_PAGES) {
         const actions = [...root.querySelectorAll('nav.article-actions a')].map(link => link.href);
         assert.deepEqual(actions, page.article.actions.map(action => SITE_URL + languagePath(action.path, page.language)), `${file}: workflow actions keep their locale`);
         const crumbs = data['@graph'].find(node => node['@type'] === 'BreadcrumbList');
-        const collection = originalPath(page.path).startsWith('/solutions/') ? '/solutions' : '/opencad';
-        assert.equal(crumbs.itemListElement[1].item, SITE_URL + languagePath(collection, page.language), `${file}: article breadcrumb points to its collection`);
+        assert.equal(crumbs.itemListElement[1].item, SITE_URL + languagePath('/opencad', page.language), `${file}: article breadcrumb points to its collection`);
       }
-    }
-    if (originalPath(page.path) === '/solutions') {
-      const targets = ['sketchup-furniture', 'furniture-manufacturing', 'cad-cam-automation'].map(slug => SITE_URL + languagePath('/solutions/' + slug, page.language));
-      assert.deepEqual([...root.querySelectorAll('.note-list h2 a')].map(link => link.href), targets, `${file}: distinct workflow guides appear in the static collection`);
-      const list = data['@graph'].find(node => node['@type'] === 'ItemList');
-      assert.deepEqual(list.itemListElement.map(item => item.url), targets, `${file}: workflow collection structured data matches visible links`);
     }
     if (originalPath(page.path) === '/opencad') {
       const choices = [...root.querySelectorAll('.file-choice-table tbody tr')];

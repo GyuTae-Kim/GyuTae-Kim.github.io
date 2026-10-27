@@ -80,13 +80,6 @@
           <app-icon class="row-arrow" name="arrow-right"></app-icon>
         </li>
       </ul>
-    </section>
-
-    <section *ngIf="workflows.length" class="project-section" aria-labelledby="project-workflows">
-      <h2 id="project-workflows">{{ '파일 확인에서 설계·제조 업무로 연결하기' | t }}</h2>
-      <ul class="guide-list">
-        <li *ngFor="let workflow of workflows"><h3><a [routerLink]="workflow.path | localLink">{{ workflow.title | t }}</a></h3><p>{{ workflow.description | t }}</p><app-icon class="row-arrow" name="arrow-right"></app-icon></li>
-      </ul>
       <p class="related-links"><a class="text-link" [routerLink]="'/opencad/guides/choose-cad-format' | localLink">{{ '파일 형식 차이·윈도우·맥에서 여는 방법' | t }}<app-icon name="arrow-right"></app-icon></a></p>
     </section>
 

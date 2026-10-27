@@ -1,10 +1,9 @@
 import { GuideDetails, OPENCAD_GUIDE_DETAILS } from './opencad-guide-details';
-import { AUDIENCE_ARTICLES } from './audience-data';
 import { CAD_FORMAT_GUIDE } from './cad-format-data';
 
 export interface SiteArticle {
   path: string;
-  category: 'OpenCAD 사용 안내' | '제조 소프트웨어 개발 노트' | '가구·제조 업무 안내';
+  category: 'OpenCAD 사용 안내' | '제조 소프트웨어 개발 노트';
   title: string;
   description: string;
   lead: string;
@@ -162,15 +161,12 @@ export const SITE_ARTICLES: SiteArticle[] = [
     ],
     related: [{ path: '/portfolio/panel-classification', label: '가구 패널 역할 인식과 파라메트릭 설계 연구' }, { path: '/portfolio/wedraw-pro', label: 'Wedraw Pro 개발 역할과 실제 화면' }, { path: '/portfolio/service-monitoring', label: '제조 소프트웨어 서비스 운영 감시 사례' }, { path: '/contact', label: '제조 소프트웨어 개발·채용·협업 연락처' }],
   },
-  ...AUDIENCE_ARTICLES,
   CAD_FORMAT_GUIDE,
 ].map(article => ({
   ...article,
   guide: OPENCAD_GUIDE_DETAILS[article.path.split('/').pop()!],
   related: article.path === CAD_FORMAT_GUIDE.path ? article.related : [
     ...article.related,
-    ...(article.category === 'OpenCAD 사용 안내' || article.category === '가구·제조 업무 안내'
-      ? [{ path: CAD_FORMAT_GUIDE.path, label: CAD_FORMAT_GUIDE.title }] : []),
-    ...(article.viewer ? [{ path: article.path.endsWith('open-skp') ? '/solutions/sketchup-furniture' : article.path.endsWith('open-step-stp') ? '/solutions/cad-cam-automation' : '/solutions/furniture-manufacturing', label: '파일 확인 다음 단계: 설계·제조 업무 안내' }] : []),
+    ...(article.category === 'OpenCAD 사용 안내' ? [{ path: CAD_FORMAT_GUIDE.path, label: CAD_FORMAT_GUIDE.title }] : []),
   ],
 })) as SiteArticle[];

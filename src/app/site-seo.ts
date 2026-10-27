@@ -2,7 +2,6 @@ import { CASE_STUDIES } from './portfolio-data';
 import { OTHER_PROJECTS } from './other-projects-data';
 import { OPENCAD_TOOLS, OPENCAD_PROJECTS, OpenCadProject } from './opencad-data';
 import { SITE_ARTICLES, SiteArticle } from './articles-data';
-import { AUDIENCE_COLLECTION, AUDIENCE_ARTICLES } from './audience-data';
 import contentHistory from './content-history.json';
 import { RESEARCH_WORKS, ResearchWork } from './research-data';
 import { LANGUAGES, Language, languageFromUrl, languagePath, localizedHref, originalPath, translateData } from './i18n/localization';
@@ -112,11 +111,6 @@ export const SEARCH_PAGES: SearchPage[] = [
     kind: 'CollectionPage',
   },
   {
-    path: AUDIENCE_COLLECTION.path, title: `${AUDIENCE_COLLECTION.title} | 김규태`,
-    description: AUDIENCE_COLLECTION.description, image: 'assets/og/wedraw-pro.jpg',
-    imageAlt: 'SketchUp 가구 설계·제조 데이터 소프트웨어 개발 노트.', kind: 'CollectionPage',
-  },
-  {
     path: '/notes', title: 'AI·CAD/CAM·가구 제조 소프트웨어 개발 노트 | 김규태',
     description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, 가구 설계·제조 데이터 개발에서 내린 판단과 검증 범위를 정리합니다.',
     image: 'assets/og/portfolio.jpg', imageAlt: '김규태의 AI·CAD/CAM·제조 소프트웨어 개발 노트.', kind: 'CollectionPage',
@@ -208,7 +202,6 @@ export function structuredData(page: SearchPage): object {
     if (page.tool) crumbs.push({ name: 'OpenCAD', item: `${SITE_URL}/opencad` });
     if (page.article) crumbs.push(page.article.path.startsWith('/opencad/')
       ? { name: 'OpenCAD', item: `${SITE_URL}/opencad` }
-      : page.article.path.startsWith('/solutions/') ? { name: '업무별 안내', item: `${SITE_URL}/solutions` }
       : { name: '개발 노트', item: `${SITE_URL}/notes` });
     crumbs.push({ name: page.project?.title ?? page.research?.title ?? page.article?.title ?? page.tool?.name ?? page.title.split(' — ')[0], item: url });
     graph.push({
@@ -237,10 +230,6 @@ export function structuredData(page: SearchPage): object {
     '@type': 'ItemList', '@id': `${url}#notes`, name: '제조 소프트웨어 개발 노트',
     itemListElement: SITE_ARTICLES.filter((article) => article.category === '제조 소프트웨어 개발 노트')
       .map((article, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE_URL + article.path, name: article.title })),
-  });
-  if (path === '/solutions') graph.push({
-    '@type': 'ItemList', '@id': `${url}#solutions`, name: AUDIENCE_COLLECTION.title,
-    itemListElement: AUDIENCE_ARTICLES.map((article, i) => ({ '@type': 'ListItem', position: i + 1, url: SITE_URL + article.path, name: article.title })),
   });
   if (path === '/portfolio') graph.push({
     '@type': 'ItemList', '@id': `${url}#projects`, name: '개발 프로젝트',
