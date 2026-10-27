@@ -264,7 +264,7 @@
 }
 .viewer-legend li {
   display: grid;
-  grid-template-columns: 24px 14px auto 1fr;
+  grid-template-columns: 24px 14px minmax(0, max-content) minmax(0, 1fr);
   align-items: center;
   gap: 8px;
   font-size: var(--fs-2);
@@ -307,13 +307,15 @@
 .legend-label {
   grid-column: 3;
   font-weight: 600;
+  overflow-wrap: normal;
 }
 .legend-detail {
   grid-column: 4;
   font-size: var(--fs-1);
   color: var(--muted);
   text-align: right;
-  white-space: nowrap;
+  min-width: 0;
+  white-space: normal;
 }
 .title-block {
   display: grid;
@@ -366,13 +368,6 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
     padding: 16px;
-  }
-  /* Long translated labels and details share the row instead of overflowing. */
-  .viewer-legend li {
-    grid-template-columns: 24px 14px auto auto;
-  }
-  .legend-detail {
-    white-space: normal;
   }
   .title-block {
     grid-template-columns: repeat(3, minmax(0, 1fr));
