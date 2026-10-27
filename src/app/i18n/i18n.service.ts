@@ -1,3 +1,4 @@
+import { imageOriginal, localizedImage } from './image-assets';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Pipe, PipeTransform } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
@@ -39,4 +40,20 @@ export class TranslatePipe implements PipeTransform {
 export class LocalLinkPipe implements PipeTransform {
   constructor(private i18n: I18nService) {}
   transform<T>(value: T): T { return this.i18n.link(value); }
+}
+
+@Pipe({ name: 'localImage', pure: false })
+export class LocalImagePipe implements PipeTransform {
+  constructor(private i18n: I18nService) {}
+  transform<T>(value: T): T {
+    return (typeof value === 'string' ? localizedImage(value, this.i18n.language) : value) as T;
+  }
+}
+
+@Pipe({ name: 'imageOriginal', pure: false })
+export class ImageOriginalPipe implements PipeTransform {
+  constructor(private i18n: I18nService) {}
+  transform(value: string | undefined): string | undefined {
+    return value ? imageOriginal(value, this.i18n.language) : undefined;
+  }
 }

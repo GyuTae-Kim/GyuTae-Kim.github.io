@@ -22,8 +22,8 @@
           tabindex="-1"
           aria-hidden="true"
           ><img
-            [src]="result.thumb + '-672.webp'"
-            [attr.srcset]="srcset(result.thumb)"
+            [src]="(result.thumb + '-672.webp') | localImage"
+            [attr.srcset]="(srcset(result.thumb)) | localImage"
             sizes="(max-width: 720px) 100vw, 300px"
             alt=""
             width="560"
@@ -138,11 +138,11 @@
         <h2 class="detail-title" id="original-title">{{ '원래 연구에서 분석한 데이터' | t }}</h2>
         <div class="original-figures">
           <figure>
-            <a [href]="(work.image) | localLink" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'K-Fashion 혼동행렬 원본 크게 보기' | t"><img [src]="work.image" [alt]="(work.imageAlt) | t" width="800" height="600" loading="lazy" /></a>
+            <a [href]="work.image | localImage | localLink" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'K-Fashion 혼동행렬 원본 크게 보기' | t"><img [src]="(work.image) | localImage" [alt]="(work.imageAlt) | t" width="800" height="600" loading="lazy" /></a>
             <figcaption>{{ (work.imageCaption) | t }}</figcaption>
           </figure>
           <figure *ngIf="work.id === 'fashion-classification'">
-            <a [href]="'assets/research/k-fashion-class-count.png' | localLink" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'K-Fashion 클래스 분포 원본 크게 보기' | t"><img src="assets/research/k-fashion-class-count.png" [attr.alt]="'K-Fashion 원연구의 클래스 0~3 학습·검증 이미지 수. 클래스별 표본 수의 차이를 보여주는 막대그래프' | t" width="1400" height="500" loading="lazy" /></a>
+            <a [href]="'assets/research/k-fashion-class-count.png' | localImage | localLink" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'K-Fashion 클래스 분포 원본 크게 보기' | t"><img [src]="'assets/research/k-fashion-class-count.png' | localImage" [attr.alt]="'K-Fashion 원연구의 클래스 0~3 학습·검증 이미지 수. 클래스별 표본 수의 차이를 보여주는 막대그래프' | t" width="1400" height="500" loading="lazy" /></a>
             <figcaption>{{ '원래 K-Fashion 데이터의 클래스 분포입니다. 학습·검증 각각에서 가장 적은 클래스에 맞춰 샘플링한 이유를 보여줍니다.' | t }}</figcaption>
           </figure>
         </div>
@@ -172,9 +172,9 @@
             ><picture
               ><source
                 *ngIf="fig.still"
-                [attr.srcset]="fig.still"
+                [attr.srcset]="(fig.still) | localImage"
                 media="(prefers-reduced-motion: reduce)" /><img
-                [src]="fig.still && stopped.has(fig.src) ? fig.still : fig.src"
+                [src]="(fig.still && stopped.has(fig.src) ? fig.still : fig.src) | localImage"
                 [alt]="(fig.alt) | t"
                 [width]="fig.width"
                 [height]="fig.height"
@@ -226,7 +226,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 [attr.aria-label]="'원본 크기로 보기: {0}' | t:[(fig.alt) ]"
-                ><img [src]="fig.src" [alt]="(fig.alt) | t" [width]="fig.width" [height]="fig.height" loading="lazy"
+                ><img [src]="(fig.src) | localImage" [alt]="(fig.alt) | t" [width]="fig.width" [height]="fig.height" loading="lazy"
               /></a>
               <figcaption>{{ (fig.caption) | t }}</figcaption>
             </figure>

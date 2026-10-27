@@ -30,7 +30,7 @@
       <img
         class="viewer-still"
         *ngIf="state !== 'live'"
-        [src]="still"
+        [src]="(still) | localImage"
         alt=""
         width="1200"
         height="750"

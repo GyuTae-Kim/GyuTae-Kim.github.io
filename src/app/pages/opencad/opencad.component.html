@@ -53,8 +53,8 @@
     <article class="tool-card" *ngFor="let tool of liveTools; let i = index" [class.tool-card-text]="!tool.figure" [attr.aria-labelledby]="tool.id">
       <figure class="tool-shot" *ngIf="tool.figure">
         <img
-          [src]="tool.figure.base + '-1440.webp'"
-          [attr.srcset]="srcset(tool.figure.base)"
+          [src]="(tool.figure.base + '-1440.webp') | localImage"
+          [attr.srcset]="(srcset(tool.figure.base)) | localImage"
           sizes="(max-width: 1000px) 100vw, 640px"
           [alt]="(tool.figure.alt) | t"
           width="1440"
@@ -63,7 +63,7 @@
           [attr.fetchpriority]="i === 0 ? 'high' : null"
         />
         <figcaption>
-          <span class="figure-kind">{{ '실제 화면' | t }}</span>{{ (tool.figure.caption) | t }}</figcaption>
+          <span class="figure-kind">{{ '실제 화면' | t }}</span>{{ (tool.figure.caption) | t }} <a *ngIf="((tool.figure.base + '-1440.webp') | imageOriginal) as originalImage" [href]="originalImage" target="_blank" rel="noopener noreferrer" class="image-original-link">{{ '번역 참고 이미지 · 한국어 원본 보기' | t }}</a></figcaption>
       </figure>
       <div class="tool-body">
         <p class="tool-meta"><span class="tool-status live">{{ '공개' | t }}</span>{{ (tool.kind) | t }}</p>

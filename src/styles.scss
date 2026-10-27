@@ -2942,3 +2942,5 @@ app-icon.row-arrow {
 html:lang(ja) { --sans: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; }
 html:lang(zh-CN) { --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
 html:not(:lang(ko)) { word-break: normal; overflow-wrap: anywhere; }
+
+.image-original-link { display: block; margin-top: 0.5rem; font-size: 0.875rem; text-decoration: underline; text-underline-offset: 3px; }

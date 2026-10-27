@@ -17,15 +17,15 @@
       </div>
       <figure class="tool-shot" *ngIf="project.figure as figure; else coreFigure">
         <img
-          [src]="figure.base + '-1440.webp'"
-          [attr.srcset]="srcset(figure.base)"
+          [src]="(figure.base + '-1440.webp') | localImage"
+          [attr.srcset]="(srcset(figure.base)) | localImage"
           sizes="(max-width: 1000px) 100vw, 600px"
           [alt]="(figure.alt) | t"
           width="1440"
           height="900"
           fetchpriority="high"
         />
-        <figcaption><span class="figure-kind">{{ '실제 화면' | t }}</span>{{ (figure.caption) | t }}</figcaption>
+        <figcaption><span class="figure-kind">{{ '실제 화면' | t }}</span>{{ (figure.caption) | t }} <a *ngIf="((figure.base + '-1440.webp') | imageOriginal) as originalImage" [href]="originalImage" target="_blank" rel="noopener noreferrer" class="image-original-link">{{ '번역 참고 이미지 · 한국어 원본 보기' | t }}</a></figcaption>
       </figure>
       <!-- The core has no app of its own; its picture is the viewers drawn with it. -->
       <ng-template #coreFigure>
@@ -33,7 +33,7 @@
           <div class="core-shot-grid">
             <img
               *ngFor="let viewer of coreViewers"
-              [src]="viewer.figure!.base + '-720.webp'"
+              [src]="(viewer.figure!.base + '-720.webp') | localImage"
               [alt]="(viewer.figure!.alt) | t"
               width="1440"
               height="900"
@@ -96,7 +96,7 @@
         <li *ngFor="let item of related">
           <a [routerLink]="(item.path) | localLink">
             <span class="related-shot" [class.related-core]="!item.figure">
-              <img *ngIf="item.figure" [src]="item.figure.base + '-720.webp'" alt="" width="1440" height="900" loading="lazy" />
+              <img *ngIf="item.figure" [src]="(item.figure.base + '-720.webp') | localImage" alt="" width="1440" height="900" loading="lazy" />
               <code *ngIf="!item.figure">Scene3d</code>
             </span>
             <span class="row-meta">{{ (item.kind) | t }}</span>

@@ -1,3 +1,4 @@
+import { localizedImage } from './image-assets';
 import { catalogs } from './catalogs';
 export { ensureCatalog } from './catalogs';
 
@@ -61,7 +62,7 @@ export function translate(value: string, language: Language, parameters: unknown
 
 // JSON-LD and search descriptions must agree with the visible translated content.
 export function translateData<T>(value: T, language: Language): T {
-  if (typeof value === 'string') return translate(value, language) as T;
+  if (typeof value === 'string') return localizedImage(translate(value, language), language) as T;
   if (Array.isArray(value)) return value.map(item => translateData(item, language)) as T;
   if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, translateData(item, language)])) as T;
   return value;

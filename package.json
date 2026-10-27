@@ -12,7 +12,8 @@
     "check:seo": "node tools/check-seo.mjs docs",
     "update:content-dates": "ng run portfolio:server:production && node tools/update-content-dates.mjs",
     "test:content-dates": "node --test tools/content-dates.test.mjs",
-    "check:i18n": "node tools/check-i18n.mjs"
+    "check:i18n": "node tools/check-i18n.mjs",
+    "check:images": "node tools/check-localized-images.mjs"
   },
   "private": true,
   "dependencies": {

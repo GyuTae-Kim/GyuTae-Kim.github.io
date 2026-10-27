@@ -3,7 +3,7 @@
     <button type="button" class="panel-trigger" [attr.aria-label]="'{0} 위치와 설명' | t:[(type.name) ]" [attr.aria-describedby]="'panel-tip-' + type.id" [attr.aria-expanded]="active === type.id" (click)="show(type, $event)">{{ (type.name) | t }}</button>
     <div class="panel-tooltip" role="tooltip" [id]="'panel-tip-' + type.id" [class.open]="active === type.id" [attr.aria-hidden]="active !== type.id" [style.left.px]="left" [style.top.px]="top">
       <div class="panel-card">
-        <img [src]="type.image" [alt]="(type.imageAlt) | t" width="420" height="300" loading="lazy" />
+        <img [src]="(type.image) | localImage" [alt]="(type.imageAlt) | t" width="420" height="300" loading="lazy" />
         <strong>{{ (type.name) | t }}</strong>
         <p>{{ (type.description) | t }}</p>
         <small><i aria-hidden="true"></i>{{ '파란색이 해당 패널입니다 · 위치 안내용 개념도' | t }}</small>

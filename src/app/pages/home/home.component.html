@@ -51,8 +51,8 @@
       >
         <!-- A real product screen, so the card does not repeat project 03's thumbnail below. -->
         <img
-          src="assets/cases/wedraw-pro/card-336.webp"
-          srcset="assets/cases/wedraw-pro/card-336.webp 336w, assets/cases/wedraw-pro/card-672.webp 672w"
+          [src]="'assets/cases/wedraw-pro/card-336.webp' | localImage"
+          [attr.srcset]="'assets/cases/wedraw-pro/card-336.webp 336w, assets/cases/wedraw-pro/card-672.webp 672w' | localImage"
           sizes="132px"
           alt=""
           width="560"
@@ -86,8 +86,8 @@
           <a class="index-row case-row" [routerLink]="(['/portfolio', project.id]) | localLink">
             <span class="row-thumb"
               ><img
-                [src]="project.thumb + '-336.webp'"
-                [attr.srcset]="srcset(project.thumb)"
+                [src]="(project.thumb + '-336.webp') | localImage"
+                [attr.srcset]="(srcset(project.thumb)) | localImage"
                 sizes="(max-width: 720px) 110px, 170px"
                 alt=""
                 width="560"
@@ -122,8 +122,8 @@
         <li *ngFor="let project of operations">
           <a class="operation-card" [routerLink]="(['/portfolio', project.id]) | localLink">
             <img
-              [src]="project.thumb + '-336.webp'"
-              [attr.srcset]="srcset(project.thumb)"
+              [src]="(project.thumb + '-336.webp') | localImage"
+              [attr.srcset]="(srcset(project.thumb)) | localImage"
               sizes="(max-width: 767px) 96px, 110px"
               alt=""
               width="560"
@@ -154,7 +154,7 @@
           >
             <span class="row-thumb opencad-thumb"
               ><img
-                [src]="tool.figure!.base + '-720.webp'"
+                [src]="(tool.figure!.base + '-720.webp') | localImage"
                 alt=""
                 width="1440"
                 height="900"
@@ -208,8 +208,8 @@
           >
             <span class="row-thumb"
               ><img
-                [src]="work.result!.thumb + '-336.webp'"
-                [attr.srcset]="srcset(work.result!.thumb)"
+                [src]="(work.result!.thumb + '-336.webp') | localImage"
+                [attr.srcset]="(srcset(work.result!.thumb)) | localImage"
                 sizes="(max-width: 720px) 110px, 170px"
                 alt=""
                 width="560"
@@ -251,7 +251,7 @@
       </div>
       <div class="about-block">
         <img
-          src="assets/sean-kim.webp"
+          [src]="'assets/sean-kim.webp' | localImage"
           [attr.alt]="'김규태(Sean Kim) 프로필 사진' | t"
           width="100"
           height="100"

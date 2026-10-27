@@ -1,0 +1,418 @@
+[
+  {
+    "id": "home",
+    "language": "en",
+    "path": "assets/og/home.jpg",
+    "title": "Sean Kim | AI & CAD/CAM Developer Portfolio",
+    "description": "Sean Kim's AI and CAD/CAM portfolio: 3D machining feature recognition, Autodesk Fusion CAM automation, SketchUp manufacturing data and service operations.",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "home",
+    "language": "ja",
+    "path": "assets/og/home.jpg",
+    "title": "Sean Kim | AI・CAD/CAM開発者のポートフォリオ",
+    "description": "AI・CAD/CAM開発者Sean Kimのポートフォリオ。3D加工フィーチャ認識、Fusion CAM自動化、SketchUpの製造データ連携、サービス運用の担当範囲と成果を紹介します。",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "home",
+    "language": "zh-CN",
+    "path": "assets/og/home.jpg",
+    "title": "Sean Kim | AI 与 CAD/CAM 开发者作品集",
+    "description": "AI 与 CAD/CAM 开发者 Sean Kim 的作品集，涵盖三维加工特征识别、Fusion CAM 自动化、SketchUp 制造数据对接和服务运维，说明本人职责、成果与验证范围。",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "home",
+    "language": "de",
+    "path": "assets/og/home.jpg",
+    "title": "Sean Kim | KI- und CAD/CAM-Entwickler",
+    "description": "Sean Kims Portfolio: KI für 3D-Geometrie und Feature-Erkennung, Fusion-CAM-Automatisierung, SketchUp-Fertigungsdaten und Softwarebetrieb. Mit Aufgaben, Ergebnissen und Prüfgrenzen.",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "portfolio",
+    "language": "en",
+    "path": "assets/og/portfolio.jpg",
+    "title": "AI, CAD/CAM & Manufacturing Projects",
+    "description": "Explore Sean Kim's work in 3D AI, CAD/CAM automation, SketchUp manufacturing data and service monitoring, with roles, results and validation limits.",
+    "source": "assets/cases/feature-cam/hero.webp"
+  },
+  {
+    "id": "portfolio",
+    "language": "ja",
+    "path": "assets/og/portfolio.jpg",
+    "title": "AI・CAD/CAM・製造ソフトウェア開発事例",
+    "description": "3D形状AI、CAD/CAM自動化、SketchUpの製造データ連携、サービス監視の開発事例。Sean Kimが担当した役割、実装結果、検証範囲を確認できます。",
+    "source": "assets/cases/feature-cam/hero.webp"
+  },
+  {
+    "id": "portfolio",
+    "language": "zh-CN",
+    "path": "assets/og/portfolio.jpg",
+    "title": "AI、CAD/CAM 与制造软件开发案例",
+    "description": "查看 Sean Kim 在三维形状 AI、CAD/CAM 自动化、SketchUp 制造数据和服务监控方面的开发案例，了解个人职责、实现结果与验证局限。",
+    "source": "assets/cases/feature-cam/hero.webp"
+  },
+  {
+    "id": "portfolio",
+    "language": "de",
+    "path": "assets/og/portfolio.jpg",
+    "title": "KI, CAD/CAM und Fertigungssoftware",
+    "description": "Sean Kims Entwicklungsprojekte: 3D-KI, CAD/CAM-Automatisierung, SketchUp-Fertigungsdaten und Service-Monitoring. Mit eigener Rolle und belegten Ergebnissen.",
+    "source": "assets/cases/feature-cam/hero.webp"
+  },
+  {
+    "id": "cad-feature-recognition",
+    "language": "en",
+    "path": "assets/og/cad-feature-recognition.jpg",
+    "title": "3D Machining Feature Recognition & Fusion CAM",
+    "description": "A case study of Sean Kim's work on 3D geometry analysis, AI machining feature recognition and Autodesk Fusion CAM integration, with validation scope.",
+    "source": "assets/cases/feature-cam/step2.webp"
+  },
+  {
+    "id": "cad-feature-recognition",
+    "language": "ja",
+    "path": "assets/og/cad-feature-recognition.jpg",
+    "title": "3D加工フィーチャ認識・Fusion CAM自動化",
+    "description": "3D CAD形状を解析し、AIによる加工フィーチャ認識をAutodesk Fusion CAM自動化につなげた開発事例。Sean Kimの担当範囲とシミュレーションによる検証を紹介します。",
+    "source": "assets/cases/feature-cam/step2.webp"
+  },
+  {
+    "id": "cad-feature-recognition",
+    "language": "zh-CN",
+    "path": "assets/og/cad-feature-recognition.jpg",
+    "title": "三维加工特征识别与 Fusion CAM 自动化",
+    "description": "从三维几何分析、AI 加工特征识别到 Autodesk Fusion CAM 集成的开发案例，介绍 Sean Kim 的职责、加工策略与仿真验证范围。",
+    "source": "assets/cases/feature-cam/step2.webp"
+  },
+  {
+    "id": "cad-feature-recognition",
+    "language": "de",
+    "path": "assets/og/cad-feature-recognition.jpg",
+    "title": "KI-Feature-Erkennung & Fusion-CAM-Automatisierung",
+    "description": "Sean Kims Arbeit an 3D-Geometrieanalyse, KI-gestützter Erkennung von Bearbeitungsmerkmalen und Autodesk-Fusion-CAM-Anbindung, mit Prüfgrenzen.",
+    "source": "assets/cases/feature-cam/step2.webp"
+  },
+  {
+    "id": "panel-classification",
+    "language": "en",
+    "path": "assets/og/panel-classification.jpg",
+    "title": "Furniture Panel Recognition & Parametric Design",
+    "description": "Sean Kim's role in AI panel recognition, joint-surface analysis and parametric resizing rules for furniture design, with project results and limits.",
+    "source": "assets/cases/panel/hero.webp"
+  },
+  {
+    "id": "panel-classification",
+    "language": "ja",
+    "path": "assets/og/panel-classification.jpg",
+    "title": "家具パネル認識AI・パラメトリック設計",
+    "description": "家具パネルの役割と接合面を解析し、寸法変更の計算規則を構成した研究。チーム内でSean Kimが担当したAIと計算式の開発、結果と限界を紹介します。",
+    "source": "assets/cases/panel/hero.webp"
+  },
+  {
+    "id": "panel-classification",
+    "language": "zh-CN",
+    "path": "assets/og/panel-classification.jpg",
+    "title": "家具板件识别 AI 与参数化设计",
+    "description": "通过 AI 识别家具板件角色，分析接合面并计算尺寸调整规则。介绍 Sean Kim 在团队中负责的模型与计算公式开发，以及项目成果与局限。",
+    "source": "assets/cases/panel/hero.webp"
+  },
+  {
+    "id": "panel-classification",
+    "language": "de",
+    "path": "assets/og/panel-classification.jpg",
+    "title": "KI-Plattenerkennung und parametrische Möbelplanung",
+    "description": "KI für Möbelplatten, Analyse von Verbindungsflächen und Regeln zur Größenänderung. Sean Kims Aufgaben im Team, Implementierung und Grenzen.",
+    "source": "assets/cases/panel/hero.webp"
+  },
+  {
+    "id": "wedraw-pro",
+    "language": "en",
+    "path": "assets/og/wedraw-pro.jpg",
+    "title": "SketchUp Furniture Design & Manufacturing Data",
+    "description": "Sean Kim's work on Wedraw Pro: connecting SketchUp furniture models to drawings, BOMs, labels and CNC data, with his team responsibilities explained.",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "wedraw-pro",
+    "language": "ja",
+    "path": "assets/og/wedraw-pro.jpg",
+    "title": "SketchUp家具設計・製造データ連携",
+    "description": "SketchUpの家具モデルを図面・BOM・ラベル・CNCデータへつなぐWedraw Proの開発事例。Sean Kimがチームで担当した製造データ出力と生産連携を紹介します。",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "wedraw-pro",
+    "language": "zh-CN",
+    "path": "assets/og/wedraw-pro.jpg",
+    "title": "SketchUp 家具设计与制造数据",
+    "description": "Wedraw Pro 开发案例：将 SketchUp 家具模型连接至图纸、BOM、标签和 CNC 数据，介绍 Sean Kim 在团队中负责的制造数据输出与生产对接。",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "wedraw-pro",
+    "language": "de",
+    "path": "assets/og/wedraw-pro.jpg",
+    "title": "SketchUp im Möbelbau: Planung und Fertigungsdaten",
+    "description": "Wedraw Pro verbindet SketchUp-Möbelmodelle mit Zeichnungen, Stücklisten, Etiketten und CNC-Daten. Sean Kims Aufgaben bei Datenausgabe und Produktionsanbindung.",
+    "source": "assets/cases/wedraw-pro/hero.webp"
+  },
+  {
+    "id": "service-monitoring",
+    "language": "en",
+    "path": "assets/og/service-monitoring.jpg",
+    "title": "Monitoring Operations and Service Disruptions in Manufacturing Software",
+    "description": "This case study explores the development of a system to monitor service disruptions by tracking errors across manufacturing software servers and PC applications. It covers issues identified through this monitoring—such as database response delays and external integration errors—as well as the subsequent resolution process and the role played by Sean Kim.",
+    "source": "assets/cases/operations/dashboard-live-public-1100.webp"
+  },
+  {
+    "id": "service-monitoring",
+    "language": "ja",
+    "path": "assets/og/service-monitoring.jpg",
+    "title": "製造ソフトウェアの運用・サービス障害監視",
+    "description": "製造ソフトウェアにおけるサーバーおよびPCアプリのエラーを収集し、サービス障害を監視した開発事例です。監視によって発見されたDB応答の遅延や外部連携エラー、実際の修正プロセス、そしてSean Kimの役割について紹介します。",
+    "source": "assets/cases/operations/dashboard-live-public-1100.webp"
+  },
+  {
+    "id": "service-monitoring",
+    "language": "zh-CN",
+    "path": "assets/og/service-monitoring.jpg",
+    "title": "制造软件运行与服务故障监控",
+    "description": "这是一个关于通过收集制造软件服务器和PC应用程序的错误来监控服务故障的开发案例研究。本文介绍了通过监控发现的数据库响应延迟和外部集成错误、实际的纠正过程以及 Sean Kim 在其中的作用。",
+    "source": "assets/cases/operations/dashboard-live-public-1100.webp"
+  },
+  {
+    "id": "service-monitoring",
+    "language": "de",
+    "path": "assets/og/service-monitoring.jpg",
+    "title": "Überwachung von Betriebs- und Serviceausfällen in der Fertigungssoftware",
+    "description": "Dies ist eine Fallstudie zur Entwicklung und Überwachung von Serviceausfällen durch die Erfassung von Fehlern von Fertigungssoftwareservern und PC-Anwendungen. Es beschreibt die durch Monitoring identifizierten Verzögerungen bei der Datenbankantwort und externen Integrationsfehler, den eigentlichen Korrekturprozess sowie die Rolle von Sean Kim.",
+    "source": "assets/cases/operations/dashboard-live-public-1100.webp"
+  },
+  {
+    "id": "voda-architecture",
+    "language": "en",
+    "path": "assets/og/voda-architecture.jpg",
+    "title": "VODA Web Behavior Analytics Architecture Redesign",
+    "description": "How the architecture of VODA, an analytics service that collects clicks, scrolls and page views from website visitors, was redesigned. Covers the work Sean Kim did, including SQS message processing, an aggregation refiner that fixed timeouts on the analytics screens and a full-page capture crawler.",
+    "source": "assets/cases/voda/heatmap-1100.webp"
+  },
+  {
+    "id": "voda-architecture",
+    "language": "ja",
+    "path": "assets/og/voda-architecture.jpg",
+    "title": "Web行動分析サービスVODAのアーキテクチャ再設計",
+    "description": "Webサイト訪問者のクリック、スクロール、ページビューを集める分析サービスVODAのアーキテクチャ再設計の事例です。SQSメッセージ処理、分析画面のタイムアウトを解消した集計精製器、フルページキャプチャのクローラーなど、Sean Kimが担当した開発を紹介します。",
+    "source": "assets/cases/voda/heatmap-1100.webp"
+  },
+  {
+    "id": "voda-architecture",
+    "language": "zh-CN",
+    "path": "assets/og/voda-architecture.jpg",
+    "title": "网页行为分析服务 VODA 架构重新设计",
+    "description": "这是收集网站访客点击、滚动和页面浏览数据的分析服务 VODA 的架构重新设计案例，介绍 Sean Kim 负责的开发工作，包括 SQS 消息处理、解决分析页面超时问题的汇总整理器以及整页截图爬虫。",
+    "source": "assets/cases/voda/heatmap-1100.webp"
+  },
+  {
+    "id": "voda-architecture",
+    "language": "de",
+    "path": "assets/og/voda-architecture.jpg",
+    "title": "Neugestaltung der Architektur des Webanalysedienstes VODA",
+    "description": "Fallstudie zur Neugestaltung der Architektur von VODA, einem Analysedienst, der Klicks, Scrollbewegungen und Seitenaufrufe von Website-Besuchern sammelt. Vorgestellt wird die Entwicklungsarbeit von Sean Kim, darunter SQS-Nachrichtenverarbeitung, ein Aggregations-Aufbereiter gegen Zeitüberschreitungen der Analyseansichten und ein Crawler für ganzseitige Screenshots.",
+    "source": "assets/cases/voda/heatmap-1100.webp"
+  },
+  {
+    "id": "vory-q-curation",
+    "language": "en",
+    "path": "assets/og/vory-q-curation.jpg",
+    "title": "Designing VORY-Q, a Personalized Recommendation Service for Online Stores",
+    "description": "How VORY-Q, a SaaS that recommends products from store visitors' page views and purchase history, was designed. Covers the design and development Sean Kim handled, from header-script integration, the REST API and relational database to customer segments and statistics-based recommendation algorithms.",
+    "source": "assets/cases/vory-q/recommendation-1100.webp"
+  },
+  {
+    "id": "vory-q-curation",
+    "language": "ja",
+    "path": "assets/og/vory-q-curation.jpg",
+    "title": "ショッピングモール向けパーソナライズドレコメンドサービスVORY-Qの設計",
+    "description": "ショッピングモール訪問者のページビューと購入履歴から商品をおすすめするSaaS、VORY-Qの設計事例です。ヘッダースクリプトによる連携、REST APIとRDB、顧客セグメント、統計ベースのレコメンドアルゴリズムまで、Sean Kimが担当した設計と開発を紹介します。",
+    "source": "assets/cases/vory-q/recommendation-1100.webp"
+  },
+  {
+    "id": "vory-q-curation",
+    "language": "zh-CN",
+    "path": "assets/og/vory-q-curation.jpg",
+    "title": "购物商城个性化推荐服务 VORY-Q 设计",
+    "description": "这是根据商城访客的页面浏览和购买记录推荐商品的 SaaS VORY-Q 的设计案例，介绍 Sean Kim 负责的设计与开发，涵盖页头脚本接入、REST API 与关系数据库、客户细分以及基于统计的推荐算法。",
+    "source": "assets/cases/vory-q/recommendation-1100.webp"
+  },
+  {
+    "id": "vory-q-curation",
+    "language": "de",
+    "path": "assets/og/vory-q-curation.jpg",
+    "title": "Entwurf von VORY-Q, einem personalisierten Empfehlungsdienst für Onlineshops",
+    "description": "Fallstudie zum Entwurf von VORY-Q, einem SaaS, das anhand von Seitenaufrufen und Kaufhistorie der Shopbesucher Produkte empfiehlt. Vorgestellt werden Entwurf und Entwicklung von Sean Kim, von der Header-Skript-Anbindung über REST-API und relationale Datenbank bis zu Kundensegmenten und statistikbasierten Empfehlungsalgorithmen.",
+    "source": "assets/cases/vory-q/recommendation-1100.webp"
+  },
+  {
+    "id": "scene-change-player",
+    "language": "en",
+    "path": "assets/og/scene-change-player.jpg",
+    "title": "Building a Video Player That Marks Scene Changes",
+    "description": "A C# WPF video player that finds scene changes in a video and marks them on the seek bar. Covers the player features Sean Kim developed, including split-point previews, timeline zoom, scene navigation, split-point editing and segment saving with ffmpeg.",
+    "source": "assets/cases/scene-player/player-1100.webp"
+  },
+  {
+    "id": "scene-change-player",
+    "language": "ja",
+    "path": "assets/og/scene-change-player.jpg",
+    "title": "シーン切り替えを表示する動画プレーヤーの開発",
+    "description": "動画のシーン切り替え位置を見つけて再生バーに表示するC# WPFの動画プレーヤーです。分割位置のプレビュー、タイムラインの拡大、シーン移動、分割位置の編集、ffmpegによる区間保存など、Sean Kimが開発したプレーヤー機能を紹介します。",
+    "source": "assets/cases/scene-player/player-1100.webp"
+  },
+  {
+    "id": "scene-change-player",
+    "language": "zh-CN",
+    "path": "assets/og/scene-change-player.jpg",
+    "title": "标记场景切换的视频播放器开发",
+    "description": "这是一款找出视频场景切换点并在进度条上标记的 C# WPF 视频播放器，介绍 Sean Kim 开发的播放器功能，包括分割点预览、时间轴缩放、场景跳转、分割点编辑以及用 ffmpeg 保存片段。",
+    "source": "assets/cases/scene-player/player-1100.webp"
+  },
+  {
+    "id": "scene-change-player",
+    "language": "de",
+    "path": "assets/og/scene-change-player.jpg",
+    "title": "Entwicklung eines Videoplayers, der Szenenwechsel markiert",
+    "description": "Ein C#-WPF-Videoplayer, der Szenenwechsel im Video findet und auf der Zeitleiste markiert. Vorgestellt werden die von Sean Kim entwickelten Player-Funktionen, darunter Vorschau der Teilungspunkte, Zeitleisten-Zoom, Szenennavigation, Bearbeiten der Teilungspunkte und Abschnittsspeicherung mit ffmpeg.",
+    "source": "assets/cases/scene-player/player-1100.webp"
+  },
+  {
+    "id": "research",
+    "language": "en",
+    "path": "assets/og/research.jpg",
+    "title": "Reinforcement Learning & Computer Vision",
+    "description": "Undergraduate research on TSP routing, ResNet clothing classification and virtual try-on. Review public code, experiments and limitations.",
+    "source": "assets/research/results/tsp/tours-compare.webp"
+  },
+  {
+    "id": "research",
+    "language": "ja",
+    "path": "assets/og/research.jpg",
+    "title": "強化学習・コンピュータービジョン研究",
+    "description": "学部研究で取り組んだTSP経路探索、ResNetによる衣類画像分類、バーチャル試着アプリ。公開コード、再実験の結果と限界を紹介します。",
+    "source": "assets/research/results/tsp/tours-compare.webp"
+  },
+  {
+    "id": "research",
+    "language": "zh-CN",
+    "path": "assets/og/research.jpg",
+    "title": "强化学习与计算机视觉研究",
+    "description": "本科研究项目：TSP 路径搜索、ResNet 服装图像分类和虚拟试衣应用。提供公开代码、复现实验结果、基准比较与研究局限。",
+    "source": "assets/research/results/tsp/tours-compare.webp"
+  },
+  {
+    "id": "research",
+    "language": "de",
+    "path": "assets/og/research.jpg",
+    "title": "Reinforcement Learning und Computer Vision",
+    "description": "Forschung im Studium zu TSP-Routen, ResNet-Bildklassifikation und virtueller Anprobe. Öffentlicher Code, Reproduktion, Vergleiche und Grenzen.",
+    "source": "assets/research/results/tsp/tours-compare.webp"
+  },
+  {
+    "id": "fashion-classification",
+    "language": "en",
+    "path": "assets/og/fashion-classification.jpg",
+    "title": "ResNet Clothing Classification & Computer Vision",
+    "description": "Sean Kim's clothing-classification research: K-Fashion training and evaluation, plus Fashion-MNIST experiments on augmentation and residual connections.",
+    "source": "assets/research/results/classification/prediction-gallery.webp"
+  },
+  {
+    "id": "fashion-classification",
+    "language": "ja",
+    "path": "assets/og/fashion-classification.jpg",
+    "title": "ResNet衣類画像分類・コンピュータービジョン",
+    "description": "K-Fashionを用いたResNetの学習・評価と、Fashion-MNISTでの再実験。データ拡張、残差接続、クラス別の誤分類を検証した研究です。",
+    "source": "assets/research/results/classification/prediction-gallery.webp"
+  },
+  {
+    "id": "fashion-classification",
+    "language": "zh-CN",
+    "path": "assets/og/fashion-classification.jpg",
+    "title": "ResNet 服装图像分类与计算机视觉",
+    "description": "介绍使用 K-Fashion 的 ResNet 训练与评估，以及 Fashion-MNIST 复现实验中对数据增强、残差连接和分类错误的分析。",
+    "source": "assets/research/results/classification/prediction-gallery.webp"
+  },
+  {
+    "id": "fashion-classification",
+    "language": "de",
+    "path": "assets/og/fashion-classification.jpg",
+    "title": "ResNet-Bildklassifikation und Computer Vision",
+    "description": "ResNet-Training mit K-Fashion und Experimente mit Fashion-MNIST. Analysen zu Datenaugmentation, Residualverbindungen und klassenweisen Fehlklassifikationen.",
+    "source": "assets/research/results/classification/prediction-gallery.webp"
+  },
+  {
+    "id": "virtual-try-on",
+    "language": "en",
+    "path": "assets/og/virtual-try-on.jpg",
+    "title": "Virtual Try-On App & Computer Vision Integration",
+    "description": "How Sean Kim connected a public virtual try-on model to Flask and Android, covering preprocessing, masks, reused models and integration limits.",
+    "source": "assets/research/results/try-on/tryon-before-after.webp"
+  },
+  {
+    "id": "virtual-try-on",
+    "language": "ja",
+    "path": "assets/og/virtual-try-on.jpg",
+    "title": "バーチャル試着アプリ・画像認識API連携",
+    "description": "公開バーチャル試着モデルとFlask API・Androidアプリを連携した研究。入力前処理とマスク処理、再利用したモデル、担当実装と検証範囲を紹介します。",
+    "source": "assets/research/results/try-on/tryon-before-after.webp"
+  },
+  {
+    "id": "virtual-try-on",
+    "language": "zh-CN",
+    "path": "assets/og/virtual-try-on.jpg",
+    "title": "虚拟试衣应用与计算机视觉 API 集成",
+    "description": "将公开虚拟试衣模型连接到 Flask API 和 Android 应用的研究，说明本人负责的输入预处理、掩码处理、服务端集成与模型复用范围。",
+    "source": "assets/research/results/try-on/tryon-before-after.webp"
+  },
+  {
+    "id": "virtual-try-on",
+    "language": "de",
+    "path": "assets/og/virtual-try-on.jpg",
+    "title": "Virtuelle Anprobe: Flask und Android",
+    "description": "Anbindung eines öffentlichen Anprobemodells an Flask und Android: Vorverarbeitung, Masken, wiederverwendete Modelle und Sean Kims Integrationsarbeit.",
+    "source": "assets/research/results/try-on/tryon-before-after.webp"
+  },
+  {
+    "id": "opencad",
+    "language": "en",
+    "path": "assets/og/opencad.jpg",
+    "title": "OpenCAD | Free Online CAD Editor for DWG & DXF",
+    "description": "Open, draw, edit and save DWG and DXF drawings for free with OpenCAD. Use the online CAD editor and STEP, STP, SketchUp SKP and NC viewers without installation or sign-up. Files are processed locally in your browser. Check the supported features for each format.",
+    "source": "assets/opencad/viewer-step-1440.webp"
+  },
+  {
+    "id": "opencad",
+    "language": "ja",
+    "path": "assets/og/opencad.jpg",
+    "title": "OpenCAD | 無料Web CAD・DWG/DXF編集",
+    "description": "OpenCADでDWG・DXF図面を無料で開き、作図・編集・保存。インストール・会員登録不要のWeb CADとSTEP・STP・SketchUp（スケッチアップ）SKP・NCビューアを利用できます。ファイルはサーバーへ送らずブラウザ内で処理。形式別の対応範囲も確認できます。",
+    "source": "assets/opencad/viewer-step-1440.webp"
+  },
+  {
+    "id": "opencad",
+    "language": "zh-CN",
+    "path": "assets/og/opencad.jpg",
+    "title": "OpenCAD | 免费在线CAD编辑器 · DWG/DXF",
+    "description": "使用OpenCAD免费打开、新建、编辑和保存DWG、DXF图纸。无需安装或注册，即可使用在线CAD编辑器和STEP、STP、SketchUp（草图大师）SKP、NC查看器。文件在浏览器本地处理，不上传服务器。查看各格式的功能与支持范围。",
+    "source": "assets/opencad/viewer-step-1440.webp"
+  },
+  {
+    "id": "opencad",
+    "language": "de",
+    "path": "assets/og/opencad.jpg",
+    "title": "OpenCAD | Kostenloses Online-CAD für DWG und DXF",
+    "description": "Mit OpenCAD DWG- und DXF-Zeichnungen kostenlos öffnen, zeichnen, bearbeiten und speichern. Online-CAD und Viewer für STEP, STP, SketchUp SKP und NC ohne Installation oder Registrierung. Dateien bleiben im Browser. Mit Angaben zu den unterstützten Funktionen je Format.",
+    "source": "assets/opencad/viewer-step-1440.webp"
+  }
+]
