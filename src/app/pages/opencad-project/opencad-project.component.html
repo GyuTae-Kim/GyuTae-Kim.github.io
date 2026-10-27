@@ -25,7 +25,7 @@
           height="900"
           fetchpriority="high"
         />
-        <figcaption><span class="figure-kind">{{ '실제 화면' | t }}</span>{{ (figure.caption) | t }} <a *ngIf="((figure.base + '-1440.webp') | imageOriginal) as originalImage" [href]="originalImage" target="_blank" rel="noopener noreferrer" class="image-original-link">{{ '번역 참고 이미지 · 한국어 원본 보기' | t }}</a></figcaption>
+        <figcaption>{{ (figure.caption) | t }} <a *ngIf="((figure.base + '-1440.webp') | imageOriginal) as originalImage" [href]="originalImage" target="_blank" rel="noopener noreferrer" class="image-original-link">{{ '번역 참고 이미지 · 한국어 원본 보기' | t }}</a></figcaption>
       </figure>
       <!-- The core has no app of its own; its picture is the viewers drawn with it. -->
       <ng-template #coreFigure>
@@ -39,13 +39,13 @@
               height="900"
             />
           </div>
-          <figcaption><span class="figure-kind">{{ '실제 화면' | t }}</span>{{ '이 코어로 화면을 그리는 NC·STEP·SKP 뷰어' | t }}</figcaption>
+          <figcaption>{{ '이 코어로 화면을 그리는 NC·STEP·SKP 뷰어' | t }}</figcaption>
         </figure>
       </ng-template>
     </header>
 
     <section class="project-section" aria-labelledby="project-purpose">
-      <h2 id="project-purpose">{{ '어떤 도구인가요?' | t }}</h2>
+      <h2 id="project-purpose">{{ '도구 소개' | t }}</h2>
       <p class="project-lead">{{ (project.introduction) | t }}</p>
       <dl class="feature-grid">
         <div *ngFor="let feature of project.features">
@@ -68,7 +68,7 @@
       <ul class="check-list">
         <li *ngFor="let limitation of project.limitations">{{ (limitation) | t }}</li>
       </ul>
-      <p class="project-fineprint">{{ 'WebGL2와 JavaScript를 지원하는 브라우저를 사용하세요. OpenCAD는 김규태가 개발하는 MIT 라이선스 오픈소스 프로젝트입니다.' | t }}</p>
+      <p class="project-fineprint">{{ 'WebGL2와 JavaScript를 지원하는 브라우저를 사용하세요. OpenCAD는 MIT 라이선스로 공개한 개인 오픈소스 프로젝트입니다.' | t }}</p>
     </section>
 
     <section *ngIf="guides.length" class="project-section" aria-labelledby="project-guides">
@@ -84,7 +84,7 @@
     </section>
 
     <aside class="project-section" aria-labelledby="project-related">
-      <h2 id="project-related">{{ '함께 쓰는 OpenCAD 프로젝트' | t }}</h2>
+      <h2 id="project-related">{{ '다른 OpenCAD 프로젝트' | t }}</h2>
       <ul class="related-tools">
         <li *ngFor="let item of related">
           <a [routerLink]="(item.path) | localLink">

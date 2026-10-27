@@ -52,14 +52,14 @@
         <ul><li *ngFor="let source of post.sources"><a [href]="(source.url) | localLink" target="_blank" rel="noopener noreferrer">{{ (source.label) | t }}<app-icon name="external"></app-icon></a></li></ul>
       </section>
       <aside class="article-related" aria-labelledby="article-related">
-        <h2 id="article-related">{{ '함께 확인할 내용' | t }}</h2>
+        <h2 id="article-related">{{ '관련 페이지' | t }}</h2>
         <ul><li *ngFor="let link of post.related"><a [routerLink]="(link.path) | localLink">{{ (link.label) | t }}<app-icon name="arrow-right"></app-icon></a></li></ul>
         <p>{{ '작성:' | t }} <a [routerLink]="'/' | localLink">{{ '김규태 Sean Kim' | t }}</a> {{ '· AI·CAD/CAM 소프트웨어 개발' | t }}</p>
       </aside>
     </article>
   </ng-container>
   <ng-template #archive>
-    <header class="page-intro"><p class="eyebrow">{{ '김규태 Sean Kim' | t }}</p><h1>{{ '제조 소프트웨어 개발 노트' | t }}<span class="accent">.</span></h1><p>{{ 'AI·CAD/CAM과 가구 제조 소프트웨어를 개발하며 고민한 것을 적었습니다. 프로젝트마다 맡은 역할과 결과는 글에 링크한 사례에서 볼 수 있습니다.' | t }}</p></header>
+    <header class="page-intro"><p class="eyebrow">{{ '김규태 Sean Kim' | t }}</p><h1>{{ '제조 소프트웨어 개발 노트' | t }}<span class="accent">.</span></h1><p>{{ 'AI·CAD/CAM과 가구 제조 소프트웨어를 개발하며 고민한 것을 적었습니다. 프로젝트마다 맡은 역할과 결과는 글에 링크한 사례에 있습니다.' | t }}</p></header>
     <div class="note-list"><article *ngFor="let note of notes"><p class="eyebrow">{{ (note.category) | t }}</p><h2><a [routerLink]="(note.path) | localLink">{{ (note.title) | t }}</a></h2><p>{{ (note.description) | t }}</p><a class="text-link" [routerLink]="(note.path) | localLink">{{ '글 읽기' | t }}<app-icon name="arrow-right"></app-icon></a></article></div>
     <aside class="article-related"><a [routerLink]="'/portfolio' | localLink">{{ '전체 개발 프로젝트 보기' | t }}</a> · <a [routerLink]="'/opencad' | localLink">{{ 'OpenCAD 사용 안내' | t }}</a></aside>
   </ng-template>
