@@ -4,7 +4,7 @@
       {{ '찾는 프로젝트가 없습니다. 아래 목록에서 골라 주세요.' | t }}
     </p>
     <div class="page-intro">
-      <h1>{{ '김규태의 AI·CAD/CAM 개발 사례' | t }}<span class="accent">.</span></h1>
+      <h1>{{ 'AI·CAD/CAM 프로젝트' | t }}<span class="accent">.</span></h1>
       <p>
         {{ '3D 모델에서 가공 특징과 가구 패널을 인식하는 AI를 연구하고, 인식 결과로 Fusion CAM 공정을 만들고 가구 크기 변경을 계산했습니다.' | t }}<br />{{ '가구 설계에서 생산까지 잇는 Wedraw Pro에서는 제조 데이터와 생산 투입 단계를 리딩했습니다.' | t }}
       </p>
@@ -224,7 +224,7 @@
       <p class="showcase-note" *ngIf="selected!.id === 'cad-feature-recognition'">{{ '위 내용은 기대 효과입니다. 현장에 도입했을 때 시간과 비용이 얼마나 줄어드는지는 따로 확인해야 합니다.' | t }}</p>
     </section>
     <section class="case-concept" *ngIf="selected!.concept as concept" aria-labelledby="case-concept-title">
-      <h2 class="detail-title" id="case-concept-title"><span>3D</span>{{ '개념 모델로 보는 과정' | t }}</h2>
+      <h2 class="detail-title" id="case-concept-title"><span>3D</span>{{ '단계별 개념 모델' | t }}</h2>
       <p class="case-concept-note">{{ (conceptNotes[concept]) | t }}</p>
       <app-model-viewport [fixedModel]="concept"></app-model-viewport>
     </section>
@@ -450,7 +450,7 @@
         </ol>
       </div>
       <section class="caught" *ngIf="other!.caught?.length" aria-labelledby="caught-title">
-        <h3 class="caught-title" id="caught-title">{{ '감시가 찾아낸 실제 문제' | t }} <b>{{ '{0}건' | t:[(other!.caught!.length)] }}</b></h3>
+        <h3 class="caught-title" id="caught-title">{{ '감시가 찾아낸 문제' | t }} <b>{{ '{0}건' | t:[(other!.caught!.length)] }}</b></h3>
         <div class="operation-evidence caught-shot" *ngIf="other!.caughtShot as shot">
           <ng-container *ngTemplateOutlet="shots; context: { $implicit: [shot] }"></ng-container>
         </div>

@@ -59,7 +59,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/',
     title: '김규태 Sean Kim | AI·CAD/CAM 개발자 포트폴리오',
-    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 맡은 역할과 결과를 소개합니다. 학부연구생 때 한 강화학습·컴퓨터 비전 연구와 실험 결과도 볼 수 있습니다.',
+    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 맡은 역할과 결과를 소개합니다. 학부연구생 때 한 강화학습·컴퓨터 비전 연구와 실험 결과도 담았습니다.',
     image: 'assets/og/home.jpg',
     imageAlt: '김규태 Sean Kim 포트폴리오. 가구 설계부터 가공 데이터까지 3D 형상을 다룹니다.',
     kind: 'ProfilePage',
@@ -105,7 +105,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/opencad',
     title: '오픈캐드(OpenCAD) | 무료 웹캐드·DWG DXF 편집',
-    description: '오픈캐드(OpenCAD)에서는 DWG·DXF 도면을 무료로 열고, 새로 그리거나 고친 뒤 저장할 수 있습니다. 설치와 회원가입 없이 쓰는 웹캐드이며 STEP·STP, 스케치업 SKP, NC 뷰어도 있습니다. 파일은 서버로 올리지 않고 브라우저에서 처리하며, 형식별 지원 범위도 안내합니다.',
+    description: '오픈캐드(OpenCAD)는 DWG·DXF 도면을 무료로 열고, 새로 그리거나 고친 뒤 저장하는 웹캐드입니다. 설치와 회원가입 없이 쓰며 STEP·STP, 스케치업 SKP, NC 뷰어도 있습니다. 파일은 서버로 올리지 않고 브라우저에서 처리하며, 형식별 지원 범위도 안내합니다.',
     image: 'assets/og/opencad.jpg',
     imageAlt: 'OpenCAD 표지. DWG·DXF 도면, STEP·SKP 3D 모델, NC 공구 경로 뷰어 네 가지의 화면.',
     kind: 'CollectionPage',

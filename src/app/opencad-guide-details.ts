@@ -18,7 +18,7 @@ export const OPENCAD_GUIDE_DETAILS: Record<string, GuideDetails> = {
   'measure-export': {
     projectPath: '/opencad/projects/dwg-dxf',
     support: [{ label: '측정', text: 'DIST / MEASUREGEOM / AREA / MASSPROP' }, { label: 'PDF', text: 'PLOT / PRINT / EXPORTPDF' }],
-    example: [{ label: '예제 열기', text: '같은 두 끝점을 스냅으로 지정해 재고, 도면 단위와 출력 축척을 함께 확인합니다.' }],
+    example: [{ label: '예제 열기', text: '같은 두 끝점을 스냅으로 지정해 재고, 도면 단위와 출력 축척도 확인합니다.' }],
     checks: [{ label: '측정값 불일치', text: '도면 단위 → 객체 스냅 → 실제 형상 → 수동 치수 문자 순서로 대조합니다.' }, { label: '출력 크기 불일치', text: '플롯 축척과 PDF 인쇄의 페이지 맞춤 설정을 확인합니다.' }],
   },
   'open-step-stp': {
@@ -39,7 +39,7 @@ export const OPENCAD_GUIDE_DETAILS: Record<string, GuideDetails> = {
     example: [{ label: '단위', text: 'mm' }, { label: '예제 집', text: '6000 × 4000 mm' }, { label: '장면', text: '앞마당 · 식탁 · 단면 · 위에서' }],
     checks: [{ label: '예제 확인 순서', text: '예제로 먼저 보기 → 장면 선택 → 태그 표시 → 전체 보기 순서로 재현합니다.' }, { label: '누락 객체', text: '태그·숨김 객체·장면의 표시 상태와 단면을 확인합니다. 다시 해석하기 전에 표시 설정을 복원해 보세요.' }],
     figures: [
-      { src: 'assets/opencad/guide-skp-scenes-1440.webp', alt: '공개 SKP 예제 집의 저장된 장면과 표시 설정을 확인하는 화면.', caption: '브라우저에서 만든 합성 예제 집입니다. 장면을 바꾸고 태그를 켜고 끄면서 표시가 어떻게 달라지는지 볼 수 있습니다.', width: 1440, height: 812 },
+      { src: 'assets/opencad/guide-skp-scenes-1440.webp', alt: '공개 SKP 예제 집의 저장된 장면과 표시 설정을 확인하는 화면.', caption: '브라우저에서 만든 합성 예제 집입니다. 장면을 바꾸거나 태그를 켜고 끄면 표시가 달라집니다.', width: 1440, height: 812 },
     ],
   },
   'check-nc-toolpath': {
