@@ -159,7 +159,7 @@ for (const page of SEARCH_PAGES) {
       else assert.ok(!document.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]'), `${file}: no unpublished app URL`);
     }
     const root = document.querySelector('app-root');
-    const languageLinks = [...root.querySelectorAll('.language-versions a')];
+    const languageLinks = [...root.querySelectorAll('.language-versions:not(.profile-language-homes) a')];
     assert.equal(languageLinks.length, LANGUAGES.length, `${file}: visible language alternatives`);
     for (const { code, label } of LANGUAGES) {
       const link = languageLinks.find(link => link.hreflang === code);
@@ -168,6 +168,27 @@ for (const page of SEARCH_PAGES) {
       assert.equal(link.textContent, label, `${file}: language name`);
       assert.equal(link.href, SITE_URL + languagePath(originalPath(page.path), code), `${file}: matching page in ${code}`);
       assert.equal(link.getAttribute('aria-current'), code === page.language ? 'page' : null, `${file}: current language`);
+    }
+    // An indexed tool/article must also expose each developer home, rather than
+    // relying on sitemap processing or only linking translated tool pages.
+    const profiles = [...root.querySelectorAll('.profile-language-homes a')];
+    assert.equal(profiles.length, LANGUAGES.length, `${file}: discoverable author homes`);
+    for (const { code } of LANGUAGES) {
+      const profile = profiles.find(link => link.hreflang === code);
+      assert.ok(profile && !profile.closest('[hidden]'), `${file}: visible ${code} author profile`);
+      assert.equal(profile.href, SITE_URL + languagePath('/', code), `${file}: canonical ${code} author home`);
+    }
+    for (const link of root.querySelectorAll('a[href]')) {
+      const target = new URL(link.href);
+      if (target.origin === SITE_URL) assert.ok(!/^\/(en|ja|zh-CN|de)$/.test(target.pathname), `${file}: home alias ${link.getAttribute('href')}`);
+    }
+    for (const alternate of document.querySelectorAll('link[rel="alternate"][hreflang]')) {
+      assert.ok(alternate.compareDocumentPosition(document.querySelector('#site-structured-data')) & 4, `${file}: language links precede structured data`);
+    }
+    if (originalPath(page.path) === '/opencad') {
+      const developer = root.querySelector('.page-intro a[href="' + languagePath('/', page.language) + '"]');
+      assert.ok(developer, `${file}: contextual developer portfolio entry`);
+      assert.ok(root.querySelector('#browser-cad-title'), `${file}: browser CAD scope and free-use guide`);
     }
     assert.equal(root.querySelectorAll('h1').length, 1, `${file}: one visible page heading`);
     assert.ok(root.querySelector('main').textContent.trim().length > 150, `${file}: real body content`);

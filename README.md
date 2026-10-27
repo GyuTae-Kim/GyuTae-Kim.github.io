@@ -2,6 +2,16 @@
 
 AI, 3D 형상, CAD/CAM 연구개발 포트폴리오 사이트의 소스입니다. https://gyutae-kim.github.io
 
+Sean Kim develops AI, CAD/CAM automation and manufacturing software. Read the portfolio and use OpenCAD, his open-source browser CAD editor and file viewers, in your language:
+
+| Language | Developer portfolio | Free browser CAD and viewers |
+| --- | --- | --- |
+| 한국어 | [김규태 포트폴리오](https://gyutae-kim.github.io/) | [오픈캐드 · 웹캐드·무료캐드](https://gyutae-kim.github.io/opencad) |
+| English | [Sean Kim — AI & CAD/CAM Developer Portfolio](https://gyutae-kim.github.io/en/) | [OpenCAD — free online CAD editor and viewer](https://gyutae-kim.github.io/en/opencad) |
+| 日本語 | [Sean Kim — AI・CAD/CAM開発者のポートフォリオ](https://gyutae-kim.github.io/ja/) | [OpenCAD — 無料Web CAD・3Dビューア](https://gyutae-kim.github.io/ja/opencad) |
+| 简体中文 | [Sean Kim — AI 与 CAD/CAM 开发者作品集](https://gyutae-kim.github.io/zh-CN/) | [OpenCAD — 免费在线 CAD 编辑器与查看器](https://gyutae-kim.github.io/zh-CN/opencad) |
+| Deutsch | [Sean Kim — KI- und CAD/CAM-Entwicklerportfolio](https://gyutae-kim.github.io/de/) | [OpenCAD — kostenloses Browser-CAD und CAD-Viewer](https://gyutae-kim.github.io/de/opencad) |
+
 - `/`: 소개, 3D 개념 모델 뷰어, 주요 프로젝트, 학부연구생 때의 연구, 특허와 프로그램
 - `/portfolio`, `/portfolio/:id`: 프로젝트 세 개(가공 특징 인식과 CAM 자동화, 가구 패널 인식, Wedraw Pro)와 프로젝트 기록
 - `/research`, `/research/:id`: 학부연구생 때 공개한 연구 세 개의 카드 목록과 개별 실험 결과

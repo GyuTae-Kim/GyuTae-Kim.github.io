@@ -3,16 +3,27 @@
     <p class="eyebrow">{{ '브라우저에서 쓰는 오픈소스 CAD' | t }}</p>
     <h1>
       {{ '오픈캐드(OpenCAD)' | t }}<br class="desktop-break" />
-      {{ '설치 없는 무료 웹캐드' | t }}<span class="accent">.</span>
+      {{ '설치 없는 웹캐드·무료캐드' | t }}<span class="accent">.</span>
     </h1>
     <p>
       {{ '오픈캐드(OpenCAD)는 설치·회원가입 없이 쓰는 무료 웹캐드와 파일 뷰어입니다. DWG·DXF 도면은 브라우저에서 열어 새로 그리거나 편집한 뒤 저장합니다. STEP·STP 3D 모델, 스케치업 SKP 파일과 NC·G-code·MPR 공구 경로는 형식별 뷰어로 확인하세요. 파일은 서버로 보내지 않고 이 기기의 브라우저에서 처리합니다.' | t }}
     </p>
+    <p><a class="text-link" [href]="'/' | localLink">{{ '오픈캐드 개발자 김규태의 포트폴리오' | t }}<app-icon name="arrow-right"></app-icon></a></p>
     <div class="tool-actions">
       <a class="button primary" [href]="'https://gyutae-kim.github.io/opencad-dwgdxf/' | localLink">{{ '무료 웹캐드 시작하기' | t }}<app-icon name="arrow-right"></app-icon></a>
       <a class="button outline" [routerLink]="'/opencad/projects/dwg-dxf' | localLink">{{ '사용법·지원 범위' | t }}<app-icon name="arrow-right"></app-icon></a>
     </div>
   </div>
+
+  <section class="opencad-section" aria-labelledby="browser-cad-title">
+    <h2 id="browser-cad-title">{{ '웹캐드·무료캐드 사용 안내' | t }}</h2>
+    <h3>{{ '웹캐드, 무료캐드, 오픈캐드는 무엇인가요?' | t }}</h3>
+    <p>{{ '웹캐드는 설치 대신 브라우저에서 사용하는 CAD를 말합니다. 오픈캐드(OpenCAD)는 김규태(Sean Kim)가 개발하는 오픈소스 무료캐드·뷰어 프로젝트입니다. 이 페이지에서 DWG·DXF 웹캐드와 STEP·STP·SKP·NC 뷰어를 골라 바로 실행할 수 있습니다.' | t }}</p>
+    <h3>{{ '무료캐드로 도면 편집과 3D 모델 수정을 모두 할 수 있나요?' | t }}</h3>
+    <p>{{ 'DWG·DXF 웹캐드는 도면 열기·새로 그리기·편집·저장을 지원합니다. STEP·STP와 스케치업 SKP 도구는 모델 확인·측정용 뷰어이며 원본 CAD의 전체 모델링 기능을 제공하지 않습니다. 파일 형식별 사용 안내에서 지원 범위를 먼저 확인하세요.' | t }}</p>
+    <h3>{{ '무료 사용 조건과 도면 보안은 어떻게 되나요?' | t }}</h3>
+    <p>{{ '공개된 네 가지 도구는 설치·회원가입 없이 무료로 사용할 수 있고 소스코드는 MIT 라이선스로 공개합니다. 도면과 모델은 이 기기의 브라우저에서 처리합니다. 각 도구의 소스코드와 지원 범위를 함께 확인할 수 있습니다.' | t }}</p>
+  </section>
 
   <section class="opencad-section" aria-labelledby="file-choice-title">
     <h2 id="file-choice-title">{{ 'DWG·DXF·STEP·STP·SKP 파일에 맞는 뷰어 선택' | t }}</h2>

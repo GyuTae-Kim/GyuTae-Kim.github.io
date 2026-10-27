@@ -3,7 +3,7 @@
   <div class="site-header">
     <a class="brand" [routerLink]="'/' | localLink" [attr.aria-label]="'김규태 Sean Kim 홈' | t"
       ><span class="brand-mark" aria-hidden="true">S<span>.</span></span
-      ><span class="brand-name">{{ '김규태' | t }}<span>Sean Kim</span></span></a
+      ><span class="brand-name">{{ (i18n.language === 'ko' ? '김규태' : '김규태 Sean Kim') | t }}<span *ngIf="i18n.language === 'ko'">Sean Kim</span></span></a
     >
     <div class="navigation-control">
       <button class="header-icon navigation-trigger" type="button" [attr.aria-label]="'주요 메뉴' | t" aria-controls="primary-navigation" [attr.aria-expanded]="navigationOpen" (click)="toggleNavigation()">
@@ -53,6 +53,13 @@
     <a *ngFor="let language of i18n.languages" [href]="i18n.languageHref(language.code)"
        [attr.lang]="language.code" [attr.hreflang]="language.code" [attr.aria-current]="i18n.language === language.code ? 'page' : null">{{ language.label }}</a>
   </nav>
+  <div class="profile-discovery">
+    <p>{{ '개발자 포트폴리오' | t }}</p>
+    <nav class="language-versions profile-language-homes" [attr.aria-label]="'포트폴리오 언어별 홈' | t">
+      <a *ngFor="let language of i18n.languages" [href]="i18n.homeHref(language.code)"
+         [attr.lang]="language.code" [attr.hreflang]="language.code">{{ language.code === 'ko' ? '김규태' : 'Sean Kim' }} · {{ language.label }}</a>
+    </nav>
+  </div>
   <dl>
     <div>
       <dt>{{ '작성' | t }}</dt>

@@ -1891,5 +1891,20 @@
   "여러 단면 평면과 잘린 면 채우기, 큰 좌표에서도 떨리지 않는 묶음 원점": "Mehrere Schnittebenen mit Schnittflächenfüllung, eigene Ursprünge je Gruppe, damit große Koordinaten nicht zittern",
   "단면": "Schnitt",
   "번역 참고 이미지 · 한국어 원본 보기": "Übersetzte Referenz · Koreanisches Original ansehen",
-  "언어 선택": "Sprache wählen"
+  "언어 선택": "Sprache wählen",
+  "개발자 포트폴리오": "Entwicklerportfolio",
+  "포트폴리오 언어별 홈": "Portfolio-Startseiten nach Sprache",
+  "AI·CAD/CAM 개발자 포트폴리오": "Portfolio für KI- und CAD/CAM-Entwicklung",
+  "AI·CAD/CAM 개발 포트폴리오": "Portfolio zur KI- und CAD/CAM-Softwareentwicklung",
+  "설치 없는 웹캐드·무료캐드": "Kostenloses CAD im Browser, ohne Installation",
+  "오픈캐드 개발자 김규태의 포트폴리오": "Sean Kim — Portfolio des OpenCAD-Entwicklers",
+  "웹캐드·무료캐드 사용 안내": "Kostenloses Browser-CAD: Funktionen und Datenschutz",
+  "웹캐드, 무료캐드, 오픈캐드는 무엇인가요?": "Was ist Browser-CAD, und was bietet OpenCAD kostenlos?",
+  "웹캐드는 설치 대신 브라우저에서 사용하는 CAD를 말합니다. 오픈캐드(OpenCAD)는 김규태(Sean Kim)가 개발하는 오픈소스 무료캐드·뷰어 프로젝트입니다. 이 페이지에서 DWG·DXF 웹캐드와 STEP·STP·SKP·NC 뷰어를 골라 바로 실행할 수 있습니다.": "Browser-CAD läuft direkt im Webbrowser statt als installierte Desktop-Anwendung. OpenCAD ist Sean Kims Open-Source-Projekt für kostenlose CAD-Bearbeitung und Dateiansicht. Wählen Sie hier den DWG/DXF-Editor oder einen Viewer für STEP, STP, SKP oder NC und starten Sie direkt.",
+  "무료캐드로 도면 편집과 3D 모델 수정을 모두 할 수 있나요?": "Kann ich sowohl 2D-Zeichnungen als auch 3D-Modelle bearbeiten?",
+  "DWG·DXF 웹캐드는 도면 열기·새로 그리기·편집·저장을 지원합니다. STEP·STP와 스케치업 SKP 도구는 모델 확인·측정용 뷰어이며 원본 CAD의 전체 모델링 기능을 제공하지 않습니다. 파일 형식별 사용 안내에서 지원 범위를 먼저 확인하세요.": "Der DWG/DXF-Editor unterstützt das Öffnen, Erstellen, Bearbeiten und Speichern von 2D-Zeichnungen. Die STEP/STP- und SketchUp-SKP-Werkzeuge dienen der Ansicht und Messung; sie bieten nicht sämtliche Modellierungsfunktionen der ursprünglichen CAD-Anwendung. Prüfen Sie vorab den Funktionsumfang im Leitfaden zum jeweiligen Dateiformat.",
+  "무료 사용 조건과 도면 보안은 어떻게 되나요?": "Ist die Nutzung kostenlos, und wo werden meine Zeichnungen verarbeitet?",
+  "공개된 네 가지 도구는 설치·회원가입 없이 무료로 사용할 수 있고 소스코드는 MIT 라이선스로 공개합니다. 도면과 모델은 이 기기의 브라우저에서 처리합니다. 각 도구의 소스코드와 지원 범위를 함께 확인할 수 있습니다.": "Alle vier veröffentlichten Werkzeuge sind ohne Installation und Registrierung kostenlos nutzbar; der Quellcode steht unter der MIT-Lizenz. Zeichnungen und Modelle werden im Browser Ihres Geräts verarbeitet. Für jedes Werkzeug sind Quellcode und unterstützte Funktionen verlinkt.",
+  "오픈캐드(OpenCAD) | 웹캐드·무료캐드·DWG DXF 편집": "OpenCAD | Kostenloses Online-CAD & CAD-Viewer",
+  "오픈캐드(OpenCAD)는 설치 없이 DWG·DXF 도면을 열고 편집·저장하는 웹캐드·무료캐드입니다. STEP·STP·스케치업 SKP·NC 뷰어도 제공합니다. 파일은 브라우저에서 처리하며, 무료 사용 조건과 형식별 지원 범위를 안내합니다.": "OpenCAD ist ein kostenloser Online-CAD-Editor und Viewer. Öffnen, bearbeiten und speichern Sie DWG/DXF ohne Installation oder prüfen Sie STEP-, STP-, SketchUp-SKP- und NC-Dateien. Dateien bleiben im Browser. Hinweise zur kostenlosen Nutzung und zum unterstützten Funktionsumfang sind verfügbar."
 }

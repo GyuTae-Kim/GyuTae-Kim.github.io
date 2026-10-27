@@ -62,7 +62,12 @@ export class SeoService {
     // One writer for SSR and browser navigation. Keep sharing tags ahead of
     // styles and large body data for clients that fetch only the first 8 KiB.
     const anchor = this.document.head.querySelector('base');
-    for (const tag of Array.from(this.document.head.querySelectorAll('meta[name="description"], meta[name="robots"], meta[name="author"], meta[property^="og:"], meta[name^="twitter:"], link[rel="canonical"], #site-structured-data'))) {
+    const searchTags = [
+      ...Array.from(this.document.head.querySelectorAll('meta[name="description"], meta[name="robots"], meta[name="author"], meta[property^="og:"], meta[name^="twitter:"]')),
+      ...Array.from(this.document.head.querySelectorAll('link[rel="canonical"], link[rel="alternate"][hreflang]')),
+      data,
+    ];
+    for (const tag of searchTags) {
       this.document.head.insertBefore(tag, anchor);
     }
   }

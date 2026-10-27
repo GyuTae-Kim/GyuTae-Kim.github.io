@@ -19,6 +19,15 @@ describe('AppComponent', () => {
     const menu = (fixture.nativeElement as HTMLElement).querySelectorAll('nav[aria-label="주요 메뉴"] a');
     expect(Array.from(menu).map((a) => a.textContent?.trim())).toEqual(['프로젝트', '연구', '오픈캐드', '연락']);
   });
+  it('exposes canonical developer homes from a foreign tool page without repeating the author name', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    TestBed.inject(I18nService).setUrl('/en/opencad');
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('.brand-name')!.textContent!.trim()).toBe('Sean Kim');
+    expect(Array.from(root.querySelectorAll<HTMLAnchorElement>('.profile-language-homes a')).map(link => link.getAttribute('href')))
+      .toEqual(['/', '/en/', '/ja/', '/zh-CN/', '/de/']);
+  });
   it('discloses languages from an icon and closes with Escape or an outside pointer', () => {
     const fixture = TestBed.createComponent(AppComponent); fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
