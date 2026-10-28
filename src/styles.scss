@@ -2894,9 +2894,7 @@ app-icon.row-arrow {
   }
 }
 
-/* Use installed script-appropriate fonts; Korean subsets cannot cover CJK text. */
-html:lang(ja) { --sans: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; }
-html:lang(zh-CN) { --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+/* Native scripts use the self-hosted families selected in the SSR document. */
 html:not(:lang(ko)) { word-break: normal; overflow-wrap: anywhere; }
 
 .image-original-link { display: block; margin-top: 0.5rem; font-size: 0.875rem; text-decoration: underline; text-underline-offset: 3px; }

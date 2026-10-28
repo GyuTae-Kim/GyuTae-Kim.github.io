@@ -13,8 +13,8 @@
   a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
   a[aria-current='page'] { color: var(--ink); font-weight: 700; }
   a:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
-  a[lang='ja'] { font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; }
-  a[lang='zh-CN'] { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  a[lang='ja'] { font-family: 'Portfolio Sans', 'Portfolio Japanese', 'Portfolio CJK', sans-serif; }
+  a[lang='zh-CN'] { font-family: 'Portfolio Sans', 'Portfolio Chinese', 'Portfolio CJK', sans-serif; }
 }
 .language-menu {
   position: absolute; top: calc(100% + 8px); right: 0; z-index: 100;
@@ -25,8 +25,8 @@
   a:hover, a:focus-visible { background: var(--paper); outline: 2px solid var(--blue); outline-offset: -2px; }
   a[aria-checked='true'] { color: var(--blue); font-weight: 700; }
   a[aria-checked='true']::after { content: '✓'; }
-  a[lang='ja'] { font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; }
-  a[lang='zh-CN'] { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  a[lang='ja'] { font-family: 'Portfolio Sans', 'Portfolio Japanese', 'Portfolio CJK', sans-serif; }
+  a[lang='zh-CN'] { font-family: 'Portfolio Sans', 'Portfolio Chinese', 'Portfolio CJK', sans-serif; }
 }
 @media (max-width: 1000px) {
   .brand-name > span { display: none; }
