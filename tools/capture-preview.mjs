@@ -81,6 +81,25 @@ try {
   assert.ok(!proof.fonts.some(font => font.status === 'loaded' &&
     ['Portfolio Japanese', 'Portfolio Chinese'].includes(font.family.replaceAll('"', '')) &&
     font.family.replaceAll('"', '') !== native), 'Language labels must use the small shared face, not download another language body font');
+  if (new URL(url).hash) {
+    // Native fragment scrolling can precede router startup and font layout.
+    // Align the requested heading after readiness so the proof shows that area.
+    const aligned = await send('Runtime.evaluate', { expression: `(async () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const element = document.getElementById(id);
+      if (!element) return { error: 'Missing requested fragment', id };
+      const inset = (document.querySelector('.site-header-bar')?.getBoundingClientRect().height || 0) + 24;
+      window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - inset, behavior: 'instant' });
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const bounds = element.getBoundingClientRect();
+      return { id, text: element.textContent, top: bounds.top, inset, viewportHeight: innerHeight };
+    })()`, awaitPromise: true, returnByValue: true });
+    assert.ok(!aligned.exceptionDetails, JSON.stringify(aligned.exceptionDetails));
+    proof.anchor = aligned.result.value;
+    assert.ok(!proof.anchor.error, JSON.stringify(proof.anchor));
+    assert.ok(proof.anchor.top >= proof.anchor.inset - 2 && proof.anchor.top < proof.anchor.viewportHeight,
+      'Requested fragment must be visible below the header: ' + JSON.stringify(proof.anchor));
+  }
   const capture = await send('Page.captureScreenshot', { format: 'png' });
   await writeFile(output, Buffer.from(capture.data, 'base64'));
   await writeFile(output.replace(/\.png$/, '.json'), JSON.stringify(proof, null, 2) + '\n');
