@@ -1929,5 +1929,9 @@
   "오픈캐드(OpenCAD)와 OpenSCAD는 같은 프로그램인가요?": "Sind OpenCAD und OpenSCAD dasselbe Programm?",
   "서로 다른 프로젝트입니다. 이 사이트의 OpenCAD는 DWG·DXF 2D 웹캐드와 STEP·SKP·NC 뷰어를 제공합니다. 스크립트로 3D 모델을 만드는 OpenSCAD와는 별개이며, .scad 파일을 편집하는 도구는 제공하지 않습니다.": "Es sind unterschiedliche Projekte. OpenCAD auf dieser Website bietet einen DWG/DXF-Editor für 2D-CAD im Browser sowie STEP-, SKP- und NC-Betrachter. Es ist unabhängig von OpenSCAD, das 3D-Modelle aus Skripten erstellt. Die OpenCAD-Werkzeuge bearbeiten keine .scad-Dateien.",
   "OpenSCAD 공식 소개": "Über OpenSCAD auf der offiziellen Website",
-  "무료 웹캐드로 DWG·DXF 도면 열기·편집·저장 | 김규태": "Kostenloses Online-CAD: DWG/DXF öffnen, bearbeiten und speichern | Sean Kim"
+  "무료 웹캐드로 DWG·DXF 도면 열기·편집·저장 | 김규태": "Kostenloses Online-CAD: DWG/DXF öffnen, bearbeiten und speichern | Sean Kim",
+  "파일이 없어도 공개 예제로 먼저 확인할 수 있습니다. 도면 편집·3D 치수·공구 경로 중 필요한 기능을 골라 보세요.": "Auch ohne eigene Datei können Sie die öffentlichen Beispiele öffnen. Testen Sie Zeichnungsbearbeitung, 3D-Messungen oder Werkzeugwege nach Bedarf.",
+  "무료캐드 FreeCAD와 오픈캐드는 어떻게 다른가요?": "Was unterscheidet OpenCAD von FreeCAD?",
+  "FreeCAD는 설계 이력을 가진 3D 파라메트릭 모델을 만드는 별도 프로젝트입니다. OpenCAD는 브라우저에서 DWG·DXF를 편집하고 STEP·SKP·NC 파일을 확인하는 도구입니다. FreeCAD 원본(.FCStd)을 직접 열지는 않으며, 3D 형상 확인은 FreeCAD에서 STEP으로 내보낸 파일을 사용하세요.": "FreeCAD ist ein eigenständiges Projekt zum Erstellen parametrischer 3D-Modelle mit Konstruktionshistorie. OpenCAD bearbeitet DWG/DXF-Zeichnungen und zeigt STEP-, SKP- und NC-Dateien im Browser an. Native FreeCAD-Dateien (.FCStd) lassen sich hier nicht direkt öffnen. Exportieren Sie das Modell in FreeCAD als STEP, um seine 3D-Geometrie hier zu prüfen.",
+  "FreeCAD 공식 기능·지원 형식": "FreeCAD-Funktionen und unterstützte Formate"
 }

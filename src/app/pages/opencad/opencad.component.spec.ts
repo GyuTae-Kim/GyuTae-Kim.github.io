@@ -60,4 +60,15 @@ describe('OpenCadComponent', () => {
       '/opencad/guides/choose-cad-format',
     ]);
   });
+
+  it('opens each format sample directly without requiring a personal file', () => {
+    const samples = Array.from(page.querySelectorAll<HTMLAnchorElement>('.file-sample-link'));
+    expect(samples.map(link => link.getAttribute('href'))).toEqual([
+      'https://gyutae-kim.github.io/opencad-dwgdxf/?sample',
+      'https://gyutae-kim.github.io/opencad-step/?sample',
+      'https://gyutae-kim.github.io/opencad-skp/?sample',
+      'https://gyutae-kim.github.io/opencad-nc/?sample',
+    ]);
+    expect(samples.every(link => link.textContent?.includes('예제로 먼저 보기'))).toBeTrue();
+  });
 });

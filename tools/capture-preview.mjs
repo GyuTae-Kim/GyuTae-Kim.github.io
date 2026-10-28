@@ -29,8 +29,13 @@ try {
   let port;
   for (let attempt = 0; attempt < 100; attempt++) {
     assert.equal(chrome.exitCode, null, 'Chrome exited before debugging was ready');
-    try { port = Number((await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).split('\n')[0]); break; }
-    catch { await delay(50); }
+    try {
+      const candidate = Number((await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).split('\n')[0]);
+      // Chrome may create the file before writing its port. An empty or
+      // partially written file is still startup, not a ready debugging server.
+      if (Number.isInteger(candidate) && candidate > 0 && candidate <= 65535) { port = candidate; break; }
+    } catch (error) { if (error.code !== 'ENOENT') throw error; }
+    await delay(50);
   }
   assert.ok(port, 'Chrome debugging port unavailable');
   const targets = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();

@@ -145,6 +145,7 @@
     <section class="index-section" aria-labelledby="home-opencad-title">
       <div class="section-title"><h2 id="home-opencad-title">{{ '무료 웹캐드와 3D 뷰어, 오픈캐드' | t }}</h2><a class="text-link" [routerLink]="'/opencad' | localLink">{{ '모든 도구와 사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></div>
       <p class="section-lead">{{ 'DWG·DXF 도면을 열고 고쳐 저장하는 2D 캐드, STEP·SketchUp 모델과 NC 공구 경로를 보는 뷰어를 만들고 있습니다. 모두 설치 없이 무료로 쓰는 개인 오픈소스 프로젝트이고, 뷰어들이 함께 쓰는 3D 코어도 공개했습니다.' | t }}</p>
+      <div class="tool-actions home-opencad-actions"><a class="button primary" [href]="cadEditor.url! | localLink">{{ '무료 웹캐드 시작하기' | t }}<app-icon name="arrow-right"></app-icon></a></div>
       <ol class="index-rows">
         <li *ngFor="let tool of openCadApps">
           <a

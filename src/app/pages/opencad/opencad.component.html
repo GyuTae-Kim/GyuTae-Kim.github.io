@@ -15,6 +15,17 @@
     </div>
   </div>
 
+  <section class="opencad-section" aria-labelledby="file-choice-title">
+    <h2 id="file-choice-title">{{ 'DWG·DXF·STEP·STP·SKP 파일에 맞는 뷰어 선택' | t }}</h2>
+    <p>{{ '파일이 없어도 공개 예제로 먼저 확인할 수 있습니다. 도면 편집·3D 치수·공구 경로 중 필요한 기능을 골라 보세요.' | t }}</p>
+    <table class="file-choice-table">
+      <caption>{{ '파일 형식과 확인할 작업으로 무료 뷰어를 고릅니다.' | t }}</caption>
+      <thead><tr><th scope="col">{{ '파일·뷰어 열기' | t }}</th><th scope="col">{{ '할 수 있는 일' | t }}</th><th scope="col">{{ '지원 범위·사용법' | t }}</th></tr></thead>
+      <tbody><tr *ngFor="let choice of fileChoices"><th scope="row"><a [href]="choice.tool.url! | localLink">{{ choice.label | t }}</a><a *ngIf="choice.sampleUrl" class="file-sample-link" [href]="choice.sampleUrl | localLink">{{ '예제로 먼저 보기' | t }}<app-icon name="arrow-right"></app-icon></a></th><td>{{ choice.purpose | t }}</td><td><a [routerLink]="choice.guidePath | localLink">{{ '사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></td></tr></tbody>
+    </table>
+    <p><a class="text-link" [routerLink]="'/opencad/guides/choose-cad-format' | localLink">{{ '파일 형식 차이·윈도우·맥에서 여는 방법' | t }}<app-icon name="arrow-right"></app-icon></a></p>
+  </section>
+
   <section class="opencad-section" aria-labelledby="browser-cad-title">
     <h2 id="browser-cad-title">{{ '웹캐드·무료캐드 사용 안내' | t }}</h2>
     <h3>{{ '웹캐드, 무료캐드, 오픈캐드는 무엇인가요?' | t }}</h3>
@@ -23,18 +34,10 @@
     <p>{{ 'DWG·DXF 웹캐드는 도면 열기·새로 그리기·편집·저장을 지원합니다. STEP·STP와 스케치업 SKP 도구는 모델 확인·측정용 뷰어이며 원본 CAD의 전체 모델링 기능을 제공하지 않습니다. 파일 형식별 사용 안내에서 지원 범위를 먼저 확인하세요.' | t }}</p>
     <h3>{{ '무료 사용 조건과 도면 보안은 어떻게 되나요?' | t }}</h3>
     <p>{{ '공개된 네 가지 도구는 설치·회원가입 없이 무료로 사용할 수 있고 소스코드는 MIT 라이선스로 공개합니다. 도면과 모델은 이 기기의 브라우저에서 처리합니다. 각 도구의 소스코드와 지원 범위를 함께 확인할 수 있습니다.' | t }}</p>
+    <h3>{{ '무료캐드 FreeCAD와 오픈캐드는 어떻게 다른가요?' | t }}</h3>
+    <p>{{ 'FreeCAD는 설계 이력을 가진 3D 파라메트릭 모델을 만드는 별도 프로젝트입니다. OpenCAD는 브라우저에서 DWG·DXF를 편집하고 STEP·SKP·NC 파일을 확인하는 도구입니다. FreeCAD 원본(.FCStd)을 직접 열지는 않으며, 3D 형상 확인은 FreeCAD에서 STEP으로 내보낸 파일을 사용하세요.' | t }} <a href="https://www.freecad.org/features.php" rel="noopener noreferrer">{{ 'FreeCAD 공식 기능·지원 형식' | t }}</a></p>
     <h3>{{ '오픈캐드(OpenCAD)와 OpenSCAD는 같은 프로그램인가요?' | t }}</h3>
     <p>{{ '서로 다른 프로젝트입니다. 이 사이트의 OpenCAD는 DWG·DXF 2D 웹캐드와 STEP·SKP·NC 뷰어를 제공합니다. 스크립트로 3D 모델을 만드는 OpenSCAD와는 별개이며, .scad 파일을 편집하는 도구는 제공하지 않습니다.' | t }} <a href="https://openscad.org/about.html" rel="noopener noreferrer">{{ 'OpenSCAD 공식 소개' | t }}</a></p>
-  </section>
-
-  <section class="opencad-section" aria-labelledby="file-choice-title">
-    <h2 id="file-choice-title">{{ 'DWG·DXF·STEP·STP·SKP 파일에 맞는 뷰어 선택' | t }}</h2>
-    <table class="file-choice-table">
-      <caption>{{ '파일 형식과 확인할 작업으로 무료 뷰어를 고릅니다.' | t }}</caption>
-      <thead><tr><th scope="col">{{ '파일·뷰어 열기' | t }}</th><th scope="col">{{ '할 수 있는 일' | t }}</th><th scope="col">{{ '지원 범위·사용법' | t }}</th></tr></thead>
-      <tbody><tr *ngFor="let choice of fileChoices"><th scope="row"><a [href]="choice.tool.url! | localLink">{{ choice.label | t }}</a></th><td>{{ choice.purpose | t }}</td><td><a [routerLink]="choice.guidePath | localLink">{{ '사용 안내' | t }}<app-icon name="arrow-right"></app-icon></a></td></tr></tbody>
-    </table>
-    <p><a class="text-link" [routerLink]="'/opencad/guides/choose-cad-format' | localLink">{{ '파일 형식 차이·윈도우·맥에서 여는 방법' | t }}<app-icon name="arrow-right"></app-icon></a></p>
   </section>
 
   <nav class="opencad-jump-links" [attr.aria-label]="'파일 형식별 뷰어 선택' | t">
