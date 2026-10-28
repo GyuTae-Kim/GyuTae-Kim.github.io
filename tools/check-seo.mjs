@@ -5,7 +5,7 @@ import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { validateDate } from './content-dates.mjs';
 const require = createRequire(import.meta.url);
-const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified, LANGUAGES, languagePath, localizedHref, originalPath, translate } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentModified, DEFAULT_LANGUAGE, LANGUAGES, languagePath, localizedHref, originalPath, translate } = require('../dist/server/main.js');
 const outDir = resolve(process.argv[2] || 'docs');
 const fontCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/coverage.json'), 'utf8'));
 const fontCharacters = new Set([...fontCoverage.covered, ...fontCoverage.fallback]);
@@ -61,6 +61,8 @@ for (const page of SEARCH_PAGES) {
     assert.equal(document.documentElement.lang, page.language, file);
     for (const { code } of LANGUAGES) assert.equal(document.querySelector(`link[rel="alternate"][hreflang="${code}"]`)?.href, SITE_URL + languagePath(originalPath(page.path), code), `${file}: reciprocal ${code} alternate`);
     assert.equal(document.querySelectorAll('link[rel="alternate"][hreflang]').length, 6, file);
+    assert.equal(document.querySelector('link[hreflang="x-default"]')?.href, SITE_URL + languagePath(originalPath(page.path), DEFAULT_LANGUAGE), `${file}: English fallback, explicit Korean alternate preserved`);
+    assert.ok(document.querySelector(`.footer-notes a[href="${languagePath('/sitemap', page.language)}"]`), `${file}: crawlable native page directory`);
     for (const [name, value] of Object.entries(verification)) {
       const tags = document.querySelectorAll(`meta[name="${name}"]`);
       assert.equal(tags.length, value ? 1 : 0, `${file}: verification tag count ${name}`);
@@ -86,6 +88,11 @@ for (const page of SEARCH_PAGES) {
     assert.deepEqual(shape, commonHeadShape, `${file}: shared metadata field contract`);
     assert.equal(document.querySelectorAll('link[rel="canonical"]').length, 1, file);
     assert.equal(document.querySelector('link[rel="canonical"]').href, SITE_URL + page.path, file);
+    if (originalPath(page.path) === '/sitemap') {
+      const links = new Set(Array.from(document.querySelectorAll('.directory-groups a')).map(link => link.href));
+      for (const target of SEARCH_PAGES.filter(target => target.language === page.language && target.path !== page.path)) assert.ok(links.has(SITE_URL + target.path), `${file}: directory missing ${target.path}`);
+      for (const app of OPENCAD_TOOLS.filter(tool => tool.url)) assert.ok(links.has(localizedHref(app.url, page.language)), `${file}: directory missing app ${app.id}`);
+    }
     assert.equal(document.querySelector('meta[name="description"]').content, page.description, file);
     assert.match(document.querySelector('meta[name="robots"]').content, /^index, follow/, file);
     for (const [selector, expected] of [
@@ -257,14 +264,34 @@ for (const page of SEARCH_PAGES) {
   titles.add(`${page.language}:${page.title}`);
   descriptions.add(`${page.language}:${page.description}`);
 }
-const sitemapIndex = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { contentType: 'text/xml' });
-assert.equal(sitemapIndex.window.document.documentElement.localName, 'sitemapindex');
-assert.equal(sitemapIndex.window.document.documentElement.namespaceURI, 'http://www.sitemaps.org/schemas/sitemap/0.9');
-const applicationSitemaps = OPENCAD_TOOLS.flatMap(({ url }) => url && new URL(url).origin === SITE_URL ? [new URL('sitemap.xml', url).href] : []);
-assert.deepEqual([...sitemapIndex.window.document.querySelectorAll('sitemap > loc')].map(el => el.textContent),
-  [...new Set([`${SITE_URL}/sitemap-pages.xml`, ...applicationSitemaps])]);
-assert.equal(sitemapIndex.window.document.querySelectorAll('url').length, 0, 'index never copies app URL dates');
-sitemapIndex.window.close();
+const rootMap = new JSDOM(readFileSync(join(outDir, 'sitemap.xml'), 'utf8'), { contentType: 'text/xml' });
+assert.equal(rootMap.window.document.documentElement.localName, 'urlset', 'root lists URLs without a child-map fetch');
+assert.equal(rootMap.window.document.documentElement.namespaceURI, 'http://www.sitemaps.org/schemas/sitemap/0.9');
+const allCanonical = [...new Set([...SEARCH_PAGES.map(page => SITE_URL + page.path), ...hostedApps])];
+assert.deepEqual(Array.from(rootMap.window.document.querySelectorAll('url > loc')).map(el => el.textContent), allCanonical);
+const localeUnion = [];
+for (const { code } of LANGUAGES) {
+  const map = new JSDOM(readFileSync(join(outDir, `sitemap-${code}.xml`), 'utf8'), { contentType: 'text/xml' });
+  const expected = [...SEARCH_PAGES.filter(page => page.language === code).map(page => SITE_URL + page.path), ...OPENCAD_TOOLS.filter(tool => tool.url).map(tool => localizedHref(tool.url, code))];
+  const found = Array.from(map.window.document.querySelectorAll('url > loc')).map(el => el.textContent);
+  assert.deepEqual(found, expected, `${code}: exact language coverage`);
+  localeUnion.push(...found);
+  map.window.close();
+}
+assert.equal(new Set(localeUnion).size, localeUnion.length, 'locale maps partition URLs without duplicates');
+assert.deepEqual(new Set(localeUnion), new Set(allCanonical));
+for (const entry of rootMap.window.document.querySelectorAll('url')) {
+  const url = entry.querySelector('loc').textContent;
+  const versions = Array.from(entry.getElementsByTagNameNS('http://www.w3.org/1999/xhtml', 'link'));
+  if (hostedApps.has(url)) {
+    assert.equal(versions.length, 0, `${url}: app-owned language annotations are not overridden`);
+    assert.equal(entry.querySelectorAll('lastmod').length, 0, `${url}: no invented app modification date`);
+  } else {
+    assert.equal(versions.length, 6, `${url}: native alternatives and fallback`);
+    assert.equal(versions.find(link => link.getAttribute('hreflang') === 'x-default')?.getAttribute('href'), versions.find(link => link.getAttribute('hreflang') === 'en')?.getAttribute('href'), `${url}: English XML fallback`);
+  }
+}
+rootMap.window.close();
 const sitemap = new JSDOM(readFileSync(join(outDir, 'sitemap-pages.xml'), 'utf8'), { contentType: 'text/xml' });
 assert.equal(sitemap.window.document.documentElement.localName, 'urlset');
 const sitemapUrls = [...sitemap.window.document.querySelectorAll('loc')].map((loc) => loc.textContent);
@@ -289,10 +316,7 @@ sitemap.window.close();
 const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
-assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.txt`));
-for (const app of OPENCAD_TOOLS.filter(tool => tool.url).map(tool => tool.url)) {
-  if (new URL(app).origin === SITE_URL) assert.ok(robots.includes(`Sitemap: ${app}sitemap.xml`), `Missing application sitemap discovery: ${app}`);
-}
+assert.deepEqual(robots.match(/^Sitemap: .+$/gm), [`Sitemap: ${SITE_URL}/sitemap.xml`], 'one canonical discovery file covers the portfolio and all apps');
 // Old paths signal a permanent move without requiring JavaScript rendering.
 const movedApps = JSON.parse(readFileSync(new URL('./moved-apps.json', import.meta.url), 'utf8'));
 for (const [from, { url }] of Object.entries(movedApps)) {

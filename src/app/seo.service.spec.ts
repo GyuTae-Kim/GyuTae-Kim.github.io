@@ -100,6 +100,7 @@ describe('SeoService', () => {
       expect(document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href).toBe(`${SITE_URL}/${language}/opencad`);
       expect(document.querySelectorAll('link[rel="alternate"][hreflang]').length).toBe(6);
       expect(document.querySelector<HTMLLinkElement>('link[hreflang="ko"]')?.href).toBe(`${SITE_URL}/opencad`);
+      expect(document.querySelector<HTMLLinkElement>('link[hreflang="x-default"]')?.href).toBe(`${SITE_URL}/en/opencad`);
       const graph = JSON.parse(document.getElementById('site-structured-data')!.textContent!)['@graph'];
       expect(graph.find((node: Record<string,string>) => node['@type'] === 'CollectionPage').inLanguage).toBe(language);
     }

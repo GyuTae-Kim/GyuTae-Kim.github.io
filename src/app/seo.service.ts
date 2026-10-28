@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { searchPage, SHARE_IMAGE, SITE_NAME, SITE_URL, structuredData } from './site-seo';
-import { LANGUAGES, languageFromUrl, languagePath, originalPath, translate } from './i18n/localization';
+import { DEFAULT_LANGUAGE, LANGUAGES, languageFromUrl, languagePath, originalPath, translate } from './i18n/localization';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -44,7 +44,7 @@ export class SeoService {
       this.document.head.appendChild(canonical);
     }
     canonical.href = SITE_URL + page.path;
-    for (const item of [...LANGUAGES, { code: 'ko' as const, label: 'x-default', locale: '' }]) {
+    for (const item of [...LANGUAGES, { code: DEFAULT_LANGUAGE, label: 'x-default', locale: '' }]) {
       const link = this.document.createElement('link');
       link.rel = 'alternate';
       link.hreflang = item.label === 'x-default' ? 'x-default' : item.code;

@@ -10,6 +10,7 @@ import { OpenCadComponent } from './pages/opencad/opencad.component';
 import { OpenCadProjectComponent } from './pages/opencad-project/opencad-project.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ArticleComponent } from './pages/article/article.component';
+import { SiteDirectoryComponent } from './pages/site-directory/site-directory.component';
 
 import { AchievementsComponent } from './components/achievements/achievements.component';
 import { ModelViewportComponent } from './components/model-viewport/model-viewport.component';
@@ -31,6 +32,7 @@ import { CanonicalUrlSerializer } from './canonical-url-serializer';
     OpenCadProjectComponent,
     NotFoundComponent,
     ArticleComponent,
+    SiteDirectoryComponent,
     AchievementsComponent,
     ModelViewportComponent,
     IconComponent,

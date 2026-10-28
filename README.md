@@ -28,7 +28,7 @@ Angular 15, TypeScript, SCSS, three.js(홈 3D 뷰어, 화면에 가까워질 때
 - `src/app/components/model-viewport/`: 홈 3D 뷰어. 가공 부품(모델링 → 특징 인식 → 바이스 가공)과 원룸 벽면 가구(설계 → 제조 → 설치)를 직접 만든 기하로 그립니다. WebGL이 없거나 움직임 줄이기 설정이면 `src/assets/viewer/`의 정지 이미지를 보여 줍니다.
 - `src/assets/cases/`, `src/assets/research/`: 프로젝트와 연구 그림. 목록용 썸네일은 `thumb-336.webp`, `thumb-672.webp`입니다.
 - `src/assets/og/`: 링크 미리보기 이미지(1200×630)
-- `tools/route-pages.mjs`: 빌드 뒤 주소마다 HTML을 만들어 하위 주소가 200으로 열리고, 주소별 제목, 설명, 미리보기 이미지, 실제 화면의 전체 본문을 갖게 합니다. 사이트맵 인덱스 `sitemap.xml`과 포트폴리오 페이지 목록 `sitemap-pages.xml`도 만듭니다.
+- `tools/route-pages.mjs`: 빌드 뒤 주소마다 HTML을 만들어 하위 주소가 200으로 열리고, 주소별 제목, 설명, 미리보기 이미지, 실제 화면의 전체 본문을 갖게 합니다. 통합 URL 목록 `sitemap.xml`과 포트폴리오 페이지 목록 `sitemap-pages.xml`도 만듭니다.
 
 ## 실행
 
@@ -60,10 +60,10 @@ GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.excludesFile GIT_CONFIG_VALUE_0=/dev/nu
 
 - `src/app/site-seo.ts`: 제목·설명·대표 주소·공유 이미지와 Person, WebSite, 페이지, 프로젝트, 탐색 경로 구조화 데이터의 공통 원본입니다. 새 프로젝트는 기존 프로젝트 데이터에서 자동으로 가져옵니다.
 - `src/app/seo.service.ts`: 초기 HTML과 브라우저 이동에 공통으로 쓰는 메타데이터 생성 코드입니다. 제목·설명·작성자·canonical·Open Graph·Twitter·구조화 데이터를 생성합니다. 필드 구성은 같고 페이지별 값과 구조화 데이터 종류만 달라집니다. `src/index.html`에 이 정보를 중복 작성하지 않습니다. 없는 페이지에는 `noindex`를 적용합니다.
-- `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, 사이트맵 인덱스 `sitemap.xml`, 포트폴리오 목록 `sitemap-pages.xml`, `.nojekyll`을 만듭니다. 포트폴리오 목록의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
+- `tools/route-pages.mjs`: 주소별 HTML, 이전 주소의 이동 페이지, 통합 URL 목록 `sitemap.xml`, 포트폴리오 목록 `sitemap-pages.xml`, `.nojekyll`을 만듭니다. 포트폴리오 목록의 `lastmod`와 구조화 데이터의 `dateModified`는 같은 콘텐츠 변경 기록을 사용합니다.
 - `tools/moved-apps.json`: 저장소 이름을 바꾼 앱의 예전 Pages 경로를 새 주소로 넘깁니다. 2D 캐드는 2026-10-16에 `2dcad-viewer`에서 `opencad-dwgdxf`로 이름을 바꿨고, GitHub는 저장소 주소와 달리 Pages 경로를 넘겨 주지 않으므로 이 사이트가 `/2dcad-viewer/`를 맡습니다. 빌드가 만드는 이동 페이지는 canonical과 JavaScript 없이도 읽을 수 있는 0초 meta refresh로 영구 이전을 알립니다. `noindex`는 사용하지 않으며, JavaScript를 사용하는 브라우저에서는 쿼리와 해시(`?sample`, `?open=…`)를 두 이동 방식의 목적지에 똑같이 붙입니다. 그 아래 경로는 `src/404.html`이 넘깁니다.
 - `tools/search-verification.json`: Search Console과 서치어드바이저가 제공한 HTML 태그의 `content` 값을 넣습니다. 빈 값은 태그를 생성하지 않습니다. 생성된 `docs/index.html`을 직접 수정하면 다음 빌드 때 사라집니다.
-- `npm run check:seo`: 빌드 후 전체 본문·메타데이터·구조화 데이터·내부 링크·이미지·사이트맵 인덱스·포트폴리오 목록·robots.txt·구주소 이동·404를 검사합니다. `npm run check:i18n`은 본문과 검색·공유 메타데이터의 번역 누락도 검사합니다.
+- `npm run check:seo`: 빌드 후 전체 본문·메타데이터·구조화 데이터·내부 링크·이미지·통합·언어별 사이트맵·포트폴리오 목록·robots.txt·구주소 이동·404를 검사합니다. `npm run check:i18n`은 본문과 검색·공유 메타데이터의 번역 누락도 검사합니다.
 
 ### 콘텐츠 수정일 관리
 
@@ -80,7 +80,7 @@ npm run check:seo
 
 PR과 `master`의 SEO 검증 CI에서도 수정일 테스트·빌드·산출물 검사를 실행합니다.
 
-`/sitemap.xml`은 `/sitemap-pages.xml`과 공개된 네 앱의 `/opencad-*/sitemap.xml`을 참조하는 사이트맵 인덱스입니다. 포트폴리오 저장소는 자기 페이지의 날짜만 관리하고, 앱별 URL·언어·수정일은 각 앱 저장소의 사이트맵이 관리합니다. 앱을 갱신할 때 포트폴리오로 날짜를 복사하거나 다시 배포할 필요가 없습니다. 새 앱은 실제 사이트맵을 공개한 뒤 `opencad-data.ts`의 공개 URL과 `robots.txt`에 추가합니다. 빌드는 외부 사이트맵을 내려받지 않으므로 네트워크 없이 재현할 수 있습니다. 배포 후에는 인덱스가 참조하는 모든 사이트맵의 HTTP 상태·XML·대표 URL을 별도로 확인하세요.
+`/sitemap.xml`은 포트폴리오와 공개 앱의 모든 언어별 정식 URL을 직접 나열합니다. 다른 저장소의 XML을 추가로 가져오지 않아도 처리할 수 있으며, 앱의 수정일은 임의로 복제하지 않습니다. `/sitemap-ko.xml`, `/sitemap-en.xml`, `/sitemap-ja.xml`, `/sitemap-zh-CN.xml`, `/sitemap-de.xml`은 언어별 진단용 목록입니다. 기존 `/sitemap-pages.xml`과 `/sitemap.txt`도 호환용으로 유지하며, robots.txt는 통합 XML 한 개를 알립니다. 새 앱은 `opencad-data.ts`의 공개 URL에 추가하면 언어별 주소가 함께 생성됩니다. 빌드는 외부 XML을 내려받지 않습니다.
 
 ### 배포 후 등록
 
@@ -167,6 +167,10 @@ Search Console은 브랜드/비브랜드 검색어를 나누고 페이지·언�
 
 ### 사이트맵 가져오기 진단
 
-`tools/sitemaps.mjs`는 기존 XML 인덱스와 언어·수정일 정보를 유지하면서, 모든 공개 페이지와 OpenCAD 앱의 언어별 주소를 직접 나열한 `/sitemap.txt`도 생성합니다. 텍스트 형식에는 URL만 한 줄에 하나씩 쓰며 다른 저장소의 수정일을 복제하지 않습니다. `robots.txt`는 두 형식을 알리고, `check:seo`는 같은 공개 경로가 빠짐없이 포함되는지 확인합니다. 본문이 바뀌지 않는 사이트맵 작업은 `node tools/sitemaps.mjs docs`로 별도 생성할 수 있습니다.
+`tools/sitemaps.mjs`는 통합 XML, 언어별 XML, 포트폴리오 전용 XML과 텍스트 목록을 같은 정식 URL 자료에서 생성합니다. `check:seo`는 전체 URL의 누락·중복, 언어별 분할, hreflang 왕복 관계, 영어 기본 진입점과 날짜 소유권을 검사합니다. `/sitemap`과 각 언어의 `/en/sitemap` 같은 전체 페이지 안내는 실제 HTML 링크로 모든 페이지와 앱을 연결하므로 XML 처리 상태에 의존하지 않습니다. 사이트맵 처리 여부는 배포 성공과 구분해 Search Console에서 확인합니다.
 
 Search Console의 `가져올 수 없음`과 유형 `알 수 없음`만으로 XML 오류나 저장소 충돌을 단정하지 않습니다. 상세 오류, 실제 사이트맵 URL의 실시간 검사에서 크롤링 허용·가져오기 성공, robots.txt·직접 조치·호스트 상태를 확인하세요. 공개 HTTP 200, 재제출 접수, Search Console의 `성공` 상태는 각각 별도 증거입니다. XML이 접근 가능해도 처리되지 않는 경우 텍스트 형식을 직접 제출해 가져오기와 XML/하위 사이트맵 처리 의존성을 구분할 수 있지만, Google 처리·색인·순위 상승을 보장하지는 않습니다.
+
+지원하는 다섯 언어는 각각의 정식 URL을 유지합니다. 포트폴리오 HTML과 이 저장소가 소유한 XML 항목의 `x-default`는 미지원 언어를 위한 영어 페이지를 가리키며, 한국어를 포함한 명시적 언어별 대체 주소는 바꾸지 않습니다. 검색 결과의 실제 언어 선택과 순위는 Google 재수집 후 별도로 확인합니다.
+
+다른 저장소의 앱 항목은 통합 사이트맵에 정식 URL만 싣습니다. 앱의 수정일과 언어 주석은 해당 앱의 HTML 및 앱 저장소 사이트맵을 따르며 이 저장소에서 덮어쓰지 않습니다.

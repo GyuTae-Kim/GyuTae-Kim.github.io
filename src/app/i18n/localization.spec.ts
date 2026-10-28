@@ -1,7 +1,12 @@
-import { Language, languageFromUrl, languagePath, localizedHref, originalPath, translate } from './localization';
+import { Language, defaultLanguagePath, languageFromUrl, languagePath, localizedHref, originalPath, translate } from './localization';
 import { catalogs } from './catalogs';
 
 describe('localized navigation and text', () => {
+  it('uses English as the global fallback without changing explicit Korean links or parameters', () => {
+    expect(defaultLanguagePath('/')).toBe('/en/');
+    expect(defaultLanguagePath('/de/opencad?sample=part%20one#open')).toBe('/en/opencad?sample=part%20one#open');
+    expect(languagePath('/en/opencad', 'ko')).toBe('/opencad');
+  });
   it('keeps the same page, attribution and section when changing languages', () => {
     expect(languagePath('/en/research/graph-tsp?utm_source=search#result', 'de')).toBe('/de/research/graph-tsp?utm_source=search#result');
     expect(languagePath('/ja/?sample#main', 'ko')).toBe('/?sample#main');

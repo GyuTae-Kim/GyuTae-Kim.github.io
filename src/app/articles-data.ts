@@ -23,13 +23,18 @@ export interface SiteArticle {
 export const SITE_ARTICLES: SiteArticle[] = [
   {
     path: '/opencad/guides/open-dwg-dxf', category: 'OpenCAD 사용 안내',
-    title: '무료 온라인 뷰어로 Mac·Windows에서 DWG·DXF 도면 열기',
-    description: 'AutoCAD 설치 없이 Mac·Windows에서 DWG·DXF 파일을 여는 방법입니다. 무료 온라인 OpenCAD가 읽는 버전, 도면층과 글꼴 확인, 파일을 서버에 올리지 않는 처리 방식과 PDF 출력을 설명합니다.',
-    lead: '도면을 받았는데 CAD 프로그램이 없다면 브라우저에서 OpenCAD로 열어 확인합니다. 먼저 예제 도면으로 화면 조작을 익힌 뒤 내 파일을 여세요.',
+    title: '무료 웹캐드로 DWG·DXF 도면 열기·편집·저장',
+    description: '설치 없는 무료 웹캐드 OpenCAD로 Mac·Windows에서 DWG·DXF 도면을 열고, 새 도면을 그려 편집·저장하는 방법입니다. 지원 버전, 도면층·글꼴 확인과 PDF 출력도 안내합니다.',
+    lead: '도면을 확인하거나 새로 그려야 한다면 브라우저에서 OpenCAD를 엽니다. 설치·회원가입 없이 DWG·DXF 파일을 열고 편집·저장할 수 있습니다. 예제 도면으로 조작을 익힌 뒤 내 파일을 여세요.',
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 무료 DWG·DXF 2D 캐드 사용 안내.',
     viewer: { url: 'https://gyutae-kim.github.io/opencad-dwgdxf/', label: '무료 DWG·DXF 캐드 열기', sampleUrl: 'https://gyutae-kim.github.io/opencad-dwgdxf/?sample' },
     figure: { src: 'assets/opencad/viewer-2d-1440.webp', srcset: 'assets/opencad/viewer-2d-720.webp 720w, assets/opencad/viewer-2d-1440.webp 1440w', alt: 'OpenCAD에서 치수가 표시된 브래킷 예제 도면을 연 실제 화면.', caption: '예제 도면을 연 화면. 위쪽 리본과 아래쪽 명령행에서 기능을 실행합니다.', width: 1440, height: 900 },
     sections: [
+      {
+        id: 'free-web-cad', title: '도면이 없을 때 무료 웹캐드로 새 도면 만들기',
+        paragraphs: ['이 도구는 도면을 보기만 하는 뷰어가 아니라 새 도면 작성과 2D 편집도 지원하는 무료캐드입니다. Windows와 macOS에서 브라우저로 실행하며, 편집한 파일은 이 기기에 저장합니다.'],
+        steps: ['OpenCAD 시작 화면에서 「새 도면」을 누릅니다. 받은 도면을 고치려면 「파일 열기」에서 DWG·DXF를 선택합니다.', 'LINE으로 선을, CIRCLE로 원을 그립니다. 길이와 좌표의 기준이 되는 도면 단위를 먼저 확인하고, 명령은 Esc로 종료합니다.', '도면층과 치수를 정리하고 필요한 부분을 수정합니다. 원본 파일을 고칠 때는 다른 이름으로 저장해 원본을 보존하세요.', 'DWG 또는 DXF로 저장해 편집 가능한 도면 파일을 내려받습니다. 확인용 문서는 PLOT에서 PDF로 출력합니다.'],
+      },
       {
         id: 'mac-windows', title: 'Mac에서 DWG를 열거나 AutoCAD 없이 도면을 보려면',
         paragraphs: [
