@@ -1941,5 +1941,5 @@
   "BOM·부품표와 CNC 가공 데이터의 차이": "Bill of materials (BOM) versus CNC machining data",
   "BOM(부품표)은 어떤 부품이 몇 개 필요한지 정리하는 목록입니다. 판재의 크기·수량·재료를 확인하는 일과 CNC 장비에 넣을 가공 위치·방향·코드를 만드는 일은 다릅니다.": "A bill of materials (BOM) lists the parts and quantities needed. Checking panel sizes, quantities and materials is a different task from generating machining positions, orientations and code for a CNC machine.",
   "이 개발 사례에서는 같은 SketchUp 설계에서 부품표·라벨·가공 도면·가공 코드를 출력하고 결과를 대조했습니다. 부품표만으로는 가공 위치와 판재 투입 방향을 확인할 수 없어, 생산 투입 단계에서 회전·뒤집기·엣지밴드를 함께 점검했습니다.": "In this development case, we generated parts lists, labels, machining drawings and machining code from the same SketchUp design and compared the outputs. A parts list alone cannot verify machining positions or panel feed orientation, so the production handoff checks also covered rotation, flipping and edge banding.",
-  "개발 노트 전체 보기": "All technical notes"
+  "개발 노트 전체 보기": "All notes"
 }
