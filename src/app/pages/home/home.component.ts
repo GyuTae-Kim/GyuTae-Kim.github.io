@@ -55,6 +55,7 @@ const RESEARCH_ROLES: Record<string, string> = {
 export class HomeComponent implements AfterViewInit, OnDestroy {
   // Published apps are rows with their screenshot; the shared 3D core follows as a slim card.
   openCadApps = OPENCAD_TOOLS.filter((tool) => tool.url && tool.figure);
+  cadEditor = OPENCAD_TOOLS.find((tool) => tool.id === '2d-viewer')!;
   openCadCore = OPENCAD_PROJECTS.filter((project) => !project.url);
   cases = CASE_STUDIES.map((project) => ({ ...project, intro: PROJECT_INTROS[project.id] }));
   operations = OTHER_PROJECTS.map((project) => ({ ...project, intro: PROJECT_INTROS[project.id] }));
