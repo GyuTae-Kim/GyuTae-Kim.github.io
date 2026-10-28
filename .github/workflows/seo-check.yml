@@ -48,6 +48,9 @@ jobs:
             portal=opencad
             if [ "$locale" != ko ]; then portal="$locale/opencad"; fi
             node tools/capture-preview.mjs "http://127.0.0.1:4318/$portal/" ".runtime/mobile-previews/portal-$locale.png"
+            notes=notes
+            if [ "$locale" != ko ]; then notes="$locale/notes"; fi
+            node tools/capture-preview.mjs "http://127.0.0.1:4318/$notes/" ".runtime/mobile-previews/notes-$locale.png"
           done
       - uses: actions/upload-artifact@v4
         with:
