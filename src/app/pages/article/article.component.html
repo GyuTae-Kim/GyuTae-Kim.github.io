@@ -60,6 +60,15 @@
   </ng-container>
   <ng-template #archive>
     <header class="page-intro"><p class="eyebrow">{{ '김규태 Sean Kim' | t }}</p><h1>{{ '제조 소프트웨어 개발 노트' | t }}<span class="accent">.</span></h1><p>{{ 'AI·CAD/CAM과 가구 제조 소프트웨어를 개발하며 고민한 것을 적었습니다. 프로젝트마다 맡은 역할과 결과는 글에 링크한 사례에 있습니다.' | t }}</p></header>
+    <nav class="article-contents" [attr.aria-label]="'주제로 찾아보기' | t">
+      <strong>{{ '주제로 찾아보기' | t }}</strong>
+      <ul>
+        <li><a [routerLink]="'/notes/cad-cam-feature-recognition' | localLink" fragment="geometry">{{ 'AI 가공 특징 인식' | t }}</a></li>
+        <li><a [routerLink]="'/notes/cad-cam-feature-recognition' | localLink" fragment="cam">{{ 'Autodesk Fusion CAM 자동화' | t }}</a></li>
+        <li><a [routerLink]="'/notes/furniture-manufacturing-data' | localLink" fragment="bill-of-materials">{{ 'SketchUp 부품표(BOM)' | t }}</a></li>
+        <li><a [routerLink]="'/notes/furniture-manufacturing-data' | localLink" fragment="production">{{ 'CNC 판재 회전·뒤집기' | t }}</a></li>
+      </ul>
+    </nav>
     <div class="note-list"><article *ngFor="let note of notes"><p class="eyebrow">{{ (note.category) | t }}</p><h2><a [routerLink]="(note.path) | localLink">{{ (note.title) | t }}</a></h2><p>{{ (note.description) | t }}</p><a class="text-link" [routerLink]="(note.path) | localLink">{{ '글 읽기' | t }}<app-icon name="arrow-right"></app-icon></a></article></div>
     <aside class="article-related"><a [routerLink]="'/portfolio' | localLink">{{ '전체 개발 프로젝트 보기' | t }}</a> · <a [routerLink]="'/opencad' | localLink">{{ 'OpenCAD 사용 안내' | t }}</a></aside>
   </ng-template>
