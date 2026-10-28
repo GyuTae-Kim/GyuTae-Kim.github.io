@@ -181,6 +181,18 @@
       </a>
     </section>
 
+    <section class="index-section" aria-labelledby="home-notes-title">
+      <div class="section-title">
+        <h2 id="home-notes-title">{{ '제조 소프트웨어 개발 노트' | t }}</h2>
+        <a class="text-link" [routerLink]="'/notes' | localLink">{{ '개발 노트 전체 보기' | t }}<app-icon name="arrow-right"></app-icon></a>
+      </div>
+      <p class="section-lead">{{ 'AI·CAD/CAM과 가구 제조 소프트웨어를 개발하며 고민한 것을 적었습니다. 프로젝트마다 맡은 역할과 결과는 글에 링크한 사례에 있습니다.' | t }}</p>
+      <ul class="home-note-links">
+        <li><a [routerLink]="'/notes/cad-cam-feature-recognition' | localLink"><span>{{ '3D 가공 특징 인식을 Fusion CAM 자동화로 연결할 때 확인한 것' | t }}</span><app-icon name="arrow-right"></app-icon></a></li>
+        <li><a [routerLink]="'/notes/furniture-manufacturing-data' | localLink"><span>{{ '가구 설계를 제조 데이터로 연결하는 소프트웨어 개발' | t }}</span><app-icon name="arrow-right"></app-icon></a></li>
+      </ul>
+    </section>
+
     <section
       class="index-section"
       id="research"
