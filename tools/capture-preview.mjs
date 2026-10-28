@@ -86,13 +86,25 @@ try {
     // Align the requested heading after readiness so the proof shows that area.
     const aligned = await send('Runtime.evaluate', { expression: `(async () => {
       const id = decodeURIComponent(location.hash.slice(1));
-      const element = document.getElementById(id);
-      if (!element) return { error: 'Missing requested fragment', id };
-      const inset = (document.querySelector('.site-header-bar')?.getBoundingClientRect().height || 0) + 24;
-      window.scrollTo({ top: window.scrollY + element.getBoundingClientRect().top - inset, behavior: 'instant' });
-      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-      const bounds = element.getBoundingClientRect();
-      return { id, text: element.textContent, top: bounds.top, inset, viewportHeight: innerHeight };
+      // This is a static screenshot fixture. Smooth router scrolling can still
+      // be running after fonts load, so settle the requested viewport explicitly.
+      document.documentElement.style.setProperty('scroll-behavior', 'auto', 'important');
+      let stable = 0, position;
+      for (let attempt = 0; attempt < 60; attempt++) {
+        await document.fonts.ready;
+        const element = document.getElementById(id);
+        if (!element) return { error: 'Missing requested fragment', id };
+        const inset = (document.querySelector('.site-header-bar')?.getBoundingClientRect().height || 0) + 24;
+        position = { id, text: element.textContent, top: element.getBoundingClientRect().top, inset, viewportHeight: innerHeight };
+        if (Math.abs(position.top - inset) <= 1) {
+          if (++stable === 3) return position;
+        } else {
+          stable = 0;
+          window.scrollTo({ top: window.scrollY + position.top - inset, behavior: 'instant' });
+        }
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      }
+      return { ...position, error: 'Requested fragment did not settle' };
     })()`, awaitPromise: true, returnByValue: true });
     assert.ok(!aligned.exceptionDetails, JSON.stringify(aligned.exceptionDetails));
     proof.anchor = aligned.result.value;
