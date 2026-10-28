@@ -1,4 +1,5 @@
 @import './assets/fonts/site-sans';
+@import './assets/fonts/site-cjk';
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
@@ -23,9 +24,10 @@
   --surface: #ebeae2;
   --grid-minor: rgba(30, 37, 34, 0.045);
   --grid-major: rgba(30, 37, 34, 0.085);
-  --mono: "JetBrains Mono", "Portfolio Sans", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --cjk-font: "Portfolio CJK";
+  --mono: "JetBrains Mono", "Portfolio Sans", var(--cjk-font), "Portfolio CJK", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --sans:
-    "Portfolio Sans", -apple-system, BlinkMacSystemFont,
+    "Portfolio Sans", var(--cjk-font), "Portfolio CJK", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   /* Seven-step type scale; Korean text never goes below 13px. */
   --fs-1: 13px;
@@ -2892,9 +2894,7 @@ app-icon.row-arrow {
   }
 }
 
-/* Use installed script-appropriate fonts; Korean subsets cannot cover CJK text. */
-html:lang(ja) { --sans: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; }
-html:lang(zh-CN) { --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+/* Native scripts use the self-hosted families selected in the SSR document. */
 html:not(:lang(ko)) { word-break: normal; overflow-wrap: anywhere; }
 
 .image-original-link { display: block; margin-top: 0.5rem; font-size: 0.875rem; text-decoration: underline; text-underline-offset: 3px; }

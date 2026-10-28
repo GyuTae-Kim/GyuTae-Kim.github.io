@@ -10,6 +10,9 @@ export const LANGUAGES = [
   { code: 'de', label: 'Deutsch', locale: 'de_DE' },
 ] as const;
 export type Language = typeof LANGUAGES[number]['code'];
+// Visitors whose language is not available receive the English version.
+// Every supported language, including Korean, keeps its own explicit URL.
+export const DEFAULT_LANGUAGE: Language = 'en';
 export const normalizeMessage = (value: string): string => value.replace(/\s+/g, ' ').trim();
 export function languageFromUrl(url: string): Language {
   const segment = url.split(/[?#]/)[0].split('/')[1];
@@ -24,6 +27,7 @@ export function languagePath(url: string, language: Language): string {
   const path = originalPath(url);
   return language === 'ko' ? path : `/${language}${path === '/' ? '/' : path.startsWith('/') ? path : '/' + path}`;
 }
+export function defaultLanguagePath(url: string): string { return languagePath(url, DEFAULT_LANGUAGE); }
 export function localizedHref(value: string, language: Language): string {
   const origin = 'https://gyutae-kim.github.io';
   if (!value.startsWith(origin)) return value;

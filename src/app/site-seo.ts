@@ -58,8 +58,8 @@ const RESEARCH_SEARCH_COPY: Record<string, { title: string; description: string 
 export const SEARCH_PAGES: SearchPage[] = [
   {
     path: '/',
-    title: '김규태 Sean Kim | AI·CAD/CAM 개발자 포트폴리오',
-    description: '김규태(Sean Kim)의 AI·CAD/CAM 개발자 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 맡은 역할과 결과를 소개합니다. 학부연구생 때 한 강화학습·컴퓨터 비전 연구와 실험 결과도 담았습니다.',
+    title: '김규태 | AI·CAD/CAM 개발자 포트폴리오',
+    description: 'AI·CAD/CAM 개발자 김규태의 포트폴리오입니다. 3D 가공 특징·가구 패널 인식부터 Fusion CAM 자동화, 제조 데이터 출력과 서비스 운영 개선까지 맡은 역할과 결과를 소개합니다. 학부연구생 때 한 강화학습·컴퓨터 비전 연구와 실험 결과도 담았습니다.',
     image: 'assets/og/home.jpg',
     imageAlt: '김규태 Sean Kim 포트폴리오. 가구 설계부터 가공 데이터까지 3D 형상을 다룹니다.',
     kind: 'ProfilePage',
@@ -124,6 +124,11 @@ export const SEARCH_PAGES: SearchPage[] = [
     image: 'assets/og/opencad.jpg', imageAlt: 'OpenCAD 무료 캐드 뷰어와 오픈소스 프로젝트.',
     kind: 'WebPage', tool,
   })),
+  {
+    path: '/sitemap', title: '포트폴리오·OpenCAD 전체 페이지 | 김규태',
+    description: '김규태의 개발 프로젝트, 연구, OpenCAD 웹캐드와 파일 뷰어, 도면 사용 안내를 한곳에서 찾습니다. 각 페이지는 현재 선택한 언어로 열립니다.',
+    image: 'assets/og/home.jpg', imageAlt: '김규태 Sean Kim의 개발 프로젝트와 OpenCAD 안내.', kind: 'CollectionPage',
+  },
   {
     path: '/contact',
     title: 'AI·CAD/CAM 개발자 채용·제조 기술 협업 | 김규태',
@@ -248,6 +253,12 @@ export function structuredData(page: SearchPage): object {
     itemListElement: OPENCAD_TOOLS.filter((tool) => tool.url).map((tool, i) => ({
       '@type': 'ListItem', position: i + 1, name: tool.name, url: tool.url,
     })),
+  });
+  if (path === '/sitemap') graph.push({
+    '@type': 'ItemList', '@id': `${url}#directory`, name: '전체 페이지',
+    itemListElement: [...SEARCH_PAGES.filter(item => item.path !== '/sitemap').map(item => ({ name: item.title, url: SITE_URL + item.path })),
+      ...OPENCAD_TOOLS.filter(tool => tool.url).map(tool => ({ name: tool.name, url: tool.url! }))]
+      .map((item, i) => ({ '@type': 'ListItem', position: i + 1, ...item })),
   });
   if (page.tool) graph.push({
     '@type': page.tool.url ? 'SoftwareApplication' : 'SoftwareSourceCode',

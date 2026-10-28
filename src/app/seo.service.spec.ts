@@ -61,6 +61,8 @@ describe('SeoService', () => {
       expect(document.title).withContext(page.path).not.toMatch(/[가-힣]/);
       expect(document.querySelector<HTMLMetaElement>('meta[name="author"]')?.content).toBe('Sean Kim');
       expect(document.querySelector<HTMLMetaElement>('meta[property="og:site_name"]')?.content).toBe('Sean Kim');
+      const nativeFamily = page.language === 'ja' ? 'Portfolio Japanese' : page.language === 'zh-CN' ? 'Portfolio Chinese' : 'Portfolio CJK';
+      expect(document.documentElement.style.getPropertyValue('--cjk-font')).toContain(nativeFamily);
       for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
         const description = document.querySelector<HTMLMetaElement>(selector)?.content;
         expect(description).withContext(`${page.path}: ${selector}`).toBeTruthy();
@@ -100,6 +102,7 @@ describe('SeoService', () => {
       expect(document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href).toBe(`${SITE_URL}/${language}/opencad`);
       expect(document.querySelectorAll('link[rel="alternate"][hreflang]').length).toBe(6);
       expect(document.querySelector<HTMLLinkElement>('link[hreflang="ko"]')?.href).toBe(`${SITE_URL}/opencad`);
+      expect(document.querySelector<HTMLLinkElement>('link[hreflang="x-default"]')?.href).toBe(`${SITE_URL}/en/opencad`);
       const graph = JSON.parse(document.getElementById('site-structured-data')!.textContent!)['@graph'];
       expect(graph.find((node: Record<string,string>) => node['@type'] === 'CollectionPage').inLanguage).toBe(language);
     }

@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { searchPage, SHARE_IMAGE, SITE_NAME, SITE_URL, structuredData } from './site-seo';
-import { LANGUAGES, languageFromUrl, languagePath, originalPath, translate } from './i18n/localization';
+import { DEFAULT_LANGUAGE, LANGUAGES, languageFromUrl, languagePath, originalPath, translate } from './i18n/localization';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -11,6 +11,10 @@ export class SeoService {
   update(url: string): void {
     const language = languageFromUrl(url);
     this.document.documentElement.lang = language;
+    // Keep the native face available in the SSR document before deferred CSS.
+    // The critical-CSS optimizer can discard conditional custom-property rules.
+    this.document.documentElement.style.setProperty('--cjk-font',
+      language === 'ja' ? '"Portfolio Japanese"' : language === 'zh-CN' ? '"Portfolio Chinese"' : '"Portfolio CJK"');
     const page = searchPage(url);
     this.document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(tag => tag.remove());
     this.meta.updateTag({ name: 'robots', content: page ? 'index, follow, max-image-preview:large' : 'noindex, follow' });
@@ -44,7 +48,7 @@ export class SeoService {
       this.document.head.appendChild(canonical);
     }
     canonical.href = SITE_URL + page.path;
-    for (const item of [...LANGUAGES, { code: 'ko' as const, label: 'x-default', locale: '' }]) {
+    for (const item of [...LANGUAGES, { code: DEFAULT_LANGUAGE, label: 'x-default', locale: '' }]) {
       const link = this.document.createElement('link');
       link.rel = 'alternate';
       link.hreflang = item.label === 'x-default' ? 'x-default' : item.code;

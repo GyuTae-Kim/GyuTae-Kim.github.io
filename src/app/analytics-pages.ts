@@ -35,6 +35,7 @@ const NAMES: Record<string, [ContentGroup, string]> = {
   '/notes/cad-cam-feature-recognition': ['개발 노트', '개발 노트 | CAD/CAM 특징 인식'],
   '/notes/furniture-manufacturing-data': ['개발 노트', '개발 노트 | 가구 제조 데이터'],
   '/contact': ['연락', '포트폴리오 | 연락'],
+  '/sitemap': ['포트폴리오', '포트폴리오 | 전체 페이지'],
 };
 
 export const ANALYTICS_PAGES: readonly AnalyticsPage[] = SEARCH_PAGES.map(page => {

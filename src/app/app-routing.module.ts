@@ -9,6 +9,7 @@ import { OpenCadProjectComponent } from './pages/opencad-project/opencad-project
 import { OPENCAD_PROJECTS } from './opencad-data';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ArticleComponent } from './pages/article/article.component';
+import { SiteDirectoryComponent } from './pages/site-directory/site-directory.component';
 import { SITE_ARTICLES } from './articles-data';
 import { SEARCH_ALIASES } from './site-seo';
 import { LANGUAGES, languageFromUrl, languagePath, ensureCatalog } from './i18n/localization';
@@ -30,6 +31,7 @@ const PAGE_ROUTES: Routes = [
   { path: 'research', component: BoardComponent },
   { path: 'research/:id', component: BoardComponent },
   { path: 'opencad', component: OpenCadComponent },
+  { path: 'sitemap', component: SiteDirectoryComponent },
   { path: 'blog', redirectTo: 'research', pathMatch: 'full' },
   { path: 'blog/:post', redirectTo: 'research' },
   { path: '**', component: NotFoundComponent },
