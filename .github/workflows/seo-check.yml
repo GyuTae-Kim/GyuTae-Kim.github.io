@@ -45,6 +45,9 @@ jobs:
             route=sitemap
             if [ "$locale" != ko ]; then route="$locale/sitemap"; fi
             node tools/capture-preview.mjs "http://127.0.0.1:4318/$route/" ".runtime/mobile-previews/directory-$locale.png"
+            portal=opencad
+            if [ "$locale" != ko ]; then portal="$locale/opencad"; fi
+            node tools/capture-preview.mjs "http://127.0.0.1:4318/$portal/" ".runtime/mobile-previews/portal-$locale.png"
           done
       - uses: actions/upload-artifact@v4
         with:

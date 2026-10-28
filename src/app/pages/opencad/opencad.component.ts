@@ -12,7 +12,11 @@ export class OpenCadComponent {
     { id: 'step-viewer', label: 'STEP·STP 무료 3D 뷰어', purpose: '3D 부품·조립·단면·치수 확인', guidePath: '/opencad/guides/open-step-stp' },
     { id: 'skp-viewer', label: '스케치업 SKP 무료 뷰어', purpose: 'SketchUp 모델·태그·장면 확인', guidePath: '/opencad/guides/open-skp' },
     { id: 'nc-viewer', label: 'NC·G-code·MPR 무료 뷰어', purpose: '공구 경로·코드 줄·해석 경고 확인', guidePath: '/opencad/guides/check-nc-toolpath' },
-  ].map(choice => ({ ...choice, tool: OPENCAD_TOOLS.find(tool => tool.id === choice.id)! }));
+  ].map(choice => ({
+    ...choice,
+    tool: OPENCAD_TOOLS.find(tool => tool.id === choice.id)!,
+    sampleUrl: SITE_ARTICLES.find(article => article.path === choice.guidePath)?.viewer?.sampleUrl,
+  }));
   // Application links only appear after the app is publicly available.
   liveTools = OPENCAD_TOOLS.filter((tool) => tool.url);
   plannedTools = OPENCAD_TOOLS.filter((tool) => !tool.url);

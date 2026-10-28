@@ -2113,6 +2113,7 @@ app-icon.row-arrow {
 .file-choice-table th:last-child, .file-choice-table td:last-child { width: 22%; }
 .file-choice-table a { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
 .file-choice-table app-icon { margin-left: 4px; }
+.file-choice-table .file-sample-link { display: flex; align-items: center; width: fit-content; min-height: 44px; margin-top: 4px; font-size: var(--fs-1); font-weight: 500; }
 /* Guide and library cards: the title link covers the whole card. */
 .guide-list {
   list-style: none;
