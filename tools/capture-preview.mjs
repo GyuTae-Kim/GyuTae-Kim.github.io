@@ -69,7 +69,13 @@ try {
   assert.ok(proof.fonts.length > 0);
   assert.ok(!proof.fonts.some(font => font.status === 'error'), JSON.stringify(proof));
   const native = { ja: 'Portfolio Japanese', 'zh-CN': 'Portfolio Chinese' }[proof.language];
-  if (native) assert.ok(proof.fonts.some(font => font.family.replaceAll('"', '') === native && font.status === 'loaded'), JSON.stringify(proof));
+  if (native) {
+    assert.ok(proof.family.includes(native), JSON.stringify(proof));
+    assert.ok(proof.fonts.some(font => font.family.replaceAll('"', '') === native && font.status === 'loaded'), JSON.stringify(proof));
+  }
+  assert.ok(!proof.fonts.some(font => font.status === 'loaded' &&
+    ['Portfolio Japanese', 'Portfolio Chinese'].includes(font.family.replaceAll('"', '')) &&
+    font.family.replaceAll('"', '') !== native), 'Language labels must use the small shared face, not download another language body font');
   const capture = await send('Page.captureScreenshot', { format: 'png' });
   await writeFile(output, Buffer.from(capture.data, 'base64'));
   await writeFile(output.replace(/\.png$/, '.json'), JSON.stringify(proof, null, 2) + '\n');
