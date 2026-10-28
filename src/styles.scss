@@ -1,4 +1,5 @@
 @import './assets/fonts/site-sans';
+@import './assets/fonts/site-cjk';
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
@@ -23,9 +24,10 @@
   --surface: #ebeae2;
   --grid-minor: rgba(30, 37, 34, 0.045);
   --grid-major: rgba(30, 37, 34, 0.085);
-  --mono: "JetBrains Mono", "Portfolio Sans", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --cjk-font: "Portfolio CJK";
+  --mono: "JetBrains Mono", "Portfolio Sans", var(--cjk-font), "Portfolio CJK", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --sans:
-    "Portfolio Sans", -apple-system, BlinkMacSystemFont,
+    "Portfolio Sans", var(--cjk-font), "Portfolio CJK", -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   /* Seven-step type scale; Korean text never goes below 13px. */
   --fs-1: 13px;
@@ -38,6 +40,8 @@
   --header-h: 64px;
   --shadow: 0 1px 2px rgba(30, 37, 34, 0.05), 0 12px 28px -18px rgba(30, 37, 34, 0.3);
 }
+html:lang(ja) { --cjk-font: "Portfolio Japanese"; }
+html:lang(zh-CN) { --cjk-font: "Portfolio Chinese"; }
 * {
   box-sizing: border-box;
 }

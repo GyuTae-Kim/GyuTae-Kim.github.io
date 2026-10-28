@@ -1,5 +1,6 @@
 // Validate the deployment artifacts, including crawlers that do not execute JS.
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { createRequire } from 'node:module';
@@ -9,6 +10,12 @@ const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, OPENCAD_TOOLS, contentMo
 const outDir = resolve(process.argv[2] || 'docs');
 const fontCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/coverage.json'), 'utf8'));
 const fontCharacters = new Set([...fontCoverage.covered, ...fontCoverage.fallback]);
+const cjkCoverage = JSON.parse(readFileSync(join(outDir, 'assets/fonts/cjk-coverage.json'), 'utf8'));
+for (const font of cjkCoverage.files) {
+  const bytes = readFileSync(join(outDir, 'assets/fonts', font.name));
+  assert.equal(bytes.toString('ascii', 0, 4), 'wOF2', font.name);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), font.sha256, `${font.name}: generated glyph coverage matches deployed font`);
+}
 for (const font of [...fontCoverage.files, { name: 'jetbrains-mono-latin.woff2' }]) {
   assert.equal(readFileSync(join(outDir, 'assets/fonts', font.name)).toString('ascii', 0, 4), 'wOF2', font.name);
 }
@@ -58,6 +65,11 @@ for (const page of SEARCH_PAGES) {
     const unstyledText = fontRoot.textContent;
     const missingGlyphs = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !fontCharacters.has(c.codePointAt(0))))];
     if (page.language === 'ko') assert.deepEqual(missingGlyphs, [], `${file}: run tools/prepare-site-fonts.py for new characters`);
+    if (page.language === 'ja' || page.language === 'zh-CN') {
+      const nativeCharacters = new Set([...fontCoverage.covered, ...cjkCoverage.files.filter(font => font.locale === page.language || font.locale === 'common').flatMap(font => font.covered)]);
+      const missingNative = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !nativeCharacters.has(c.codePointAt(0))))];
+      assert.deepEqual(missingNative, [], `${file}: native text must render without OS Japanese/Chinese fonts`);
+    }
     assert.equal(document.documentElement.lang, page.language, file);
     for (const { code } of LANGUAGES) assert.equal(document.querySelector(`link[rel="alternate"][hreflang="${code}"]`)?.href, SITE_URL + languagePath(originalPath(page.path), code), `${file}: reciprocal ${code} alternate`);
     assert.equal(document.querySelectorAll('link[rel="alternate"][hreflang]').length, 6, file);
