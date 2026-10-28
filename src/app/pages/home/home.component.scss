@@ -26,12 +26,16 @@
 }
 
 @media (max-width: 767px) {
-  [aria-labelledby='home-notes-title'] .section-title {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .section-title {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: baseline;
+    gap: 10px 12px;
 
-    .text-link { margin-left: 0; white-space: nowrap; }
+    h2 { grid-column: 2; min-width: 0; }
+    .text-link { grid-column: 2; justify-self: start; margin-left: 0; max-width: 100%; }
+    h2:first-child,
+    h2:first-child + .text-link { grid-column: 1 / -1; }
   }
 }
 

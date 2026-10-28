@@ -112,6 +112,24 @@ try {
     assert.ok(proof.anchor.top >= proof.anchor.inset - 2 && proof.anchor.top < proof.anchor.viewportHeight,
       'Requested fragment must be visible below the header: ' + JSON.stringify(proof.anchor));
   }
+  if (new URL(url).hash === '#work-title') {
+    const layout = await send('Runtime.evaluate', { expression: `(() => {
+      const title = document.getElementById('work-title');
+      const section = title.closest('.section-title');
+      const number = section.querySelector('.section-no');
+      const link = section.querySelector('.text-link');
+      return { number: number.textContent, numberHeight: number.getBoundingClientRect().height,
+        lineHeight: parseFloat(getComputedStyle(number).lineHeight),
+        titleBottom: title.getBoundingClientRect().bottom, linkTop: link.getBoundingClientRect().top,
+        viewport: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth };
+    })()`, returnByValue: true });
+    assert.ok(!layout.exceptionDetails, JSON.stringify(layout.exceptionDetails));
+    proof.sectionTitle = layout.result.value;
+    assert.equal(proof.sectionTitle.number, '01');
+    assert.ok(proof.sectionTitle.numberHeight <= proof.sectionTitle.lineHeight + 1, 'Section number must stay on one line: ' + JSON.stringify(proof.sectionTitle));
+    assert.ok(proof.sectionTitle.linkTop >= proof.sectionTitle.titleBottom, 'Mobile archive link must have its own row: ' + JSON.stringify(proof.sectionTitle));
+    assert.ok(proof.sectionTitle.scrollWidth <= proof.sectionTitle.viewport + 1, 'Mobile page must fit horizontally');
+  }
   const capture = await send('Page.captureScreenshot', { format: 'png' });
   await writeFile(output, Buffer.from(capture.data, 'base64'));
   await writeFile(output.replace(/\.png$/, '.json'), JSON.stringify(proof, null, 2) + '\n');

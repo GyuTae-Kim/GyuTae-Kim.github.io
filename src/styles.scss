@@ -249,6 +249,8 @@ main:focus {
 .section-no {
   font: 500 var(--fs-1) / 1 var(--mono);
   color: var(--blue);
+  flex: none;
+  white-space: nowrap;
 }
 .accent {
   color: var(--accent);
@@ -2898,5 +2900,8 @@ app-icon.row-arrow {
 
 /* Native scripts use the self-hosted families selected in the SSR document. */
 html:not(:lang(ko)) { word-break: normal; overflow-wrap: anywhere; }
+html:lang(ja), html:lang(zh-CN) {
+  h1, h2, h3 { word-break: normal; }
+}
 
 .image-original-link { display: block; margin-top: 0.5rem; font-size: 0.875rem; text-decoration: underline; text-underline-offset: 3px; }
