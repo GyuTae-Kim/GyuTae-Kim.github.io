@@ -39,14 +39,12 @@ jobs:
             sleep 0.2
           done
           for guide in open-step-stp open-skp check-nc-toolpath; do
-            profile_dir=$(mktemp -d "$RUNNER_TEMP/seo-chrome-XXXXXX")
-            timeout 45s /usr/bin/google-chrome --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=390,844 --virtual-time-budget=2000 --user-data-dir="$profile_dir" --screenshot="$PWD/.runtime/mobile-previews/$guide.png" "http://127.0.0.1:4318/opencad/guides/$guide" 2> "$RUNNER_TEMP/seo-$guide.log"
+            node tools/capture-preview.mjs "http://127.0.0.1:4318/opencad/guides/$guide" ".runtime/mobile-previews/$guide.png"
           done
           for locale in ko en ja zh-CN de; do
             route=sitemap
             if [ "$locale" != ko ]; then route="$locale/sitemap"; fi
-            profile_dir=$(mktemp -d "$RUNNER_TEMP/seo-directory-XXXXXX")
-            timeout 45s /usr/bin/google-chrome --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=390,844 --virtual-time-budget=2000 --user-data-dir="$profile_dir" --screenshot="$PWD/.runtime/mobile-previews/directory-$locale.png" "http://127.0.0.1:4318/$route/" 2> "$RUNNER_TEMP/seo-directory-$locale.log"
+            node tools/capture-preview.mjs "http://127.0.0.1:4318/$route/" ".runtime/mobile-previews/directory-$locale.png"
           done
       - uses: actions/upload-artifact@v4
         with:
