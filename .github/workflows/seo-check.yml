@@ -54,6 +54,7 @@ jobs:
             notes_home_path=/
             if [ "$locale" != ko ]; then notes_home_path="/$locale/"; fi
             node tools/capture-preview.mjs "http://127.0.0.1:4318$notes_home_path#home-notes-title" ".runtime/mobile-previews/home-notes-$locale.png"
+            node tools/capture-preview.mjs "http://127.0.0.1:4318$notes_home_path#work-title" ".runtime/mobile-previews/home-projects-$locale.png"
           done
       - uses: actions/upload-artifact@v4
         with:
