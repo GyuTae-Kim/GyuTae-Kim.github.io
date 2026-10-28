@@ -81,6 +81,37 @@ try {
   assert.ok(!proof.fonts.some(font => font.status === 'loaded' &&
     ['Portfolio Japanese', 'Portfolio Chinese'].includes(font.family.replaceAll('"', '')) &&
     font.family.replaceAll('"', '') !== native), 'Language labels must use the small shared face, not download another language body font');
+  if (new URL(url).hash) {
+    // Native fragment scrolling can precede router startup and font layout.
+    // Align the requested heading after readiness so the proof shows that area.
+    const aligned = await send('Runtime.evaluate', { expression: `(async () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      // This is a static screenshot fixture. Smooth router scrolling can still
+      // be running after fonts load, so settle the requested viewport explicitly.
+      document.documentElement.style.setProperty('scroll-behavior', 'auto', 'important');
+      let stable = 0, position;
+      for (let attempt = 0; attempt < 60; attempt++) {
+        await document.fonts.ready;
+        const element = document.getElementById(id);
+        if (!element) return { error: 'Missing requested fragment', id };
+        const inset = (document.querySelector('.site-header-bar')?.getBoundingClientRect().height || 0) + 24;
+        position = { id, text: element.textContent, top: element.getBoundingClientRect().top, inset, viewportHeight: innerHeight };
+        if (Math.abs(position.top - inset) <= 1) {
+          if (++stable === 3) return position;
+        } else {
+          stable = 0;
+          window.scrollTo({ top: window.scrollY + position.top - inset, behavior: 'instant' });
+        }
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      }
+      return { ...position, error: 'Requested fragment did not settle' };
+    })()`, awaitPromise: true, returnByValue: true });
+    assert.ok(!aligned.exceptionDetails, JSON.stringify(aligned.exceptionDetails));
+    proof.anchor = aligned.result.value;
+    assert.ok(!proof.anchor.error, JSON.stringify(proof.anchor));
+    assert.ok(proof.anchor.top >= proof.anchor.inset - 2 && proof.anchor.top < proof.anchor.viewportHeight,
+      'Requested fragment must be visible below the header: ' + JSON.stringify(proof.anchor));
+  }
   const capture = await send('Page.captureScreenshot', { format: 'png' });
   await writeFile(output, Buffer.from(capture.data, 'base64'));
   await writeFile(output.replace(/\.png$/, '.json'), JSON.stringify(proof, null, 2) + '\n');
