@@ -61,6 +61,8 @@ describe('SeoService', () => {
       expect(document.title).withContext(page.path).not.toMatch(/[가-힣]/);
       expect(document.querySelector<HTMLMetaElement>('meta[name="author"]')?.content).toBe('Sean Kim');
       expect(document.querySelector<HTMLMetaElement>('meta[property="og:site_name"]')?.content).toBe('Sean Kim');
+      const nativeFamily = page.language === 'ja' ? 'Portfolio Japanese' : page.language === 'zh-CN' ? 'Portfolio Chinese' : 'Portfolio CJK';
+      expect(document.documentElement.style.getPropertyValue('--cjk-font')).toContain(nativeFamily);
       for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
         const description = document.querySelector<HTMLMetaElement>(selector)?.content;
         expect(description).withContext(`${page.path}: ${selector}`).toBeTruthy();

@@ -66,6 +66,8 @@ for (const page of SEARCH_PAGES) {
     const missingGlyphs = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !fontCharacters.has(c.codePointAt(0))))];
     if (page.language === 'ko') assert.deepEqual(missingGlyphs, [], `${file}: run tools/prepare-site-fonts.py for new characters`);
     if (page.language === 'ja' || page.language === 'zh-CN') {
+      const nativeFamily = cjkCoverage.files.find(font => font.locale === page.language).family;
+      assert.ok(document.documentElement.style.getPropertyValue('--cjk-font').includes(nativeFamily), `${file}: native font selection is available in SSR before deferred styles`);
       const nativeCharacters = new Set([...fontCoverage.covered, ...cjkCoverage.files.filter(font => font.locale === page.language || font.locale === 'common').flatMap(font => font.covered)]);
       const missingNative = [...new Set([...unstyledText].filter(c => !/\s/u.test(c) && !nativeCharacters.has(c.codePointAt(0))))];
       assert.deepEqual(missingNative, [], `${file}: native text must render without OS Japanese/Chinese fonts`);

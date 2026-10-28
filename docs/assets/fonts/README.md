@@ -36,8 +36,10 @@ by the content file even before that regrouping.
 Pretendard does not contain all authored Japanese and Chinese glyphs. The
 renamed Portfolio Japanese and Portfolio Chinese subsets supply those glyphs
 without requiring a platform CJK font. A 2.3 KiB Portfolio CJK face supplies the
-native language names on the other language pages. CSS selects the native face
-by the document language; English and Korean do not load the larger CJK faces.
+native language names on the other language pages. The SSR/browser language
+writer selects the native face on the HTML element before deferred CSS; English
+and Korean do not load the larger CJK faces. This inline selection also prevents
+the critical-CSS optimizer from discarding conditional custom-property rules.
 
 Inputs come from `google/fonts` commit
 `ddf386ba1b9fbc6b2c818f1ddcd9148f54ced94b`:
