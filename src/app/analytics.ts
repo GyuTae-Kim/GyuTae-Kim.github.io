@@ -26,13 +26,18 @@ let pageReady = false;
 let vitalsStarted = false;
 
 const GUIDE_KEYS = new Set(['open-dwg-dxf', 'measure-export', 'open-step-stp', 'open-skp', 'check-nc-toolpath', 'choose-cad-format']);
-export function navigationEvent(href: string): { name: string; params: Record<string, string> } | undefined {
+const ENTRY_POINTS = new Set(['hub_shortcut', 'format_table']);
+export function navigationEvent(href: string, entryPoint?: string): { name: string; params: Record<string, string> } | undefined {
   try {
     const url = new URL(href);
     if (url.protocol !== 'https:' || url.hostname !== HOST) return undefined;
     const path = url.pathname.replace(/\/(?:en|ja|zh-CN|de)\/?$/, '/');
     const target = (Object.keys(PATHS) as AnalyticsTool[]).find(key => key !== 'portfolio' && path.replace(/\/$/, '') === PATHS[key].replace(/\/$/, ''));
-    if (target) return { name: 'viewer_open', params: { target_tool: target, launch_mode: url.searchParams.has('sample') ? 'sample' : url.searchParams.has('open') ? 'url' : 'empty' } };
+    if (target) {
+      const params: Record<string, string> = { target_tool: target, launch_mode: url.searchParams.has('sample') ? 'sample' : url.searchParams.has('open') ? 'url' : 'empty' };
+      if (entryPoint && ENTRY_POINTS.has(entryPoint)) params['entry_point'] = entryPoint;
+      return { name: 'viewer_open', params };
+    }
     const guide = url.pathname.replace(/^\/(en|ja|zh-CN|de)(?=\/)/, '').match(/^\/opencad\/guides\/([^/]+)\/?$/)?.[1];
     if (guide && GUIDE_KEYS.has(guide)) return { name: 'guide_open', params: { guide_key: guide } };
   } catch { /* Only public, allowlisted navigation identities are measured. */ }
@@ -202,7 +207,7 @@ function initialize(id: string, tool: AnalyticsTool): void {
     if (!link) return;
     try {
       const url = new URL(link.href);
-      const navigation = navigationEvent(link.href);
+      const navigation = navigationEvent(link.href, link.dataset['analyticsEntry']);
       if (navigation) send(navigation.name, navigation.params);
       else if (url.hostname === 'github.com' && /^\/GyuTae-Kim\/(?:opencad-(?:dwgdxf|nc|step|skp|viewer3d)|GyuTae-Kim.github.io)\/?$/i.test(url.pathname)) {
         const repo = url.pathname.split('/')[2]!.toLowerCase();

@@ -252,6 +252,9 @@ for (const page of SEARCH_PAGES) {
     if (originalPath(page.path) === '/opencad') {
       const choices = [...root.querySelectorAll('.file-choice-table tbody tr')];
       assert.equal(choices.length, 4, `${file}: choose a viewer without loading JavaScript`);
+      const shortcuts = [...root.querySelectorAll('.page-intro .tool-shortcuts a')];
+      assert.deepEqual(shortcuts.map(link => link.href), choices.map(row => row.querySelector('th a').href), `${file}: first-screen shortcuts expose all four localized apps without JavaScript`);
+      assert.equal(root.querySelector('.shortcut-guide a')?.href, SITE_URL + page.path + '#file-choice-title', `${file}: support shortcut retains the current language and collection`);
       for (const row of choices) {
         assert.ok(hostedApps.has(row.querySelector('th a').href), `${file}: selector opens a published localized app`);
         assert.ok(row.querySelector('td a').href.startsWith(SITE_URL + languagePath('/opencad/guides/', page.language)), `${file}: selector links to a localized guide`);
