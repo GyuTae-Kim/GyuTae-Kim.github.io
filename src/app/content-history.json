@@ -4,8 +4,8 @@
     "fingerprint": "bb3c47483e654a092b7e44941b6b295dbe7af87dd3e7358d030e4c5b2376270b"
   },
   "/portfolio": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "1da789e0d2593219483bf4b7e21bb4ffaf1b46aa7199a42a7294cc3da711b440"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "6f34e25f5f084367a99e75234a6491fa2ff9c611ce141e6fdb1f362277fff3e2"
   },
   "/portfolio/cad-feature-recognition": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -120,20 +120,20 @@
     "fingerprint": "d90c379ff5b71a545a32172a74563b557ab12991a4334745020594f308e91e5c"
   },
   "/en/": {
-    "lastmod": "2026-10-28T09:50:57Z",
-    "fingerprint": "e67d4508359e7c7ea0791a65ceef2cbc46021b885fa46479ae1661d9bd91ea0f"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "00a95e594c3b1c1a0c7fb3c60f8bce889e27aa287786ae5439980e6728e5d0f0"
   },
   "/en/portfolio": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "5ee8711142e7407554d78aeaf5bb7485a9e16024ba4b2e378d842f5355156956"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "745fb88d1bb8ce8266fd71c6c84557450bb28096e315361a984e484274a12603"
   },
   "/en/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-28T08:33:12Z",
-    "fingerprint": "876fc6887edbb1eeb5a6aff02248d0daea6f73c5605ca216ffb210df889b0ba8"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "1bcc57a2839c7fd8e3e549fe3d666afde6878f75dfebf762e1d575800a9879cb"
   },
   "/en/portfolio/panel-classification": {
-    "lastmod": "2026-10-27T08:02:47Z",
-    "fingerprint": "f107b3ca3d1743cbf59778bb6b411bfdfb8688e21f8562d0bff5acd3153e0474"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "790e667f667fd1d9f54dc71456f81e8f6f22c27721c9dbf291433af1f95bad45"
   },
   "/en/portfolio/wedraw-pro": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -240,20 +240,20 @@
     "fingerprint": "a685fe7a6e05152dccbd6f1ff38790fedfe823ab04b99ca57d0967fcd90c3f50"
   },
   "/ja/": {
-    "lastmod": "2026-10-28T09:50:57Z",
-    "fingerprint": "ad39453e786eec07cc4a2de2807dc5fcb010d4096504aca12185407b1f5a08c8"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "fffa31b7a67a2bea4729bbe95b8c03ed37e6c8799f1d7e1eb964af6c5a41d70f"
   },
   "/ja/portfolio": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "af4bc3730e527421f48d2341a6406c894e3354c92caa2feab879f1efb4b489bb"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "8fe1ae5cdcdcb24214c9e21858e640823439a1a3d524f51a489eddc7d453e297"
   },
   "/ja/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-28T08:33:12Z",
-    "fingerprint": "1f0e29a52bd4998da265c5e495e8c542281ccc77abe5e1f8ebcaa8972c700840"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "00662ff79a26fb0ffe0cb70a51e9a700c9a7cb33b729cdb8134bafa0f487a202"
   },
   "/ja/portfolio/panel-classification": {
-    "lastmod": "2026-10-27T08:02:47Z",
-    "fingerprint": "7cc33726fb493034f05cea162991e85aeb24502a379ee92c90bb6abd7ea2f0cb"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "266e4a221f5820e3c96e81e6462debf3308fb61f10a27292a652d1c121d6be04"
   },
   "/ja/portfolio/wedraw-pro": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -360,24 +360,24 @@
     "fingerprint": "9ac706c355cf8b257e00cfdb1df2838046c1859f7b48dc3d50f6ed8a36f40425"
   },
   "/zh-CN/": {
-    "lastmod": "2026-10-28T09:23:36Z",
-    "fingerprint": "0ae4823497ce00f25b494cc61ece63f6c34982f2a843f07ed6aeb5c196e55545"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "c51385ae1bdc13e9df383a32927bd0dd39152b85e99718ac1a72417f6620cccb"
   },
   "/zh-CN/portfolio": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "b747b16b5baa814b23fad54716026aee1acf5bbf17d0ca788920aee47e24dd84"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "dd6a76c22069bfcbb394f73a5d628595253c4cac1ec6ba6efff74268fb1a8642"
   },
   "/zh-CN/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-28T08:33:12Z",
-    "fingerprint": "d7816679010873af9cb105aca4e8954956ac6e08388da71519f8b47b9d92ce96"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "1ee9255b0efcd63f9db5ce1c54a2708204db521e2c7a2677405ab4103ac8fbc0"
   },
   "/zh-CN/portfolio/panel-classification": {
     "lastmod": "2026-10-27T09:03:38Z",
     "fingerprint": "a3b057451ac44c3aa72acef2a0b0920a859973c3afc7a58e47737dd9a533870b"
   },
   "/zh-CN/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "67cc286b4e6ce1491ff9ec7e1d52f92dfd1362924ef616f0d1c190b331011e8f"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "3d0929c2cf10421b4a85a30a53cdc2c022368dd021609f72c67970793f069db6"
   },
   "/zh-CN/portfolio/service-monitoring": {
     "lastmod": "2026-10-27T09:01:18Z",
@@ -480,24 +480,24 @@
     "fingerprint": "01037646fdc5d1acbd1121ff571e82eb89bf7698a58352b090a7c1e3e4bbdd36"
   },
   "/de/": {
-    "lastmod": "2026-10-28T09:50:57Z",
-    "fingerprint": "0ad704447acb5d2e37e7e30b693b9c579d8058d48e07d84abfeccc95d4abe0fc"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "151d444c43c5283b30690886fec8da69008f38dc7a527778e15a1c04005598c4"
   },
   "/de/portfolio": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "ba88c461e91bf44e255c724cec11c5362f022567e97905be226c7b84c3ee8089"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "3b7ad3781922a46dc2401b7a0f5668f7f4065f1a7dcc2f0a3f235988b4c9b641"
   },
   "/de/portfolio/cad-feature-recognition": {
-    "lastmod": "2026-10-28T08:33:12Z",
-    "fingerprint": "c92e36208092d9dacd63321fb041c222a71e555fb65b62b43e4a0620b9c306f8"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "0cdb79d3e849ec752a2fd91975becce5ae8a74fa748371c6903d0b79faca4484"
   },
   "/de/portfolio/panel-classification": {
-    "lastmod": "2026-10-27T09:03:38Z",
-    "fingerprint": "7d30408e3a3d6d772cfaed3621cfd39803c99838541f79805ca49668fc9370d2"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "31d8557411f79714b512810df300caa4bc25f40ba12e41f2ca32106a8c404d9d"
   },
   "/de/portfolio/wedraw-pro": {
-    "lastmod": "2026-10-27T09:31:11Z",
-    "fingerprint": "8af418984b661cf5349655e9655285e4bd006e998cd5c5de26d3ddb5b79932f6"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "3542fd64b6cc5c85b94c7bea00da2b027e52bbc64dee45e2af141fe757fbe80a"
   },
   "/de/portfolio/service-monitoring": {
     "lastmod": "2026-10-27T09:41:47Z",
@@ -548,16 +548,16 @@
     "fingerprint": "cb515bf87205bd4c204aba2f8b6d926fe289dee880e6fe7a105a1c107916bfd7"
   },
   "/de/opencad/guides/open-step-stp": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "bab9ca5a0f0ec64bedda133d0475b97b4667d454425704cab053282bf8401fa0"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "71db814d7bb940e9afa8aff4e84f9439d43852ac8952a69fd7207fa69d3ac75b"
   },
   "/de/opencad/guides/open-skp": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "3dba4789296c2384965f0a308e333cf8a82a3aeca211bd4e73bf96d7f4435343"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "49c8422d4c1578e6b9fe97b58a49f0688526dd7f7b2f1deb5f6131d70ba8788b"
   },
   "/de/opencad/guides/check-nc-toolpath": {
-    "lastmod": "2026-10-27T13:28:14Z",
-    "fingerprint": "257e24785b05d2f18043868b6f44c03206be7a5df567b24aaa6c107622715a07"
+    "lastmod": "2026-10-29T10:44:50Z",
+    "fingerprint": "48a483ebb9325facf53b074ee948663695541e87cbfce9e88d4be82b90bd58ef"
   },
   "/de/notes/cad-cam-feature-recognition": {
     "lastmod": "2026-10-28T08:33:12Z",

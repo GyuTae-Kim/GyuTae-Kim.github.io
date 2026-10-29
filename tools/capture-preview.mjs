@@ -130,6 +130,18 @@ try {
     assert.ok(proof.sectionTitle.linkTop >= proof.sectionTitle.titleBottom, 'Mobile archive link must have its own row: ' + JSON.stringify(proof.sectionTitle));
     assert.ok(proof.sectionTitle.scrollWidth <= proof.sectionTitle.viewport + 1, 'Mobile page must fit horizontally');
   }
+  const titleBlocks = await send('Runtime.evaluate', { expression: `(() => {
+    return [...document.querySelectorAll('.title-block dd')].map(cell => ({
+      text: cell.textContent.trim(), width: cell.clientWidth, scrollWidth: cell.scrollWidth,
+      height: cell.clientHeight, scrollHeight: cell.scrollHeight
+    })).filter(cell => cell.width > 0);
+  })()`, returnByValue: true });
+  assert.ok(!titleBlocks.exceptionDetails, JSON.stringify(titleBlocks.exceptionDetails));
+  proof.titleBlocks = titleBlocks.result.value;
+  for (const cell of proof.titleBlocks) {
+    assert.ok(cell.scrollWidth <= cell.width + 1 && cell.scrollHeight <= cell.height + 1,
+      'Model details must remain fully readable: ' + JSON.stringify(cell));
+  }
   const capture = await send('Page.captureScreenshot', { format: 'png' });
   await writeFile(output, Buffer.from(capture.data, 'base64'));
   await writeFile(output.replace(/\.png$/, '.json'), JSON.stringify(proof, null, 2) + '\n');
