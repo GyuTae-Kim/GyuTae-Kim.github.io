@@ -8,7 +8,7 @@ import { assertContentDate, contentFingerprint } from './content-dates.mjs';
 import { writeSitemaps } from './sitemaps.mjs';
 
 const require = createRequire(import.meta.url);
-const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, renderPage, contentModified } = require('../dist/server/main.js');
+const { LOCALIZED_SEARCH_PAGES: SEARCH_PAGES, SITE_URL, renderPage, contentModified, LANGUAGES, languagePath } = require('../dist/server/main.js');
 const history = JSON.parse(readFileSync(new URL('../src/app/content-history.json', import.meta.url), 'utf8'));
 const outDir = resolve(process.argv[2] || 'docs');
 let base = readFileSync(join(outDir, 'index.html'), 'utf8');
@@ -66,15 +66,19 @@ for (const page of SEARCH_PAGES) {
 
 // Preserve links to the old public pages without routing every 404 through the home
 // page. A canonical and immediate refresh point to the existing destination.
-const redirects = {
-  '/portfolio/fusion-cam': '/portfolio/cad-feature-recognition',
-  '/portfolio/sketchup-manufacturing': '/portfolio/wedraw-pro',
-  '/blog': '/research',
-};
+const redirects = JSON.parse(readFileSync(new URL('./page-redirects.json', import.meta.url), 'utf8'));
 for (const [from, to] of Object.entries(redirects)) {
-  const url = SITE_URL + to;
-  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>페이지 이동 — 김규태 · Sean Kim</title><link rel="canonical" href="${url}"><meta http-equiv="refresh" content="0;url=${url}"></head><body><p>주소가 바뀌었습니다. <a href="${url}">새 페이지로 이동</a></p></body></html>`;
-  for (const file of [`${from.slice(1)}.html`, `${from.slice(1)}/index.html`]) writePage(file, html);
+  for (const { code } of LANGUAGES) {
+    const source = languagePath(from, code);
+    const destination = languagePath(to, code);
+    const page = SEARCH_PAGES.find(page => page.path === destination);
+    if (!page) throw new Error(`Redirect destination is not published: ${destination}`);
+    const url = SITE_URL + destination;
+    // Removed content stays removed. Only these known old addresses point to an
+    // existing relevant page; the original language, query and fragment survive.
+    const html = `<!doctype html><html lang="${code}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(page.title)}</title><link rel="canonical" href="${escape(url)}"><meta http-equiv="refresh" content="0;url=${escape(url)}"><script>var target = ${JSON.stringify(url)} + location.search + location.hash; document.querySelector('meta[http-equiv="refresh"]').content = '0;url=' + target; location.replace(target)</script></head><body><p><a href="${escape(url)}">${escape(page.title)}</a></p></body></html>`;
+    for (const file of [`${source.slice(1)}.html`, `${source.slice(1)}/index.html`]) writePage(file, html);
+  }
 }
 
 // A project site loses its Pages path when its repository is renamed, and GitHub does

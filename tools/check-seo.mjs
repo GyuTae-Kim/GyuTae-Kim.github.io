@@ -331,6 +331,29 @@ const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
 assert.deepEqual(robots.match(/^Sitemap: .+$/gm), [`Sitemap: ${SITE_URL}/sitemap.xml`], 'one canonical discovery file covers the portfolio and all apps');
+const retiredPages = JSON.parse(readFileSync(new URL('./page-redirects.json', import.meta.url), 'utf8'));
+for (const [from, to] of Object.entries(retiredPages)) {
+  for (const { code } of LANGUAGES) {
+    const source = languagePath(from, code);
+    const destination = languagePath(to, code);
+    assert.ok(!paths.has(source), `${source}: a redirect never replaces a current page`);
+    assert.ok(paths.has(destination), `${source}: destination is a published page`);
+    assert.ok(!sitemapUrls.includes(SITE_URL + source), `${source}: retired URL stays out of sitemap`);
+    for (const file of [`${source.slice(1)}.html`, `${source.slice(1)}/index.html`]) {
+      const raw = readFileSync(join(outDir, file), 'utf8');
+      const dom = new JSDOM(raw);
+      const document = dom.window.document;
+      const url = SITE_URL + destination;
+      assert.equal(document.documentElement.lang, code, `${file}: original language`);
+      assert.equal(document.querySelector('link[rel="canonical"]')?.href, url, `${file}: final canonical`);
+      assert.equal(document.querySelector('head > meta[http-equiv="refresh"]')?.content, `0;url=${url}`, `${file}: unconditional non-JS move`);
+      assert.ok(!/noindex/.test(document.querySelector('meta[name="robots"]')?.content ?? ''), `${file}: allow redirect processing`);
+      assert.equal(document.querySelector('a')?.href, url, `${file}: usable fallback link`);
+      assert.ok(raw.includes(`${JSON.stringify(url)} + location.search + location.hash`), `${file}: preserve campaign and fragment`);
+      dom.window.close();
+    }
+  }
+}
 // Old paths signal a permanent move without requiring JavaScript rendering.
 const movedApps = JSON.parse(readFileSync(new URL('./moved-apps.json', import.meta.url), 'utf8'));
 for (const [from, { url }] of Object.entries(movedApps)) {

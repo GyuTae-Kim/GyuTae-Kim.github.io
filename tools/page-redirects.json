@@ -1,0 +1,9 @@
+{
+  "/portfolio/fusion-cam": "/portfolio/cad-feature-recognition",
+  "/portfolio/sketchup-manufacturing": "/portfolio/wedraw-pro",
+  "/blog": "/research",
+  "/solutions": "/portfolio",
+  "/solutions/sketchup-furniture": "/portfolio/wedraw-pro",
+  "/solutions/furniture-manufacturing": "/notes/furniture-manufacturing-data",
+  "/solutions/cad-cam-automation": "/portfolio/cad-feature-recognition"
+}

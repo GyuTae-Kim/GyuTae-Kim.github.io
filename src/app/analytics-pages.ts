@@ -1,4 +1,4 @@
-import { originalPath } from './i18n/localization';
+import { languageFromUrl, languagePath, originalPath } from './i18n/localization';
 import type { ContentGroup } from './analytics';
 import { SEARCH_ALIASES, SEARCH_PAGES, searchPage } from './site-seo';
 
@@ -47,6 +47,10 @@ export const ANALYTICS_PAGES: readonly AnalyticsPage[] = SEARCH_PAGES.map(page =
 export function analyticsPage(url: string): AnalyticsPage {
   const path = originalPath(url).split(/[?#]/)[0].replace(/\/+$/, '') || '/';
   const page = searchPage(SEARCH_ALIASES.find(alias => alias.from === path)?.to ?? path);
-  return ANALYTICS_PAGES.find(item => item.path === page?.path)
-    ?? { path: '/404', title: '포트폴리오 | 없는 페이지', group: '오류' };
+  const identity = ANALYTICS_PAGES.find(item => item.path === page?.path);
+  // Keep stable reporting names, but retain the actual public language URL so
+  // landing pages can be reconciled with Search Console canonical URLs.
+  return identity
+    ? { ...identity, path: languagePath(identity.path, languageFromUrl(url)) }
+    : { path: '/404', title: '포트폴리오 | 없는 페이지', group: '오류' };
 }
