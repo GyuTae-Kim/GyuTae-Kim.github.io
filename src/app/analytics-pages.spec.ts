@@ -20,10 +20,13 @@ describe('GA public page identities', () => {
     expect(analyticsPage('/notes/furniture-manufacturing-data')).toEqual({ path: '/notes/furniture-manufacturing-data', title: '개발 노트 | 가구 제조 데이터', group: '개발 노트' });
   });
 
-  it('keeps localized routes in their stable public categories', () => {
+  it('preserves language URLs while keeping stable public names and categories', () => {
     for (const lang of ['en', 'ja', 'zh-CN', 'de']) {
-      expect(analyticsPage(`/${lang}/opencad?open=private.dwg#secret`)).toEqual(analyticsPage('/opencad'));
-      expect(analyticsPage(`/${lang}/notes/furniture-manufacturing-data?name=private#secret`)).toEqual(analyticsPage('/notes/furniture-manufacturing-data'));
+      expect(analyticsPage(`/${lang}/opencad?open=private.dwg#secret`)).toEqual({ ...analyticsPage('/opencad'), path: `/${lang}/opencad` });
+      expect(analyticsPage(`/${lang}/notes/furniture-manufacturing-data?name=private#secret`)).toEqual({ ...analyticsPage('/notes/furniture-manufacturing-data'), path: `/${lang}/notes/furniture-manufacturing-data` });
+      expect(analyticsPage(`/${lang}/index.html?open=private#secret`).path).toBe(`/${lang}/`);
+      expect(analyticsPage(`/${lang}/opencad/index.html?file=private#secret`).path).toBe(`/${lang}/opencad`);
+      expect(analyticsPage(`/${lang}/private-file.skp`).path).toBe('/404');
     }
   });
 

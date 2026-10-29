@@ -120,6 +120,8 @@ OpenCAD 프로젝트 목록은 `src/app/opencad-data.ts`에서 관리합니다. 
 
 빌드가 만드는 `.html`·`/index.html` 별칭은 `SEARCH_ALIASES`로 정상 주소에 연결합니다. 배포 전 실제 브라우저에서 별칭을 열어 주소·화면·canonical·robots가 정상 주소와 일치하는지 확인하세요. 존재하지 않는 주소는 계속 404/검색 제외로 처리합니다.
 
+검색 결과에 남아 있는 이전 주소는 `tools/page-redirects.json`에서 관련된 현재 페이지에 연결합니다. 삭제한 `/solutions` 본문이나 메뉴는 복원하지 않습니다. 다섯 언어의 알려진 주소에만 즉시 meta refresh·canonical·일반 링크를 생성하고, JavaScript가 동작하면 쿼리와 구역 위치도 보존합니다. GitHub Pages에서는 이 이동 문서가 HTTP 200을 반환하므로 HTTP 301로 기록하지 않습니다. 이전 주소는 사이트맵에 넣지 않으며, 매핑하지 않은 주소는 계속 404입니다.
+
 
 ### 다국어 페이지
 
@@ -149,6 +151,8 @@ Google은 검색어·본문·설정 등 여러 신호로 결과 언어를 선택
 ### SEO 성과와 실제 사용자 성능 측정
 
 개인 GA4 속성 `559257929`를 사용합니다. 기존 `viewer_open`은 `target_tool`과 `launch_mode`(`empty`, `sample`, `url`)를 기록하고, `guide_open`은 허용한 `guide_key`만 기록합니다. 예제·실제 파일 성공은 기존 `sample_open_success`·`file_open_success`를 구분합니다. `page_language`는 URL의 허용된 언어 코드입니다. 파일명·파일 URL·모델 내용·임의 경로·오류 원문은 보내지 않습니다.
+
+포트폴리오의 GA 페이지 이름과 분류는 고정된 공개 이름표를 유지하고, `page_location`은 `/en/opencad`처럼 실제 언어별 정식 주소를 보존합니다. 언어 전환도 서로 다른 페이지 조회로 기록하되 쿼리·fragment와 알 수 없는 경로는 제거합니다. 이 수정 전에는 외국어 조회가 기본 주소에 합쳐졌으므로 과거 GA 랜딩 주소만으로 언어별 유입을 복원할 수 없습니다. 검색 노출은 Search Console을 기준으로 판단하고, 기존 GA 기록을 외국어 유입 0건으로 해석하지 마세요.
 
 분석 동의를 허용한 경우에만 공식 `web-vitals` 라이브러리를 지연 로딩하고 `web_vital` 이벤트를 전송합니다. 매개변수는 `metric_name`(LCP/INP/CLS), `metric_value`, `metric_delta`, `metric_id`, `metric_rating`입니다. 기본 문서 단위 지표는 최초 공개 페이지에 귀속하고 SPA 이동 뒤의 다른 페이지로 잘못 귀속하지 않습니다. 제한·거부 상태에서는 성능·클릭 이벤트를 보내지 않습니다. 필드 데이터가 쌓이기 전에는 실측 p75 목표 달성이나 검색 성과 상승을 주장하지 않습니다.
 
