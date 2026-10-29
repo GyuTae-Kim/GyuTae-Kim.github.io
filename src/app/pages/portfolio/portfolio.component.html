@@ -36,8 +36,8 @@
     </section>
     <app-achievements></app-achievements>
     <aside class="end-note">
-      {{ '학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는' | t }}
-      <a [routerLink]="'/research' | localLink">{{ '연구 페이지' | t }}</a>{{ '에 있습니다.' | t }}
+      <p>{{ '학부연구생으로 진행한 강화학습과 컴퓨터 비전 프로젝트도 소개합니다.' | t }}</p>
+      <a class="text-link" [routerLink]="'/research' | localLink">{{ '연구 페이지' | t }}<app-icon name="arrow-right"></app-icon></a>
     </aside>
   </ng-container>
   <ng-template #caseDetail>

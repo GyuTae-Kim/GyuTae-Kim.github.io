@@ -1038,12 +1038,12 @@
   "연구 0": "Study 0",
   "연구 0{0} · {1}": "Study 0{0} · {1}",
   "연구 기록 전체 보기": "View full study history",
-  "연구 렌더": "Study render",
+  "연구 렌더": "Research render",
   "연구 렌더: 합성 부품의 가공 특징을 면별로 표시한 예입니다. 고객 부품 사진이 아닙니다.": "Study render: An example showing the machining features of a composite part, broken down by face. This is not a photograph of a customer's part.",
   "연구 목록": "List of studies",
   "연구 보기": "View study",
   "연구 중 폭을 바꿔 본 가구. 맞닿은 패널들이 접합 관계를 따라 차례로 움직입니다.": "A piece of furniture where the width was adjusted during the study; the adjoining panels shift in sequence, following their joint relationships.",
-  "연구 페이지": "Study page",
+  "연구 페이지": "Research projects",
   "연구에서 제조까지 이어지는 AI·CAD/CAM 개발 프로젝트.": "An AI-driven CAD/CAM development project spanning from research to manufacturing.",
   "연구에서는 3D 형상을 해석하고 규칙을 학습하는 방법을 구현했고, 제품에서는 그 결과를 설계 수정과 제조 데이터 출력, 생산 전 확인에 썼습니다. 운영에서는 처리 결과와 오류를 모아 놓친 문제를 찾아 고쳤습니다. 설계 정보를 다시 입력하는 수고와 가공 전 시행착오를 줄여, 작은 제조 현장에서도 쌓아 온 기술을 쓸 수 있게 하는 것이 목표입니다.": "In the research phase, we implemented methods to analyze geometry and learn design rules. In the product phase, these were applied to design modifications, the generation of manufacturing data, and pre-production verification. During operation, we collected processing results and error logs to identify overlooked issues and address their root causes. We hope that tools like these will reduce the burden of re-entering design information and minimize trial-and-error during the machining process, enabling even small-scale manufacturing workshops to leverage accumulated technical expertise.",
   "연락": "Contact",
@@ -1280,7 +1280,7 @@
   "채용·제조 기술 협업 문의": "Inquiries regarding recruitment or manufacturing technology collaboration",
   "챔퍼": "Chamfer",
   "처음 사용하는 순서": "Getting started",
-  "처음 시점": "Initial point in time",
+  "처음 시점": "Reset view",
   "천판": "Top plate",
   "첫 화면과 앱 파일 응답": "Initial screen and app file response",
   "최근 연구개발 프로젝트": "Recent R&D projects",
@@ -1941,5 +1941,6 @@
   "BOM·부품표와 CNC 가공 데이터의 차이": "Bill of materials (BOM) versus CNC machining data",
   "BOM(부품표)은 어떤 부품이 몇 개 필요한지 정리하는 목록입니다. 판재의 크기·수량·재료를 확인하는 일과 CNC 장비에 넣을 가공 위치·방향·코드를 만드는 일은 다릅니다.": "A bill of materials (BOM) lists the parts and quantities needed. Checking panel sizes, quantities and materials is a different task from generating machining positions, orientations and code for a CNC machine.",
   "이 개발 사례에서는 같은 SketchUp 설계에서 부품표·라벨·가공 도면·가공 코드를 출력하고 결과를 대조했습니다. 부품표만으로는 가공 위치와 판재 투입 방향을 확인할 수 없어, 생산 투입 단계에서 회전·뒤집기·엣지밴드를 함께 점검했습니다.": "In this development case, we generated parts lists, labels, machining drawings and machining code from the same SketchUp design and compared the outputs. A parts list alone cannot verify machining positions or panel feed orientation, so the production handoff checks also covered rotation, flipping and edge banding.",
-  "개발 노트 전체 보기": "All notes"
+  "개발 노트 전체 보기": "All notes",
+  "학부연구생으로 진행한 강화학습과 컴퓨터 비전 프로젝트도 소개합니다.": "Explore my undergraduate research projects in reinforcement learning and computer vision."
 }
