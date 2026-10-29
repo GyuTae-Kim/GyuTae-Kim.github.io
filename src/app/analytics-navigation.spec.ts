@@ -11,4 +11,14 @@ describe('Public SEO navigation measurement', () => {
     expect(navigationEvent('https://gyutae-kim.github.io/de/opencad/guides/open-step-stp?file=private')).toEqual({ name: 'guide_open', params: { guide_key: 'open-step-stp' } });
     for (const url of ['https://private.test/opencad-step/', 'https://gyutae-kim.github.io/opencad/guides/private-file', 'https://gyutae-kim.github.io/customer.skp', 'mailto:private@example.test']) expect(navigationEvent(url)).toBeUndefined();
   });
+  it('records only fixed app entry points without accepting URL parameters or arbitrary text', () => {
+    const url = 'https://gyutae-kim.github.io/opencad-skp/ja/?sample&entry_point=private-file.skp';
+    expect(navigationEvent(url, 'hub_shortcut')?.params).toEqual({ target_tool: 'skp', launch_mode: 'sample', entry_point: 'hub_shortcut' });
+    expect(navigationEvent(url, 'format_table')?.params['entry_point']).toBe('format_table');
+    for (const invalid of [undefined, '', 'private-file.skp', '__proto__', 'https://private.test/model']) {
+      expect(navigationEvent(url, invalid)?.params).toEqual({ target_tool: 'skp', launch_mode: 'sample' });
+    }
+    expect(navigationEvent('https://private.test/opencad-skp/', 'hub_shortcut')).toBeUndefined();
+    expect(navigationEvent('https://gyutae-kim.github.io/ja/opencad/guides/open-skp', 'hub_shortcut')?.params).toEqual({ guide_key: 'open-skp' });
+  });
 });
