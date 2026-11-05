@@ -21,7 +21,8 @@ for(const page of LOCALIZED_SEARCH_PAGES){
  for(const link of originals){assert.ok(existsSync('docs'+new URL(link.href).pathname),`${page.path}: missing original capture`);assert.ok(!new URL(link.href).pathname.includes('/i18n/'),`${page.path}: source link must open original`);}
  for(const image of doc.querySelectorAll('img[src],source[srcset]')){
   const candidates=[image.getAttribute('src'),...(image.getAttribute('srcset')?.split(',').map(p=>p.trim().split(/\s/)[0])??[])].filter(Boolean);
-  for(const candidate of candidates){const url=new URL(candidate,SITE_URL+'/');if(url.origin!==SITE_URL||!url.pathname.startsWith('/assets/'))continue;
+  // Resolve like a crawler that ignores <base href="/">: a relative address on /ja/ is /ja/assets/….
+  for(const candidate of candidates){assert.ok(!/^(\.\/)?assets\//.test(candidate),`${page.path}: page-relative image ${candidate}`);const url=new URL(candidate,SITE_URL+page.path);if(url.origin!==SITE_URL||!url.pathname.startsWith('/assets/'))continue;
    assert.ok(existsSync('docs'+url.pathname),`${page.path}: missing ${candidate}`);
    const expected=localizedImage(candidate,page.language);assert.equal(candidate,expected,`${page.path}: stale image language ${candidate}`);images++;
   }

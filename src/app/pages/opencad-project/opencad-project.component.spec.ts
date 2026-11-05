@@ -23,7 +23,7 @@ describe('OpenCadProjectComponent', () => {
   it('shows the real screen of a published viewer beside its title and actions', async () => {
     const page = await render('step-viewer');
     const shot = page.querySelector('.project-hero .tool-shot img')!;
-    expect(shot.getAttribute('src')).toBe('assets/opencad/viewer-step-1440.webp');
+    expect(shot.getAttribute('src')).toBe('/assets/opencad/viewer-step-1440.webp');
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-step/"]')).not.toBeNull();
     expect(page.querySelectorAll('.step-strip li').length).toBe(4);
     expect(page.querySelectorAll('.feature-grid > div').length).toBe(6);
@@ -31,7 +31,7 @@ describe('OpenCadProjectComponent', () => {
 
   it('introduces the 2D CAD with its own guides and no 3D core picture', async () => {
     const page = await render('2d-viewer');
-    expect(page.querySelector('.project-hero .tool-shot img')!.getAttribute('src')).toBe('assets/opencad/viewer-2d-1440.webp');
+    expect(page.querySelector('.project-hero .tool-shot img')!.getAttribute('src')).toBe('/assets/opencad/viewer-2d-1440.webp');
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-dwgdxf/"]')).not.toBeNull();
     expect(page.querySelectorAll('.check-list li').length).toBe(5);
     expect(Array.from(page.querySelectorAll('[aria-labelledby="project-guides"] .guide-list a')).map((link) => link.getAttribute('href'))).toEqual([
@@ -45,7 +45,7 @@ describe('OpenCadProjectComponent', () => {
     expect(page.querySelector('.project-hero .tool-shot')).toBeNull();
     const shots = Array.from(page.querySelectorAll('.core-shot-grid img')).map((img) => img.getAttribute('src'));
     expect(shots).toEqual([
-      'assets/opencad/viewer-step-720.webp', 'assets/opencad/viewer-skp-720.webp', 'assets/opencad/viewer-nc-720.webp',
+      '/assets/opencad/viewer-step-720.webp', '/assets/opencad/viewer-skp-720.webp', '/assets/opencad/viewer-nc-720.webp',
     ]);
     expect(page.querySelector('a[href="https://gyutae-kim.github.io/opencad-viewer3d/"]')).toBeNull();
     expect(page.querySelector('.related-tools a[href="/opencad/projects/dwg-dxf"]')).not.toBeNull();

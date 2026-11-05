@@ -73,6 +73,13 @@ for (const page of SEARCH_PAGES) {
       assert.deepEqual(missingNative, [], `${file}: native text must render without OS Japanese/Chinese fonts`);
     }
     assert.equal(document.documentElement.lang, page.language, file);
+    // Googlebot fetched /ja/assets/… and /en/assets/i18n/en/… (404 in Search Console crawl
+    // stats): image crawlers may resolve `assets/x` against the page URL, not <base href="/">.
+    const relativeAssets = [...document.querySelectorAll('[src],[srcset],[href],[poster]')]
+      .flatMap(el => ['src', 'srcset', 'href', 'poster'].map(name => el.getAttribute(name)).filter(Boolean))
+      .flatMap(value => value.split(',').map(part => part.trim().split(/\s+/)[0]))
+      .filter(value => /^(\.\/)?assets\//.test(value));
+    assert.deepEqual(relativeAssets, [], `${file}: site assets must use root-relative /assets/ addresses`);
     for (const { code } of LANGUAGES) assert.equal(document.querySelector(`link[rel="alternate"][hreflang="${code}"]`)?.href, SITE_URL + languagePath(originalPath(page.path), code), `${file}: reciprocal ${code} alternate`);
     assert.equal(document.querySelectorAll('link[rel="alternate"][hreflang]').length, 6, file);
     assert.equal(document.querySelector('link[hreflang="x-default"]')?.href, SITE_URL + languagePath(originalPath(page.path), DEFAULT_LANGUAGE), `${file}: English fallback, explicit Korean alternate preserved`);

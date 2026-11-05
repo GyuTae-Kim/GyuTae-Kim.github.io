@@ -1,4 +1,4 @@
-import { imageOriginal, localizedImage } from './image-assets';
+import { imageOriginal, localizedImage, rootRelativeAssets } from './image-assets';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Pipe, PipeTransform } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
@@ -24,6 +24,7 @@ export class I18nService {
     if (Array.isArray(value)) return (value.length ? [this.link(value[0]), ...value.slice(1)] : value) as T;
     if (typeof value !== 'string') return value;
     if (value.startsWith('/assets/')) return value;
+    if (value.startsWith('assets/')) return ('/' + value) as T;
     if (value.startsWith('/') && !value.startsWith('//')) return languagePath(value, this.language) as T;
     if (value.startsWith('https://gyutae-kim.github.io')) return localizedHref(value, this.language) as T;
     return value;
@@ -47,7 +48,7 @@ export class LocalLinkPipe implements PipeTransform {
 export class LocalImagePipe implements PipeTransform {
   constructor(private i18n: I18nService) {}
   transform<T>(value: T): T {
-    return (typeof value === 'string' ? localizedImage(value, this.i18n.language) : value) as T;
+    return (typeof value === 'string' ? rootRelativeAssets(localizedImage(value, this.i18n.language)) : value) as T;
   }
 }
 
