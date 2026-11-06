@@ -7,6 +7,7 @@ import { CASE_STUDIES } from '../../portfolio-data';
 import { RESEARCH_WORKS } from '../../research-data';
 import { IconComponent } from '../../components/icon/icon.component';
 import { BoardComponent } from './board.component';
+import { rootRelativeAssets } from '../../i18n/image-assets';
 
 describe('BoardComponent', () => {
   let fixture: ComponentFixture<BoardComponent>;
@@ -89,10 +90,10 @@ describe('BoardComponent', () => {
     toggle.click();
     fixture.detectChanges();
     expect(toggle.getAttribute('aria-pressed')).toBe('true');
-    expect(page.querySelector('.result-figure img')!.getAttribute('src')).toBe(figure.still!);
+    expect(page.querySelector('.result-figure img')!.getAttribute('src')).toBe(rootRelativeAssets(figure.still!));
     toggle.click();
     fixture.detectChanges();
     expect(toggle.getAttribute('aria-pressed')).toBe('false');
-    expect(page.querySelector('.result-figure img')!.getAttribute('src')).toBe(figure.src);
+    expect(page.querySelector('.result-figure img')!.getAttribute('src')).toBe(rootRelativeAssets(figure.src));
   });
 });

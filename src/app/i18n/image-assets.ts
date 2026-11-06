@@ -21,6 +21,13 @@ export function localizedImage(value: string, language: Language): string {
   });
 }
 
+// Search crawlers resolve image addresses against the page URL, not always
+// against <base href="/">: `assets/x` on /ja/ became /ja/assets/x and 404'd.
+// Rendered pages therefore use root-relative addresses for site assets.
+export function rootRelativeAssets(value: string): string {
+  return value.replace(/(^|,)(\s*)assets\//g, '$1$2/assets/');
+}
+
 const referenceImages = new Set<string>(imageAssets.references);
 export function imageOriginal(value: string, language: Language): string | undefined {
   if (language === 'ko') return undefined;

@@ -15,7 +15,11 @@ export function contentFingerprint(html, assetBytes, pageUrl = 'https://gyutae-k
     // Partner tooltip counters depend on which routes were rendered earlier.
     // Preserve their associations without treating a new counter as edited content.
     const tooltipIds = new Map();
+    // `/assets/x` and `assets/x` (under <base href="/">) are the same file; a
+    // spelling change of the address is not an edit of the page.
+    const sameAsset = (value) => value.replace(/(^|,)(\s*)\/assets\//g, '$1$2assets/');
     const attributeValue = (node, attr) => {
+      if (['src', 'srcset', 'href'].includes(attr.name)) return sameAsset(attr.value);
       if (!['id', 'aria-describedby'].includes(attr.name) || !node.closest('app-partner-text') || !/^kimm-partner-\d+-\d+$/.test(attr.value)) return attr.value;
       if (!tooltipIds.has(attr.value)) tooltipIds.set(attr.value, `partner-tooltip-${tooltipIds.size + 1}`);
       return tooltipIds.get(attr.value);

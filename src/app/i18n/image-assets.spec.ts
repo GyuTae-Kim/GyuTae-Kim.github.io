@@ -1,4 +1,4 @@
-import { imageOriginal, localizedImage } from './image-assets';
+import { imageOriginal, localizedImage, rootRelativeAssets } from './image-assets';
 
 describe('localized image assets', () => {
   const figure = 'assets/cases/feature-cam/step2.webp';
@@ -16,6 +16,12 @@ describe('localized image assets', () => {
     expect(localizedImage('https://example.com/?file=assets/cases/feature-cam/step2.webp', 'en')).toBe('https://example.com/?file=assets/cases/feature-cam/step2.webp');
     expect(localizedImage('assets/sean-kim.webp', 'de')).toBe('assets/sean-kim.webp');
     expect(localizedImage('assets/model.step', 'ja')).toBe('assets/model.step');
+  });
+  it('writes site assets root-relative so crawlers cannot resolve them under /ja/ or /en/', () => {
+    expect(rootRelativeAssets('assets/i18n/ja/cases/feature-cam/step2.webp')).toBe('/assets/i18n/ja/cases/feature-cam/step2.webp');
+    expect(rootRelativeAssets('assets/a-336.webp 336w, assets/a-672.webp 672w')).toBe('/assets/a-336.webp 336w, /assets/a-672.webp 672w');
+    expect(rootRelativeAssets('/assets/sean-kim.webp')).toBe('/assets/sean-kim.webp');
+    expect(rootRelativeAssets('https://example.com/?file=assets/a.webp')).toBe('https://example.com/?file=assets/a.webp');
   });
   it('keeps source evidence accessible from translated references', () => {
     expect(imageOriginal('assets/cases/wedraw-pro/step1.webp', 'ko')).toBeUndefined();

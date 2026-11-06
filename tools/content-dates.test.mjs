@@ -29,6 +29,12 @@ test('responsive image bytes and application-relative images are included', () =
   assets['/2dcad-viewer/b.jpg'] = Buffer.from('changed retina image');
   assert.notEqual(before, contentFingerprint(html, path => assets[path], 'https://gyutae-kim.github.io/2dcad-viewer/'));
 });
+test('root-relative and base-relative spellings of one asset are the same content', () => {
+  const spelled = (src, srcset, href) => page('Body').replace('<img src="/assets/a.jpg">', `<a href="${href}"><img src="${src}" srcset="${srcset}"></a>`);
+  const base = spelled('assets/a.jpg', 'assets/a.jpg 336w, assets/b.jpg 672w', 'assets/a.jpg');
+  assert.equal(contentFingerprint(base, bytes), contentFingerprint(spelled('/assets/a.jpg', '/assets/a.jpg 336w, /assets/b.jpg 672w', '/assets/a.jpg'), bytes));
+  assert.notEqual(contentFingerprint(base, bytes), contentFingerprint(spelled('assets/c.jpg', 'assets/a.jpg 336w, assets/b.jpg 672w', 'assets/a.jpg'), bytes));
+});
 test('rejects invalid calendar dates and future timestamps', () => {
   assert.throws(() => validateDate('2026-02-30T00:00:00Z'));
   assert.throws(() => validateDate('2999-01-01T00:00:00Z'));
