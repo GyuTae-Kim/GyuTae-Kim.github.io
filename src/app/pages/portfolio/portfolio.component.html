@@ -36,7 +36,7 @@
     </section>
     <app-achievements></app-achievements>
     <aside class="end-note">
-      <p>{{ '학부연구생으로 진행한 강화학습과 컴퓨터 비전 프로젝트도 소개합니다.' | t }}</p>
+      <p>{{ '학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는 따로 모았습니다.' | t }}</p>
       <a class="text-link" [routerLink]="'/research' | localLink">{{ '연구 페이지' | t }}<app-icon name="arrow-right"></app-icon></a>
     </aside>
   </ng-container>
@@ -89,7 +89,7 @@
           <b>{{ (stat.value) | t }}</b><span>{{ (stat.label) | t }}</span>
         </li>
       </ul>
-      <ol class="case-story" [attr.aria-label]="'프로젝트 흐름' | t">
+      <ol class="case-story" [attr.aria-label]="'프로젝트 진행 순서' | t">
         <li *ngFor="let step of selected!.story; let i = index">
           <div class="story-figure" *ngIf="step.image">
             <button

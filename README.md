@@ -29,6 +29,7 @@ Angular 15, TypeScript, SCSS, three.js(홈 3D 뷰어, 화면에 가까워질 때
 - `src/app/components/cad-effects/`: 페이지를 CAD 작업 화면처럼 보이게 하는 효과. 마우스를 따라가는 십자선과 헤더의 도면 좌표 표시(마우스가 있는 넓은 화면만), 도면 그리드, 화면에 들어올 때 치수선처럼 그려지는 섹션 선과 0부터 올라가는 수치, 마우스를 올린 카드의 선택 그립(`src/styles.scss`의 「CAD effects」)을 맡습니다. 그리드와 십자선은 헤더 버튼으로 끄고 켜며 선택은 `localStorage`에 남습니다. 움직임 줄이기 설정이면 그리는 연출을 하지 않고 십자선은 꺼 둡니다. 3D 뷰어의 좌표축(X·Y·Z)을 누르면 그 축 방향의 정투영 뷰(측면·정면·평면)로 돌아갑니다. 페이지가 열리면 스캔 라인이 화면을 한 번 지나가고, 글자는 윤곽에서 채움으로(제목은 해칭을 거쳐) 바뀝니다. 서버가 미리 그린 화면에서 시작한 이 연출이 앱이 뜨면서 다시 재생되지 않도록, 컴포넌트가 처음 표시된 뒤 지난 시간을 `--cad-elapsed`로 알려 이어서 재생하게 합니다. 그림은 건드리지 않습니다. 그림을 선화로 바꾸는 표시(등장할 때, 마우스를 올렸을 때, 전체 와이어프레임 보기)는 두지 않습니다.
 - `src/assets/cases/`, `src/assets/research/`: 프로젝트와 연구 그림. 목록용 썸네일은 `thumb-336.webp`, `thumb-672.webp`입니다.
 - `src/assets/og/`: 링크 미리보기 이미지(1200×630)
+- `tools/scene-player-capture/`: 장면 전환 플레이어(Windows WPF 프로그램) 화면을 다시 찍는 도구. GitHub Actions의 `Scene player capture` 워크플로를 수동으로 실행하면 Windows 러너에서 공개 소스를 빌드하고 실제 마우스 입력으로 조작해 창을 캡처합니다. 받은 캡처는 `publish-images.py`로 `src/assets/cases/scene-player/`의 이미지로 바꿉니다.
 - `tools/route-pages.mjs`: 빌드 뒤 주소마다 HTML을 만들어 하위 주소가 200으로 열리고, 주소별 제목, 설명, 미리보기 이미지, 실제 화면의 전체 본문을 갖게 합니다. 통합 URL 목록 `sitemap.xml`과 포트폴리오 페이지 목록 `sitemap-pages.xml`도 만듭니다.
 
 ## 실행

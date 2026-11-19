@@ -253,12 +253,12 @@ export const CASE_STUDIES: CaseStudy[] = [
       ],
       note: 'AI가 면 단위로 기본 7종을 분류하고, 홀·단차·챔퍼의 형상 조합을 분석해 카운터보어와 카운터싱크를 식별합니다. 아래는 학습용 STEP 모델 6개를 정답 라벨로 색칠한 예시입니다.',
       examples: [
-        { title: '복합 베이스 플레이트', src: 'assets/cases/feature-cam/examples/base-plate.webp', alt: '다수의 홀과 개방·폐쇄 포켓을 함께 가진 베이스 플레이트의 학습 라벨', caption: '기본 라벨 6종 · 177개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 스톡', kind: 'research' },
+        { title: '복합 베이스 플레이트', src: 'assets/cases/feature-cam/examples/base-plate.webp', alt: '홀 여러 개와 열린 포켓, 닫힌 포켓이 있는 베이스 플레이트의 학습 라벨', caption: '기본 라벨 6종 · 177개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 스톡', kind: 'research' },
         { title: '삼각 리브 부품', src: 'assets/cases/feature-cam/examples/triangle-rib.webp', alt: '홀·포켓·챔퍼·필렛을 구분한 삼각 리브 부품의 학습 라벨', caption: '기본 라벨 7종 · 139개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 필렛 · 스톡', kind: 'research' },
-        { title: '회전축 하우징', src: 'assets/cases/feature-cam/examples/rotary-housing.webp', alt: '원통형 중심부와 다수의 홀을 가진 회전축 하우징의 학습 라벨', caption: '기본 라벨 6종 · 78개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 필렛 · 스톡', kind: 'research' },
+        { title: '회전축 하우징', src: 'assets/cases/feature-cam/examples/rotary-housing.webp', alt: '원통형 중심부와 여러 홀이 있는 회전축 하우징의 학습 라벨', caption: '기본 라벨 6종 · 78개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 필렛 · 스톡', kind: 'research' },
         { title: '베드 플레이트', src: 'assets/cases/feature-cam/examples/bed-plate.webp', alt: '홀·포켓과 모서리 필렛이 함께 있는 베드 플레이트의 학습 라벨', caption: '기본 라벨 7종 · 74개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 필렛 · 스톡', kind: 'research' },
         { title: '테일 고정 블록', src: 'assets/cases/feature-cam/examples/tail-block.webp', alt: '열린 포켓의 바닥 필렛과 홀을 구분한 테일 고정 블록의 학습 라벨', caption: '기본 라벨 7종 · 58개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 필렛 · 스톡', kind: 'research' },
-        { title: 'Z축 홀더', src: 'assets/cases/feature-cam/examples/z-holder.webp', alt: '여러 방향의 홀과 포켓이 결합된 Z축 홀더의 학습 라벨', caption: '기본 라벨 6종 · 87개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 스톡', kind: 'research' },
+        { title: 'Z축 홀더', src: 'assets/cases/feature-cam/examples/z-holder.webp', alt: '여러 방향으로 홀과 포켓이 난 Z축 홀더의 학습 라벨', caption: '기본 라벨 6종 · 87개 면', features: '쓰루홀 · 블라인드홀 · 오픈포켓 · 클로즈포켓 · 챔퍼 · 스톡', kind: 'research' },
       ],
     },
     evidence: [
@@ -334,7 +334,7 @@ export const CASE_STUDIES: CaseStudy[] = [
         fix: '패널의 형상과 접합 관계를 그래프로 분석하고, AI로 측판·지판·천판 등 15종 패널 종류를 구분했습니다.',
       },
       {
-        problem: '고객이 웹에서 가구의 치수와 구성을 실시간으로 조절하고, 원하는 사양으로 바로 발주하고 싶어합니다.',
+        problem: '고객이 웹에서 가구의 치수와 구성을 실시간으로 조절하고, 원하는 사양으로 바로 발주하고 싶어 합니다.',
         fix: '머신러닝(선형회귀)으로 패널의 위치·크기를 계산하는 계수식을 구성했습니다. 브라우저에서는 이 계수식만 계산해, 고객이 파라미터를 실시간으로 수정하고 가구를 발주할 수 있게 했습니다.',
       },
       {
@@ -387,7 +387,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       {
         title: '파라미터 관계 수식화',
         text: '너비·깊이·높이, 걸레받이·찬넬, 코너장 멍판과 도어 여유 등을 바꾸는 규칙을 팀과 정리하고, 선형회귀로 패널의 위치·크기 변화를 수식화합니다.',
-        did: ['규칙으로 기준값을 흔든 샘플 생성', '패널마다 위치와 크기를 선형회귀로 맞춤', '웹에서 계수식으로 실시간 치수 수정과 발주 연결'],
+        did: ['규칙으로 기준값을 흔든 샘플 생성', '패널마다 위치와 크기를 선형회귀로 맞춤', '웹에서 계수식으로 치수를 실시간 수정하고 발주'],
         didNote: '가구 규칙은 팀과 함께 정리했습니다.',
         image: 'assets/cases/panel/hero.webp',
         imageAlt: '가구 폭을 바꾸기 전과 후. 맞닿은 패널들이 함께 늘어나고 옮겨 간 모습',
