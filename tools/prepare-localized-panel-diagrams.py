@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parent.parent
 LANGS=['en','ja','zh-CN','de']
 TEXT={
 '기준면과의 거리 유지':['Keep a fixed offset','基準面からの距離を維持','保持与基准面的距离','Abstand zur Bezugsfläche beibehalten'],
-'공간의 비율 유지':['Keep the space ratio','空間の比率を維持','保持空间比例','Raumverhältnis beibehalten'],
+'공간의 비율 유지':['Keep the same ratio','空間の比率を維持','保持空间比例','Breitenverhältnis beibehalten'],
 '폭 변경 전':['Before','幅変更前','宽度修改前','Breite vorher'],
 '폭 증가 후':['After widening','幅を広げた後','宽度增加后','Breite nachher'],
 '일정':['Fixed','一定','固定','Konstant'],
@@ -21,7 +21,7 @@ for i,lang in enumerate(LANGS):
   root=ET.fromstring(source.read_text());title=root.find('{*}title');label=title.text.split(':')[0].removesuffix(' 위치');name=catalog.get(label)
   assert name and not any('가'<=c<='힣' for c in name),(lang,label)
   title.text=[f'{name} location',f'{name}の位置',f'{name}的位置',f'Position: {name}'][i]
-  root.find('{*}desc').text=['Location diagram: the selected panel is blue; surrounding panels are gray.','位置を示す模式図です。選択した板材は青、周囲の板材は灰色で示します。','位置示意图：所选板件为蓝色，周围板件为灰色。','Positionsdiagramm: Die gewählte Platte ist blau, die umgebenden Platten sind grau.'][i]
+  root.find('{*}desc').text=['Location diagram: the selected panel is blue; surrounding panels are gray.','位置を示す模式図です。選択したパネルは青、周囲のパネルは灰色で示します。','位置示意图：所选板件为蓝色，周围板件为灰色。','Lageschema: Die gewählte Platte ist blau, die umgebenden Platten sind grau.'][i]
   for node in root.findall('.//{*}text'):
    if node.text in TEXT:node.text=TEXT[node.text][i]
    if node.get('font-size')=='15':node.set('font-size','13')

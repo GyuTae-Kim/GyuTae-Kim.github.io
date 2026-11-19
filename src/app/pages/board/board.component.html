@@ -142,7 +142,7 @@
             <figcaption>{{ (work.imageCaption) | t }}</figcaption>
           </figure>
           <figure *ngIf="work.id === 'fashion-classification'">
-            <a [href]="'assets/research/k-fashion-class-count.png' | localImage | localLink" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'K-Fashion 클래스 분포 원본 크게 보기' | t"><img [src]="'assets/research/k-fashion-class-count.png' | localImage" [attr.alt]="'K-Fashion 원연구의 클래스 0~3 학습·검증 이미지 수. 클래스별 표본 수의 차이를 보여주는 막대그래프' | t" width="1400" height="500" loading="lazy" /></a>
+            <a [href]="'assets/research/k-fashion-class-count.png' | localImage | localLink" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'K-Fashion 클래스 분포 원본 크게 보기' | t"><img [src]="'assets/research/k-fashion-class-count.png' | localImage" [attr.alt]="'K-Fashion 원연구의 클래스 0~3 학습·검증 이미지 수. 클래스별 표본 수의 차이를 보여 주는 막대그래프' | t" width="1400" height="500" loading="lazy" /></a>
             <figcaption>{{ '원래 K-Fashion 데이터의 클래스 분포입니다. 학습·검증 각각에서 가장 적은 클래스에 맞춰 샘플링한 이유를 보여줍니다.' | t }}</figcaption>
           </figure>
         </div>

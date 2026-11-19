@@ -241,7 +241,7 @@ export const RESEARCH_WORKS: ResearchWork[] = [
     source: 'https://github.com/GyuTae-Kim/Classification_ResNet',
     image: 'assets/research/k-fashion-confusion-matrix.png',
     imageAlt:
-      '공개 K-fashion 실험의 4개 클래스 혼동행렬. 여러 실제 클래스의 예측이 클래스 2로 몰려 있다.',
+      '공개 K-Fashion 실험의 4개 클래스 혼동행렬. 여러 실제 클래스의 예측이 클래스 2로 몰려 있습니다.',
     imageCaption:
       '원래 K-Fashion 실험의 혼동행렬입니다. 행은 실제, 열은 예측 클래스이며 0=드레스, 1=아우터, 2=바지, 3=상의입니다. 여러 실제 클래스가 바지(2)로 예측되는 쏠림을 확인했습니다. 아래 Fashion-MNIST 실험과는 다른 자료입니다.',
     period: '2021 · 학부연구생',

@@ -2623,7 +2623,7 @@ function buildFactory(edge: LineBasicMaterial, reducedMotion: boolean): Furnitur
         if (h.face === 'top') return '04 스키퍼 윗면 · 연결 피스 Ø6';
         return Math.abs(h.z - (SIDE.d / 2 - 37)) < 30 ? '04 스키퍼 아랫면 · 경첩 자리 Ø3' : '04 스키퍼 아랫면 · 선반핀 Ø3';
       }
-      if (s === 4) return '05 아랫면 라우터 · 뒷판 홈 4×7';
+      if (s === 4) return '05 아랫면 라우터 · 뒷판 홈 4 × 7';
       return '가공 완료 · 측판 안쪽 면';
     },
     done: () => !reducedMotion && t >= end,
