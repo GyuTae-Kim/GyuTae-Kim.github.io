@@ -28,6 +28,7 @@ Angular 15, TypeScript, SCSS, three.js(홈 3D 뷰어, 화면에 가까워질 때
 - `src/app/components/model-viewport/`: 홈 3D 뷰어. 가공 부품(모델링 → 특징 인식 → 바이스 가공)과 원룸 벽면 가구(설계 → 제조 → 설치)를 직접 만든 기하로 그립니다. WebGL이 없거나 움직임 줄이기 설정이면 `src/assets/viewer/`의 정지 이미지를 보여 줍니다.
 - `src/assets/cases/`, `src/assets/research/`: 프로젝트와 연구 그림. 목록용 썸네일은 `thumb-336.webp`, `thumb-672.webp`입니다.
 - `src/assets/og/`: 링크 미리보기 이미지(1200×630)
+- `tools/scene-player-capture/`: 장면 전환 플레이어(Windows WPF 프로그램) 화면을 다시 찍는 도구. GitHub Actions의 `Scene player capture` 워크플로를 수동으로 실행하면 Windows 러너에서 공개 소스를 빌드하고 실제 마우스 입력으로 조작해 창을 캡처합니다. 받은 캡처는 `publish-images.py`로 `src/assets/cases/scene-player/`의 이미지로 바꿉니다.
 - `tools/route-pages.mjs`: 빌드 뒤 주소마다 HTML을 만들어 하위 주소가 200으로 열리고, 주소별 제목, 설명, 미리보기 이미지, 실제 화면의 전체 본문을 갖게 합니다. 통합 URL 목록 `sitemap.xml`과 포트폴리오 페이지 목록 `sitemap-pages.xml`도 만듭니다.
 
 ## 실행

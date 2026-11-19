@@ -1699,7 +1699,7 @@
   "결과 파일이 생기면 지점을 그리고 버튼을 켜며, 검출이 도는 동안에는 새 검출을 막았습니다.": "Sobald die Ergebnisdatei vorliegt, zeichnet der Player die Punkte und aktiviert die Schaltflächen; während einer Erkennung wird keine neue gestartet.",
   "재생 화면": "Wiedergabeansicht",
   "장면 전환 플레이어의 재생 화면. 재생 막대 위에 분할 지점 표식이 있고, 표식 하나에 프레임 미리보기가 떠 있습니다.": "Wiedergabeansicht des Szenenwechsel-Players mit Teilungsmarken auf der Zeitleiste und einer Bildvorschau über einer Marke.",
-  "재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다.": "Die gelben Marken auf der Zeitleiste zeigen die Szenenwechsel. Beim Überfahren einer Marke erscheint das Bild als Vorschau.",
+  "재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다. 화면에 나온 영상은 Blender Foundation의 Big Buck Bunny입니다(www.bigbuckbunny.org, CC BY 3.0).": "Die gelben Marken auf der Zeitleiste zeigen die Szenenwechsel. Beim Überfahren einer Marke erscheint das Bild als Vorschau. Das gezeigte Video ist Big Buck Bunny der Blender Foundation (www.bigbuckbunny.org, CC BY 3.0).",
   "플레이어 화면": "Player-Ansichten",
   "상세 패널": "Detailbereich",
   "플레이어 옆에 붙는 상세 패널. 프레임 이동, 두 가지 장면 분할, 이전과 다음 장면, 분할 지점 추가, 저장 버튼과 미디어 정보가 있습니다.": "Der seitlich am Player angedockte Detailbereich mit Schaltflächen für Bildsprung, die zwei Szenenteilungsverfahren, vorige und nächste Szene, Teilungspunkte hinzufügen und Speichern sowie Medieninformationen.",

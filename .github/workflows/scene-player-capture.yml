@@ -1,0 +1,134 @@
+name: Scene player capture
+
+# The scene change player (/portfolio/scene-change-player) is a Windows WPF program. This job
+# builds the public source on a Windows runner, drives the program with real mouse input and
+# uploads the window captures the portfolio images are made from. Run it by hand; pick the
+# captures from the artifact and convert them with tools/scene-player-capture/publish-images.py.
+on:
+  workflow_dispatch:
+    inputs:
+      threshold:
+        description: Frame difference threshold typed into the player's detection field
+        default: '30'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scene-player-capture-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: windows-2022
+    timeout-minutes: 40
+    env:
+      PLAYER_REF: 30b6984455658639637e3278262f409711e70910
+      # FFME 4.2.320 loads the FFmpeg 4.2 shared libraries from C:\ffmpeg\x64.
+      FFMPEG_ZIP_URL: https://github.com/advancedfx/ffmpeg.zeranoe.com-builds-mirror/releases/download/20200915/ffmpeg-4.2.1-win64-shared.zip
+      FFMPEG_ZIP_SHA256: 55063d3cf750a75485c7bf196031773d81a1b25d0980c7db48ecfc7701a42331
+      # Big Buck Bunny, (c) 2008 Blender Foundation, CC BY 3.0.
+      SAMPLE_ZIP_URL: https://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_720p_h264.mov.zip
+      SAMPLE_ZIP_SHA256: b0c9ade80b086179feee41514929de583966eec87c703575d97f051f88b33b67
+      CLIP_START: '0'
+      CLIP_SECONDS: '150'
+      THRESHOLD: ${{ inputs.threshold || '30' }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: tools/scene-player-capture
+
+      - uses: actions/checkout@v5
+        with:
+          repository: GyuTae-Kim/Scene_Change_Detection_Player
+          ref: ${{ env.PLAYER_REF }}
+          path: player
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/cache@v4
+        with:
+          path: C:\capture-cache
+          key: scene-player-capture-v1-${{ env.CLIP_START }}-${{ env.CLIP_SECONDS }}
+
+      - name: Build the player
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          ./tools/scene-player-capture/prepare-build.ps1 -Source player/src
+          nuget restore player/src/packages.config -PackagesDirectory player/packages -NonInteractive
+          if ($LASTEXITCODE) { throw 'nuget restore failed' }
+          nuget install FFME.Windows -Version 4.2.320 -Framework net461 -OutputDirectory player/packages -NonInteractive
+          if ($LASTEXITCODE) { throw 'FFME.Windows install failed' }
+          nuget install Microsoft.NETFramework.ReferenceAssemblies.net461 -Version 1.0.3 -OutputDirectory player/refasm -NonInteractive
+          if ($LASTEXITCODE) { throw 'reference assemblies install failed' }
+          $refRoot = (Resolve-Path 'player/refasm/Microsoft.NETFramework.ReferenceAssemblies.net461.1.0.3/build').Path
+          $root = (Resolve-Path 'player').Path
+          msbuild player/src/WpfApp1.csproj /nologo /v:m /p:Configuration=Debug /p:Platform=x64 "/p:TargetFrameworkRootPath=$refRoot" "/p:ReferencePath=$root"
+          if ($LASTEXITCODE) { throw 'msbuild failed' }
+          $out = 'player/src/bin/x64/Debug'
+          Copy-Item player/practice.py, player/practice2.py $out
+          Get-ChildItem $out -Recurse -File | ForEach-Object { '{0,12} {1}' -f $_.Length, $_.FullName.Substring((Resolve-Path $out).Path.Length + 1) }
+
+      - name: Prepare the FFmpeg 4.2 shared libraries
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force C:\capture-cache, C:\ffmpeg\x64 | Out-Null
+          $zip = 'C:\capture-cache\ffmpeg-4.2.1-win64-shared.zip'
+          if (-not (Test-Path $zip)) {
+            curl.exe -L --fail --silent --show-error -o $zip $env:FFMPEG_ZIP_URL
+            if ($LASTEXITCODE) { throw 'FFmpeg download failed' }
+          }
+          $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
+          "ffmpeg archive sha256: $hash"
+          if ($env:FFMPEG_ZIP_SHA256 -and $hash -ne $env:FFMPEG_ZIP_SHA256) { throw 'unexpected FFmpeg archive' }
+          Expand-Archive $zip -DestinationPath "$env:RUNNER_TEMP\ffmpeg" -Force
+          Copy-Item "$env:RUNNER_TEMP\ffmpeg\*\bin\*" C:\ffmpeg\x64 -Force
+          Get-ChildItem C:\ffmpeg\x64 | ForEach-Object { '{0,12} {1}' -f $_.Length, $_.Name }
+          'C:\ffmpeg\x64' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Prepare the sample clip
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $clip = 'C:\capture-cache\big_buck_bunny.mp4'
+          if (-not (Test-Path $clip)) {
+            $zip = "$env:RUNNER_TEMP\sample.zip"
+            curl.exe -L --fail --silent --show-error -A 'Mozilla/5.0' -o $zip $env:SAMPLE_ZIP_URL
+            if ($LASTEXITCODE) { throw 'sample download failed' }
+            $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
+            "sample archive sha256: $hash"
+            if ($env:SAMPLE_ZIP_SHA256 -and $hash -ne $env:SAMPLE_ZIP_SHA256) { throw 'unexpected sample archive' }
+            Expand-Archive $zip -DestinationPath "$env:RUNNER_TEMP\sample" -Force
+            $movie = (Get-ChildItem "$env:RUNNER_TEMP\sample" -Recurse -Filter *.mov | Select-Object -First 1).FullName
+            C:\ffmpeg\x64\ffmpeg.exe -hide_banner -loglevel error -y -ss $env:CLIP_START -t $env:CLIP_SECONDS -i $movie -map 0:v:0 -map 0:a:0 -c:v libx264 -preset medium -crf 18 -g 12 -pix_fmt yuv420p -c:a aac -ac 2 -b:a 160k -movflags +faststart $clip
+            if ($LASTEXITCODE) { throw 'clip encode failed' }
+          }
+          New-Item -ItemType Directory -Force C:\Videos | Out-Null
+          Copy-Item $clip C:\Videos\big_buck_bunny.mp4 -Force
+          C:\ffmpeg\x64\ffprobe.exe -hide_banner -v error -show_entries 'format=duration,size,bit_rate:stream=codec_name,width,height,r_frame_rate,channels,sample_rate,nb_frames' -of default=noprint_wrappers=1 C:\Videos\big_buck_bunny.mp4
+
+      - name: Install what the detection script imports
+        run: python -m pip install --disable-pip-version-check numpy==1.26.4 opencv-python-headless==4.10.0.84
+
+      - name: Report frame differences in the clip
+        run: python tools/scene-player-capture/analyze.py C:\Videos\big_buck_bunny.mp4
+
+      - name: Drive the player and capture
+        shell: powershell
+        run: |
+          $app = (Resolve-Path 'player/src/bin/x64/Debug').Path
+          ./tools/scene-player-capture/capture.ps1 -AppDir $app -Video 'C:\Videos\big_buck_bunny.mp4' -OutDir "$env:GITHUB_WORKSPACE\capture-out" -Threshold ([int]$env:THRESHOLD)
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scene-player-capture
+          path: capture-out
+          retention-days: 7
+          if-no-files-found: warn

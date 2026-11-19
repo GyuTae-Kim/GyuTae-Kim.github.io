@@ -1699,7 +1699,7 @@
   "결과 파일이 생기면 지점을 그리고 버튼을 켜며, 검출이 도는 동안에는 새 검출을 막았습니다.": "Once the result file appears, the player draws the points and enables the buttons, and it blocks a new detection while one is running.",
   "재생 화면": "Playback screen",
   "장면 전환 플레이어의 재생 화면. 재생 막대 위에 분할 지점 표식이 있고, 표식 하나에 프레임 미리보기가 떠 있습니다.": "Playback screen of the scene change player, with split-point markers on the seek bar and a frame preview above one of them.",
-  "재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다.": "The yellow markers on the seek bar are the points where the scene changes. Hovering a marker previews its frame.",
+  "재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다. 화면에 나온 영상은 Blender Foundation의 Big Buck Bunny입니다(www.bigbuckbunny.org, CC BY 3.0).": "The yellow markers on the seek bar are the points where the scene changes. Hovering a marker previews its frame. The video shown is Big Buck Bunny by the Blender Foundation (www.bigbuckbunny.org, CC BY 3.0).",
   "플레이어 화면": "Player screens",
   "상세 패널": "Detail panel",
   "플레이어 옆에 붙는 상세 패널. 프레임 이동, 두 가지 장면 분할, 이전과 다음 장면, 분할 지점 추가, 저장 버튼과 미디어 정보가 있습니다.": "The detail panel docked beside the player, with buttons for frame jump, the two scene splitting methods, previous and next scene, adding split points and saving, plus media information.",
