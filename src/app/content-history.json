@@ -4,8 +4,8 @@
     "fingerprint": "5590af9b4411a479a5a829bfff99ba94218a966620abc316c5321e5f345fbabb"
   },
   "/portfolio": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "2fb3794acf1fbafa81e9d0c9870b262240bb23fa7b2830cad6321f68dd10ba45"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "3af9118e3a6e020ca84bb8d3daaae504576d27b1e6d0183ba982b763b9d22980"
   },
   "/portfolio/cad-feature-recognition": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -32,8 +32,8 @@
     "fingerprint": "e585f54b6e0325653c3775a8b3cc3d7cd07db3640a42abc0aadfc71fba0a14d8"
   },
   "/portfolio/scene-change-player": {
-    "lastmod": "2026-11-19T08:09:38Z",
-    "fingerprint": "4938c2b134adcd8d0f7bdcaa40aecdb68aab00ed43d397ff24798626550510e5"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "d63c36cb683cddb0396b55532d15a556ccdfca34aa2b5fab222fd2fba7497f49"
   },
   "/research": {
     "lastmod": "2026-10-27T09:31:11Z",
@@ -124,8 +124,8 @@
     "fingerprint": "4e99f4da1d5876cbe5d53aa73e5c0d8b66d9030726507e0bb483ce851973b6d3"
   },
   "/en/portfolio": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "7d70903d7a96d05104ba9e23d3eb676161abd4fe4778fda33becd4817a87a611"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "01b65d685ba29300a9be5d8ce921f125d710cb197eae71b81348ab4a0bb99e7d"
   },
   "/en/portfolio/cad-feature-recognition": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -152,8 +152,8 @@
     "fingerprint": "181aad9eac2fd4159427aa0bed90c80a3a676dc436d660b6f92ab366b91cb0d3"
   },
   "/en/portfolio/scene-change-player": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "a5a01f125c7f44777e82cb34c1f3a8f9dcaada67fda813d2f8009c23f1573137"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "e8342b34ea1b6d524d67dde8ca102d6d8b88197288dd876e4317a320a86b313b"
   },
   "/en/research": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -244,8 +244,8 @@
     "fingerprint": "f3b1063655ed720d77d077cdc7f18ea4422208118eed150f76ec1dca95e99002"
   },
   "/ja/portfolio": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "35847baa4d4aa35d5db5a7cf85fe6a4d5729edc8291875000e95f87f53262984"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "951521c9f0159f524bc901b73433d1fe2b31a242a90474ab2b1ed2100e0c7327"
   },
   "/ja/portfolio/cad-feature-recognition": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -272,8 +272,8 @@
     "fingerprint": "b8d5997dd3c3265bed08d27aac9989b24f607c6580b4a68d20b37e8e30e77356"
   },
   "/ja/portfolio/scene-change-player": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "a80ab265f471f35cb548d7cb91ccca45029cfbfc6dfc95efe308cbf08427ddd0"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "fba2dcac1c8534a102b4473771a09f2e7e7493a4f8ad29c7a8c6ed19cc0d8a14"
   },
   "/ja/research": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -364,8 +364,8 @@
     "fingerprint": "0c61eb9b04766a7294da38b9562f8c33f93c92d593c2ff6a74dc60147af3fbc5"
   },
   "/zh-CN/portfolio": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "71271de10d7ef0ed4757b6b8c5daa2e15fb51628ff7095fcf9aa7e17e8fcd1ec"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "457fe8bd3f7a5496570a54e00b934bd29ac645491266f8a8ab67cc0e7948a20d"
   },
   "/zh-CN/portfolio/cad-feature-recognition": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -392,8 +392,8 @@
     "fingerprint": "82ad22475f47919a2d7080e316d158c241e7052cfe5afd3873f03575d27680d4"
   },
   "/zh-CN/portfolio/scene-change-player": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "1c4700ac5af97d868c3d1fdbc69d8ce9c1303ced93aa3d72aadd5dd4c07c327b"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "3daa8d04d81751e585a1324c9a67d76f80a5d10f72dbfdf0bd2a0dee873708ac"
   },
   "/zh-CN/research": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -484,8 +484,8 @@
     "fingerprint": "9b57c49e0f3a8dc9467ba9becb4d46fe6c72dd3f07f9cf8ba123a4b5af876b1e"
   },
   "/de/portfolio": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "1916f00dff3eb72a64c7c9bbaf36b0715be8a84890b54b06a04e9f0732639739"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "955f0a2ccbf854b14605063d99eb602dfbc6c5be0d64db6679d188e552a4db12"
   },
   "/de/portfolio/cad-feature-recognition": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -512,8 +512,8 @@
     "fingerprint": "28c12b74600299d207c71beb8a50d9e9f0acf288da910127e00f0e51aa2cba98"
   },
   "/de/portfolio/scene-change-player": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "7f0a7d8c72383e0d4ced34869afb110710f84094e0fa2c7b22e00dd1d9e9e14a"
+    "lastmod": "2026-11-19T08:57:48Z",
+    "fingerprint": "04d4479f0ce6b5a55e2a71b63623597d9c17ba3f5f48da7e49015c84a3a42d8a"
   },
   "/de/research": {
     "lastmod": "2026-11-19T08:42:30Z",
