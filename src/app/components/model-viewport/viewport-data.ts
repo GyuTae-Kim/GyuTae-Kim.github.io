@@ -149,7 +149,7 @@ export const VIEW_MODELS: ViewModel[] = [
       {
         label: '제조',
         title: '공장에서 패널을 가공합니다',
-        text: '엔진이 배치한 대로 몸통재 판재에서 패널을 오려 내고, 하부장 측판에 엣지를 붙인 뒤 스키퍼로 목찬넬 자리를 따내고 구멍과 뒷판 홈을 냅니다.',
+        text: '엔진이 배치한 대로 몸통재 판재에서 패널을 재단하고, 하부장 측판에 엣지를 붙인 뒤 스키퍼로 목찬넬 자리를 따내고 구멍과 뒷판 홈을 냅니다.',
         legend: [
           { label: '네스팅', detail: '몸통재 18T · 11장', swatch: TINTS.sheet },
           { label: '엣지밴딩', detail: '측판 3면 · 0.8 mm', swatch: TINTS.cut },

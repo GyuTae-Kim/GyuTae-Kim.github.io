@@ -5,20 +5,20 @@
       "path": "assets/cases/wedraw-pro/step1.webp",
       "copy": {
         "en": {
-          "title": "Designed using Furniture Builder",
-          "description": "Configuration settings for structure, interior, and doors in Furniture Builder. This tool was developed by our team."
+          "title": "Design in Furniture Builder",
+          "description": "Furniture Builder's structure, interior and door settings. Furniture Builder was developed together by the team."
         },
         "ja": {
-          "title": "家具ビルダーによる設計",
-          "description": "「家具ビルダー」の構造・内部・ドア設定画面です。この「家具ビルダー」はチームで共同開発しました。"
+          "title": "家具ビルダーで設計",
+          "description": "家具ビルダーの構造・内部・扉の設定です。家具ビルダーはチームで共同開発しました。"
         },
         "zh-CN": {
-          "title": "使用 Furniture Builder 进行设计",
-          "description": "这些是 Furniture Builder 的结构、内部和门设置。Furniture Builder 由团队开发。"
+          "title": "用 Furniture Builder 设计",
+          "description": "Furniture Builder 的结构、内部和门板设置。Furniture Builder 由团队共同开发。"
         },
         "de": {
-          "title": "Entworfen mit Furniture Builder",
-          "description": "Dies sind die Einstellungen für Struktur, Innenausstattung und Türen in Furniture Builder. Furniture Builder wurde in Zusammenarbeit des Teams entwickelt."
+          "title": "Planen mit dem Furniture Builder",
+          "description": "Einstellungen für Aufbau, Innenaufteilung und Türen im Furniture Builder. Den Furniture Builder hat das Team gemeinsam entwickelt."
         }
       },
       "source": "assets/cases/wedraw-pro/hero.webp",
@@ -37,20 +37,20 @@
       "path": "assets/cases/wedraw-pro/step2.webp",
       "copy": {
         "en": {
-          "title": "Drawings and procurement",
-          "description": "Plan, elevation, and internal views, along with material specifications, extracted from the same design."
+          "title": "Drawings and ordering",
+          "description": "Plan, elevation and interior drawings and material specifications produced from the same design."
         },
         "ja": {
           "title": "図面と発注",
-          "description": "同じ設計から、平面図・立面図・内部図面および材料仕様を抽出した結果です。"
+          "description": "同じ設計から、平面図・立面図・内部図と材料仕様を出力した結果です。"
         },
         "zh-CN": {
-          "title": "图纸和订单",
-          "description": "从同一设计中提取平面图、立面图和室内图以及材料规格的结果。"
+          "title": "图纸与下单",
+          "description": "从同一设计生成平面图、立面图、内部图和材料规格的结果。"
         },
         "de": {
-          "title": "Zeichnungen und Aufträge",
-          "description": "Ergebnisse der Extraktion von Grundriss-, Ansichts- und Innenzeichnungen sowie Materialspezifikationen aus demselben Design."
+          "title": "Zeichnungen und Bestellung",
+          "description": "Grundriss, Ansichten, Innenansichten und Materialangaben, erzeugt aus demselben Entwurf."
         }
       },
       "source": "assets/cases/wedraw-pro/step2.webp",
@@ -770,20 +770,20 @@
       "path": "assets/cases/wedraw-pro/step3.webp",
       "copy": {
         "en": {
-          "title": "Manufacturing data via Connector",
-          "description": "This screen allows you to group doors that should be cut together, and to split any groups that exceed the size of the raw material sheet."
+          "title": "Manufacturing data from Connector",
+          "description": "The screen for grouping doors that must be cut together and splitting groups larger than the sheet."
         },
         "ja": {
-          "title": "コネクターによる製造データ",
-          "description": "一緒に切断するドアをグループ化し、原板（素材）より大きいグループを分割するための画面です。"
+          "title": "コネクターで製造データ",
+          "description": "一緒に切り出す扉をグループにまとめ、原板より大きいグループを分割する画面です。"
         },
         "zh-CN": {
-          "title": "通过连接器传输制造数据",
-          "description": "此屏幕将需要一起切割的门分组，并将大于原始分组的门拆分。表格。"
+          "title": "用 Connector 输出制造数据",
+          "description": "把需要一起开料的门板编成组，并拆分超出大板尺寸的组的界面。"
         },
         "de": {
-          "title": "Fertigungsdaten über Connector",
-          "description": "Dies ist ein Bildschirm zum Gruppieren von Türen, die zusammen zugeschnitten werden müssen, und zum Aufteilen von Gruppen, die größer als das Originalblatt sind."
+          "title": "Fertigungsdaten mit dem Connector",
+          "description": "Hier werden Türen, die zusammen geschnitten werden müssen, zu Gruppen zusammengefasst und Gruppen geteilt, die größer als die Rohplatte sind."
         }
       },
       "source": "assets/cases/wedraw-pro/hero.webp",
@@ -802,20 +802,20 @@
       "path": "assets/cases/wedraw-pro/step4.webp",
       "copy": {
         "en": {
-          "title": "Entering production",
-          "description": "A web-based viewer for verifying part placement on sheets and door-matching groups prior to production."
+          "title": "Production handoff",
+          "description": "The web viewer for checking part layout on sheets and grain-matched door groups before production."
         },
         "ja": {
-          "title": "製造への投入",
-          "description": "原板上への部品配置や、ドアの木目合わせグループを生産前に確認できるWebビューアーです。"
+          "title": "生産投入",
+          "description": "原板上の部品配置と扉の木目合わせグループを、生産前に確認するWebビューアです。"
         },
         "zh-CN": {
-          "title": "生产输入",
-          "description": "用于在生产前检查零件在账簿上的位置以及门对齐情况的网页查看器。"
+          "title": "生产对接",
+          "description": "在生产前检查大板上的板件排布和门板对纹组的网页查看器。"
         },
         "de": {
-          "title": "Produktionseingabe",
-          "description": "Dies ist ein Webviewer zur Überprüfung der Teileplatzierung auf den Führungsleisten und Türausrichtungsgruppen vor der Produktion."
+          "title": "Produktionsübergabe",
+          "description": "Web-Viewer, in dem sich Teilebelegung der Rohplatten und Tür-Maserungsgruppen vor der Produktion prüfen lassen."
         }
       },
       "source": "assets/cases/wedraw-pro/step4.webp",
@@ -1555,20 +1555,20 @@
       "path": "assets/cases/feature-cam/mdt-finish.webp",
       "copy": {
         "en": {
-          "title": "Surface Waviness and Shape Error Maps",
-          "description": "Analyses with this output display surface waviness and geometric deviations using color maps, shown separately from actual measured roughness values."
+          "title": "Surface waviness and form error maps",
+          "description": "For analysis results that include this output, surface waviness and form error are shown as color maps, separately from measured roughness."
         },
         "ja": {
           "title": "加工面のうねり・形状誤差マップ",
-          "description": "この出力を含む分析では、加工面のうねり（波状度）と形状誤差をカラーマップで確認します。実際の測定粗さとは区別して表示されます。"
+          "description": "この出力がある解析結果では、加工面のうねりと形状誤差をカラーマップで確認します。実測の表面粗さとは分けて表示します。"
         },
         "zh-CN": {
-          "title": "加工表面波纹度和形状误差图。",
-          "description": "在包含此输出的分析中，使用颜色图检查加工表面的波纹度和形状误差。它与实际测量的粗糙度分开显示。"
+          "title": "加工面波纹度与形状误差图",
+          "description": "带有这项输出的分析结果，可以用色图查看加工面波纹度和形状误差。它与实测表面粗糙度分开显示。"
         },
         "de": {
-          "title": "Karte der Oberflächenwelligkeit und Formfehler",
-          "description": "In der Analyse, die diese Ausgabe beinhaltet, werden die Welligkeit und Formfehler der bearbeiteten Oberfläche mithilfe einer Farbskala überprüft. Sie werden separat von der tatsächlich gemessenen Rauheit angezeigt."
+          "title": "Karte für Welligkeit und Formabweichung",
+          "description": "Bei Analyseergebnissen mit dieser Ausgabe zeigen Farbkarten die Welligkeit der bearbeiteten Fläche und die Formabweichung. Sie werden getrennt von der real gemessenen Rauheit dargestellt."
         }
       },
       "source": "assets/cases/feature-cam/mdt-finish.webp",
@@ -1828,20 +1828,20 @@
       "path": "assets/cases/feature-cam/mdt-force.webp",
       "copy": {
         "en": {
-          "title": "Cutting Force, Chip Thickness, and NC Segment",
-          "description": "Select specific machining segments to compare cutting forces and chip thickness; examine the corresponding NC block, tool, feed rate, and spindle speed at the point where these values ​​reach their maximum."
+          "title": "Cutting force, chip thickness and NC segments",
+          "description": "Select machining segments to compare cutting force and chip thickness, and inspect the NC block, tool, feed rate and spindle speed at the peak."
         },
         "ja": {
-          "title": "切削力・切りくず厚さとNCセグメント",
-          "description": "加工区間を選択して切削力や切りくず厚さを比較し、最大値となる時点のNCブロック、工具、送り速度、回転数を確認します。"
+          "title": "切削力・切りくず厚さとNC区間",
+          "description": "加工区間を選んで切削力・切りくず厚さを比較し、最大値の時点のNCブロック・工具・送り・回転数を確認します。"
         },
         "zh-CN": {
-          "title": "切削力、切屑厚度和数控截面",
-          "description": "选择一个加工截面，比较切削力和切屑厚度，并检查最大值点的数控模块、刀具、进给率和转速。"
+          "title": "切削力、切屑厚度与 NC 区段",
+          "description": "选择加工区段，对比切削力和切屑厚度，并查看最大值时刻的 NC 程序段、刀具、进给和主轴转速。"
         },
         "de": {
-          "title": "Schnittkraft, Spandicke und NC-Schnitt",
-          "description": "Wählen Sie einen Bearbeitungsbereich aus, um Schnittkraft und Spandicke zu vergleichen und den NC-Block, das Werkzeug, den Vorschub und die Drehzahl am Punkt des Maximalwerts zu untersuchen."
+          "title": "Schnittkraft, Spandicke und NC-Abschnitte",
+          "description": "Ein Bearbeitungsabschnitt wird ausgewählt, um Schnittkraft und Spandicke zu vergleichen; für den Zeitpunkt des Maximums lassen sich NC-Satz, Werkzeug, Vorschub und Drehzahl ablesen."
         }
       },
       "source": "assets/cases/feature-cam/mdt-force.webp",
@@ -2211,20 +2211,20 @@
       "path": "assets/cases/feature-cam/mdt-surface.webp",
       "copy": {
         "en": {
-          "title": "Machined Shapes and Deviations from the Design",
-          "description": "Examine the machining results with 3D rotation/enlargement and direction change. Design surface, remaining material, and overcut mark are distinguished by tolerance standard color and area ratio."
+          "title": "Machined geometry and deviation from the design",
+          "description": "Rotate and zoom the machining result in 3D. The design surface, remaining stock and overcut are colored by tolerance, and the share of each area is shown."
         },
         "ja": {
-          "title": "加工形状と設計値との偏差",
-          "description": "3D回転・拡大と方向転換で加工結果を調べます。公差基準 色と領域比で設計面・残り素材・過削表示を区分します。"
+          "title": "加工形状と設計との偏差",
+          "description": "加工結果を3Dで回転・拡大して確認します。公差を基準に設計面・削り残し・削りすぎを色分けし、領域の割合も表示します。"
         },
         "zh-CN": {
-          "title": "加工形状与设计之间的偏差。",
-          "description": "通过 3D 旋转/放大和方向变化检查加工结果。设计面、剩余材料和过切标记通过公差标准颜色和面积比例来区分。"
+          "title": "加工形状及其与设计的偏差",
+          "description": "可以在 3D 中旋转、放大查看加工结果。以公差为基准，用颜色区分设计面、残留材料和过切，并显示各区域的占比。"
         },
         "de": {
-          "title": "Abweichung zwischen Bearbeitungsform und Konstruktionszeichnung",
-          "description": "Untersuchen Sie die Bearbeitungsergebnisse mit 3D-Rotation/-Vergrößerung und Richtungsänderung. Designoberfläche, Restmaterial und Überschnittmarkierung werden durch Toleranzstandardfarbe und Flächenverhältnis unterschieden."
+          "title": "Bearbeitete Geometrie und Abweichung vom Konstruktionsmodell",
+          "description": "Das Bearbeitungsergebnis lässt sich in 3D drehen und vergrößern. Sollfläche, Restmaterial und Konturverletzung werden anhand der Toleranz eingefärbt; dazu wird der Flächenanteil angezeigt."
         }
       },
       "source": "assets/cases/feature-cam/mdt-surface.webp",
@@ -2484,20 +2484,20 @@
       "path": "assets/cases/feature-cam/step4.webp",
       "copy": {
         "en": {
-          "title": "Visualization of Digital Twin Results",
-          "description": "Based on MDT simulation results provided by a partner organization, we created a 3D visualization that displays graphs of cutting forces and chip thickness, as well as the discrepancies between the actual machining results and the original design."
+          "title": "Digital twin result visualization",
+          "description": "Taking the results of MDT simulations run by a partner organization, I built graphs of cutting force and chip thickness and a 3D view that shows how the machined result differs from the design."
         },
         "ja": {
           "title": "デジタルツイン結果の可視化",
-          "description": "協力機関が実施したMDTシミュレーション結果に基づき、切削力やチップ厚みのグラフ、および加工結果と設計値との差異を示す3D画面を作成しました。"
+          "description": "協力機関が実施したMDTシミュレーションの結果を受け取り、切削力・切りくず厚さのグラフと、加工結果と設計との差を示す3D画面を作りました。"
         },
         "zh-CN": {
           "title": "数字孪生结果可视化",
-          "description": "接收合作伙伴机构执行的MDT仿真结果，并创建3D屏幕，显示切削力和切屑厚度曲线图，以及加工结果与设计之间的差异。"
+          "description": "收到合作机构所做的 MDT 仿真结果后，制作了切削力和切屑厚度曲线图，以及展示加工结果与设计差异的 3D 界面。"
         },
         "de": {
-          "title": "Visualisierung der Ergebnisse des digitalen Zwillings",
-          "description": "Die von der Partnerorganisation durchgeführten MDT-Simulationsergebnisse wurden empfangen und in einer 3D-Ansicht dargestellt. Diese zeigt Diagramme zu Schnittkraft und Spandicke sowie die Abweichung zwischen Bearbeitungsergebnis und Konstruktion."
+          "title": "Ergebnisvisualisierung des digitalen Zwillings",
+          "description": "Aus den Ergebnissen der MDT-Simulation, die eine Partnerorganisation durchgeführt hat, habe ich Diagramme für Schnittkraft und Spandicke sowie eine 3D-Ansicht gebaut, die die Abweichung des Bearbeitungsergebnisses vom Konstruktionsmodell zeigt."
         }
       },
       "source": "assets/cases/feature-cam/step4.webp",
@@ -2667,20 +2667,20 @@
       "path": "assets/cases/panel/step4.webp",
       "copy": {
         "en": {
-          "title": "Generation and Verification of Manufacturing Data",
-          "description": "This screen allows you to review the generated machining code in an NC viewer. Examine the machined surfaces and hole positions on the panel."
+          "title": "Manufacturing data generation and checks",
+          "description": "The generated machining code checked in the NC viewer, showing the panel's machined faces and hole positions."
         },
         "ja": {
           "title": "製造データの生成・確認",
-          "description": "生成された加工コードをNCビューアで確認する画面です。板材の加工面と穴の位置を確認します。"
+          "description": "生成した加工コードをNCビューアで確認する画面です。板材の加工面と穴位置を確認します。"
         },
         "zh-CN": {
-          "title": "制造数据创建与验证",
-          "description": "此屏幕用于在 NC Viewer 中检查生成的加工代码。检查板材的加工表面和孔的位置。"
+          "title": "制造数据生成与检查",
+          "description": "在 NC 查看器中检查生成的加工代码的界面，可查看板材的加工面和孔位。"
         },
         "de": {
-          "title": "Erstellung und Überprüfung von Fertigungsdaten",
-          "description": "Dies ist der Bildschirm zur Überprüfung des generierten Bearbeitungscodes im NC Viewer. Prüfen Sie die Bearbeitungsfläche und die Position der Bohrungen in der Platte."
+          "title": "Fertigungsdaten erzeugen und prüfen",
+          "description": "Der erzeugte CNC-Code im NC-Viewer. Geprüft werden Bearbeitungsseite und Bohrpositionen der Platte."
         }
       },
       "source": "assets/cases/panel/step4.webp",
@@ -4050,8 +4050,8 @@
           "description": "An area that recommends the most viewed products to all members. The store's top menu has been cropped out."
         },
         "ja": {
-          "title": "モールのメインページのおすすめ領域",
-          "description": "会員全体によく見られた商品をおすすめする領域です。モール上部のメニューは切り取っています。"
+          "title": "ECサイトのトップページのレコメンド枠",
+          "description": "会員全体に、よく見られている商品をおすすめする枠です。ECサイト上部のメニューは切り取っています。"
         },
         "zh-CN": {
           "title": "商城首页的推荐区域",
@@ -4309,19 +4309,19 @@
       "copy": {
         "en": {
           "title": "Free Online STEP & STP Viewer: Open and Measure Files",
-          "description": "Stored PMI from the public synthetic sample. This does not validate tolerances in a customer file."
+          "description": "PMI stored in the public sample I made."
         },
         "ja": {
           "title": "無料オンラインSTEP・STPビューア：ファイルを開いて測定",
-          "description": "公開された合成サンプルに保存されたPMIです。顧客ファイルの公差を検証した結果ではありません。"
+          "description": "自作の公開サンプルに保存されたPMIです。"
         },
         "zh-CN": {
           "title": "免费在线 STEP、STP 查看器：打开文件与测量尺寸",
-          "description": "这是公开合成示例中保存的PMI，并非客户文件的公差验证结果。"
+          "description": "这是自制公开示例中保存的 PMI。"
         },
         "de": {
           "title": "Kostenloser Online-STEP- und STP-Viewer: Öffnen und Messen",
-          "description": "Gespeicherte PMI des öffentlichen synthetischen Beispiels. Dies validiert keine Toleranzen einer Kundendatei."
+          "description": "Gespeicherte PMI des selbst erstellten öffentlichen Beispiels."
         }
       },
       "masks": [
@@ -4921,7 +4921,7 @@
       "copy": {
         "en": {
           "title": "Free Online STEP & STP Viewer: Open and Measure Files",
-          "description": "X section is enabled. Turn sectioning off to restore the full view when diagnosing a blank screen."
+          "description": "The X section is on. When you are checking a blank view, use \"Turn off section\" to bring back the full model."
         },
         "ja": {
           "title": "無料オンラインSTEP・STPビューア：ファイルを開いて測定",
@@ -5633,11 +5633,11 @@
       "copy": {
         "en": {
           "title": "Free Online STEP & STP Viewer: Open and Measure Files",
-          "description": "The whole assembly is hidden in the product tree. This display setting is different from a parsing failure."
+          "description": "The whole assembly is hidden in the product tree. The view is empty because of a display setting, not because the file failed to load."
         },
         "ja": {
           "title": "無料オンラインSTEP・STPビューア：ファイルを開いて測定",
-          "description": "製品ツリーで組立全体を非表示にした状態です。ファイル解析失敗とは異なる表示設定の問題です。"
+          "description": "製品ツリーでアセンブリ全体を非表示にした状態です。ファイルを読み込めなかったのではなく、表示設定のために何も表示されていません。"
         },
         "zh-CN": {
           "title": "免费在线 STEP、STP 查看器：打开文件与测量尺寸",
@@ -5645,7 +5645,7 @@
         },
         "de": {
           "title": "Kostenloser Online-STEP- und STP-Viewer: Öffnen und Messen",
-          "description": "Die gesamte Baugruppe ist im Produktbaum ausgeblendet. Diese Anzeigeeinstellung ist kein Analysefehler."
+          "description": "Die gesamte Baugruppe ist im Produktbaum ausgeblendet. Die Ansicht ist wegen dieser Anzeigeeinstellung leer, nicht weil die Datei nicht gelesen wurde."
         }
       },
       "masks": [
@@ -6155,7 +6155,7 @@
       "copy": {
         "en": {
           "title": "Free Online STEP & STP Viewer: Open and Measure Files",
-          "description": "Show all restores the same model. If a layer is off, restore it in the Layers tab too."
+          "description": "Clicking \"Show all\" brings the same model back. If you turned a layer off, restore it in the Layers tab as well."
         },
         "ja": {
           "title": "無料オンラインSTEP・STPビューア：ファイルを開いて測定",
@@ -6167,7 +6167,7 @@
         },
         "de": {
           "title": "Kostenloser Online-STEP- und STP-Viewer: Öffnen und Messen",
-          "description": "Alles anzeigen stellt dasselbe Modell wieder her. Aktivieren Sie ausgeschaltete Layer zusätzlich im Layer-Register."
+          "description": "Mit „Alle anzeigen“ ist dasselbe Modell wieder sichtbar. Ausgeschaltete Layer schalten Sie zusätzlich auf der Layer-Registerkarte wieder ein."
         }
       },
       "masks": [
@@ -6647,19 +6647,19 @@
       "copy": {
         "en": {
           "title": "Free Online SketchUp Viewer: Open SKP Files",
-          "description": "A synthetic house generated in the browser. Use it to inspect scene switching and tag visibility."
+          "description": "A sample house generated in the browser. Switching scenes or turning tags on and off changes what is shown."
         },
         "ja": {
           "title": "無料オンラインSketchUpビューア：SKPファイルを開く",
-          "description": "ブラウザーで生成した合成サンプルの家です。シーン切り替えとタグ表示を確認できます。"
+          "description": "ブラウザで生成したサンプルの家です。シーンを切り替えたりタグをオン・オフしたりすると、表示が変わります。"
         },
         "zh-CN": {
           "title": "免费在线 SketchUp 查看器：打开 SKP 文件",
-          "description": "这是在浏览器中生成的合成房屋示例，可用于检查场景切换和标签可见性。"
+          "description": "这是在浏览器中生成的示例房屋。切换场景或开关标签，显示内容会随之变化。"
         },
         "de": {
           "title": "Kostenloser Online-SketchUp-Viewer: SKP-Dateien öffnen",
-          "description": "Ein im Browser erzeugtes synthetisches Beispielhaus zum Prüfen von Szenenwechsel und Tag-Sichtbarkeit."
+          "description": "Ein im Browser erzeugtes Beispielhaus. Beim Wechseln der Szene oder Ein- und Ausblenden von Tags ändert sich die Anzeige."
         }
       },
       "masks": [
