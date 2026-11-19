@@ -162,8 +162,8 @@
       <p class="showcase-note">{{ (parameters.note) | t }}</p>
     </section>
     <section class="recognition-showcase" *ngIf="selected!.recognition as recognition" aria-labelledby="recognition-title">
-      <h2 class="detail-title" id="recognition-title"><span>{{ 'AI' | t }}</span>{{ '식별하는 가공 피쳐 {0}종' | t:[(recognition.features.length)] }}</h2>
-      <ul class="feature-catalog" [attr.aria-label]="'지원 가공 피쳐' | t">
+      <h2 class="detail-title" id="recognition-title"><span>{{ 'AI' | t }}</span>{{ '식별하는 가공 특징 {0}종' | t:[(recognition.features.length)] }}</h2>
+      <ul class="feature-catalog" [attr.aria-label]="'지원 가공 특징' | t">
         <li *ngFor="let feature of recognition.features">
           <i *ngIf="feature.color" [style.background]="feature.color" aria-hidden="true"></i>
           <strong>{{ (feature.name) | t }}</strong><span>{{ (feature.description) | t }}</span>
@@ -182,7 +182,7 @@
           </figcaption>
         </figure>
       </div>
-      <p class="showcase-note">{{ '색상은 위 목록의 기본 피쳐와 같습니다. 학습에 사용한 형상과 정답 라벨이며, 새 부품을 예측한 결과가 아닙니다.' | t }}</p>
+      <p class="showcase-note">{{ '색상은 위 목록의 기본 가공 특징과 같습니다. 학습에 사용한 형상과 정답 라벨이며, 새 부품을 예측한 결과가 아닙니다.' | t }}</p>
     </section>
     <section class="evidence-section" *ngFor="let evidence of selected!.evidence" [attr.aria-labelledby]="evidence.id">
       <h2 class="detail-title" [id]="evidence.id">{{ (evidence.title) | t }}</h2>
