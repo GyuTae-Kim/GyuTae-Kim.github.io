@@ -2,18 +2,14 @@ name: Scene player capture
 
 # The scene change player (/portfolio/scene-change-player) is a Windows WPF program. This job
 # builds the public source on a Windows runner, drives the program with real mouse input and
-# uploads the window captures the portfolio images are made from.
+# uploads the window captures the portfolio images are made from. Run it by hand; pick the
+# captures from the artifact and convert them with tools/scene-player-capture/publish-images.py.
 on:
   workflow_dispatch:
     inputs:
       threshold:
         description: Frame difference threshold typed into the player's detection field
         default: '30'
-  push:
-    branches: ['claude/scenechange-detector-portfolio-images-*']
-    paths:
-      - '.github/workflows/scene-player-capture.yml'
-      - 'tools/scene-player-capture/**'
 
 permissions:
   contents: read
