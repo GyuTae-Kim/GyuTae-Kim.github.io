@@ -1,7 +1,7 @@
 {
   "/": {
-    "lastmod": "2026-11-19T10:08:43Z",
-    "fingerprint": "1bc17a0a20eaa1a93e6e162f835b68d9c0ae94e7577115fcc725a0b27da4e9f0"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "42887504ed121980adb52238194355db9e386aee950d28e3c9326174a3b6e8bb"
   },
   "/portfolio": {
     "lastmod": "2026-11-19T08:57:48Z",
@@ -56,8 +56,8 @@
     "fingerprint": "88ce63e573566d9dbf6fbea08796125539fb102e835cbd115d32d564243eecff"
   },
   "/notes": {
-    "lastmod": "2026-10-28T08:33:12Z",
-    "fingerprint": "69edacc9692893d5e9d72f7c7e727817ac9b35cb2da6b5320965bcd0a6458dac"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "b4f2b44e034139217afd1fe0c3bd75f800d7ddf3a87bfc4f8c21e0af0cc9bcf3"
   },
   "/opencad/guides/open-dwg-dxf": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -80,12 +80,12 @@
     "fingerprint": "4fb93fa6da257abcf25614c882ea2def93121c4ab692da3a657c35b07aa27c7c"
   },
   "/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "945076d59a453aedc86fc109df4f8898ec0797cd64380626fe9024d084f45e52"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "f3c825d0eba34638810fc0c94e424780f31e586cbe6541a814856e4777fd6d41"
   },
   "/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-10-28T08:33:12Z",
-    "fingerprint": "92d4be826b9b247320c80e5895e92bdbec5da72e23d2c0b2e20cc54bb7e005ff"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "b2d6abe1837ce2337fb237f035266c73bdaf4295be9fa00e9b8a3d0c24796b5e"
   },
   "/opencad/guides/choose-cad-format": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -112,16 +112,16 @@
     "fingerprint": "ba3951a2a7c079a09c268ceae03a0b30dbb23b065587e129034e5fdc90571532"
   },
   "/sitemap": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "530f243f1bfc20470a3133c13ea7ca817e81faf3cdda86d874cfdaa73b23281a"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "b170db9f4e018f2f3b18d67cc1d565866dad0cb8e73b937064476dd7c3e88714"
   },
   "/contact": {
     "lastmod": "2026-10-27T09:31:11Z",
     "fingerprint": "d90c379ff5b71a545a32172a74563b557ab12991a4334745020594f308e91e5c"
   },
   "/en/": {
-    "lastmod": "2026-11-19T10:08:43Z",
-    "fingerprint": "6db1a34bd039b23033f80b859138d10aa7ce104f58d7ae7d9cca8c53c2d63784"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "71f58ddb09d546af7df16da19e92adfa1572396a32aa459b6beb0da3295ab3d7"
   },
   "/en/portfolio": {
     "lastmod": "2026-11-19T08:57:48Z",
@@ -176,8 +176,8 @@
     "fingerprint": "fef2eb10b159fbdca8eb6527b0b5370f4b65e02ebfcf3ad4f718eb0d577d804b"
   },
   "/en/notes": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "c24111fddfc6402ba41beca1960baa9caf1b242f92d6437e5aba2f2a9508897d"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "e79a4b63687aec201e89c5e094179d55ba4acb07e0396ff48c7494aabd25cf04"
   },
   "/en/opencad/guides/open-dwg-dxf": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -200,12 +200,12 @@
     "fingerprint": "38757af78faab717abc69bb0ca2826fcfebc25f78e5b1e9568011dff524cd0de"
   },
   "/en/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "16329ac87edce0ffab7b7318f520b50aa14b7117ff04ab67b57395d054585515"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "ed97d19f78082e86c78e3363ee25b0ecbc8db04f8856624ed44a286c456e73cf"
   },
   "/en/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "d9da29681151b406502e420484bd1dee0b32844adf969971daea399edb9404f4"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "79d72e951d1d0069b423af8937cc74c8c152b5cc59eb49f048789620b05f5876"
   },
   "/en/opencad/guides/choose-cad-format": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -240,8 +240,8 @@
     "fingerprint": "805b3d5b3998ea14ee7563af1c9e1b480dbd0e1252e8e076a9999933bf89bad0"
   },
   "/ja/": {
-    "lastmod": "2026-11-19T10:08:43Z",
-    "fingerprint": "6914e731dd90168572f9e00f5b2c9cf9aa8184be31e161081c07ba0b22d0a830"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "9ad94c45593f8ae2655e2fbf71ec3375a664783c41b529c3abc0209364169b70"
   },
   "/ja/portfolio": {
     "lastmod": "2026-11-19T08:57:48Z",
@@ -296,8 +296,8 @@
     "fingerprint": "a1a40cc4110b9766b46cbd985826b17ab394b78bf20b9ff0c6843e6d97b79cfb"
   },
   "/ja/notes": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "30996f26eb01cd92a7a9ff66576b2622e515fa2c5a9d39facf489486453f7e26"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "2b35b4eec2eacad80b0df2b25a1ba8fc72a506dd6a15bb4369e9a286b26af0b1"
   },
   "/ja/opencad/guides/open-dwg-dxf": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -320,12 +320,12 @@
     "fingerprint": "9d1eb14828fc8c11146c13a0d15f4ff443cb51bf7a26a2a545ce65ad1658cb87"
   },
   "/ja/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "97151e1510b6f06eed099bf3b4bb5d795f652b7b07c3e29b5dd480758b836bb2"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "327ebc265617c2e7a0f9744a2e5f7118b987515b408031230b3265ec9fe98f94"
   },
   "/ja/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "b5560854bacfccfd5c859bf472ac59d460e9b852d9d97fe7a96765cec962208c"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "6c26bce369f290995dd7b8d13b8b369c94de000a812b7b6426989d787153540a"
   },
   "/ja/opencad/guides/choose-cad-format": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -360,8 +360,8 @@
     "fingerprint": "f2baaf423a3b8fbe4fb6d325f2f9947998cf76481e329a8b63dc8780988a3729"
   },
   "/zh-CN/": {
-    "lastmod": "2026-11-19T10:08:43Z",
-    "fingerprint": "ea7fb2f28ad41133499145a039c1c0fd7082c222fbb37387fb49f5550bccfa97"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "bfcece50053dce0afb4245424f9eab1180d7d12c50693b7ebe548b34305fc873"
   },
   "/zh-CN/portfolio": {
     "lastmod": "2026-11-19T08:57:48Z",
@@ -416,8 +416,8 @@
     "fingerprint": "95084bc81709a7fe29c13a573fa866671d4743be20cec69c4d1f386693d5c11f"
   },
   "/zh-CN/notes": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "926d0183fd4bd5c1e9066396e9670b11ef747d76c9b998de0741b312962e293f"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "9bba24e4e84a1c4f0ef9c3e675ffd3792c22c4b71435c6b4d2f1b6eb05b54173"
   },
   "/zh-CN/opencad/guides/open-dwg-dxf": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -440,12 +440,12 @@
     "fingerprint": "32816d1ce9908f61eca71168c3926a1765a25eaf04a85748cff1ba07c7294e86"
   },
   "/zh-CN/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "3ab43deafacddd50e3ec397af16e5e69931331ebbb5294c8e4e3f233f06d522e"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "f23c6719cff9d5e6b26fef38272fb3581d4a8731710ba97ec32b6afd9285edab"
   },
   "/zh-CN/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "cfe3e2652b0beebe6f6ae75db40635063adf37fdde4f2778808790c372bf3764"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "e847eae43b81aba75d750aacbae16b27462887581387d67ddd3e24cef0fc6a0b"
   },
   "/zh-CN/opencad/guides/choose-cad-format": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -536,8 +536,8 @@
     "fingerprint": "446a4357bb28132a5cc77f30934c9d07677b8b266a06c7b11ec0bbaded219296"
   },
   "/de/notes": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "5374ab80448d8a0e770e19be9b1c89edbb960170f14ab469b7def66ceb406266"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "04f48a784f4068ac5695625f68f58bb032e03c80b479cb990752012f9d6f2922"
   },
   "/de/opencad/guides/open-dwg-dxf": {
     "lastmod": "2026-11-19T08:42:30Z",
@@ -560,12 +560,12 @@
     "fingerprint": "260378e1102f8994418ccab8cfdedb5306e000e460962ede8fb518a91a066848"
   },
   "/de/notes/cad-cam-feature-recognition": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "fb5cf3c32d40d96b4806b3681813c1ea14734040bd617e7b7a6e61a187299aaf"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "411e2b0ac494b7e2bb8df34eff87bead96b5d8dc608bce5a850ad5eb8e551912"
   },
   "/de/notes/furniture-manufacturing-data": {
-    "lastmod": "2026-11-19T08:42:30Z",
-    "fingerprint": "87a0b8dcfaca456d0e267993ec1bb374128943daeb482b85760cbb7e67727e36"
+    "lastmod": "2026-11-19T10:25:02Z",
+    "fingerprint": "daca61891e1d5048832e8e1a04bee9f3201f446b09508c5083c0f90607ad5808"
   },
   "/de/opencad/guides/choose-cad-format": {
     "lastmod": "2026-11-19T08:42:30Z",
