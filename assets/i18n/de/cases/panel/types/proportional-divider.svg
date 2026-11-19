@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="420" height="300" viewBox="0 0 420 300" role="img" aria-labelledby="title description" xml:lang="de">
 <title id="title">Position: Mittelwand (proportional)</title>
-<desc id="description">Positionsdiagramm: Die gewählte Platte ist blau, die umgebenden Platten sind grau.</desc>
+<desc id="description">Lageschema: Die gewählte Platte ist blau, die umgebenden Platten sind grau.</desc>
 <rect width="420" height="300" fill="#f6f8fa" />
 <g font-family="Arial, sans-serif" fill="#29343d">
-<text x="210" y="29" text-anchor="middle" font-size="19" font-weight="bold">Raumverhältnis beibehalten</text>
+<text x="210" y="29" text-anchor="middle" font-size="19" font-weight="bold">Breitenverhältnis beibehalten</text>
 <text x="82.5" y="63" text-anchor="middle" font-size="13">Breite vorher</text>
 <rect x="20" y="83" width="125" height="126" fill="#edf1f5" stroke="#a5b4c3" stroke-width="2" />
 <rect x="79.5" y="83" width="6" height="126" fill="#2c659d" />
