@@ -8,7 +8,7 @@ import { OPENCAD_PROJECTS, OPENCAD_TOOLS } from '../../opencad-data';
 // title: a shorter card title when the page title is too long for the home card.
 const PROJECT_INTROS: Record<string, { title?: string; result: string; role: string }> = {
   'cad-feature-recognition': {
-    result: '가공 피쳐를 인식해 Fusion CAM 공정을 만들고 결과까지 확인했습니다.',
+    result: '가공 특징을 인식해 Fusion CAM 공정을 만들고 결과까지 확인했습니다.',
     role: '형상 분석, 가공 전략 설계, Fusion 연동을 개발했습니다. 디지털 트윈은 결과 시각화만 맡았습니다.',
   },
   'panel-classification': {

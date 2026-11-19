@@ -108,7 +108,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
     scopeLine: '검증은 Fusion·MDT 시뮬레이션까지 · 실제 가공 품질 승인 아님',
     stats: [
-      { value: '9종', label: '식별하는 가공 피쳐 · 스톡 포함' },
+      { value: '9종', label: '식별하는 가공 특징 · 스톡 포함' },
       { value: '±0.15 mm', label: '설계 대비 공차 · MDT 예시의 과삭 판정 기준' },
       { value: '1건', label: '라벨링 프로그램 등록 신청 접수' },
     ],
@@ -173,7 +173,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: 'AI 가공 특징 인식',
-        text: '그래프 신경망의 면 분류와 형상 조합 분석으로 스톡·홀·포켓·챔퍼·필렛 등 9종의 가공 피쳐를 식별합니다.',
+        text: '그래프 신경망의 면 분류와 형상 조합 분석으로 스톡·홀·포켓·챔퍼·필렛 등 9종의 가공 특징을 식별합니다.',
         did: [
           '학습 데이터를 만드는 라벨링 프로그램',
           '형상 계열 기준 데이터 분할',
@@ -181,7 +181,7 @@ export const CASE_STUDIES: CaseStudy[] = [
           '입력, 증강, 라벨 변경별 영향 비교',
         ],
         image: 'assets/cases/feature-cam/examples/base-plate.webp',
-        imageAlt: '여러 홀과 포켓이 있는 베이스 플레이트 학습 모델. 면의 가공 피쳐 라벨을 색상으로 구분했습니다.',
+        imageAlt: '여러 홀과 포켓이 있는 베이스 플레이트 학습 모델. 면의 가공 특징 라벨을 색상으로 구분했습니다.',
       },
       {
         title: '가공 전략 설계',
@@ -263,7 +263,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     },
     evidence: [
       {
-        id: 'cam-strategy', title: '인식한 피쳐로 만든 Fusion CAM 공정',
+        id: 'cam-strategy', title: '인식한 가공 특징으로 만든 Fusion CAM 공정',
         introduction: '1–3은 앞면 셋업에서 하는 대표적인 Fusion CAM 공정이고, 4는 가공 방향을 바꿔 반대면을 이어서 가공하는 공정입니다. Fusion 화면의 파란 선은 절삭 경로, 노란 선은 경로 사이를 오가는 이동입니다.',
         figures: [
           { title: '1 · 외곽 소재 황삭', src: 'assets/cases/feature-cam/strategy-stock.webp', alt: '부품 바깥쪽 소재를 층별로 제거하는 Fusion 외곽 황삭 경로', caption: '부품 외곽에 남은 소재를 여러 깊이로 나누어 제거합니다.', kind: 'product' },
