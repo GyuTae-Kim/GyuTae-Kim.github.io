@@ -112,7 +112,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   },
   {
     path: '/notes', title: 'AI·CAD/CAM·가구 제조 소프트웨어 개발 노트 | 김규태',
-    description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, 가구 설계·제조 데이터를 개발하며 고민한 것과 확인한 내용을 적었습니다.',
+    description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, SketchUp 가구 설계에서 제조 데이터를 만드는 소프트웨어를 개발하며 부딪힌 문제와 확인한 것을 적었습니다.',
     image: 'assets/og/portfolio.jpg', imageAlt: '김규태의 AI·CAD/CAM·제조 소프트웨어 개발 노트.', kind: 'CollectionPage',
   },
   ...SITE_ARTICLES.map((article): SearchPage => ({
