@@ -458,12 +458,14 @@ app-icon.row-arrow {
   scroll-margin-top: calc(var(--header-h) + 24px);
 }
 .section-title {
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 14px;
   padding-bottom: 14px;
   margin-bottom: 4px;
-  border-bottom: 1px solid var(--ink);
+  /* the rule itself is drawn by ::after, see "CAD effects" below */
+  border-bottom: 1px solid transparent;
 }
 .section-title h2 {
   font-size: var(--fs-5);
@@ -2863,6 +2865,365 @@ app-icon.row-arrow {
     grid-template-columns: 92px minmax(0, 1fr);
   }
 }
+/* ---------- CAD effects (components/cad-effects) ---------- */
+/* Drawing grid across the whole sheet; the grid button in the status strip turns it off
+   (.cad-plain), so the server-rendered page already has it. */
+html:not(.cad-plain) body {
+  /* lighter than the viewer stage's grid, so body text stays the darkest thing on the page */
+  --page-minor: rgba(30, 37, 34, 0.035);
+  --page-major: rgba(30, 37, 34, 0.065);
+  background-image:
+    linear-gradient(var(--page-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--page-major) 1px, transparent 1px),
+    linear-gradient(var(--page-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--page-minor) 1px, transparent 1px);
+  background-size:
+    60px 60px,
+    60px 60px,
+    12px 12px,
+    12px 12px;
+}
+
+/* Crosshair: two hairlines across the window and a pickbox, as in a CAD drawing area.
+   It sits under the header and never takes a click. */
+.cad-cross {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cad-cross.on {
+  opacity: 1;
+}
+.cad-cross i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.cad-cross-x,
+.cad-cross-y {
+  background: var(--ink);
+  opacity: 0.2;
+}
+.cad-cross-x {
+  width: 1px;
+  height: 100%;
+}
+.cad-cross-y {
+  width: 100%;
+  height: 1px;
+}
+.cad-pick {
+  width: 11px;
+  height: 11px;
+  margin: -5px 0 0 -5px;
+  border: 1px solid var(--blue);
+  opacity: 0.75;
+}
+
+/* A section rule is a dimension line: a slash terminator at each end, and the line is
+   drawn from the left when the section scrolls into view (.cad-wait until then). */
+.section-title::before,
+.section-title::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.section-title::after {
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--ink);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+.section-title::before {
+  --tick: linear-gradient(
+    to bottom right,
+    transparent calc(50% - 0.7px),
+    var(--ink) calc(50% - 0.7px) calc(50% + 0.7px),
+    transparent calc(50% + 0.7px)
+  );
+  left: -4px;
+  right: -4px;
+  bottom: -5px;
+  height: 9px;
+  background:
+    var(--tick) left / 9px 9px no-repeat,
+    var(--tick) right / 9px 9px no-repeat;
+  transition: opacity 0.25s 0.7s;
+}
+.section-title.cad-wait::after {
+  transform: scaleX(0);
+  transition: none;
+}
+.section-title.cad-wait::before {
+  opacity: 0;
+  transition: none;
+}
+
+/* ---- entrance: the sheet is plotted when a page opens ---- */
+
+/* One pass of a scan line down the window when a page opens, as if the sheet were being
+   plotted. The first pass is pure CSS so it starts with the first paint; the component
+   restarts it on later pages by alternating two copies of the same animation. */
+@mixin cad-pass-frames {
+  from {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+  85% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+}
+@keyframes cad-pass {
+  @include cad-pass-frames;
+}
+@keyframes cad-pass-a {
+  @include cad-pass-frames;
+}
+@keyframes cad-pass-b {
+  @include cad-pass-frames;
+}
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  pointer-events: none;
+  /* a soft band with the scan line itself along its lower edge */
+  background: linear-gradient(to bottom, transparent, rgba(47, 95, 158, 0.1) calc(100% - 2px), var(--blue) calc(100% - 2px));
+  opacity: 0;
+  transform: translateY(-100%);
+  animation: cad-pass 1.15s cubic-bezier(0.45, 0, 0.3, 1) 0.05s backwards;
+}
+html.cad-pass-a body::before {
+  animation-name: cad-pass-a;
+}
+html.cad-pass-b body::before {
+  animation-name: cad-pass-b;
+}
+
+/* The entrance is timed from the first paint, not from when an element is created. When
+   the app starts on a server-rendered page it rebuilds the same elements; the component
+   then sets --cad-elapsed (time since the first paint) so the rebuilt elements carry on
+   where the first ones were instead of starting over. A page opened later plays from the
+   start, and the pass classes rename the animations so elements kept from the previous
+   page replay too. */
+$cad-inked: ".profile-name strong, .profile-role, .profile-text, .index-nav a, .index-nav b, .profile-links a, .page-intro > p, .page-intro .eyebrow";
+$cad-hatched: ".index-profile h1, .page-intro h1, .detail-intro h1";
+@function cad-after($seconds) {
+  @return calc(#{$seconds} - var(--cad-elapsed, 0s));
+}
+
+/* Text is inked in behind the scan line: outlines first, then the fill. */
+@mixin cad-ink-frames {
+  from,
+  50% {
+    color: transparent;
+    -webkit-text-stroke: 0.55px var(--ink);
+  }
+}
+@keyframes cad-ink {
+  @include cad-ink-frames;
+}
+@keyframes cad-ink-a {
+  @include cad-ink-frames;
+}
+@keyframes cad-ink-b {
+  @include cad-ink-frames;
+}
+#{$cad-inked} {
+  animation: cad-ink 0.55s cad-after(0.2s) backwards;
+}
+.profile-text,
+.page-intro > p:not(.eyebrow) {
+  animation-delay: cad-after(0.5s);
+}
+.index-nav a,
+.index-nav b {
+  animation-delay: cad-after(0.62s);
+}
+.index-nav a:nth-child(2),
+.index-nav a:nth-child(2) b {
+  animation-delay: cad-after(0.66s);
+}
+.index-nav a:nth-child(3),
+.index-nav a:nth-child(3) b {
+  animation-delay: cad-after(0.7s);
+}
+.index-nav a:nth-child(4),
+.index-nav a:nth-child(4) b {
+  animation-delay: cad-after(0.74s);
+}
+.index-nav a:nth-child(n + 5),
+.index-nav a:nth-child(n + 5) b {
+  animation-delay: cad-after(0.78s);
+}
+.profile-links a {
+  animation-delay: cad-after(0.9s);
+}
+html.cad-pass-a {
+  #{$cad-inked} {
+    animation-name: cad-ink-a;
+  }
+}
+html.cad-pass-b {
+  #{$cad-inked} {
+    animation-name: cad-ink-b;
+  }
+}
+
+/* Headings go one step further: outline, then section hatching that thickens until the
+   letters are solid. --hatch is the width of the hatch lines within their 6px pitch; it
+   is registered so it can be animated smoothly (elsewhere it steps, which still reads). */
+@property --hatch {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 6px;
+}
+@mixin cad-hatch-frames {
+  0% {
+    color: transparent;
+    -webkit-text-stroke: 0.7px var(--ink);
+    --hatch: 0px;
+  }
+  25% {
+    --hatch: 0px;
+  }
+  50% {
+    --hatch: 1.3px;
+  }
+  70% {
+    -webkit-text-stroke: 0.7px var(--ink);
+  }
+  /* identical to the plain heading, so nothing jumps when the animation lets go */
+  100% {
+    color: transparent;
+    -webkit-text-stroke: 0 var(--ink);
+    --hatch: 6px;
+  }
+}
+@keyframes cad-hatch {
+  @include cad-hatch-frames;
+}
+@keyframes cad-hatch-a {
+  @include cad-hatch-frames;
+}
+@keyframes cad-hatch-b {
+  @include cad-hatch-frames;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  #{$cad-hatched},
+  .section-title h2 {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--ink) 0 var(--hatch, 6px),
+      transparent var(--hatch, 6px) 6px
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  #{$cad-hatched} {
+    animation: cad-hatch 1.1s cad-after(0.25s) backwards;
+  }
+  html.cad-pass-a {
+    #{$cad-hatched} {
+      animation-name: cad-hatch-a;
+    }
+  }
+  html.cad-pass-b {
+    #{$cad-hatched} {
+      animation-name: cad-hatch-b;
+    }
+  }
+  /* a section title waits as an outline (.cad-wait) and is filled when it scrolls in (.cad-in) */
+  .section-title.cad-wait h2 {
+    color: transparent;
+    -webkit-text-stroke: 0.6px var(--ink);
+    --hatch: 0px;
+  }
+  .section-title.cad-in h2 {
+    animation: cad-hatch 1s backwards;
+  }
+}
+
+/* Pointing at a row selects its figure the way CAD selects an object: a dashed outline
+   with a grip on each corner. */
+.operation-card,
+.product-card,
+.opencad-core,
+.row-figure {
+  position: relative;
+}
+.row-thumb::after,
+.operation-card::after,
+.product-card::after,
+.opencad-core::after,
+.row-figure::after {
+  --grip: linear-gradient(var(--blue), var(--blue));
+  content: "";
+  position: absolute;
+  inset: -4px;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    var(--grip) left top / 7px 7px no-repeat,
+    var(--grip) right top / 7px 7px no-repeat,
+    var(--grip) left bottom / 7px 7px no-repeat,
+    var(--grip) right bottom / 7px 7px no-repeat;
+  outline: 1px dashed var(--blue);
+  outline-offset: -4px;
+  transition: opacity 0.12s;
+}
+.index-row:focus-visible .row-thumb::after,
+.operation-card:focus-visible::after,
+.product-card:focus-visible::after,
+.opencad-core:focus-visible::after,
+.row-figure:focus-visible::after {
+  opacity: 1;
+}
+@media (hover: hover) {
+  .index-row:hover .row-thumb::after,
+  .operation-card:hover::after,
+  .product-card:hover::after,
+  .opencad-core:hover::after,
+  .row-figure:hover::after {
+    opacity: 1;
+  }
+}
+@media print {
+  .cad-cross,
+  body::before {
+    display: none;
+  }
+  .section-title.cad-wait h2 {
+    color: inherit;
+    -webkit-text-stroke: 0;
+  }
+  html:not(.cad-plain) body {
+    background-image: none;
+  }
+  .section-title.cad-wait::after {
+    transform: none;
+  }
+  .section-title.cad-wait::before {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

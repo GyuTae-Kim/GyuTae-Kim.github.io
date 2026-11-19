@@ -1943,5 +1943,12 @@
   "이 개발 사례에서는 같은 SketchUp 설계에서 부품표·라벨·가공 도면·가공 코드를 출력하고 결과를 대조했습니다. 부품표만으로는 가공 위치와 판재 투입 방향을 확인할 수 없어, 생산 투입 단계에서 회전·뒤집기·엣지밴드를 함께 점검했습니다.": "In diesem Projekt haben wir Stücklisten, Etiketten, Fertigungszeichnungen und CNC-Code aus derselben SketchUp-Planung ausgegeben und die Ergebnisse miteinander abgeglichen. Aus der Stückliste allein gehen weder die Bearbeitungspositionen noch die Einlegerichtung der Platten hervor. Bei der Produktionsübergabe haben wir deshalb auch Drehen, Wenden und Kantenbänder mitgeprüft.",
   "개발 노트 전체 보기": "Alle Entwicklungsnotizen",
   "학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는 따로 모았습니다.": "Meine Projekte zu Reinforcement Learning und Computer Vision aus dem Bachelorstudium stehen auf einer eigenen Seite.",
-  "파일 형식으로 도구 선택": "Tool nach Dateiformat wählen"
+  "파일 형식으로 도구 선택": "Tool nach Dateiformat wählen",
+  "도면 화면 설정": "Anzeige der Zeichenfläche",
+  "그리드 표시": "Raster anzeigen",
+  "십자선 표시": "Fadenkreuz anzeigen",
+  "보는 방향": "Blickrichtung",
+  "{0}축 방향에서 보기": "Ansicht entlang der {0}-Achse",
+  "3축 CNC 가공 설계 자동화": "Automatisierte 3-Achs-CNC-Planung",
+  "가구 제조 자동화": "Automatisierte Möbelfertigung"
 }

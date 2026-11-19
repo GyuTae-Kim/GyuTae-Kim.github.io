@@ -1,0 +1,23 @@
+<div class="cad-status" *ngIf="pointer" role="group" [attr.aria-label]="'도면 화면 설정' | t">
+  <span class="cad-coords" aria-hidden="true"
+    ><b>X</b><span #readX>0.0</span><b>Y</b><span #readY>0.0</span></span
+  >
+  <button
+    type="button"
+    [attr.aria-pressed]="grid"
+    [attr.aria-label]="'그리드 표시' | t"
+    [attr.title]="'그리드 표시' | t"
+    (click)="toggleGrid()"
+  >
+    <app-icon name="grid"></app-icon>
+  </button>
+  <button
+    type="button"
+    [attr.aria-pressed]="crosshair"
+    [attr.aria-label]="'십자선 표시' | t"
+    [attr.title]="'십자선 표시' | t"
+    (click)="toggleCrosshair()"
+  >
+    <app-icon name="crosshair"></app-icon>
+  </button>
+</div>

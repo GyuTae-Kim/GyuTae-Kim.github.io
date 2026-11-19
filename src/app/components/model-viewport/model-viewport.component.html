@@ -36,6 +36,22 @@
         height="750"
       />
     </div>
+    <div class="vp-gizmo" #gizmo *ngIf="state === 'live'" role="group" [attr.aria-label]="'보는 방향' | t">
+      <svg viewBox="-40 -40 80 80" aria-hidden="true" focusable="false">
+        <line *ngFor="let axis of axes" [attr.data-axis]="axis" x1="0" y1="0" x2="0" y2="0" />
+      </svg>
+      <button
+        *ngFor="let axis of axes; let i = index"
+        type="button"
+        class="vp-axis"
+        [attr.data-axis]="axis"
+        [attr.aria-label]="'{0}축 방향에서 보기' | t:[axis]"
+        [attr.title]="'{0}축 방향에서 보기' | t:[axis]"
+        (click)="snapView(i)"
+      >
+        {{ axis }}
+      </button>
+    </div>
     <span class="viewer-hint" *ngIf="state === 'live'" aria-hidden="true"
       ><app-icon name="orbit"></app-icon>{{ '드래그해서 돌려 보기' | t }}</span
     >

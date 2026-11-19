@@ -17,6 +17,7 @@ import { ModelViewportComponent } from './components/model-viewport/model-viewpo
 import { IconComponent } from './components/icon/icon.component';
 import { PartnerTextComponent } from './components/partner-text/partner-text.component';
 import { PanelCatalogComponent } from './components/panel-catalog/panel-catalog.component';
+import { CadEffectsComponent } from './components/cad-effects/cad-effects.component';
 import { I18nModule } from './i18n/i18n.module';
 import { UrlSerializer } from '@angular/router';
 import { CanonicalUrlSerializer } from './canonical-url-serializer';
@@ -38,6 +39,7 @@ import { CanonicalUrlSerializer } from './canonical-url-serializer';
     IconComponent,
     PartnerTextComponent,
     PanelCatalogComponent,
+    CadEffectsComponent,
   ],
   imports: [BrowserModule.withServerTransition({ appId: 'portfolio' }), AppRoutingModule, I18nModule],
   providers: [{ provide: UrlSerializer, useClass: CanonicalUrlSerializer }],

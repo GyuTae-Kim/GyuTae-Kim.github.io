@@ -31,6 +31,7 @@ import {
   Shape,
   ShapeUtils,
   SphereGeometry,
+  Spherical,
   TetrahedronGeometry,
   Vector2,
   Vector3,
@@ -2852,6 +2853,14 @@ function buildFurniture(reducedMotion: boolean): ModelView {
 
 // ---------- viewport ----------
 
+// Axes of the models in scene space: both are drawn Z-up with their front (-Y) toward
+// the starting camera, so the triad reads like the one in a CAD window.
+const MODEL_AXES = [new Vector3(1, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0)];
+// Orbit limits while the reader drags; a standard view may go to the edge of them.
+const POLAR = { min: 0.25, max: 1.38 };
+const GIZMO_RADIUS = 27;
+const SNAP_SECONDS = 0.45;
+
 export interface ViewportOptions {
   translate?: (text: string) => string;
   reducedMotion: boolean;
@@ -2890,6 +2899,10 @@ export class ViewportScene {
   // Until the reader drags, the model sways a little around its starting view.
   private swaying = true;
   private swayClock = 0;
+  // Axis triad in the corner of the stage and the turn towards a standard view.
+  private gizmoLines: SVGLineElement[] = [];
+  private gizmoCaps: HTMLElement[] = [];
+  private snap?: { theta: number; phi: number; turn: number; tilt: number; t: number };
   private readonly resize: ResizeObserver;
   private readonly intersection: IntersectionObserver;
 
@@ -2946,9 +2959,12 @@ export class ViewportScene {
     this.controls.enableZoom = false;
     this.controls.enablePan = false;
     this.controls.enableDamping = true;
-    this.controls.minPolarAngle = 0.25;
-    this.controls.maxPolarAngle = 1.38;
-    this.controls.addEventListener('start', () => (this.swaying = false));
+    this.controls.minPolarAngle = POLAR.min;
+    this.controls.maxPolarAngle = POLAR.max;
+    this.controls.addEventListener('start', () => {
+      this.swaying = false;
+      this.snap = undefined;
+    });
     // Let vertical swipes scroll the page on touch screens; sideways drags rotate.
     canvas.style.touchAction = 'pan-y';
 
@@ -2996,9 +3012,64 @@ export class ViewportScene {
     this.paused = paused;
   }
 
+  // The triad lives in the component's template, so its buttons are real, labelled ones.
+  attachGizmo(gizmo: HTMLElement) {
+    this.gizmoLines = Array.from(gizmo.querySelectorAll('line'));
+    this.gizmoCaps = Array.from(gizmo.querySelectorAll<HTMLElement>('.vp-axis'));
+    this.placeGizmo();
+  }
+
+  // Turns to the standard view along a model axis (0 X, 1 Y, 2 Z): an orthographic side,
+  // front or top view, as on a drawing. It keeps the side the camera is already on; a
+  // second press on the same axis goes round to the opposite side. Never from below.
+  snapView(axis: number) {
+    const eye = this.camera.position.clone().sub(this.controls.target);
+    const from = new Spherical().setFromVector3(eye);
+    const to = MODEL_AXES[axis].clone();
+    const facing = eye.normalize().dot(to);
+    if (axis !== 2 && (Math.abs(facing) > 0.999 ? facing > 0 : facing < 0)) to.negate();
+    // Looking straight down, the azimuth decides which way is up: keep the model's +Y up.
+    const azimuth = axis === 2 ? 0 : Math.atan2(to.x, to.z);
+    const turn = Math.atan2(Math.sin(azimuth - from.theta), Math.cos(azimuth - from.theta));
+    this.swaying = false;
+    this.controls.minPolarAngle = 0;
+    this.controls.maxPolarAngle = Math.PI / 2;
+    this.snap = {
+      theta: from.theta,
+      phi: from.phi,
+      turn,
+      tilt: (axis === 2 ? 0.0012 : Math.PI / 2) - from.phi,
+      t: this.options.reducedMotion ? 1 : 0,
+    };
+    if (this.options.reducedMotion) this.stepSnap(0);
+    if (!this.frame) this.renderOnce();
+  }
+
+  // Azimuth and height move together, so the model turns about its vertical axis on the
+  // way instead of rolling on screen.
+  private stepSnap(dt: number) {
+    const snap = this.snap;
+    if (!snap) return;
+    snap.t = Math.min(snap.t + dt / SNAP_SECONDS, 1);
+    const k = 1 - Math.pow(1 - snap.t, 3);
+    this.camera.position
+      .setFromSphericalCoords(600, snap.phi + snap.tilt * k, snap.theta + snap.turn * k)
+      .add(this.controls.target);
+    if (snap.t >= 1) this.snap = undefined;
+  }
+
+  private renderOnce() {
+    this.controls.update();
+    this.renderer.render(this.scene, this.camera);
+    this.placeNotes();
+  }
+
   resetView() {
     this.swaying = true;
     this.swayClock = 0;
+    this.snap = undefined;
+    this.controls.minPolarAngle = POLAR.min;
+    this.controls.maxPolarAngle = POLAR.max;
     this.camera.position.copy(this.current.view).normalize().multiplyScalar(600);
     this.controls.target.set(0, 0, 0);
     this.controls.update();
@@ -3051,6 +3122,7 @@ export class ViewportScene {
         if (this.swaying && !this.options.reducedMotion) this.sway(dt);
         this.current.update(now / 1000, dt);
       }
+      this.stepSnap(dt);
       if (this.current.fitRadius !== this.fitted) this.fit();
       this.controls.update();
       if (this.autoplay && this.current.done?.()) {
@@ -3104,7 +3176,26 @@ export class ViewportScene {
     return new Vector2(((v.x + 1) / 2) * this.width, ((1 - v.y) / 2) * this.height);
   }
 
+  // Each axis of the triad as the camera sees it; the nearer cap is drawn on top.
+  private placeGizmo() {
+    if (!this.gizmoCaps.length) return;
+    const toCamera = this.camera.quaternion.clone().invert();
+    MODEL_AXES.forEach((axis, i) => {
+      const v = axis.clone().applyQuaternion(toCamera);
+      const x = (v.x * GIZMO_RADIUS).toFixed(1);
+      const y = (-v.y * GIZMO_RADIUS).toFixed(1);
+      const cap = this.gizmoCaps[i];
+      cap.style.transform = `translate(${x}px, ${y}px)`;
+      cap.style.zIndex = String(Math.round((v.z + 1) * 10));
+      cap.classList.toggle('behind', v.z < -0.05);
+      cap.classList.toggle('facing', Math.abs(v.z) > 0.999);
+      this.gizmoLines[i]?.setAttribute('x2', x);
+      this.gizmoLines[i]?.setAttribute('y2', y);
+    });
+  }
+
   private placeNotes() {
+    this.placeGizmo();
     const notes = this.current.notes(this.layer);
     const center = this.project(new Vector3(), this.current.root);
     const reach = Math.min(Math.max(this.width * 0.075, 30), 56);

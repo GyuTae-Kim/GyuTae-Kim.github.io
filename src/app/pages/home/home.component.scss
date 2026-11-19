@@ -2,6 +2,65 @@
   display: block;
 }
 
+// Dimension under the headline: extension lines at both ends, arrowheads, and the
+// measured width in the middle, drawn outward from the centre when the page opens.
+.title-dim {
+  --rule: linear-gradient(var(--ink), var(--ink));
+  position: relative;
+  display: block;
+  height: 22px;
+  max-width: 100%;
+  margin: -8px 0 18px;
+  background:
+    var(--rule) left top / 1px 100% no-repeat,
+    var(--rule) right top / 1px 100% no-repeat,
+    var(--rule) left 14px / 100% 1px no-repeat;
+  animation: title-dim-draw 0.9s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 11px;
+    border: solid transparent;
+    border-width: 3.5px 9px;
+  }
+
+  &::before {
+    left: 1px;
+    border-left-width: 0;
+    border-right-color: var(--ink);
+  }
+
+  &::after {
+    right: 1px;
+    border-right-width: 0;
+    border-left-color: var(--ink);
+  }
+
+  b {
+    position: absolute;
+    left: 50%;
+    top: 14.5px;
+    padding: 0 8px;
+    background: var(--paper);
+    color: var(--accent);
+    font: 600 var(--fs-1) / 1 var(--mono);
+    font-variant-numeric: tabular-nums;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes title-dim-draw {
+  from {
+    clip-path: inset(0 50%);
+  }
+
+  to {
+    clip-path: inset(0 0);
+  }
+}
+
 .home-note-links {
   list-style: none;
   margin: 0;

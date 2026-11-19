@@ -1943,5 +1943,12 @@
   "이 개발 사례에서는 같은 SketchUp 설계에서 부품표·라벨·가공 도면·가공 코드를 출력하고 결과를 대조했습니다. 부품표만으로는 가공 위치와 판재 투입 방향을 확인할 수 없어, 생산 투입 단계에서 회전·뒤집기·엣지밴드를 함께 점검했습니다.": "In this project we output the parts list, labels, machining drawings and machining code from the same SketchUp design and cross-checked them. A parts list alone cannot confirm machining positions or a panel's loading orientation, so at the production handoff stage we also checked rotation, flipping and edge banding.",
   "개발 노트 전체 보기": "All notes",
   "학부연구생 때 한 강화학습과 컴퓨터 비전 프로젝트는 따로 모았습니다.": "My undergraduate research projects in reinforcement learning and computer vision are on a separate page.",
-  "파일 형식으로 도구 선택": "Choose a tool by file format"
+  "파일 형식으로 도구 선택": "Choose a tool by file format",
+  "도면 화면 설정": "Drawing display settings",
+  "그리드 표시": "Show grid",
+  "십자선 표시": "Show crosshair",
+  "보는 방향": "View direction",
+  "{0}축 방향에서 보기": "View along the {0} axis",
+  "3축 CNC 가공 설계 자동화": "Automated 3-axis CNC process planning",
+  "가구 제조 자동화": "Automated furniture manufacturing"
 }

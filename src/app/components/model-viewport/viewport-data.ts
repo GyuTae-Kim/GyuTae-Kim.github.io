@@ -70,7 +70,7 @@ export const TINTS = {
 export const VIEW_MODELS: ViewModel[] = [
   {
     id: 'part',
-    label: '가공 부품',
+    label: '3축 CNC 가공 설계 자동화',
     sheet: 'A-01',
     name: '포켓·단차 블록',
     caseId: 'cad-feature-recognition',
@@ -126,7 +126,7 @@ export const VIEW_MODELS: ViewModel[] = [
   },
   {
     id: 'furniture',
-    label: '가구',
+    label: '가구 제조 자동화',
     sheet: 'A-02',
     name: '원룸 벽면 가구',
     caseId: 'wedraw-pro',
