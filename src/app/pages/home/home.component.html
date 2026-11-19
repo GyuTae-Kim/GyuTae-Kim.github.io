@@ -10,6 +10,10 @@
         >.</span
       >
     </h1>
+    <!-- The headline's own width on this screen, drawn as a dimension. Decorative. -->
+    <span class="title-dim" *ngIf="titleWidth" aria-hidden="true" [style.width.px]="titleWidth"
+      ><b>{{ titleWidth }}</b></span
+    >
     <p class="profile-text">
       {{ '3D 형상을 읽는 AI를 만들고, 이를 가구 설계 변경과 가공 공정 생성에 적용했습니다. Fusion CAM 자동화를 연구개발하고, 팀에서는 Wedraw Pro의 제조 데이터 출력과 생산 투입을 리딩했습니다. 서비스 운영에서 드러난 오류도 추적해 고칩니다.' | t }}
     </p>

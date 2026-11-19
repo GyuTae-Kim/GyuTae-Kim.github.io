@@ -4,12 +4,13 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconComponent } from './components/icon/icon.component';
 import { AppComponent } from './app.component';
+import { CadEffectsComponent } from './components/cad-effects/cad-effects.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [I18nModule, RouterTestingModule],
-      declarations: [AppComponent, IconComponent],
+      declarations: [AppComponent, IconComponent, CadEffectsComponent],
     }).compileComponents();
   });
 

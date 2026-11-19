@@ -25,11 +25,16 @@ import { I18nService } from '../../i18n/i18n.service';
 })
 export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('stage') private stage!: ElementRef<HTMLDivElement>;
+  // The axis triad appears once the scene is live; the scene then moves its caps.
+  @ViewChild('gizmo') private set gizmo(ref: ElementRef<HTMLElement> | undefined) {
+    if (ref) this.scene?.attachGizmo(ref.nativeElement);
+  }
   // On a project page the viewer shows that project's model only, without the model
   // tabs or the link back to the same project.
   @Input() fixedModel?: ModelId;
 
   models = VIEW_MODELS;
+  readonly axes = ['X', 'Y', 'Z'];
   readonly reducedMotion = typeof window === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   model: ModelId = 'part';
   // With motion each model plays its three layers on its own, e.g. modelling →
@@ -137,6 +142,11 @@ export class ModelViewportComponent implements OnInit, AfterViewInit, OnDestroy 
 
   resetView() {
     this.scene?.resetView();
+  }
+
+  // Standard view along a model axis; the animation keeps playing from the new side.
+  snapView(axis: number) {
+    this.scene?.snapView(axis);
   }
 
   togglePause() {

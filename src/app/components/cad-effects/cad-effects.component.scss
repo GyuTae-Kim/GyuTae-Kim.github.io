@@ -1,0 +1,74 @@
+// Status strip in the header: sheet coordinates of the mouse and the two display toggles.
+// Without a mouse the host stays out of the header's flex row.
+:host {
+  display: none;
+}
+
+:host(.on) {
+  display: flex;
+  flex: none;
+  margin-left: auto;
+}
+
+.cad-status {
+  display: flex;
+  align-items: stretch;
+  height: 30px;
+  border: 1px solid var(--line-strong);
+  background: var(--sheet);
+  font: 500 var(--fs-1) / 1 var(--mono);
+}
+
+.cad-coords {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-variant-numeric: tabular-nums;
+
+  b {
+    font-weight: 600;
+    color: var(--blue);
+  }
+
+  span {
+    min-width: 6ch;
+    color: var(--accent);
+    text-align: right;
+  }
+}
+
+button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  padding: 0;
+  border-left: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--muted);
+
+  &:hover {
+    color: var(--ink);
+  }
+
+  &[aria-pressed='true'] {
+    background: var(--white);
+    color: var(--ink);
+    box-shadow: inset 0 -2px 0 var(--blue);
+  }
+
+  &:focus-visible {
+    outline-offset: 2px;
+  }
+
+  app-icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media print {
+  :host(.on) {
+    display: none;
+  }
+}

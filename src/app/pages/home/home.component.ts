@@ -81,12 +81,29 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     { id: 'about', label: '소개' },
   ];
   active = '';
+  // Width of the headline text in CSS pixels, shown under it as a dimension.
+  titleWidth = 0;
   private observer?: IntersectionObserver;
+  private titleSize?: ResizeObserver;
 
   constructor(private readonly zone: NgZone) {}
 
   ngAfterViewInit() {
     if (typeof IntersectionObserver === 'undefined') return;
+    const title = document.getElementById('intro-title');
+    if (title && typeof ResizeObserver !== 'undefined') {
+      // Measures the text, not the block: the widest line of the headline.
+      const measure = () => {
+        const range = document.createRange();
+        range.selectNodeContents(title);
+        const width = Math.round(range.getBoundingClientRect().width);
+        if (width && width !== this.titleWidth) this.zone.run(() => (this.titleWidth = width));
+      };
+      this.titleSize = new ResizeObserver(measure);
+      this.titleSize.observe(title);
+      // The web font arrives after the first measurement and changes the width.
+      document.fonts?.ready.then(measure);
+    }
     // Highlight the section that crosses the upper middle of the screen.
     this.observer = new IntersectionObserver(
       (entries) => {
@@ -103,5 +120,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.observer?.disconnect();
+    this.titleSize?.disconnect();
   }
 }
