@@ -163,11 +163,11 @@ export const OTHER_PROJECTS: OtherProject[] = [
     category: '운영 자동화 · 서비스 안정성',
     period: '2026',
     summary:
-      '서비스 3개의 서버 구성요소 13곳과 송장 전송·알림톡 같은 업무 결과를 감시합니다. 서버 API와 사용자 PC 앱의 오류도 모아, 슬랙 알림을 받으면 관리자 화면에서 원인을 찾아보게 했습니다.',
+      '서비스 3개의 서버 구성 요소 13곳과 송장 전송·알림톡 같은 업무 결과를 감시합니다. 서버 API와 사용자 PC 앱의 오류도 모아, 슬랙 알림을 받으면 관리자 화면에서 원인을 찾아보게 했습니다.',
     stats: [
       { value: '0.5초 → 0.1초', label: '느린 조회 개선 직후 관측한 주문 서비스 DB 평균 응답' },
       { value: `${MONITORING_CAUGHT.length}건`, label: '감시 알림으로 찾아 원인을 고친 운영 문제' },
-      { value: '13곳', label: '1분마다 확인하는 서버 구성요소' },
+      { value: '13곳', label: '1분마다 확인하는 서버 구성 요소' },
     ],
     role: '감시 기준과 알림 방식을 설계했습니다. 감시 프로그램과 서버 상태 화면, 업무 결과 확인, API 오류와 PC 앱 오류 수집, 이를 모아 보는 관리자 콘솔까지 직접 개발했습니다.',
     outcome: {
@@ -229,7 +229,7 @@ export const OTHER_PROJECTS: OtherProject[] = [
         full: SHOTS + 'slack-daily-report-public.jpg',
         title: '슬랙 정기 보고',
         alt: '실제로 받은 슬랙 감시 보고. 봇 이름과 상세 구성, 확인 시각은 가려져 있습니다.',
-        caption: '하루 두 번 모든 구성요소의 상태를 보고합니다. 장애와 복구 경보도 같은 채널로 보냅니다.',
+        caption: '하루 두 번 모든 구성 요소의 상태를 보고합니다. 장애와 복구 경보도 같은 채널로 보냅니다.',
         width: 1100,
         height: 501,
       },
@@ -337,7 +337,7 @@ export const OTHER_PROJECTS: OtherProject[] = [
     tags: ['Python', 'Selenium', 'Docker', 'Elasticsearch', 'MySQL', 'AWS SQS'],
     work: [
       { title: '좌표 수집', text: '마우스 아래 맨 앞 요소를 기준으로 좌표 기록' },
-      { title: '메시지 처리', text: 'SQS 메시지를 Elasticsearch 문서 양식으로 가공' },
+      { title: '메시지 처리', text: 'SQS 메시지를 Elasticsearch 문서 형식으로 변환' },
       { title: '데이터 정제기', text: '주기적으로 집계해 RDS 테이블에 저장' },
       { title: '페이지 크롤러', text: '풀 페이지 스크롤 사이트도 전체 화면 캡처' },
     ],
