@@ -44,7 +44,7 @@ export const OPENCAD_GUIDE_DETAILS: Record<string, GuideDetails> = {
   },
   'check-nc-toolpath': {
     projectPath: '/opencad/projects/nc-viewer',
-    support: [{ label: 'G-code', text: '.nc / .gcode / .ngc' }, { label: 'Heidenhain', text: 'Plain text / DIN–ISO' }, { label: '판재 가공', text: 'woodWOP MPR / WangShi PGI / KDT XML' }],
+    support: [{ label: 'G-code', text: '.nc / .gcode / .ngc' }, { label: 'Heidenhain', text: 'Klartext / DIN/ISO' }, { label: '판재 가공', text: 'woodWOP MPR / WangShi PGI / KDT XML' }],
     example: [{ label: '단위', text: 'G21 · mm' }, { label: '좌표', text: 'G90 · XYZ' }],
     checks: [{ label: '예제 확인 순서', text: '예제 경로를 열고 코드 줄과 이동을 함께 확인한 뒤 재생과 단위·해석 경고를 점검합니다.' }, { label: '가공 전 확인', text: '충돌, 공구 보정, 기계 동작은 경로 화면으로 알 수 없으니 실제 장비에서 따로 확인합니다.' }],
   },

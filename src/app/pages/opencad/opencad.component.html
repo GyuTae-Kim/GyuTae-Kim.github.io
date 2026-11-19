@@ -150,9 +150,9 @@
   </section>
 
   <aside class="end-note">
-    {{ '열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면' | t }}
-    <a [href]="'https://github.com/GyuTae-Kim/opencad-dwgdxf/issues' | localLink" target="_blank" rel="noopener noreferrer"
+    <!-- Spaces around the links live in each language's text: Japanese and Chinese take none. -->
+    {{ '열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면 ' | t }}<a [href]="'https://github.com/GyuTae-Kim/opencad-dwgdxf/issues' | localLink" target="_blank" rel="noopener noreferrer"
       >{{ 'GitHub 이슈' | t }}</a
-    >{{ '나' | t }} <a [routerLink]="'/contact' | localLink">{{ '메일' | t }}</a>{{ '로 알려 주세요.' | t }}
+    >{{ '나 ' | t }}<a [routerLink]="'/contact' | localLink">{{ '메일' | t }}</a>{{ '로 알려 주세요.' | t }}
   </aside>
 </div>

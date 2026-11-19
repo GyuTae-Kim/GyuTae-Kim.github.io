@@ -162,7 +162,7 @@
       <p class="showcase-note">{{ (parameters.note) | t }}</p>
     </section>
     <section class="recognition-showcase" *ngIf="selected!.recognition as recognition" aria-labelledby="recognition-title">
-      <h2 class="detail-title" id="recognition-title"><span>AI</span>{{ '식별하는 가공 피쳐 {0}종' | t:[(recognition.features.length)] }}</h2>
+      <h2 class="detail-title" id="recognition-title"><span>{{ 'AI' | t }}</span>{{ '식별하는 가공 피쳐 {0}종' | t:[(recognition.features.length)] }}</h2>
       <ul class="feature-catalog" [attr.aria-label]="'지원 가공 피쳐' | t">
         <li *ngFor="let feature of recognition.features">
           <i *ngIf="feature.color" [style.background]="feature.color" aria-hidden="true"></i>
