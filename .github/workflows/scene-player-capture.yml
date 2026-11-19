@@ -30,9 +30,10 @@ jobs:
       PLAYER_REF: 30b6984455658639637e3278262f409711e70910
       # FFME 4.2.320 loads the FFmpeg 4.2 shared libraries from C:\ffmpeg\x64.
       FFMPEG_ZIP_URL: https://github.com/advancedfx/ffmpeg.zeranoe.com-builds-mirror/releases/download/20200915/ffmpeg-4.2.1-win64-shared.zip
-      FFMPEG_ZIP_SHA256: ''
+      FFMPEG_ZIP_SHA256: 55063d3cf750a75485c7bf196031773d81a1b25d0980c7db48ecfc7701a42331
       # Big Buck Bunny, (c) 2008 Blender Foundation, CC BY 3.0.
       SAMPLE_ZIP_URL: https://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_720p_h264.mov.zip
+      SAMPLE_ZIP_SHA256: b0c9ade80b086179feee41514929de583966eec87c703575d97f051f88b33b67
       CLIP_START: '0'
       CLIP_SECONDS: '150'
       THRESHOLD: ${{ inputs.threshold || '30' }}
@@ -104,7 +105,9 @@ jobs:
             $zip = "$env:RUNNER_TEMP\sample.zip"
             curl.exe -L --fail --silent --show-error -A 'Mozilla/5.0' -o $zip $env:SAMPLE_ZIP_URL
             if ($LASTEXITCODE) { throw 'sample download failed' }
-            "sample archive sha256: $((Get-FileHash $zip -Algorithm SHA256).Hash.ToLower())"
+            $hash = (Get-FileHash $zip -Algorithm SHA256).Hash.ToLower()
+            "sample archive sha256: $hash"
+            if ($env:SAMPLE_ZIP_SHA256 -and $hash -ne $env:SAMPLE_ZIP_SHA256) { throw 'unexpected sample archive' }
             Expand-Archive $zip -DestinationPath "$env:RUNNER_TEMP\sample" -Force
             $movie = (Get-ChildItem "$env:RUNNER_TEMP\sample" -Recurse -Filter *.mov | Select-Object -First 1).FullName
             C:\ffmpeg\x64\ffmpeg.exe -hide_banner -loglevel error -y -ss $env:CLIP_START -t $env:CLIP_SECONDS -i $movie -map 0:v:0 -map 0:a:0 -c:v libx264 -preset medium -crf 18 -g 12 -pix_fmt yuv420p -c:a aac -ac 2 -b:a 160k -movflags +faststart $clip

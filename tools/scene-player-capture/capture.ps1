@@ -432,6 +432,14 @@ function Close-MessageBox {
     return $true
 }
 
+# The backdrop starts at the bottom of the window order so the player opens above it. Once the
+# player is up, raise the backdrop to just below the player's lowest window to cover other windows.
+function Set-BackdropBelowPlayer {
+    param([int]$ProcId)
+    $windows = @(Get-AppWindows $ProcId)
+    if ($windows.Count) { $null = [Desk]::SetWindowPos([Desk]::BackdropHandle, $windows[-1].Handle, 0, 0, 0, 0, 0x0013) }
+}
+
 function Write-AppErrors {
     try {
         Get-WinEvent -FilterHashtable @{ LogName = 'Application'; Level = 2; StartTime = $script:Started } -MaxEvents 5 -ErrorAction Stop |
@@ -474,9 +482,10 @@ try {
     $null = [Desk]::SetForegroundWindow($mainHwnd)
     $main = $AE::FromHandle($mainHwnd)
     Log "player window $mainHwnd, cursor flags $([Desk]::CursorFlags())"
+    Set-BackdropBelowPlayer $appPid
 
     # --- Open the clip through the player's own file dialog ---------------------------------
-    Set-FrameRect $mainHwnd 120 80 760 656
+    Set-FrameRect $mainHwnd 120 80 760 640
     Save-Diag 'launched'
     Click-Element (Find-ById $main 'OpenFileButton')
     $dialog = Wait-AppWindow -ProcId $appPid -Class '#32770' -TimeoutSec 30
@@ -557,15 +566,31 @@ try {
     $null = Close-MessageBox $appPid 'detection finished'
     if ($frames.Count -lt 2) { throw 'the detection recorded fewer than two frames' }
 
-    # --- Detail panel captures: step through scenes with the panel's button -----------------
-    $nextButton = Find-ById $detail 'NextBranchBtn'
-    $steps = [math]::Min($frames.Count, 18)
-    for ($s = 1; $s -le $steps; $s++) {
-        Wake-Controls $mainHwnd
-        Click-Element $nextButton
+    # --- Detail panel captures: go to a scene by its mark, then rest the pointer on the panel ----
+    Set-BackdropBelowPlayer $appPid
+    Wake-Controls $mainHwnd
+    $panelMarks = @(Get-Marks $mainHwnd)
+    Log "marks beside the panel: $($panelMarks.Count) at x = $(($panelMarks | ForEach-Object { $_.X }) -join ' ')"
+    if ($panelMarks.Count -lt 2) { throw 'no marks were found on the seek bar beside the panel' }
+    $nextCenter = Get-Center (Find-ById $detail 'NextBranchBtn')
+    $wanted = 12
+    $picks = @()
+    for ($k = 0; $k -lt $wanted; $k++) {
+        $i = [int][math]::Floor(($k + 0.5) * $panelMarks.Count / $wanted)
+        if ($picks -notcontains $i) { $picks += $i }
+    }
+    $n = 0
+    foreach ($i in $picks) {
+        $n++
+        [Desk]::Click($panelMarks[$i].X, $panelMarks[$i].Y)
         Start-Sleep -Milliseconds 1500
-        if (Close-MessageBox $appPid 'next scene') { break }
-        Save-Png $shotX $shotY $shotW $shotH ('detail-cand-{0:00}.png' -f $s) $true
+        Wake-Controls $mainHwnd
+        Save-Png $shotX $shotY $shotW $shotH ('detail-plain-{0:00}.png' -f $n)
+        [Desk]::Glide($nextCenter.X, $nextCenter.Y)
+        Start-Sleep -Milliseconds 500
+        Save-Png $shotX $shotY $shotW $shotH ('detail-cand-{0:00}.png' -f $n) $true
+        Log ("detail-cand-{0:00}: position mark {1}" -f $n, $i)
+        if ($script:Player.HasExited) { throw "the player exited (code $($script:Player.ExitCode)) during the panel captures" }
     }
     Save-Diag 'detail-done'
 
@@ -625,17 +650,7 @@ try {
         Start-Sleep -Milliseconds 900
         $zoomed = @(Get-Marks $mainHwnd)
         Log "marks after zoom: $($zoomed.Count) at x = $(($zoomed | ForEach-Object { $_.X }) -join ' ')"
-        $inside = @($zoomed | Where-Object { $_.X -gt $f.Left + 40 -and $_.X -lt $f.Right - 200 })
-        $z = 0
-        foreach ($target in ($inside | Select-Object -First 4)) {
-            $z++
-            [Desk]::Glide($target.X, $target.Y - 45)
-            [Desk]::Glide($target.X, $target.Y)
-            Start-Sleep -Milliseconds 1100
-            Save-Png $f.Left $f.Top $fw $fh ('player-zoom-{0:00}.png' -f $z) $true
-            [Desk]::Glide($target.X, $target.Y - 45)
-            Start-Sleep -Milliseconds 300
-        }
+        Save-Png $f.Left $f.Top $fw $fh 'player-zoom.png'
         Save-Diag 'zoom-done'
     } catch {
         Log "zoom captures skipped: $($_.Exception.Message)"
