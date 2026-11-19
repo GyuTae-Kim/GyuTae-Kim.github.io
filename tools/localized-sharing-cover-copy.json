@@ -140,7 +140,7 @@
     "language": "ja",
     "path": "assets/og/wedraw-pro.jpg",
     "title": "SketchUp家具設計・製造データ連携",
-    "description": "SketchUpの家具モデルを図面・BOM・ラベル・CNCデータへつなぐWedraw Proの開発事例。Sean Kimがチームで担当した製造データ出力と生産連携を紹介します。",
+    "description": "SketchUpの家具モデルを図面・BOM・ラベル・CNCデータへつなぐWedraw Proの開発事例。Sean Kimがチームで担当した製造データ出力と生産投入を紹介します。",
     "source": "assets/cases/wedraw-pro/hero.webp"
   },
   {
@@ -164,7 +164,7 @@
     "language": "en",
     "path": "assets/og/service-monitoring.jpg",
     "title": "Monitoring Operations and Service Disruptions in Manufacturing Software",
-    "description": "This case study explores the development of a system to monitor service disruptions by tracking errors across manufacturing software servers and PC applications. It covers issues identified through this monitoring—such as database response delays and external integration errors—as well as the subsequent resolution process and the role played by Sean Kim.",
+    "description": "A case study on monitoring service incidents by collecting errors from manufacturing software servers and PC apps. Covers the slow database responses and external integration errors the monitoring caught, how they were fixed, and Sean Kim's role.",
     "source": "assets/cases/operations/dashboard-live-public-1100.webp"
   },
   {
@@ -172,7 +172,7 @@
     "language": "ja",
     "path": "assets/og/service-monitoring.jpg",
     "title": "製造ソフトウェアの運用・サービス障害監視",
-    "description": "製造ソフトウェアにおけるサーバーおよびPCアプリのエラーを収集し、サービス障害を監視した開発事例です。監視によって発見されたDB応答の遅延や外部連携エラー、実際の修正プロセス、そしてSean Kimの役割について紹介します。",
+    "description": "製造ソフトウェアのサーバーとPCアプリのエラーを集め、サービス障害を監視した開発事例です。監視で見つかったDB応答の遅延や外部連携エラー、実際の修正過程とSean Kimの役割を紹介します。",
     "source": "assets/cases/operations/dashboard-live-public-1100.webp"
   },
   {
@@ -180,15 +180,15 @@
     "language": "zh-CN",
     "path": "assets/og/service-monitoring.jpg",
     "title": "制造软件运行与服务故障监控",
-    "description": "这是一个关于通过收集制造软件服务器和PC应用程序的错误来监控服务故障的开发案例研究。本文介绍了通过监控发现的数据库响应延迟和外部集成错误、实际的纠正过程以及 Sean Kim 在其中的作用。",
+    "description": "汇总制造软件的服务器和 PC 应用错误、监控服务故障的开发案例，介绍监控发现的数据库响应延迟和外部对接错误、实际的修复过程，以及 Sean Kim 负责的工作。",
     "source": "assets/cases/operations/dashboard-live-public-1100.webp"
   },
   {
     "id": "service-monitoring",
     "language": "de",
     "path": "assets/og/service-monitoring.jpg",
-    "title": "Überwachung von Betriebs- und Serviceausfällen in der Fertigungssoftware",
-    "description": "Dies ist eine Fallstudie zur Entwicklung und Überwachung von Serviceausfällen durch die Erfassung von Fehlern von Fertigungssoftwareservern und PC-Anwendungen. Es beschreibt die durch Monitoring identifizierten Verzögerungen bei der Datenbankantwort und externen Integrationsfehler, den eigentlichen Korrekturprozess sowie die Rolle von Sean Kim.",
+    "title": "Fertigungssoftware im Betrieb: Monitoring von Störungen",
+    "description": "Monitoring für Fertigungssoftware: Fehler aus Servern und PC-Apps sammeln, DB-Verzögerungen und Schnittstellenfehler finden und beheben. Sean Kims Rolle.",
     "source": "assets/cases/operations/dashboard-live-public-1100.webp"
   },
   {
@@ -204,7 +204,7 @@
     "language": "ja",
     "path": "assets/og/voda-architecture.jpg",
     "title": "Web行動分析サービスVODAのアーキテクチャ再設計",
-    "description": "Webサイト訪問者のクリック、スクロール、ページビューを集める分析サービスVODAのアーキテクチャ再設計の事例です。SQSメッセージ処理、分析画面のタイムアウトを解消した集計精製器、フルページキャプチャのクローラーなど、Sean Kimが担当した開発を紹介します。",
+    "description": "Webサイト訪問者のクリック、スクロール、ページビューを集める分析サービスVODAのアーキテクチャ再設計の事例です。SQSメッセージ処理、分析画面のタイムアウトを解消した集計バッチ、フルページキャプチャのクローラーなど、Sean Kimが担当した開発を紹介します。",
     "source": "assets/cases/voda/heatmap-1100.webp"
   },
   {
@@ -235,8 +235,8 @@
     "id": "vory-q-curation",
     "language": "ja",
     "path": "assets/og/vory-q-curation.jpg",
-    "title": "ショッピングモール向けパーソナライズドレコメンドサービスVORY-Qの設計",
-    "description": "ショッピングモール訪問者のページビューと購入履歴から商品をおすすめするSaaS、VORY-Qの設計事例です。ヘッダースクリプトによる連携、REST APIとRDB、顧客セグメント、統計ベースのレコメンドアルゴリズムまで、Sean Kimが担当した設計と開発を紹介します。",
+    "title": "ECサイト向けパーソナライズレコメンドサービスVORY-Qの設計",
+    "description": "ECサイト訪問者のページビューと購入履歴から商品をレコメンドするSaaS、VORY-Qの設計事例です。ヘッダースクリプトによる連携、REST APIとRDB、顧客セグメント、統計ベースのレコメンドアルゴリズムまで、Sean Kimが担当した設計と開発を紹介します。",
     "source": "assets/cases/vory-q/recommendation-1100.webp"
   },
   {
@@ -300,7 +300,7 @@
     "language": "ja",
     "path": "assets/og/research.jpg",
     "title": "強化学習・コンピュータービジョン研究",
-    "description": "学部研究で取り組んだTSP経路探索、ResNetによる衣類画像分類、バーチャル試着アプリ。公開コード、再実験の結果と限界を紹介します。",
+    "description": "学部研究で取り組んだTSP経路探索、ResNetによる衣類画像分類、バーチャル試着アプリ。公開コード、実験結果と試行錯誤を紹介します。",
     "source": "assets/research/results/tsp/tours-compare.webp"
   },
   {
