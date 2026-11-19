@@ -97,7 +97,7 @@ export const SEARCH_PAGES: SearchPage[] = [
     imageAlt: research.id === 'graph-tsp'
       ? '강화학습으로 TSP 경로를 만드는 그래프 모델. 학습 정책과 최원 삽입 경로 비교.'
       : research.id === 'fashion-classification'
-        ? 'ResNet 의류 분류 연구. Fashion-MNIST 예측 예시와 직접 구현한 학습·평가 흐름.'
+        ? 'ResNet 의류 분류 연구. Fashion-MNIST 예측 예시와 직접 구현한 학습·평가 과정.'
         : '가상 착용 앱 연구. 인물 사진과 입힐 옷, 착용 결과를 나란히 놓은 예시.',
     kind: 'WebPage',
     research,
