@@ -13,7 +13,9 @@ LANGS=['en','ja','zh-CN','de']
 CONFIG=ROOT/'tools/image-localization-labels.json'
 FONT={}
 for lang in LANGS:
- spec='Arial' if lang in ['en','de'] else ':lang='+lang.replace('zh-CN','zh-cn')
+ # fc-match ':lang=ja'/':lang=zh-cn' may answer with a pan-Unicode face (Arial Unicode MS) whose
+ # middle dot sits left and whose commas sit centred, as in Traditional Chinese. Name native faces.
+ spec={'en':'Arial','de':'Arial','ja':'Hiragino Sans:lang=ja','zh-CN':'Heiti SC:lang=zh-cn'}[lang]
  match=subprocess.check_output(['fc-match','-f','%{file}|%{family}',spec],text=True).split('|')
  FONT[lang]=(match[0],match[1].split(',')[0])
 
@@ -135,15 +137,39 @@ def build(row,lang,work):
    run(['img2webp','-loop','0','-lossy','-q','88',*frames,'-o',dest])
  return {'path':row['path'],'language':lang,'output':str(dest.relative_to(ROOT)),'sha256':hashlib.sha256(dest.read_bytes()).hexdigest()}
 
+NO_LINE_START=set('、。，．・：；？！）」』】〉》…‥ー々ぁぃぅぇぉっゃゅょゎァィゥェォッャュョヮ％')
 def wrapped(text,width,fontPath,size,max_lines):
- font=ImageFont.truetype(fontPath,size);units=list(text) if re.search('[\u3040-\u30ff\u3400-\u9fff]',text) else text.split(' ')
- spacer='' if re.search('[\u3040-\u30ff\u3400-\u9fff]',text) else ' '
- lines=[];line=''
- for unit in units:
-  trial=line+spacer+unit if line else unit
-  if font.getlength(trial)>width and line:lines.append(line);line=unit
-  else:line=trial
- if line:lines.append(line)
+ font=ImageFont.truetype(fontPath,size)
+ if not re.search('[\u3040-\u30ff\u3400-\u9fff]',text):
+  lines=[];line=''
+  for unit in text.split(' '):
+   trial=line+' '+unit if line else unit
+   if font.getlength(trial)>width and line:lines.append(line);line=unit
+   else:line=trial
+  if line:lines.append(line)
+ else:
+  # Japanese/Chinese break between characters, but Latin words and numbers inside them
+  # (Sean Kim, Fashion-MNIST, 1,346) stay whole.
+  units=re.findall(r"[A-Za-z0-9][A-Za-z0-9.,:/+#%&'_-]*|\s+|.",text);rows=[[]]
+  for unit in units:
+   row=rows[-1]
+   # A line never begins with closing punctuation or a small kana: let it hang.
+   if row and not unit.isspace() and unit not in NO_LINE_START and font.getlength(''.join(row+[unit]).rstrip())>width:
+    while row and row[-1].isspace():row.pop()
+    rows.append([unit])
+   elif row or not unit.isspace():row.append(unit)
+  # A last line of one or two characters (ン, す。) reads as a stray glyph; bring a neighbour down,
+  # and keep taking while the line would start with a character that may not lead.
+  if len(rows)>1 and len(''.join(rows[-1]))<=2 and len(''.join(rows[-2]))>4:
+   prev=rows[-2];moved=[]
+   while len(prev)>1:
+    unit=prev.pop()
+    if unit.isspace():break
+    moved.insert(0,unit)
+    if unit not in NO_LINE_START:break
+   while prev and prev[-1].isspace():prev.pop()
+   rows[-1]=moved+rows[-1]
+  lines=[''.join(row).rstrip() for row in rows if row]
  if len(lines)>max_lines:lines=lines[:max_lines];lines[-1]=lines[-1].rstrip(' .,')+'…'
  return lines
 
@@ -153,7 +179,7 @@ def reference_svg(row,lang,ocr):
  import io
  data=io.BytesIO();image.save(data,format='PNG');encoded=base64.b64encode(data.getvalue()).decode()
  family=FONT[lang][1];fontPath=FONT[lang][0];margin=max(12,w*.035)
- badge={'en':'Localized reference · original available','ja':'翻訳参考図・原本を参照可能','zh-CN':'本地化参考图 · 可查看原图','de':'Übersetzte Referenz · Original verfügbar'}[lang]
+ badge={'en':'Localized reference · original available','ja':'翻訳参考図・原本を参照可能','zh-CN':'本地化参考图 · 可查看原图','de':'Übersetztes Referenzbild · Original verfügbar'}[lang]
  heading_size=max(14,min(38,int(w/31)));body_size=max(12,min(24,int(w/55)))
  header=max(54,h*.19);footer=max(80,h*.26);body_height=h-header-footer
  x,y,cw,ch=[a*b for a,b in zip(row['crop'],[sw,sh,sw,sh])]
