@@ -2973,7 +2973,7 @@
         },
         "de": {
           "title": "Bewegungs-Heatmap-Ansicht",
-          "description": "Zeigt, wo die Maus der Besucher lange verweilte, über der Seite. Koordinatenerfassung und Aggregation liefern die Daten für diese Ansicht. Der Screenshot stammt aus dem Vorstellungsmaterial des Dienstes; der Firmenname wurde unkenntlich gemacht."
+          "description": "Zeigt über der Seite, wo die Maus der Besucher lange verweilte. Koordinatenerfassung und Aggregation liefern die Daten für diese Ansicht. Der Screenshot stammt aus den Präsentationsunterlagen des Dienstes; der Firmenname wurde unkenntlich gemacht."
         }
       },
       "source": "assets/cases/voda/heatmap.webp",
@@ -3436,7 +3436,7 @@
         },
         "de": {
           "title": "Ansicht der Nutzerzahlanalyse",
-          "description": "Zeigt Besuchsverläufe nach Uhrzeit und Wochentag samt Prognosewerten. Der Screenshot stammt aus dem Vorstellungsmaterial des Dienstes; der Firmenname wurde unkenntlich gemacht."
+          "description": "Zeigt Besuchsverläufe nach Uhrzeit und Wochentag samt Prognosewerten. Der Screenshot stammt aus den Präsentationsunterlagen des Dienstes; der Firmenname wurde unkenntlich gemacht."
         }
       },
       "source": "assets/cases/voda/charts.webp",
@@ -4929,7 +4929,7 @@
         },
         "zh-CN": {
           "title": "免费在线 STEP、STP 查看器：打开文件与测量尺寸",
-          "description": "当前开启了X剖面。排查空白视图时，请关闭剖面以恢复完整显示。"
+          "description": "当前开启了 X 剖面。画面空白时，可用“关闭剖面”恢复显示。"
         },
         "de": {
           "title": "Kostenloser Online-STEP- und STP-Viewer: Öffnen und Messen",
@@ -6163,7 +6163,7 @@
         },
         "zh-CN": {
           "title": "免费在线 STEP、STP 查看器：打开文件与测量尺寸",
-          "description": "点击全部显示可恢复同一模型。如果关闭了图层，也请在图层选项卡中恢复。"
+          "description": "点击“全部显示”，同一模型重新显示出来。如果关闭了图层，也请在图层选项卡中恢复。"
         },
         "de": {
           "title": "Kostenloser Online-STEP- und STP-Viewer: Öffnen und Messen",

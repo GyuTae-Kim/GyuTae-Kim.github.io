@@ -36,7 +36,7 @@
     "language": "en",
     "path": "assets/og/portfolio.jpg",
     "title": "AI, CAD/CAM & Manufacturing Projects",
-    "description": "Explore Sean Kim's work in 3D AI, CAD/CAM automation, SketchUp manufacturing data and service monitoring, with roles, results and validation limits.",
+    "description": "Explore Sean Kim's work in 3D AI, CAD/CAM automation, SketchUp manufacturing data and service monitoring, with his role and results in each project.",
     "source": "assets/cases/feature-cam/hero.webp"
   },
   {
@@ -44,7 +44,7 @@
     "language": "ja",
     "path": "assets/og/portfolio.jpg",
     "title": "AI・CAD/CAM・製造ソフトウェア開発事例",
-    "description": "3D形状AI、CAD/CAM自動化、SketchUpの製造データ連携、サービス監視の開発事例。Sean Kimが担当した役割、実装結果、検証範囲を確認できます。",
+    "description": "3D形状AI、CAD/CAM自動化、SketchUpの製造データ連携、サービス監視の開発事例。Sean Kimが担当した役割と結果を確認できます。",
     "source": "assets/cases/feature-cam/hero.webp"
   },
   {
@@ -52,7 +52,7 @@
     "language": "zh-CN",
     "path": "assets/og/portfolio.jpg",
     "title": "AI、CAD/CAM 与制造软件开发案例",
-    "description": "查看 Sean Kim 在三维形状 AI、CAD/CAM 自动化、SketchUp 制造数据和服务监控方面的开发案例，了解个人职责、实现结果与验证局限。",
+    "description": "查看 Sean Kim 在三维形状 AI、CAD/CAM 自动化、SketchUp 制造数据和服务监控方面的开发案例，了解他在各项目中的职责与成果。",
     "source": "assets/cases/feature-cam/hero.webp"
   },
   {
@@ -68,7 +68,7 @@
     "language": "en",
     "path": "assets/og/cad-feature-recognition.jpg",
     "title": "3D Machining Feature Recognition & Fusion CAM",
-    "description": "A case study of Sean Kim's work on 3D geometry analysis, AI machining feature recognition and Autodesk Fusion CAM integration, with validation scope.",
+    "description": "A case study of Sean Kim's work on 3D geometry analysis, AI machining feature recognition, machining strategy and Autodesk Fusion CAM integration, plus visualization of simulation results.",
     "source": "assets/cases/feature-cam/step2.webp"
   },
   {
@@ -76,7 +76,7 @@
     "language": "ja",
     "path": "assets/og/cad-feature-recognition.jpg",
     "title": "3D加工フィーチャ認識・Fusion CAM自動化",
-    "description": "3D CAD形状を解析し、AIによる加工フィーチャ認識をAutodesk Fusion CAM自動化につなげた開発事例。Sean Kimの担当範囲とシミュレーションによる検証を紹介します。",
+    "description": "3D CAD形状を解析し、AIによる加工フィーチャ認識をAutodesk Fusion CAMの工程生成につなげた研究開発事例。Sean Kimが担当した形状解析、AI学習、加工戦略設計とシミュレーション結果の可視化を紹介します。",
     "source": "assets/cases/feature-cam/step2.webp"
   },
   {
@@ -84,7 +84,7 @@
     "language": "zh-CN",
     "path": "assets/og/cad-feature-recognition.jpg",
     "title": "三维加工特征识别与 Fusion CAM 自动化",
-    "description": "从三维几何分析、AI 加工特征识别到 Autodesk Fusion CAM 集成的开发案例，介绍 Sean Kim 的职责、加工策略与仿真验证范围。",
+    "description": "从三维几何分析、AI 加工特征识别到生成 Autodesk Fusion CAM 工序的研发案例，介绍 Sean Kim 负责的形状分析、AI 训练、加工策略设计与仿真结果可视化。",
     "source": "assets/cases/feature-cam/step2.webp"
   },
   {
@@ -92,7 +92,7 @@
     "language": "de",
     "path": "assets/og/cad-feature-recognition.jpg",
     "title": "KI-Feature-Erkennung & Fusion-CAM-Automatisierung",
-    "description": "Sean Kims Arbeit an 3D-Geometrieanalyse, KI-gestützter Erkennung von Bearbeitungsmerkmalen und Autodesk-Fusion-CAM-Anbindung, mit Prüfgrenzen.",
+    "description": "Sean Kims Arbeit an 3D-Geometrieanalyse, KI-gestützter Erkennung von Bearbeitungsmerkmalen, Bearbeitungsstrategie und Autodesk-Fusion-CAM-Anbindung, dazu die Visualisierung der Simulationsergebnisse.",
     "source": "assets/cases/feature-cam/step2.webp"
   },
   {
@@ -124,7 +124,7 @@
     "language": "de",
     "path": "assets/og/panel-classification.jpg",
     "title": "KI-Plattenerkennung und parametrische Möbelplanung",
-    "description": "KI für Möbelplatten, Analyse von Verbindungsflächen und Regeln zur Größenänderung. Sean Kims Aufgaben im Team, Implementierung und Grenzen.",
+    "description": "KI für Möbelplatten, Analyse von Kontaktflächen und Regeln zur Größenänderung. Sean Kims Aufgaben im Team, Implementierung und Grenzen.",
     "source": "assets/cases/panel/hero.webp"
   },
   {
@@ -156,7 +156,7 @@
     "language": "de",
     "path": "assets/og/wedraw-pro.jpg",
     "title": "SketchUp im Möbelbau: Planung und Fertigungsdaten",
-    "description": "Wedraw Pro verbindet SketchUp-Möbelmodelle mit Zeichnungen, Stücklisten, Etiketten und CNC-Daten. Sean Kims Aufgaben bei Datenausgabe und Produktionsanbindung.",
+    "description": "Wedraw Pro verbindet SketchUp-Möbelmodelle mit Zeichnungen, Stücklisten, Etiketten und CNC-Daten. Sean Kims Aufgaben bei Datenausgabe und Produktionsübergabe.",
     "source": "assets/cases/wedraw-pro/hero.webp"
   },
   {
@@ -179,7 +179,7 @@
     "id": "service-monitoring",
     "language": "zh-CN",
     "path": "assets/og/service-monitoring.jpg",
-    "title": "制造软件运行与服务故障监控",
+    "title": "制造软件运维与服务故障监控",
     "description": "汇总制造软件的服务器和 PC 应用错误、监控服务故障的开发案例，介绍监控发现的数据库响应延迟和外部对接错误、实际的修复过程，以及 Sean Kim 负责的工作。",
     "source": "assets/cases/operations/dashboard-live-public-1100.webp"
   },
@@ -292,7 +292,7 @@
     "language": "en",
     "path": "assets/og/research.jpg",
     "title": "Reinforcement Learning & Computer Vision",
-    "description": "Undergraduate research on TSP routing, ResNet clothing classification and virtual try-on. Review public code, experiments and limitations.",
+    "description": "Undergraduate research on TSP routing, ResNet clothing classification and virtual try-on: public code, experiment results and trial and error.",
     "source": "assets/research/results/tsp/tours-compare.webp"
   },
   {
@@ -308,7 +308,7 @@
     "language": "zh-CN",
     "path": "assets/og/research.jpg",
     "title": "强化学习与计算机视觉研究",
-    "description": "本科研究项目：TSP 路径搜索、ResNet 服装图像分类和虚拟试衣应用。提供公开代码、复现实验结果、基准比较与研究局限。",
+    "description": "本科研究项目：TSP 路径搜索、ResNet 服装图像分类和虚拟试衣应用。提供公开代码、实验结果与试错记录。",
     "source": "assets/research/results/tsp/tours-compare.webp"
   },
   {
@@ -316,7 +316,7 @@
     "language": "de",
     "path": "assets/og/research.jpg",
     "title": "Reinforcement Learning und Computer Vision",
-    "description": "Forschung im Studium zu TSP-Routen, ResNet-Bildklassifikation und virtueller Anprobe. Öffentlicher Code, Reproduktion, Vergleiche und Grenzen.",
+    "description": "Forschung im Studium zu TSP-Routen, ResNet-Bildklassifikation und virtueller Anprobe. Veröffentlichter Code, Experimentergebnisse und Fehlversuche.",
     "source": "assets/research/results/tsp/tours-compare.webp"
   },
   {
@@ -332,7 +332,7 @@
     "language": "ja",
     "path": "assets/og/fashion-classification.jpg",
     "title": "ResNet衣類画像分類・コンピュータービジョン",
-    "description": "K-Fashionを用いたResNetの学習・評価と、Fashion-MNISTでの再実験。データ拡張、残差接続、クラス別の誤分類を検証した研究です。",
+    "description": "K-Fashionを用いたResNetの学習・評価と、Fashion-MNISTでの実験。データ拡張、残差接続、クラス別の誤分類を検証した研究です。",
     "source": "assets/research/results/classification/prediction-gallery.webp"
   },
   {
@@ -340,7 +340,7 @@
     "language": "zh-CN",
     "path": "assets/og/fashion-classification.jpg",
     "title": "ResNet 服装图像分类与计算机视觉",
-    "description": "介绍使用 K-Fashion 的 ResNet 训练与评估，以及 Fashion-MNIST 复现实验中对数据增强、残差连接和分类错误的分析。",
+    "description": "介绍使用 K-Fashion 的 ResNet 训练与评估，以及在 Fashion-MNIST 实验中对数据增强、残差连接和分类错误的分析。",
     "source": "assets/research/results/classification/prediction-gallery.webp"
   },
   {
@@ -356,7 +356,7 @@
     "language": "en",
     "path": "assets/og/virtual-try-on.jpg",
     "title": "Virtual Try-On App & Computer Vision Integration",
-    "description": "How Sean Kim connected a public virtual try-on model to Flask and Android, covering preprocessing, masks, reused models and integration limits.",
+    "description": "How Sean Kim connected a public virtual try-on model to Flask and Android, covering preprocessing, masks, server and app integration and the reused models.",
     "source": "assets/research/results/try-on/tryon-before-after.webp"
   },
   {
@@ -364,7 +364,7 @@
     "language": "ja",
     "path": "assets/og/virtual-try-on.jpg",
     "title": "バーチャル試着アプリ・画像認識API連携",
-    "description": "公開バーチャル試着モデルとFlask API・Androidアプリを連携した研究。入力前処理とマスク処理、再利用したモデル、担当実装と検証範囲を紹介します。",
+    "description": "公開バーチャル試着モデルをFlask APIとAndroidアプリにまとめた研究。担当した入力前処理とマスク処理、サーバー・アプリ連携、再利用したモデルを紹介します。",
     "source": "assets/research/results/try-on/tryon-before-after.webp"
   },
   {
@@ -372,7 +372,7 @@
     "language": "zh-CN",
     "path": "assets/og/virtual-try-on.jpg",
     "title": "虚拟试衣应用与计算机视觉 API 集成",
-    "description": "将公开虚拟试衣模型连接到 Flask API 和 Android 应用的研究，说明本人负责的输入预处理、掩码处理、服务端集成与模型复用范围。",
+    "description": "将公开虚拟试衣模型与 Flask API 和 Android 应用整合的研究，介绍本人负责的输入预处理、掩码处理、服务端与应用集成，以及复用的模型。",
     "source": "assets/research/results/try-on/tryon-before-after.webp"
   },
   {
@@ -380,7 +380,7 @@
     "language": "de",
     "path": "assets/og/virtual-try-on.jpg",
     "title": "Virtuelle Anprobe: Flask und Android",
-    "description": "Anbindung eines öffentlichen Anprobemodells an Flask und Android: Vorverarbeitung, Masken, wiederverwendete Modelle und Sean Kims Integrationsarbeit.",
+    "description": "Anbindung eines öffentlichen Anprobemodells an Flask und Android: Vorverarbeitung, Masken, Server- und App-Integration und wiederverwendete Modelle.",
     "source": "assets/research/results/try-on/tryon-before-after.webp"
   },
   {

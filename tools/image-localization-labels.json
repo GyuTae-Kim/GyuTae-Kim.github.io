@@ -314,7 +314,7 @@
           ],
           "translations": {
             "en": "Resized panel",
-            "ja": "幅を変更した板材",
+            "ja": "幅を変えたパネル",
             "zh-CN": "宽度已修改的板件",
             "de": "Platte mit geänderter Breite"
           }
@@ -329,7 +329,7 @@
           ],
           "translations": {
             "en": "Connected panels update",
-            "ja": "接合する板材を調整",
+            "ja": "連動するパネル",
             "zh-CN": "相连板件随之调整",
             "de": "Verbundene Platten werden angepasst"
           }
@@ -359,7 +359,7 @@
           ],
           "translations": {
             "en": "When a panel width changes,",
-            "ja": "板材の幅を変えると、",
+            "ja": "パネルの幅を変えると",
             "zh-CN": "修改一块板件的宽度后，",
             "de": "Ändert sich eine Plattenbreite,"
           }
@@ -374,7 +374,7 @@
           ],
           "translations": {
             "en": "connected panels follow",
-            "ja": "接合関係に従って他の板材が",
+            "ja": "接合関係の順に他のパネルも",
             "zh-CN": "相连板件沿接合关系",
             "de": "folgen verbundene Platten"
           }
@@ -389,7 +389,7 @@
           ],
           "translations": {
             "en": "and adjust size and position.",
-            "ja": "寸法と位置を順に調整します。",
+            "ja": "寸法と位置が変わります。",
             "zh-CN": "依次调整尺寸和位置。",
             "de": "und passen Maße und Position an."
           }
@@ -428,7 +428,7 @@
           ],
           "translations": {
             "en": "Resized panel",
-            "ja": "幅を変更した板材",
+            "ja": "幅を変えたパネル",
             "zh-CN": "宽度已修改的板件",
             "de": "Platte mit geänderter Breite"
           }
@@ -443,7 +443,7 @@
           ],
           "translations": {
             "en": "Connected panels update",
-            "ja": "接合する板材を調整",
+            "ja": "連動するパネル",
             "zh-CN": "相连板件随之调整",
             "de": "Verbundene Platten werden angepasst"
           }
@@ -473,7 +473,7 @@
           ],
           "translations": {
             "en": "When a panel width changes,",
-            "ja": "板材の幅を変えると、",
+            "ja": "パネルの幅を変えると",
             "zh-CN": "修改一块板件的宽度后，",
             "de": "Ändert sich eine Plattenbreite,"
           }
@@ -488,7 +488,7 @@
           ],
           "translations": {
             "en": "connected panels follow",
-            "ja": "接合関係に従って他の板材が",
+            "ja": "接合関係の順に他のパネルも",
             "zh-CN": "相连板件沿接合关系",
             "de": "folgen verbundene Platten"
           }
@@ -503,7 +503,7 @@
           ],
           "translations": {
             "en": "and adjust size and position.",
-            "ja": "寸法と位置を順に調整します。",
+            "ja": "寸法と位置が変わります。",
             "zh-CN": "依次调整尺寸和位置。",
             "de": "und passen Maße und Position an."
           }
@@ -595,10 +595,10 @@
             0.06207211877080909
           ],
           "translations": {
-            "en": "Both fixes",
-            "ja": "両方を修正",
-            "zh-CN": "两项均修复",
-            "de": "Beide Korrekturen"
+            "en": "All fixes",
+            "ja": "すべて修正",
+            "zh-CN": "全部修复",
+            "de": "Alle Korrekturen"
           }
         }
       ],
@@ -925,7 +925,7 @@
             "en": "Input photo",
             "ja": "入力写真",
             "zh-CN": "输入照片",
-            "de": "Eingabefoto"
+            "de": "Originalfoto"
           }
         },
         {
@@ -940,7 +940,7 @@
             "en": "Target garment",
             "ja": "着せる衣服",
             "zh-CN": "目标服装",
-            "de": "Zielkleidung"
+            "de": "Kleidungsstück"
           }
         },
         {

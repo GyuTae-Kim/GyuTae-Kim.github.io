@@ -19,7 +19,7 @@ export class SeoService {
     this.document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(tag => tag.remove());
     this.meta.updateTag({ name: 'robots', content: page ? 'index, follow, max-image-preview:large' : 'noindex, follow' });
     if (!page) {
-      this.title.setTitle(translate('없는 페이지 — 김규태 · Sean Kim', language));
+      this.title.setTitle(translate('없는 페이지 | 김규태', language));
       this.meta.updateTag({ name: 'description', content: translate('요청한 페이지를 찾을 수 없습니다. 김규태의 프로젝트·연구·OpenCAD 안내에서 다시 찾아 주세요.', language) });
       this.document.querySelector('link[rel="canonical"]')?.remove();
       this.document.getElementById('site-structured-data')?.remove();
