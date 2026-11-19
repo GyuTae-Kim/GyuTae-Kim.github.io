@@ -503,16 +503,16 @@ export const OTHER_PROJECTS: OtherProject[] = [
         fix: '결과 파일이 생기면 지점을 그리고 버튼을 켜며, 검출이 도는 동안에는 새 검출을 막았습니다.',
       },
     ],
-    // Placeholders until the user captures the Windows app; replace the files and keep the captions.
+    // Captured from the program itself on a Windows runner: tools/scene-player-capture.
     evidence: [
       {
         src: SCENE_PLAYER + 'player-1100.webp',
         full: SCENE_PLAYER + 'player.webp',
         title: '재생 화면',
         alt: '장면 전환 플레이어의 재생 화면. 재생 막대 위에 분할 지점 표식이 있고, 표식 하나에 프레임 미리보기가 떠 있습니다.',
-        caption: '재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다.',
+        caption: '재생 막대의 노란 표식이 장면이 바뀌는 지점입니다. 표식에 마우스를 올리면 그 프레임을 미리 보여 줍니다. 화면에 나온 영상은 Blender Foundation의 Big Buck Bunny입니다(www.bigbuckbunny.org, CC BY 3.0).',
         width: 1100,
-        height: 688,
+        height: 650,
       },
     ],
     moreEvidenceTitle: '플레이어 화면',
@@ -524,7 +524,7 @@ export const OTHER_PROJECTS: OtherProject[] = [
         alt: '플레이어 옆에 붙는 상세 패널. 프레임 이동, 두 가지 장면 분할, 이전과 다음 장면, 분할 지점 추가, 저장 버튼과 미디어 정보가 있습니다.',
         caption: '장면 분할 실행과 장면 이동, 분할 지점 편집, 구간 저장을 이 패널에서 합니다. 영상의 코덱과 해상도 같은 정보도 보여 줍니다.',
         width: 1100,
-        height: 688,
+        height: 623,
       },
     ],
   },
