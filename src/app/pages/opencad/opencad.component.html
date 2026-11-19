@@ -136,6 +136,19 @@
     </ul>
   </section>
 
+  <section class="opencad-section" aria-labelledby="opencad-projects-title">
+    <div class="section-title"><h2 id="opencad-projects-title">{{ 'AI·CAD/CAM 개발 프로젝트' | t }}</h2></div>
+    <ul class="guide-list">
+      <li *ngFor="let project of projects">
+        <p class="guide-meta">{{ (project.category) | t }}</p>
+        <h3><a [routerLink]="('/portfolio/' + project.id) | localLink">{{ (project.title) | t }}</a></h3>
+        <p>{{ (project.subtitle) | t }}</p>
+        <app-icon class="row-arrow" name="arrow-right"></app-icon>
+      </li>
+    </ul>
+    <p class="shortcut-guide"><a class="text-link" [routerLink]="'/portfolio' | localLink">{{ '개발 프로젝트 전체 보기' | t }}<app-icon name="arrow-right"></app-icon></a></p>
+  </section>
+
   <aside class="end-note">
     {{ '열리지 않는 도면이나 먼저 지원했으면 하는 형식이 있으면' | t }}
     <a [href]="'https://github.com/GyuTae-Kim/opencad-dwgdxf/issues' | localLink" target="_blank" rel="noopener noreferrer"

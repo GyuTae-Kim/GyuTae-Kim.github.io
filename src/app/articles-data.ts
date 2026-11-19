@@ -1,5 +1,6 @@
 import { GuideDetails, OPENCAD_GUIDE_DETAILS } from './opencad-guide-details';
 import { CAD_FORMAT_GUIDE } from './cad-format-data';
+import { CASE_STUDIES } from './portfolio-data';
 
 export interface SiteArticle {
   path: string;
@@ -171,8 +172,15 @@ export const SITE_ARTICLES: SiteArticle[] = [
 ].map(article => ({
   ...article,
   guide: OPENCAD_GUIDE_DETAILS[article.path.split('/').pop()!],
-  related: article.path === CAD_FORMAT_GUIDE.path ? article.related : [
+  related: [
     ...article.related,
-    ...(article.category === 'OpenCAD 사용 안내' ? [{ path: CAD_FORMAT_GUIDE.path, label: CAD_FORMAT_GUIDE.title }] : []),
+    ...(article.category === 'OpenCAD 사용 안내' && article.path !== CAD_FORMAT_GUIDE.path ? [{ path: CAD_FORMAT_GUIDE.path, label: CAD_FORMAT_GUIDE.title }] : []),
+    ...(article.category === 'OpenCAD 사용 안내' ? [guideProject(article.path)] : []),
   ],
 })) as SiteArticle[];
+
+// Search visits mostly arrive on the OpenCAD guides, so each guide also links the developer's closest project page.
+function guideProject(path: string): { path: string; label: string } {
+  const project = CASE_STUDIES.find((item) => item.id === (path === '/opencad/guides/open-skp' ? 'wedraw-pro' : 'cad-feature-recognition'))!;
+  return { path: `/portfolio/${project.id}`, label: project.title };
+}

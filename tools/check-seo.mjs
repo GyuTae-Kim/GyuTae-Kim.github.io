@@ -341,6 +341,8 @@ const robots = readFileSync(join(outDir, 'robots.txt'), 'utf8');
 assert.match(robots, /User-agent: \*\s+Allow: \//);
 assert.ok(robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`));
 assert.deepEqual(robots.match(/^Sitemap: .+$/gm), [`Sitemap: ${SITE_URL}/sitemap.xml`], 'one canonical discovery file covers the portfolio and all apps');
+const indexNow = JSON.parse(readFileSync(new URL('./indexnow.json', import.meta.url), 'utf8'));
+assert.equal(readFileSync(join(outDir, `${indexNow.key}.txt`), 'utf8').trim(), indexNow.key, 'IndexNow key file is published at the site root');
 const retiredPages = JSON.parse(readFileSync(new URL('./page-redirects.json', import.meta.url), 'utf8'));
 for (const [from, to] of Object.entries(retiredPages)) {
   for (const { code } of LANGUAGES) {
