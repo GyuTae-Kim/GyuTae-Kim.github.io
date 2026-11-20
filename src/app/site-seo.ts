@@ -29,12 +29,12 @@ export interface SearchPage {
 
 // Search copy describes the work and responsibility documented on each case page.
 const PROJECT_SEARCH_COPY: Record<string, { title: string; description: string }> = {
-  'cad-feature-recognition': { title: '3D 가공 특징 인식·Fusion CAM 자동화 | 김규태', description: '3D CAD 모델의 가공 특징을 AI로 인식해 Autodesk Fusion CAM 공정까지 만든 연구개발 사례입니다. 김규태가 맡은 형상 분석, AI 학습, 가공 전략 설계와 시뮬레이션 결과 시각화를 소개합니다.' },
+  'cad-feature-recognition': { title: '3D 가공 특징 인식·Fusion CAM 자동화 | 김규태', description: '3D CAD 모델의 가공 특징을 AI로 인식해 Autodesk Fusion CAM 공정까지 만든 연구개발 프로젝트입니다. 김규태가 맡은 형상 분석, AI 학습, 가공 전략 설계와 시뮬레이션 결과 시각화를 소개합니다.' },
   'panel-classification': { title: '가구 패널 인식 AI·파라메트릭 설계 | 김규태', description: '가구의 패널 역할을 AI로 인식하고 크기 변경 규칙을 계산하는 파라메트릭 설계 연구입니다. 팀 프로젝트에서 김규태가 맡은 패널·접합면 분석, AI 연구와 계수식 계산을 소개합니다.' },
-  'wedraw-pro': { title: 'SketchUp 가구 설계·제조 데이터 개발 | 김규태', description: 'SketchUp 기반 가구 설계에서 도면·발주·제조 데이터와 생산 투입으로 이어지는 Wedraw Pro 개발 사례입니다. 팀에서 김규태가 리딩한 제조 데이터 출력·생산 투입과 도면·발주 초기 개발을 소개합니다.' },
-  'service-monitoring': { title: '제조 소프트웨어 운영·서비스 장애 감시 | 김규태', description: '제조 소프트웨어의 서버와 PC 앱 오류를 모아 서비스 장애를 감시한 개발 사례입니다. 감시가 찾아낸 DB 응답 지연과 외부 연동 오류, 실제 수정 과정과 김규태의 역할을 소개합니다.' },
-  'voda-architecture': { title: '웹 행동 분석 서비스 VODA 아키텍처 재설계 | 김규태', description: '웹사이트 방문자의 클릭, 스크롤, 페이지뷰를 모으는 분석 서비스 VODA의 아키텍처 재설계 사례입니다. SQS 메시지 처리, 분석 화면의 시간 초과를 해결한 집계 정제기, 풀 페이지 캡처 크롤러 등 김규태가 맡은 개발을 소개합니다.' },
-  'vory-q-curation': { title: '쇼핑몰 개인화 추천 서비스 VORY-Q 설계 | 김규태', description: '쇼핑몰 방문자의 페이지뷰와 구매 이력으로 상품을 추천하는 SaaS VORY-Q의 설계 사례입니다. 헤더 스크립트 연동, REST API와 RDB, 고객 세그먼트, 통계 기반 추천 알고리즘까지 김규태가 맡은 설계와 개발을 소개합니다.' },
+  'wedraw-pro': { title: 'SketchUp 가구 설계·제조 데이터 개발 | 김규태', description: 'SketchUp 기반 가구 설계에서 도면·발주·제조 데이터와 생산 투입으로 이어지는 Wedraw Pro 개발 프로젝트입니다. 팀에서 김규태가 리딩한 제조 데이터 출력·생산 투입과 도면·발주 초기 개발을 소개합니다.' },
+  'service-monitoring': { title: '제조 소프트웨어 운영·서비스 장애 감시 | 김규태', description: '제조 소프트웨어의 서버와 PC 앱 오류를 모아 서비스 장애를 감시한 개발 프로젝트입니다. 감시가 찾아낸 DB 응답 지연과 외부 연동 오류, 실제 수정 과정과 김규태의 역할을 소개합니다.' },
+  'voda-architecture': { title: '웹 행동 분석 서비스 VODA 아키텍처 재설계 | 김규태', description: '웹사이트 방문자의 클릭, 스크롤, 페이지뷰를 모으는 분석 서비스 VODA의 아키텍처 재설계 프로젝트입니다. SQS 메시지 처리, 분석 화면의 시간 초과를 해결한 집계 정제기, 풀 페이지 캡처 크롤러 등 김규태가 맡은 개발을 소개합니다.' },
+  'vory-q-curation': { title: '쇼핑몰 개인화 추천 서비스 VORY-Q 설계 | 김규태', description: '쇼핑몰 방문자의 페이지뷰와 구매 이력으로 상품을 추천하는 SaaS VORY-Q의 설계 프로젝트입니다. 헤더 스크립트 연동, REST API와 RDB, 고객 세그먼트, 통계 기반 추천 알고리즘까지 김규태가 맡은 설계와 개발을 소개합니다.' },
   'scene-change-player': { title: '장면 전환을 표시하는 동영상 플레이어 개발 | 김규태', description: '영상의 장면 전환 지점을 찾아 재생 막대에 표시하는 C# WPF 동영상 플레이어입니다. 분할 지점 미리보기와 타임라인 확대, 장면 이동, 분할 지점 편집, ffmpeg 구간 저장 등 김규태가 개발한 플레이어 기능을 소개합니다.' },
 };
 
@@ -66,8 +66,8 @@ export const SEARCH_PAGES: SearchPage[] = [
   },
   {
     path: '/portfolio',
-    title: 'AI·CAD/CAM·제조 소프트웨어 개발 사례 | 김규태',
-    description: '3D 형상 AI, CAD 자동화, CAM 공정 생성과 가구 제조 소프트웨어 개발 사례입니다. 프로젝트마다 김규태가 맡은 역할과 결과를 소개합니다.',
+    title: 'AI·CAD/CAM·제조 소프트웨어 개발 프로젝트 | 김규태',
+    description: '3D 형상 AI, CAD 자동화, CAM 공정 생성과 가구 제조 소프트웨어 개발 프로젝트를 모았습니다. 프로젝트마다 김규태가 맡은 역할과 결과를 소개합니다.',
     image: 'assets/og/portfolio.jpg',
     imageAlt: '연구에서 제조까지 이어지는 AI·CAD/CAM 개발 프로젝트.',
     kind: 'CollectionPage',
@@ -112,7 +112,7 @@ export const SEARCH_PAGES: SearchPage[] = [
   },
   {
     path: '/notes', title: 'AI·CAD/CAM·가구 제조 소프트웨어 개발 노트 | 김규태',
-    description: 'AI·CAD/CAM 개발자 김규태의 기술 글입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, SketchUp 가구 설계에서 제조 데이터를 만드는 소프트웨어를 개발하며 부딪힌 문제와 확인한 것을 적었습니다.',
+    description: 'AI·CAD/CAM 개발자 김규태의 개발 노트입니다. 3D 가공 특징 인식과 Fusion CAM 자동화, SketchUp 가구 설계에서 제조 데이터를 만드는 소프트웨어를 개발하며 부딪힌 문제와 확인한 것을 적었습니다.',
     image: 'assets/og/portfolio.jpg', imageAlt: '김규태의 AI·CAD/CAM·제조 소프트웨어 개발 노트.', kind: 'CollectionPage',
   },
   ...SITE_ARTICLES.map((article): SearchPage => ({
