@@ -29,7 +29,7 @@ export const OPENCAD_GUIDE_DETAILS: Record<string, GuideDetails> = {
     figures: [
       { src: 'assets/opencad/guide-step-pmi-1440.webp', alt: 'STEP 예제의 PMI 탭에 표시된 폭 20 mm와 구멍 지름 4 mm.', caption: '직접 만든 공개 예제에 저장된 PMI입니다.', width: 1440, height: 865 },
       { src: 'assets/opencad/guide-step-section-1440.webp', alt: '같은 STEP 예제에서 X 단면을 켜고 내부 형상을 확인한 화면.', caption: 'X 단면을 켠 상태입니다. 화면이 비어 보일 때는 단면 끄기로 원래대로 되돌려 봅니다.', width: 1440, height: 865 },
-      { src: 'assets/opencad/guide-step-hidden-1440.webp', alt: '부품을 모두 숨겨 빈 화면이 된 STEP 예제.', caption: '제품 나무에서 조립 전체를 숨긴 상태입니다. 파일을 못 읽은 것이 아니라 표시 설정 때문에 비어 보입니다.', width: 1440, height: 865 },
+      { src: 'assets/opencad/guide-step-hidden-1440.webp', alt: '부품을 모두 숨겨 빈 화면이 된 STEP 예제.', caption: '모델 트리에서 조립 전체를 숨긴 상태입니다. 파일을 못 읽은 것이 아니라 표시 설정 때문에 비어 보입니다.', width: 1440, height: 865 },
       { src: 'assets/opencad/guide-step-restored-1440.webp', alt: '모두 보이기로 같은 STEP 예제를 다시 표시한 화면.', caption: '모두 보이기를 눌러 같은 모델을 다시 표시했습니다. 레이어를 껐다면 레이어 탭에서도 다시 켜세요.', width: 1440, height: 865 },
     ],
   },
