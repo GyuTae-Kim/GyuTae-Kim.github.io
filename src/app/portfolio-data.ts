@@ -99,11 +99,11 @@ export const CASE_STUDIES: CaseStudy[] = [
     number: '01',
     headline: '3D 모델에서 가공 특징을 찾아 Fusion CAM 공정을 자동으로 만듭니다',
     outcome: {
-      result: '3D CAD의 형상을 읽는 AI, 학습용 라벨링 프로그램, 가공 전략 설계 엔진과 Fusion CAM 연동을 개발했습니다. 디지털 트윈에서는 협력 기관이 수행한 시뮬레이션의 결과 시각화만 담당해, 절삭 부하와 가공 결과를 그래프와 3D로 보여 주는 화면을 만들었습니다.',
+      result: '3D CAD의 형상을 읽는 AI, 학습용 라벨링 프로그램, 가공 전략 설계 엔진과 Fusion CAM 연동을 개발했습니다. 디지털 트윈에서는 협력 기관이 수행한 시뮬레이션의 결과 시각화만 담당해, 절삭력과 가공 결과를 그래프와 3D로 보여 주는 화면을 만들었습니다.',
       impact: [
         { title: '반복 작업을 줄이는 공정 설계', text: '면과 홀을 하나씩 골라 공정을 설정하던 반복 작업이 줄어, 숙련자는 공구와 가공 조건을 검토하는 데 시간을 더 쓸 수 있습니다.' },
         { title: '숙련자의 노하우를 함께 쓰기', text: '숙련자가 형상을 보고 공정을 짜는 방식을 소프트웨어에 담아 두면, CAM 경험이 적은 작업자나 작은 제조 현장도 그 방식을 쓸 수 있습니다.' },
-        { title: '가공 전 시뮬레이션으로 시행착오 줄이기', text: '가공하기 전에 절삭 부하와 설계 대비 편차를 시뮬레이션으로 확인하면, 시행착오로 버리는 소재와 공구, 시간을 줄일 수 있습니다.' },
+        { title: '가공 전 시뮬레이션으로 시행착오 줄이기', text: '가공하기 전에 절삭력과 설계 대비 편차를 시뮬레이션으로 확인하면, 시행착오로 버리는 소재와 공구, 시간을 줄일 수 있습니다.' },
       ],
     },
     scopeLine: '검증은 Fusion·MDT 시뮬레이션까지 · 실제 가공 품질 승인 아님',
@@ -264,7 +264,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     evidence: [
       {
         id: 'cam-strategy', title: '인식한 가공 특징으로 만든 Fusion CAM 공정',
-        introduction: '1–3은 앞면 셋업에서 하는 대표적인 Fusion CAM 공정이고, 4는 가공 방향을 바꿔 반대면을 이어서 가공하는 공정입니다. Fusion 화면의 파란 선은 절삭 경로, 노란 선은 경로 사이를 오가는 이동입니다.',
+        introduction: '1~3은 앞면 셋업에서 하는 대표적인 Fusion CAM 공정이고, 4는 가공 방향을 바꿔 반대면을 이어서 가공하는 공정입니다. Fusion 화면의 파란 선은 절삭 경로, 노란 선은 경로 사이를 오가는 이동입니다.',
         figures: [
           { title: '1 · 외곽 소재 황삭', src: 'assets/cases/feature-cam/strategy-stock.webp', alt: '부품 바깥쪽 소재를 층별로 제거하는 Fusion 외곽 황삭 경로', caption: '부품 외곽에 남은 소재를 여러 깊이로 나누어 제거합니다.', kind: 'product' },
           { title: '2 · 홀 드릴링', src: 'assets/cases/feature-cam/strategy-drill.webp', alt: '네 개 홀 위치에 생성된 Fusion 드릴링 경로', caption: '홀의 위치와 깊이에 맞춰 드릴을 선택하고 축 방향의 가공 경로를 만듭니다.', kind: 'product' },
@@ -276,7 +276,7 @@ export const CASE_STUDIES: CaseStudy[] = [
             caption: '앞면의 홀·포켓 가공을 마치면 부품을 뒤집어 고정하는 다음 셋업으로 전환합니다. 모델 좌표계 기준 공구 접근 방향을 +Z에서 −Z로 바꾸고, 뒷면 상면 황삭 → 외곽 황삭 → 윤곽 정삭을 이어갑니다.',
             kind: 'product',
             setupViews: [
-              { title: '셋업 1 · 앞면 포켓 황삭 (+Z)', src: 'assets/cases/feature-cam/setup-front-cam.webp', alt: '앞면의 +Z 방향에서 내부 다단 포켓 황삭 경로를 표시한 실제 Fusion 캡처', caption: 'Fusion에서 앞면의 내부 포켓 황삭 경로를 표시한 화면입니다. 1–3번 공정은 이 +Z 방향의 셋업에서 진행합니다.', kind: 'product' },
+              { title: '셋업 1 · 앞면 포켓 황삭 (+Z)', src: 'assets/cases/feature-cam/setup-front-cam.webp', alt: '앞면의 +Z 방향에서 내부 다단 포켓 황삭 경로를 표시한 실제 Fusion 캡처', caption: 'Fusion에서 앞면의 내부 포켓 황삭 경로를 표시한 화면입니다. 1~3번 공정은 이 +Z 방향의 셋업에서 진행합니다.', kind: 'product' },
               { title: '셋업 2 · 뒷면 상면 황삭 (−Z)', src: 'assets/cases/feature-cam/setup-back-face-cam.webp', alt: '반대면의 −Z 방향에서 뒷면 상면 황삭 경로를 표시한 실제 Fusion 캡처', caption: '같은 부품을 반대면에서 본 Fusion 화면입니다. 부품을 뒤집는 셋업 전환 후, −Z 방향의 뒷면 상면 황삭부터 이어갑니다.', kind: 'product' },
               { title: '셋업 2 · 뒷면 윤곽 정삭', src: 'assets/cases/feature-cam/setup-back-contour-cam.webp', alt: '같은 뒷면 시점에서 외곽 윤곽 정삭 경로를 표시한 실제 Fusion 캡처', caption: '같은 뒷면 시점에서 외곽 윤곽의 정삭 경로를 표시했습니다. 뒷면의 상면·외곽 황삭 다음에 정삭이 이어집니다.', kind: 'product' },
             ],
@@ -285,7 +285,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         id: 'mdt-visualization', title: '디지털 트윈 결과 그래프와 3D 화면',
-        introduction: '디지털 트윈(MDT) 시뮬레이션은 협력 기관이 수행했습니다. 그 결과를 받아 보여 주는 그래프와 3D 시각화만 담당했습니다. 아래는 보관된 MDT 분석 결과의 절삭 부하와 가공 형상을 시각화한 화면입니다.',
+        introduction: '디지털 트윈(MDT) 시뮬레이션은 협력 기관이 수행했습니다. 그 결과를 받아 보여 주는 그래프와 3D 시각화만 담당했습니다. 아래는 보관된 MDT 분석 결과의 절삭력과 가공 형상을 시각화한 화면입니다.',
         figures: [
           { title: '절삭력·칩 두께와 NC 구간', src: 'assets/cases/feature-cam/mdt-force.webp', alt: 'NC 구간별 최대 절삭력과 칩 두께, 평균·P95 통계, 시간별 절삭력 그래프가 있는 MDT 결과 뷰어', caption: '가공 구간을 선택해 절삭력·칩 두께를 비교하고, 최댓값 시점의 NC 블록·공구·이송·회전수를 살펴봅니다.', kind: 'product' },
           { title: '가공 형상과 설계 대비 편차', src: 'assets/cases/feature-cam/mdt-surface.webp', alt: '설계 모델과 MDT 가공 결과를 겹쳐 설계면과 남은 소재를 색상으로 구분하는 3D 화면', caption: '가공 결과를 3D로 돌리고 확대해 봅니다. 공차를 기준으로 설계면, 남은 소재, 과삭을 색으로 나누고 영역 비율도 보여 줍니다.', kind: 'product' },
@@ -394,11 +394,11 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: '제조 데이터 생성·확인',
-        text: '연결 피스와 하드웨어를 배치하고 BOM·도면·엣지밴딩을 계산합니다. 생성한 가공 코드는 NC 뷰어로 열어 가공 면과 홀 위치를 확인합니다.',
-        did: ['연결 피스 위치와 하드웨어 배치', 'BOM, 도면, 엣지밴딩 계산', '생성한 가공 코드의 가공 면·홀 위치 확인'],
+        text: '연결 피스와 하드웨어를 배치하고 BOM·도면·엣지밴딩을 계산합니다. 생성한 가공 파일은 NC 뷰어로 열어 가공 면과 홀 위치를 확인합니다.',
+        did: ['연결 피스 위치와 하드웨어 배치', 'BOM, 도면, 엣지밴딩 계산', '생성한 가공 파일의 가공 면·홀 위치 확인'],
         image: 'assets/cases/panel/step4.webp',
         imageAlt: 'NC 뷰어에서 판재 아랫면의 드릴 가공 60개를 3D로 확인하는 화면',
-        imageCaption: '생성한 가공 코드를 NC 뷰어에서 확인하는 화면입니다. 판재의 가공 면과 홀 위치를 살펴봅니다.',
+        imageCaption: '생성한 가공 파일을 NC 뷰어에서 확인하는 화면입니다. 판재의 가공 면과 홀 위치를 살펴봅니다.',
       },
     ],
     diagramLabels: ['패널·접합면', 'AI 패널 인식', '관계 수식화', '제조 데이터 확인'],
@@ -416,7 +416,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     number: '03',
     headline: '디자이너의 설계가 공장의 가공 데이터가 됩니다',
     outcome: {
-      result: 'SketchUp으로 설계한 가구에서 BOM, 라벨, 가공 도면, 가공 코드를 출력하는 기능을 만들었습니다. 네스팅기와 스키퍼마다 다른 투입 방향, 공구 위치, 가공 순서를 반영했고, 판재를 돌리거나 뒤집어도 가공 위치와 엣지밴드, 결 방향이 따라가게 했습니다.',
+      result: 'SketchUp으로 설계한 가구에서 BOM, 라벨, 가공 도면, 가공 파일을 출력하는 기능을 만들었습니다. 네스팅기와 스키퍼마다 다른 투입 방향, 공구 위치, 가공 순서를 반영했고, 판재를 돌리거나 뒤집어도 가공 위치와 엣지밴드, 결 방향이 따라가게 했습니다.',
       impact: [
         { title: '설계 정보 재입력 줄이기', text: '설계한 패널과 하드웨어 정보를 도면, 발주, 제조 데이터에 이어 쓰므로, 부서나 공장으로 넘어갈 때 치수와 가공 정보를 다시 입력하는 일을 줄일 수 있습니다.' },
         { title: '현장 노하우를 규칙으로 남기기', text: '기계별 투입 방향과 도어컵·찬넬 가공 순서를 소프트웨어 규칙으로 만들어, 가공 파일을 출력할 때마다 숙련 작업자의 판단이 반영됩니다.' },
@@ -426,7 +426,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     scopeLine: '',
     expandedDetails: true,
     stats: [
-      { value: '4종', label: 'BOM · 라벨 · 가공 도면 · 가공 코드 출력' },
+      { value: '4종', label: 'BOM · 라벨 · 가공 도면 · 가공 파일 출력' },
       { value: '2종', label: '네스팅기 · 스키퍼에 맞춘 가공 파일' },
       { value: '웹 뷰어', label: '원장 배치 · NC 가공 · 2D 도면 확인' },
     ],
@@ -491,7 +491,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: '커넥터로 제조 데이터',
-        text: '제조 담당자가 커넥터에서 도어 결맞춤 그룹과 네스팅을 확인하고 BOM, 라벨, 가공 도면, MPR·PGI 가공 코드를 한 번에 출력합니다.',
+        text: '제조 담당자가 커넥터에서 도어 결맞춤 그룹과 네스팅을 확인하고 BOM, 라벨, 가공 도면, MPR·PGI 가공 파일을 한 번에 출력합니다.',
         did: [
           '제조 모드와 출력 (BOM, 라벨, 가공 도면, MPR·PGI)',
           '경첩, 런너, 리프트 가공을 판재에 투영',
@@ -504,8 +504,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       },
       {
         title: '생산 투입',
-        text: '네스팅과 가공 코드를 현장 CNC로 넘기기 전에 웹 네스팅 뷰어와 NC 뷰어로 확인하고, 라벨을 붙여 생산합니다.',
-        did: ['네스팅 웹 뷰어 (원장 배치, 도어 결맞춤 그룹)', 'NC 뷰어로 가공 코드 확인', '2D CAD 웹 뷰어'],
+        text: '네스팅과 가공 파일을 현장 CNC로 넘기기 전에 웹 네스팅 뷰어와 NC 뷰어로 확인하고, 라벨을 붙여 생산합니다.',
+        did: ['네스팅 웹 뷰어 (원장 배치, 도어 결맞춤 그룹)', 'NC 뷰어로 가공 파일 확인', '2D CAD 웹 뷰어'],
         image: 'assets/cases/wedraw-pro/step4.webp',
         imageAlt: '네스팅 뷰어의 도어 결맞춤 그룹 목록과 원장 위 부품 배치',
         imageCaption: '원장 위 부품 배치와 도어 결맞춤 그룹을 생산 전에 확인하는 웹 뷰어입니다.',
@@ -517,7 +517,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     figure: {
       src: 'assets/cases/wedraw-pro/hero.webp',
       alt: '가구빌더로 설계한 데모 주방(몸통 18개)을 SketchUp에서 본 화면',
-      caption: '고객 데이터 대신 데모 주방으로 보여 주는 설계 결과입니다. 이 모델에서 도면·BOM·라벨·가공 코드를 생성합니다.',
+      caption: '고객 데이터 대신 데모 주방으로 보여 주는 설계 결과입니다. 이 모델에서 도면·BOM·라벨·가공 파일을 생성합니다.',
       kind: 'product',
     },
   },

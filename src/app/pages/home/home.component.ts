@@ -16,7 +16,7 @@ const PROJECT_INTROS: Record<string, { title?: string; result: string; role: str
     role: '팀에서 패널 인식 AI와 패널의 크기·위치 변화를 계산하는 계수식 구성을 맡았습니다.',
   },
   'wedraw-pro': {
-    result: 'SketchUp 설계를 BOM·라벨·도면·가공 코드로 출력하고 웹에서 확인하게 했습니다.',
+    result: 'SketchUp 설계를 BOM·라벨·도면·가공 파일로 출력하고 웹에서 확인하게 했습니다.',
     role: '팀에서 제조 데이터 출력·생산 투입과 도면·발주 초기 개발을 리딩했습니다.',
   },
   'service-monitoring': {
