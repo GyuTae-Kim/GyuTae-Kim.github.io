@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { I18nService } from '../../i18n/i18n.service';
 import { OPENCAD_TOOLS, OPENCAD_PROJECTS } from '../../opencad-data';
 import { SITE_ARTICLES } from '../../articles-data';
 import { CASE_STUDIES } from '../../portfolio-data';
@@ -30,6 +31,18 @@ export class OpenCadComponent {
 
   // Most search visits land on this hub, so the developer's project pages are linked from it directly.
   projects = CASE_STUDIES;
+
+  // Embedding the viewers in another site (opencad-site-kit). The demo page is bilingual and not
+  // localized, so it skips localLink, which would add a language path to a gyutae-kim.github.io URL.
+  readonly embedDemo = 'https://gyutae-kim.github.io/opencad-site-kit/';
+
+  constructor(private readonly i18n: I18nService) {}
+
+  get embedGuide(): string {
+    return this.i18n.language === 'ko'
+      ? 'https://github.com/GyuTae-Kim/opencad-site-kit/blob/main/docs/EMBED.md'
+      : 'https://github.com/GyuTae-Kim/opencad-site-kit/blob/main/docs/EMBED.en.md';
+  }
 
   srcset(base: string): string {
     return `${base}-720.webp 720w, ${base}-1440.webp 1440w`;

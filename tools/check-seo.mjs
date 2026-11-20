@@ -25,6 +25,8 @@ const descriptions = new Set();
 const paths = new Set(SEARCH_PAGES.flatMap((page) => [page.path, page.path.replace(/\/+$/, '') || '/']));
 // These linked applications belong to separate repositories on the same Pages host.
 const hostedApps = new Set(OPENCAD_TOOLS.filter((tool) => tool.url).flatMap((tool) => LANGUAGES.map(({code}) => localizedHref(tool.url,code))));
+// Project pages on this host that the site links to but neither builds nor lists in its sitemaps (the opencad-site-kit embed demo).
+const linkedProjectPages = new Set(['https://gyutae-kim.github.io/opencad-site-kit/']);
 const verification = JSON.parse(readFileSync(new URL('./search-verification.json', import.meta.url), 'utf8'));
 const checkedImages = new Set();
 // Detail covers must stay tied to their subject instead of falling back to a collection cover.
@@ -270,7 +272,7 @@ for (const page of SEARCH_PAGES) {
     for (const anchor of root.querySelectorAll('a[href]')) {
       const link = new URL(anchor.href);
       if (link.origin !== SITE_URL) continue;
-      assert.ok(paths.has(link.pathname) || paths.has(link.pathname.replace(/\/$/, '')) || hostedApps.has(link.origin + link.pathname) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
+      assert.ok(paths.has(link.pathname) || paths.has(link.pathname.replace(/\/$/, '')) || hostedApps.has(link.origin + link.pathname) || linkedProjectPages.has(link.origin + link.pathname) || (link.pathname.startsWith('/assets/') && existsSync(join(outDir, decodeURIComponent(link.pathname)))), `${file}: unknown internal link ${link.pathname}`);
       if (link.pathname === page.path && link.hash) {
         assert.ok(document.getElementById(decodeURIComponent(link.hash.slice(1))), `${file}: broken fragment ${link.hash}`);
       }
