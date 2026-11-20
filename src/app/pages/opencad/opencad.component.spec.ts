@@ -78,4 +78,12 @@ describe('OpenCadComponent', () => {
     ]);
     expect(samples.every(link => link.textContent?.includes('예제로 먼저 보기'))).toBeTrue();
   });
+  it('links the embed demo without a language path and the install guide on GitHub', () => {
+    const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('.embed-links a'));
+    expect(links.map((link) => link.getAttribute('href'))).toEqual([
+      'https://gyutae-kim.github.io/opencad-site-kit/',
+      'https://github.com/GyuTae-Kim/opencad-site-kit/blob/main/docs/EMBED.md',
+    ]);
+    expect(links.every((link) => link.target === '_blank' && link.rel.includes('noopener'))).toBeTrue();
+  });
 });

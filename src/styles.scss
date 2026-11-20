@@ -2306,6 +2306,7 @@ app-icon.row-arrow {
   overflow-wrap: anywhere;
 }
 .page-intro > .shortcut-guide { margin-top: 14px; }
+.embed-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 @media (min-width: 1000px) {
   .tool-shortcuts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }

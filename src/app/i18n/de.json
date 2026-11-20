@@ -1999,5 +1999,9 @@
   "2021.06–2022.01": "06/2021–01/2022",
   "2025.05.13": "13.05.2025",
   "2025.11.21": "21.11.2025",
-  "2025.12.12": "12.12.2025"
+  "2025.12.12": "12.12.2025",
+  "내 웹사이트에 넣기": "In die eigene Website einbinden",
+  "블로그나 제품 소개 페이지에도 스크립트 한 줄로 이 뷰어를 넣을 수 있습니다. 파일은 그 페이지와 뷰어 사이에서만 오가고 서버로 보내지 않습니다.": "Mit einer Zeile Skript lassen sich diese Viewer auch in einen Blog oder eine Produktseite einbinden. Dateien gehen nur zwischen dieser Seite und dem Viewer hin und her und werden an keinen Server gesendet.",
+  "데모 페이지에서 써 보기": "Auf der Demoseite ausprobieren",
+  "설치 방법": "Installation"
 }
