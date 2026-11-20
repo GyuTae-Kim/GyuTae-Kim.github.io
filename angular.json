@@ -33,7 +33,8 @@
               "src/favicon-32x32.png",
               "src/site.webmanifest",
               "src/404.html",
-              "src/robots.txt"
+              "src/robots.txt",
+              "src/6ac1ec8e3c2d4c93becd16277df90980.txt"
             ],
             "styles": ["src/styles.scss"],
             "baseHref": "/",

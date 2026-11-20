@@ -20,6 +20,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:content-dates
+      - run: npm run test:indexnow
       - run: npm run build
       - run: npm run check:seo
       - run: npm run check:i18n

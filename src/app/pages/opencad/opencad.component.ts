@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { OPENCAD_TOOLS, OPENCAD_PROJECTS } from '../../opencad-data';
 import { SITE_ARTICLES } from '../../articles-data';
+import { CASE_STUDIES } from '../../portfolio-data';
 
 @Component({
   selector: 'app-opencad',
@@ -26,6 +27,9 @@ export class OpenCadComponent {
     ...article,
     tool: OPENCAD_TOOLS.find((tool) => tool.url === article.viewer?.url),
   }));
+
+  // Most search visits land on this hub, so the developer's project pages are linked from it directly.
+  projects = CASE_STUDIES;
 
   srcset(base: string): string {
     return `${base}-720.webp 720w, ${base}-1440.webp 1440w`;

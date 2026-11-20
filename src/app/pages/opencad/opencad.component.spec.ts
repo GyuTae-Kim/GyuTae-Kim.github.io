@@ -52,6 +52,13 @@ describe('OpenCadComponent', () => {
     expect(skp.textContent).toContain('SketchUp 6~2026');
   });
 
+  it('links each developer project page directly from the hub', () => {
+    const links = Array.from(page.querySelectorAll<HTMLAnchorElement>('[aria-labelledby="opencad-projects-title"] a'));
+    expect(links.map((link) => link.getAttribute('href'))).toEqual([
+      '/portfolio/cad-feature-recognition', '/portfolio/panel-classification', '/portfolio/wedraw-pro', '/portfolio',
+    ]);
+  });
+
   it('links the task guides', () => {
     const guides = Array.from(page.querySelectorAll<HTMLAnchorElement>('[aria-labelledby="opencad-guides-title"] .guide-list a'));
     expect(guides.map((link) => link.getAttribute('href'))).toEqual([
