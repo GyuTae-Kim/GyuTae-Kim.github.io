@@ -36,10 +36,14 @@ export function contentFingerprint(html, assetBytes, pageUrl = 'https://gyutae-k
     ]));
     const cover = doc.querySelector('meta[property="og:image"]')?.content;
     if (cover) images.add(cover);
+    // The WebSite node is the same site-wide identity on every page (its names
+    // feed the search result site name). Editing it is not an edit of the page.
+    const pageData = (data) => Array.isArray(data?.['@graph'])
+      ? { ...data, '@graph': data['@graph'].filter(node => node?.['@type'] !== 'WebSite') } : data;
     const assets = [...images].map(src => new URL(src, doc.baseURI)).filter(url => url.origin === new URL(pageUrl).origin)
       .map(url => [url.pathname, digest(assetBytes(url.pathname))]).sort(([a], [b]) => a.localeCompare(b));
     return digest(JSON.stringify({ title: doc.title, canonical: doc.querySelector('link[rel="canonical"]')?.href,
-      metadata, data: [...doc.querySelectorAll('script[type="application/ld+json"]')].map(el => withoutDates(JSON.parse(el.textContent))),
+      metadata, data: [...doc.querySelectorAll('script[type="application/ld+json"]')].map(el => withoutDates(pageData(JSON.parse(el.textContent)))),
       body: tree(doc.querySelector('main')), assets }));
   } finally { dom.window.close(); }
 }
