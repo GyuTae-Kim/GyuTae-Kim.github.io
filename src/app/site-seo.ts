@@ -8,6 +8,8 @@ import { LANGUAGES, Language, languageFromUrl, languagePath, localizedHref, orig
 
 export const SITE_URL = 'https://gyutae-kim.github.io';
 export const SITE_NAME = '김규태 · Sean Kim';
+// Shorter names first; the lowercase host is Google's documented site-name backup.
+export const SITE_ALTERNATE_NAMES = ['김규태', 'Sean Kim', 'gyutae-kim.github.io'] as const;
 // All sharing covers use the same small, widely supported JPEG format.
 export const SHARE_IMAGE = { width: 1200, height: 630, type: 'image/jpeg' };
 export function contentModified(path: string): string {
@@ -184,7 +186,7 @@ export function structuredData(page: SearchPage): object {
       email: 'mailto:GyuTae.K1020@gmail.com', sameAs: ['https://github.com/GyuTae-Kim'],
       knowsAbout: ['AI 개발', 'Python', '3D 형상 AI', '가공 특징 인식', 'CAD/CAM', 'CAD 자동화', '제조 소프트웨어', 'Autodesk Fusion API', 'SketchUp', '가구 제조 데이터', '강화학습', '컴퓨터 비전'],
     },
-    { '@type': 'WebSite', '@id': websiteId, url: `${SITE_URL}/`, name: SITE_NAME, alternateName: ['김규태 개발자 포트폴리오', 'Sean Kim Portfolio'],
+    { '@type': 'WebSite', '@id': websiteId, url: `${SITE_URL}/`, name: SITE_NAME, alternateName: [...SITE_ALTERNATE_NAMES],
       description: 'AI·CAD/CAM 개발자 김규태의 연구개발·제조 소프트웨어 프로젝트와 연구 기록',
       inLanguage: 'ko', publisher: { '@id': personId } },
     {
@@ -279,6 +281,12 @@ export function structuredData(page: SearchPage): object {
   person['alternateName'] = ['김규태', 'Sean Kim', 'GyuTae-Kim'].filter(name => name !== person['name']);
   person['url'] = SITE_URL + languagePath('/', language);
   person['mainEntityOfPage'] = { '@id': `${person['url']}#webpage` };
+  // One website has one site name. Google reads it from the root home page and
+  // otherwise falls back to the parent host name ("GitHub"), so every language
+  // repeats the same untranslated names, ending with the lowercase host backup.
+  const website = localized.find(node => node['@id'] === websiteId)!;
+  website['name'] = SITE_NAME;
+  website['alternateName'] = [...SITE_ALTERNATE_NAMES];
   // This is one multilingual website; each page and work has its own language.
   for (const node of localized) if ('inLanguage' in node) {
     node['inLanguage'] = node['@type'] === 'WebSite' ? LANGUAGES.map(({ code }) => code) : language;

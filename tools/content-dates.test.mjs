@@ -35,6 +35,12 @@ test('root-relative and base-relative spellings of one asset are the same conten
   assert.equal(contentFingerprint(base, bytes), contentFingerprint(spelled('/assets/a.jpg', '/assets/a.jpg 336w, /assets/b.jpg 672w', '/assets/a.jpg'), bytes));
   assert.notEqual(contentFingerprint(base, bytes), contentFingerprint(spelled('assets/c.jpg', 'assets/a.jpg 336w, assets/b.jpg 672w', 'assets/a.jpg'), bytes));
 });
+test('the site-wide WebSite identity is not page content, while page nodes still are', () => {
+  const graph = (siteNames, pageName = 'Page') => page('Body').replace('{"name":"Page","dateModified":"2026-01-01T00:00:00Z"}',
+    JSON.stringify({ '@graph': [{ '@type': 'WebSite', '@id': '/#website', name: 'Site', alternateName: siteNames }, { '@type': 'WebPage', name: pageName }] }));
+  assert.equal(contentFingerprint(graph(['A']), bytes), contentFingerprint(graph(['A', 'example.test']), bytes));
+  assert.notEqual(contentFingerprint(graph(['A']), bytes), contentFingerprint(graph(['A'], 'Renamed page'), bytes));
+});
 test('rejects invalid calendar dates and future timestamps', () => {
   assert.throws(() => validateDate('2026-02-30T00:00:00Z'));
   assert.throws(() => validateDate('2999-01-01T00:00:00Z'));

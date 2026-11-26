@@ -50,6 +50,9 @@ GA 기본 측정기준인 **콘텐츠 그룹**으로 소개·가이드·실행 �
 | `sample_open_success` | 예제를 표시함 | `tool`, `input_kind=sample`, `file_format`, `duration_ms` |
 | `sample_open_error` | 예제를 열지 못함 | 위 값과 `error_code` |
 | `export_complete` | 내보내기 다운로드 시작 또는 직접 파일 저장 완료 | `tool`, `export_format` |
+| `contact_open` | 홈페이지에서 메일 링크나 GitHub 프로필 링크를 누름 | `tool`, `contact_method`(`email`·`github`), 공개 페이지 정보 |
+
+`contact_open`은 포트폴리오를 본 사람이 연락하려 한 신호다. 메일 주소·제목·본문은 보내지 않고 연락 수단만 보낸다. 저장소 링크는 계속 `source_open`으로 센다.
 
 `input_kind`는 `local`, `url`, `sample` 중 하나다. 취소되거나 새 요청으로 대체된 열기는 성공으로 집계하지 않는다.
 다운로드 방식의 내보내기는 브라우저에 저장을 요청했다는 뜻이며 디스크 저장 완료를 입증하지 않는다. 직접 파일 저장을 지원하는 경우 쓰기를 마친 뒤 기록한다.
@@ -64,6 +67,19 @@ GA 기본 측정기준인 **콘텐츠 그룹**으로 소개·가이드·실행 �
 5. `duration_ms`는 이벤트 범위 맞춤 측정항목(밀리초)으로 등록한다. `file_open_success`를 주요 이벤트로 지정한다. 예제 성공은 여기에 포함되지 않는다.
 6. 이벤트 데이터 보관은 14개월로 설정했다. 홈페이지 루트의 Search Console 속성 `https://gyutae-kim.github.io/`를 같은 웹 스트림에 연결했다.
 7. 최초 배포 후 허용/거부, 페이지 이동, 예제·실제 파일 열기, 내보내기를 확인한다. 실시간과 이벤트 요청에서 파일명·주소가 빠져 있는지 확인한 뒤 분석을 시작한다.
+8. `contact_method`는 이벤트 범위 맞춤 측정기준 「연락 수단」으로 등록했다. GA는 최근 28일 안에 들어온 이벤트만 주요 이벤트로 지정할 수 있으므로, 배포 뒤 첫 `contact_open`이 들어오면 주요 이벤트로 지정한다. OpenCAD 사용은 `file_open_success`, 포트폴리오 관심은 `contact_open`으로 따로 본다.
+9. 데이터 필터 **Internal Traffic**(내부 트래픽, `traffic_type=internal` 제외)는 2026-11-26 웹앱이 `opencad-site-kit` 0.4.0으로 배포된 뒤 활성으로 바꿨다. 제외된 데이터는 복구되지 않고, 바꾸기 전 수집분에는 소급 적용되지 않는다.
+10. 세션 시간 제한은 기본 30분을 유지한다. 도면을 오래 보다가 다시 조작하면 페이지 조회 없는 새 세션이 생겨 방문 페이지가 `(not set)`으로 잡힌다. 그래도 늘리지 않는 이유: 늘린 시간 안에 검색 등 다른 경로로 다시 들어온 방문이 이전 세션에 합쳐져 유입 경로가 사라지고, 바꾸기 전 기간과 세션 수를 비교할 수 없게 된다.
+11. 기본 채널 그룹은 `cn.bing.com`·`m.search.naver.com` 검색 유입과 `weixin110.qq.com`(위챗 링크 확인 페이지)을 추천(Referral)으로 분류한다. 검색·소셜로 묶어 보려면 맞춤 채널 그룹을 만든다.
+
+## 내부·QA 방문 제외
+
+소유자와 검증 방문은 `traffic_type=internal`을 붙여 보내고, 위 데이터 필터로 보고서에서 뺀다.
+
+- 이 브라우저 전체: 아무 공개 페이지에 `#ga-internal=on`을 붙여 한 번 연다(예: `https://gyutae-kim.github.io/#ga-internal=on`). 해제는 `#ga-internal=off`. 같은 출처의 홈페이지·앱이 같은 저장 값(`opencad.analytics-internal.v1`)을 읽는다.
+- 배포 검증 링크: `?utm_source=qa&utm_medium=verification`을 붙이면 그 탭의 방문만 내부로 표시한다.
+- 표시는 방문 통계 허용·기본 방문 선택과 별개다. 수집을 거절한 방문에는 처음부터 아무것도 보내지 않는다.
+- 웹앱(DWG/DXF·NC·STEP·SKP)은 `opencad-site-kit`의 분석 어댑터를 쓰므로, 같은 표시를 읽도록 그쪽에도 반영해야 앱 사용 통계에서 빠진다.
 
 ## 분석 방법
 

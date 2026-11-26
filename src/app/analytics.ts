@@ -24,6 +24,7 @@ let pageReferrer = '';
 let lastPage = '';
 let pageReady = false;
 let vitalsStarted = false;
+let internal = false;
 
 const GUIDE_KEYS = new Set(['open-dwg-dxf', 'measure-export', 'open-step-stp', 'open-skp', 'check-nc-toolpath', 'choose-cad-format']);
 const ENTRY_POINTS = new Set(['hub_shortcut', 'format_table']);
@@ -44,6 +45,35 @@ export function navigationEvent(href: string, entryPoint?: string): { name: stri
   return undefined;
 }
 
+/** Recruiter contact intent: only the channel is measured, never the address or message. */
+export function contactEvent(href: string): { name: string; params: Record<string, string> } | undefined {
+  try {
+    const url = new URL(href);
+    if (url.protocol === 'mailto:') return { name: 'contact_open', params: { contact_method: 'email' } };
+    if (url.protocol === 'https:' && url.hostname === 'github.com' && /^\/GyuTae-Kim\/?$/i.test(url.pathname)) return { name: 'contact_open', params: { contact_method: 'github' } };
+  } catch { /* Not a contact link. */ }
+  return undefined;
+}
+
+const INTERNAL_KEY = 'opencad.analytics-internal.v1';
+/**
+ * Owner and QA visits are tagged `traffic_type=internal` so the GA4 "Internal
+ * Traffic" data filter can drop them. `#ga-internal=on|off` marks this browser
+ * (shared with the apps on the same origin); a `utm_source=qa` link marks only
+ * the current tab.
+ */
+export function internalTraffic(search: string, hash: string, store: { local?: Storage; session?: Storage } = {}): boolean {
+  try {
+    const local = store.local ?? localStorage;
+    const session = store.session ?? sessionStorage;
+    const toggle = /^#(?:.*&)?ga-internal=(on|off)(?:&|$)/.exec(hash)?.[1];
+    if (toggle === 'on') local.setItem(INTERNAL_KEY, '1');
+    if (toggle === 'off') { local.removeItem(INTERNAL_KEY); session.removeItem(INTERNAL_KEY); }
+    if (new URLSearchParams(search).get('utm_source')?.toLowerCase() === 'qa') session.setItem(INTERNAL_KEY, '1');
+    return local.getItem(INTERNAL_KEY) === '1' || session.getItem(INTERNAL_KEY) === '1';
+  } catch { return false; }
+}
+
 /** Keep campaign slugs, excluding user-supplied file/URL parameters and fragments. */
 export function campaignQuery(search: string): string {
   const out = new URLSearchParams();
@@ -61,7 +91,7 @@ function referrer(): string {
 
 function fields(): Record<string, string> {
   const pageLanguage = location.pathname.match(/\/(en|ja|zh-CN|de)(?:\/|$)/)?.[1] ?? 'ko';
-  return { tool: active!.tool, page_title: pageTitle, content_group: pageGroup, page_language: pageLanguage, page_location: `https://${HOST}${pagePath}${consent === 'granted' ? campaignQuery(location.search) : ''}`, page_referrer: consent === 'granted' ? pageReferrer : '' };
+  return { tool: active!.tool, page_title: pageTitle, content_group: pageGroup, page_language: pageLanguage, page_location: `https://${HOST}${pagePath}${consent === 'granted' ? campaignQuery(location.search) : ''}`, page_referrer: consent === 'granted' ? pageReferrer : '', ...(internal ? { traffic_type: 'internal' } : {}) };
 }
 
 function send(name: string, params: Record<string, string | number> = {}, context?: Record<string, string>): void {
@@ -194,6 +224,7 @@ function initialize(id: string, tool: AnalyticsTool): void {
   const nav = navigator as Navigator & { globalPrivacyControl?: boolean };
   if (nav.globalPrivacyControl || nav.doNotTrack === '1') return;
   active = { id, tool };
+  internal = internalTraffic(location.search, location.hash);
   pagePath = PATHS[tool]; pageTitle = TITLES[tool];
   pageGroup = tool === 'portfolio' ? '포트폴리오' : 'OpenCAD 앱';
   pageReferrer = referrer();
@@ -207,7 +238,7 @@ function initialize(id: string, tool: AnalyticsTool): void {
     if (!link) return;
     try {
       const url = new URL(link.href);
-      const navigation = navigationEvent(link.href, link.dataset['analyticsEntry']);
+      const navigation = navigationEvent(link.href, link.dataset['analyticsEntry']) ?? contactEvent(link.href);
       if (navigation) send(navigation.name, navigation.params);
       else if (url.hostname === 'github.com' && /^\/GyuTae-Kim\/(?:opencad-(?:dwgdxf|nc|step|skp|viewer3d)|GyuTae-Kim.github.io)\/?$/i.test(url.pathname)) {
         const repo = url.pathname.split('/')[2]!.toLowerCase();

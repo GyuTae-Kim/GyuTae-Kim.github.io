@@ -175,6 +175,11 @@ for (const page of SEARCH_PAGES) {
     assert.equal(person.mainEntityOfPage['@id'], profileUrl + '#webpage', `${file}: author profile identity`);
     assert.equal(pageNode.inLanguage, page.language, `${file}: page language`);
     assert.deepEqual(data['@graph'].find(node => node['@type'] === 'WebSite').inLanguage, LANGUAGES.map(({ code }) => code), `${file}: multilingual website`);
+    // Google reads the site name from the root home page and otherwise shows the
+    // parent host ("GitHub"); keep one untranslated name with the host as backup.
+    const website = data['@graph'].find(node => node['@type'] === 'WebSite');
+    assert.equal(website.name, '김규태 · Sean Kim', `${file}: one site name in every language`);
+    assert.deepEqual(website.alternateName, ['김규태', 'Sean Kim', 'gyutae-kim.github.io'], `${file}: site name fallbacks`);
     if (originalPath(page.path) === '/opencad') {
       const tools = data['@graph'].find(node => node['@id'] === `${SITE_URL + page.path}#tools`);
       assert.deepEqual(tools.itemListElement.map(item => item.url), OPENCAD_TOOLS.filter(tool => tool.url).map(tool => localizedHref(tool.url, page.language)), `${file}: structured viewer links stay in this language`);

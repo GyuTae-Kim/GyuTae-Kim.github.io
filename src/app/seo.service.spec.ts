@@ -93,6 +93,10 @@ describe('SeoService', () => {
       seo.update(languagePath('/', code));
       graph = JSON.parse(document.getElementById('site-structured-data')!.textContent!)['@graph'];
       expect(graph.find((node: Record<string, string>) => node['@type'] === 'ProfilePage').mainEntity['@id']).toBe(person['@id']);
+      // One site has one search result site name, whatever the page language.
+      const website = graph.find((node: Record<string, string>) => node['@type'] === 'WebSite');
+      expect(website.name).withContext(code).toBe('김규태 · Sean Kim');
+      expect(website.alternateName).withContext(code).toEqual(['김규태', 'Sean Kim', 'gyutae-kim.github.io']);
     }
   });
   it('uses self canonicals and reciprocal language alternatives, then clears them on 404', () => {
